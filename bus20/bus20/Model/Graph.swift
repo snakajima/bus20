@@ -37,16 +37,30 @@ struct Graph {
     }
     
     func render(frame:CGRect) -> UIImage {
-        UIGraphicsBeginImageContext(frame.size)
+        UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         let ctx = UIGraphicsGetCurrentContext()!
         UIColor.yellow.setFill()
         ctx.fill(frame)
+        
+        ctx.setLineWidth(1.0)
         UIColor.gray.setFill()
+        UIColor.gray.setStroke()
+        
+        let bounds = self.bounds
+        let scale = min(frame.size.width / bounds.size.width,
+                        frame.size.height / bounds.size.height)
+        
         for node in nodes {
-            node.render(ctx:ctx)
+            node.render(ctx:ctx, graph:self, scale:scale)
         }
         return UIGraphicsGetImageFromCurrentImageContext()!
+    }
+    
+    var bounds:CGRect {
+        let xs = nodes.map { $0.x }
+        let ys = nodes.map { $0.y }
+        return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
 }
 
@@ -55,21 +69,35 @@ struct Node {
     let y:CGFloat
     let edges:[Edge]
     
-    func render(ctx:CGContext) {
-        let rc = CGRect(x: x, y: y, width: 3.0, height: 3.0)
+    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
+        let rc = CGRect(x: x * scale - 2, y: y * scale - 2, width: 4, height: 4)
         ctx.fillEllipse(in: rc)
+        
+        ctx.beginPath()
+        for edge in edges {
+            edge.addPath(ctx: ctx, graph: graph, scale: scale)
+        }
+        ctx.closePath()
+        ctx.drawPath(using: .stroke)
     }
 }
 
 struct Edge {
-    let node0:Int // index
-    let node1:Int // index
+    let index0:Int // index
+    let index1:Int // index
     let biDirectional:Bool
     let length:CGFloat
     init(node0:Int, node1:Int, length:CGFloat=1.0, biDirectional:Bool=true) {
-        self.node0 = node0
-        self.node1 = node1
+        self.index0 = node0
+        self.index1 = node1
         self.length = length
         self.biDirectional = biDirectional
+    }
+
+    func addPath(ctx:CGContext, graph:Graph, scale:CGFloat) {
+        let node0 = graph.nodes[index0]
+        let node1 = graph.nodes[index1]
+        ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
+        ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
     }
 }
