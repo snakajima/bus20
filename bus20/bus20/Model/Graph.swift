@@ -39,17 +39,17 @@ struct Graph {
     func render(frame:CGRect) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
-        let ctx = UIGraphicsGetCurrentContext()!
-        UIColor.yellow.setFill()
-        ctx.fill(frame)
-        
-        ctx.setLineWidth(1.0)
-        UIColor.gray.setFill()
-        UIColor.gray.setStroke()
-        
+
         let bounds = self.bounds
         let scale = min(frame.size.width / bounds.size.width,
                         frame.size.height / bounds.size.height)
+
+        let ctx = UIGraphicsGetCurrentContext()!
+        UIColor.white.setFill()
+        ctx.fill(frame)
+        ctx.setLineWidth(1.0)
+        UIColor.gray.setFill()
+        UIColor.gray.setStroke()
         
         for node in nodes {
             node.render(ctx:ctx, graph:self, scale:scale)
