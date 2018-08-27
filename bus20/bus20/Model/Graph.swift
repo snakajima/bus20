@@ -14,8 +14,8 @@ struct Graph {
     
     init(w:Int, h:Int, unit:CGFloat) {
         var nodes = [Node]()
-        for x in 0..<w {
-            for y in 0..<h {
+        for y in 0..<h {
+            for x in 0..<w {
                 let index = y * w + x
                 var edges = [Edge]()
                 if x > 0 {
@@ -99,7 +99,7 @@ struct Edge {
 }
 
 struct Route {
-    private var edges:[Edge]
+    private var edges = [Edge]()
     
     mutating func add(edge:Edge) {
         if let last = edges.last {
@@ -118,5 +118,6 @@ struct Route {
             let node = graph.nodes[edge.index1]
             ctx.addLine(to: CGPoint(x: node.x * scale, y: node.y * scale))
         }
+        ctx.drawPath(using: .stroke)
     }
 }

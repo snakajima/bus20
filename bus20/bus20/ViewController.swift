@@ -25,18 +25,32 @@ class ViewController: UIViewController {
         routeView = UIImageView(frame:frame)
         view.addSubview(routeView)
         
+        
+        var route = Route()
+        var node = graph.nodes.first!
+        var edge = node.edges.first!
+        route.add(edge: edge)
+        node = graph.nodes[edge.index1]
+        edge = node.edges[2]
+        route.add(edge: edge)
+        node = graph.nodes[edge.index1]
+        edge = node.edges[1]
+        route.add(edge: edge)
+        node = graph.nodes[edge.index1]
+        edge = node.edges[3]
+        route.add(edge: edge)
+
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.setLineWidth(10.0)
+        ctx.setLineCap(.round)
+        ctx.setLineJoin(.round)
         UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
-        
-        for node in graph.nodes {
-            node.render(ctx:ctx, graph:graph, scale:scale)
-        }
-        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
 
+        route.render(ctx: ctx, graph: graph, scale: scale)
+        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
     }
 
     override func didReceiveMemoryWarning() {
