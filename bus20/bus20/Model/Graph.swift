@@ -10,7 +10,7 @@ import UIKit
 import CoreGraphics
 
 struct Graph {
-    var nodes:[Node]
+    let nodes:[Node]
     
     init(w:Int, h:Int, unit:CGFloat) {
         var nodes = [Node]()
@@ -60,9 +60,9 @@ struct Graph {
     }
     
     func shortest(start:Int, end:Int) -> Route {
-        var graph = self
-        graph.nodes[start].type = .start
-        graph.nodes[end].type = .end
+        var nodes = self.nodes
+        nodes[start].type = .start
+        nodes[end].type = .end
 
         var routes = [Route]()
         func insert(route:Route) {
@@ -74,7 +74,12 @@ struct Graph {
             }
             routes.append(route)
         }
-        for edge in graph.nodes[start].edges {
+        func touch(edge:Edge) {
+            if nodes[edge.index1].type == .empty {
+               nodes[edge.index1].type = .used
+            }
+        }
+        for edge in nodes[start].edges {
             insert(route:Route(edge:edge))
         }
         
