@@ -29,9 +29,8 @@ class ViewController: UIViewController {
         defer { UIGraphicsEndImageContext() }
         
         let ctx = UIGraphicsGetCurrentContext()!
-        ctx.setLineWidth(1.0)
-        UIColor.red.setFill()
-        UIColor.red.setStroke()
+        ctx.setLineWidth(10.0)
+        UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         
         for node in graph.nodes {
             node.render(ctx:ctx, graph:graph, scale:scale)
