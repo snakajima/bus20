@@ -67,8 +67,12 @@ struct Graph {
         var routes = graph.nodes[start].edges.map({ Route(edge:$0) }).sorted { (r0, r1) -> Bool in
             r0.length < r1.length
         }
+        var shortest:Route?
+        repeat {
+            shortest = routes.first!
+        } while shortest == nil
         
-        return routes[0]
+        return shortest!
     }
 }
 
