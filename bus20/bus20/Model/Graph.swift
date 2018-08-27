@@ -36,13 +36,9 @@ struct Graph {
         self.nodes = nodes
     }
     
-    func render(frame:CGRect) -> UIImage {
+    func render(frame:CGRect, scale:CGFloat) -> UIImage {
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
-
-        let bounds = self.bounds
-        let scale = min(frame.size.width / bounds.size.width,
-                        frame.size.height / bounds.size.height)
 
         let ctx = UIGraphicsGetCurrentContext()!
         UIColor.white.setFill()

@@ -10,13 +10,34 @@ import UIKit
 
 class ViewController: UIViewController {
     let graph = Graph(w: 10, h: 10, unit: 1.0)
-
+    var routeView:UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        let rc = view.frame
-        let imageView = UIImageView(frame: rc)
-        imageView.image = graph.render(frame: rc)
-        view.addSubview(imageView)
+        let frame = view.frame
+        let mapView = UIImageView(frame: frame)
+        let bounds = graph.bounds
+        let scale = min(frame.size.width / bounds.size.width,
+                        frame.size.height / bounds.size.height)
+        mapView.image = graph.render(frame: frame, scale:scale)
+        view.addSubview(mapView)
+
+        routeView = UIImageView(frame:frame)
+        view.addSubview(routeView)
+        
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        
+        let ctx = UIGraphicsGetCurrentContext()!
+        ctx.setLineWidth(1.0)
+        UIColor.red.setFill()
+        UIColor.red.setStroke()
+        
+        for node in graph.nodes {
+            node.render(ctx:ctx, graph:graph, scale:scale)
+        }
+        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
+
     }
 
     override func didReceiveMemoryWarning() {
