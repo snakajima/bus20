@@ -61,9 +61,22 @@ struct Graph {
 }
 
 struct Node {
+    enum NodeType {
+        case empty
+        case start
+        case end
+        case used
+    }
     let x:CGFloat
     let y:CGFloat
     let edges:[Edge]
+    var type = NodeType.empty
+    
+    init(x:CGFloat, y:CGFloat, edges:[Edge]) {
+        self.x = x
+        self.y = y
+        self.edges = edges
+    }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
         let rc = CGRect(x: x * scale - 2, y: y * scale - 2, width: 4, height: 4)
