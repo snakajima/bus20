@@ -101,3 +101,26 @@ struct Edge {
         ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
     }
 }
+
+struct Route {
+    private var edges:[Edge]
+    
+    mutating func add(edge:Edge) {
+        if let last = edges.last {
+            assert(last.index1 == edge.index0)
+        }
+        edges.append(edge)
+    }
+    
+    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
+        guard let first = edges.first else {
+            return
+        }
+        let node0 = graph.nodes[first.index0]
+        ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
+        for edge in edges {
+            let node = graph.nodes[edge.index1]
+            ctx.addLine(to: CGPoint(x: node.x * scale, y: node.y * scale))
+        }
+    }
+}
