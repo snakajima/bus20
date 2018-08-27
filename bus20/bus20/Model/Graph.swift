@@ -12,7 +12,7 @@ import CoreGraphics
 struct Graph {
     let nodes:[Node]
     
-    init(w:Int, h:Int, unit:Float) {
+    init(w:Int, h:Int, unit:CGFloat) {
         var nodes = [Node]()
         for x in 0..<w {
             for y in 0..<h {
@@ -30,35 +30,43 @@ struct Graph {
                 if y+1 < h {
                     edges.append(Edge(node0: index, node1: index+w, length: unit))
                 }
-                nodes.append(Node(x: unit * Float(x), y: unit * Float(y), edges: edges))
+                nodes.append(Node(x: unit * CGFloat(x), y: unit * CGFloat(y), edges: edges))
             }
         }
         self.nodes = nodes
     }
     
-    var image:UIImage {
-        let rc = CGRect(x: 0, y: 0, width: 200, height: 200)
-        UIGraphicsBeginImageContext(rc.size)
+    func render(frame:CGRect) -> UIImage {
+        UIGraphicsBeginImageContext(frame.size)
         defer { UIGraphicsEndImageContext() }
         let ctx = UIGraphicsGetCurrentContext()!
         UIColor.yellow.setFill()
-        ctx.fill(rc)
+        ctx.fill(frame)
+        UIColor.gray.setFill()
+        for node in nodes {
+            node.render(ctx:ctx)
+        }
         return UIGraphicsGetImageFromCurrentImageContext()!
     }
 }
 
 struct Node {
-    let x:Float
-    let y:Float
+    let x:CGFloat
+    let y:CGFloat
     let edges:[Edge]
+    
+    func render(ctx:CGContext) {
+        let rc = CGRect(x: x, y: y, width: 3.0, height: 3.0)
+        ctx.fillEllipse(in: rc)
+    }
 }
 
 struct Edge {
     let node0:Int // index
     let node1:Int // index
     let biDirectional:Bool
-    let length:Float
-    init(node0:Int, node1:Int, length:Float=1.0, biDirectional:Bool=true) {
+    let length:CGFloat
+    init(node0:Int, node1:Int, length:CGFloat=1.0, biDirectional:Bool=true) {
         self.node0 = node0
         self.node1 = node1
         self.length = length

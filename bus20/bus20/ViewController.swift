@@ -15,7 +15,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let rc = view.frame
         let imageView = UIImageView(frame: rc)
-        imageView.image = graph.image
+        imageView.image = graph.render(frame: rc)
         view.addSubview(imageView)
     }
 
