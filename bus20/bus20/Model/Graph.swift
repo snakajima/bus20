@@ -64,11 +64,26 @@ struct Graph {
         graph.nodes[start].type = .start
         graph.nodes[end].type = .end
 
-        var routes = graph.nodes[start].edges.map({ Route(edge:$0) }).sorted { (r0, r1) -> Bool in
-            r0.length < r1.length
+        var routes = [Route]()
+        func insert(route:Route) {
+            for i in 0..<routes.count {
+                if route.length < routes[i].length {
+                    routes.insert(route, at: i)
+                    return
+                }
+            }
+            routes.append(route)
+        }
+        for edge in graph.nodes[start].edges {
+            insert(route:Route(edge:edge))
+        }
+        
+        func propagate(route:Route) {
         }
         var shortest:Route?
         repeat {
+            let route = routes.removeFirst()
+            propagate(route: route)
             shortest = routes.first!
         } while shortest == nil
         
