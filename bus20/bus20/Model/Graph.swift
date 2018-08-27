@@ -58,6 +58,23 @@ struct Graph {
         let ys = nodes.map { $0.y }
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
+    
+    func shortest(start:Int, end:Int) -> Route {
+        var route = Route()
+        var node = self.nodes.first!
+        var edge = node.edges.first!
+        route.add(edge: edge)
+        node = self.nodes[edge.index1]
+        edge = node.edges[2]
+        route.add(edge: edge)
+        node = self.nodes[edge.index1]
+        edge = node.edges[1]
+        route.add(edge: edge)
+        node = self.nodes[edge.index1]
+        edge = node.edges[3]
+        route.add(edge: edge)
+        return route
+    }
 }
 
 struct Node {
