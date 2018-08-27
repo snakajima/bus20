@@ -9,10 +9,14 @@
 import UIKit
 
 class ViewController: UIViewController {
+    let graph = Graph(w: 10, h: 10, unit: 10.0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let rc = view.frame
+        let imageView = UIImageView(frame: rc)
+        imageView.image = graph.image
+        view.addSubview(imageView)
     }
 
     override func didReceiveMemoryWarning() {
