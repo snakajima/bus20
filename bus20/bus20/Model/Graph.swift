@@ -10,7 +10,7 @@ import UIKit
 import CoreGraphics
 
 struct Graph {
-    let nodes:[Node]
+    var nodes:[Node]
     
     init(w:Int, h:Int, unit:CGFloat) {
         var nodes = [Node]()
@@ -60,20 +60,15 @@ struct Graph {
     }
     
     func shortest(start:Int, end:Int) -> Route {
-        var route = Route()
-        var node = self.nodes.first!
-        var edge = node.edges.first!
-        route.add(edge: edge)
-        node = self.nodes[edge.index1]
-        edge = node.edges[2]
-        route.add(edge: edge)
-        node = self.nodes[edge.index1]
-        edge = node.edges[1]
-        route.add(edge: edge)
-        node = self.nodes[edge.index1]
-        edge = node.edges[3]
-        route.add(edge: edge)
-        return route
+        var graph = self
+        graph.nodes[start].type = .start
+        graph.nodes[end].type = .end
+
+        var routes = graph.nodes[start].edges.map({ Route(edge:$0) }).sorted { (r0, r1) -> Bool in
+            r0.length < r1.length
+        }
+        
+        return routes[0]
     }
 }
 
@@ -84,6 +79,7 @@ struct Node {
         case end
         case used
     }
+    
     let x:CGFloat
     let y:CGFloat
     let edges:[Edge]
@@ -130,12 +126,19 @@ struct Edge {
 
 struct Route {
     private var edges = [Edge]()
+    var length = CGFloat(0)
+    
+    init(edge:Edge) {
+        edges = [edge]
+        length = edge.length
+    }
     
     mutating func add(edge:Edge) {
         if let last = edges.last {
             assert(last.index1 == edge.index0)
         }
         edges.append(edge)
+        length += edge.length
     }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
