@@ -29,7 +29,6 @@ class Shuttle {
             if edges.isEmpty {
                 let index1 = (edge.index1 + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
                 self.route = graph.routes[edge.index1][index1]
-                //Graph.shortest(nodes: nodes, start: edge.index1, end: index1)
             } else {
                 self.route = Route(edges: edges, length: route.length - edge.length)
             }
@@ -37,8 +36,9 @@ class Shuttle {
         }
         let node0 = graph.nodes[edge.index0]
         let node1 = graph.nodes[edge.index1]
-        let x = node0.x + (node1.x - node0.x) * (time - baseTime) / edge.length
-        let y = node0.y + (node1.y - node0.y) * (time - baseTime) / edge.length
+        let ratio = (time - baseTime) / edge.length
+        let x = node0.x + (node1.x - node0.x) * ratio
+        let y = node0.y + (node1.y - node0.y) * ratio
         let rc = CGRect(x: x * scale - 5, y: y * scale - 5, width: 10, height: 10)
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.8).setFill()
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
