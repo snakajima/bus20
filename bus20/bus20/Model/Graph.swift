@@ -34,7 +34,18 @@ struct Graph {
                                   y: unit * (CGFloat(y + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375), edges: edges))
             }
         }
-        self.nodes = nodes
+        
+        // calculate length
+        self.nodes = nodes.map({ (node) -> Node in
+            let edges = node.edges.map({ (edge) -> Edge in
+                let node0 = nodes[edge.index0]
+                let node1 = nodes[edge.index1]
+                let dx = node0.x - node1.x
+                let dy = node0.y - node1.y
+                return Edge(node0: edge.index0, node1: edge.index1, length: sqrt(dx*dx + dy*dy))
+            })
+            return Node(x: node.x, y: node.y, edges: edges)
+        })
     }
     
     func render(frame:CGRect, scale:CGFloat) -> UIImage {
@@ -148,7 +159,7 @@ struct Node {
 struct Edge {
     let index0:Int
     let index1:Int
-    let length:CGFloat
+    var length:CGFloat
     init(node0:Int, node1:Int, length:CGFloat=1.0) {
         self.index0 = node0
         self.index1 = node1

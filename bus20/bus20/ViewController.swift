@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         route.render(ctx: ctx, graph: graph, scale: scale)
 
         UIColor(hue: 0.50, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
-        route = graph.shortest(start: 71, end: 48)
+        route = graph.shortest(start: 78, end: 33)
         route.render(ctx: ctx, graph: graph, scale: scale)
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
     }
