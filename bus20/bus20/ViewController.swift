@@ -11,12 +11,13 @@ import UIKit
 class ViewController: UIViewController {
     let graph = Graph(w: 10, h: 10, unit: 1.0)
     var routeView:UIImageView!
+    var scale = CGFloat(1.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = view.frame
         let mapView = UIImageView(frame: frame)
-        let scale = min(frame.size.width / 11.0,
+        scale = min(frame.size.width / 11.0,
                         frame.size.height / 11.0)
         mapView.image = graph.render(frame: frame, scale:scale)
         view.addSubview(mapView)
