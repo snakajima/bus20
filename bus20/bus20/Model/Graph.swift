@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import CoreGraphics
 
 struct Graph {
     let nodes:[Node]
@@ -110,104 +109,7 @@ struct Graph {
     }
 }
 
-struct Node {
-    enum NodeType {
-        case empty
-        case start
-        case end
-        case used
-    }
-    
-    let x:CGFloat
-    let y:CGFloat
-    let edges:[Edge]
-    let type:NodeType
-    
-    init(x:CGFloat, y:CGFloat, edges:[Edge]) {
-        self.x = x
-        self.y = y
-        self.edges = edges
-        self.type = .empty
-    }
-    
-    init(node:Node, type:NodeType) {
-        self.x = node.x
-        self.y = node.y
-        self.edges = node.edges
-        self.type = type
-    }
-    
-    func distance(to:Node) -> CGFloat {
-        let dx = to.x - self.x
-        let dy = to.y - self.y
-        return sqrt(dx * dx + dy * dy)
-    }
-    
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
-        let rc = CGRect(x: x * scale - 2, y: y * scale - 2, width: 4, height: 4)
-        ctx.fillEllipse(in: rc)
-        
-        ctx.beginPath()
-        for edge in edges {
-            edge.addPath(ctx: ctx, graph: graph, scale: scale)
-        }
-        ctx.closePath()
-        ctx.drawPath(using: .stroke)
-    }
-}
 
-struct Edge {
-    let index0:Int
-    let index1:Int
-    var length:CGFloat
-    init(node0:Int, node1:Int, length:CGFloat=1.0) {
-        self.index0 = node0
-        self.index1 = node1
-        self.length = length
-    }
 
-    func addPath(ctx:CGContext, graph:Graph, scale:CGFloat) {
-        let node0 = graph.nodes[index0]
-        let node1 = graph.nodes[index1]
-        ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
-        ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
-    }
-}
 
-struct Route {
-    private let edges:[Edge]
-    let length:CGFloat
-    let extra:CGFloat
-    
-    init(edge:Edge, extra:CGFloat) {
-        self.edges = [edge]
-        self.length = edge.length
-        self.extra = extra
-    }
-    
-    init(route:Route, edge:Edge, extra:CGFloat) {
-        var edges = route.edges
-        edges.append(edge)
-        self.edges = edges
-        self.length = route.length + edge.length
-        self.extra = extra
-    }
-    
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
-        guard let first = edges.first else {
-            return
-        }
-        let node0 = graph.nodes[first.index0]
-        ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
-        for edge in edges {
-            let node = graph.nodes[edge.index1]
-            ctx.addLine(to: CGPoint(x: node.x * scale, y: node.y * scale))
-        }
-        ctx.drawPath(using: .stroke)
-    }
-    
-    var lastIndex:Int {
-        let last = edges.last!
-        return last.index1
-    }
-}
+
