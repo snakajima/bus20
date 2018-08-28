@@ -90,22 +90,17 @@ struct Graph {
                 let type = nodes[edge.index1].type
                 if type == .empty || type == .end {
                     touch(edge: edge)
-                    let routePlus = Route(route: route, edge: edge)
-                    insert(route:routePlus)
+                    insert(route:Route(route: route, edge: edge))
                 }
             }
         }
-        var shortest:Route?
+        var first:Route!
         repeat {
-            let route = routes.removeFirst()
-            propagate(route: route)
-            let first = routes.first!
-            if nodes[first.lastIndex].type == .end {
-                shortest = first
-            }
-        } while shortest == nil
+            propagate(route: routes.removeFirst())
+            first = routes.first!
+        } while nodes[first.lastIndex].type != .end
         
-        return shortest!
+        return first
     }
 }
 
