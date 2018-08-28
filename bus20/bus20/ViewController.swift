@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         route = graph.shortest(start: 78, end: 33)
         route.render(ctx: ctx, graph: graph, scale: scale)
 
-        for var shuttle in shuttles {
+        for shuttle in shuttles {
             shuttle.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Shuttle {
+class Shuttle {
     let hue:CGFloat
     var edge:Edge
     var baseTime = CGFloat(0)
@@ -18,11 +18,12 @@ struct Shuttle {
         self.edge = edge
     }
 
-    mutating func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
+    func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
             let node = graph.nodes[edge.index1]
-            edge = node.edges[0]
+            let index = (Int(arc4random()) % node.edges.count)
+            edge = node.edges[index]
         }
         let node0 = graph.nodes[edge.index0]
         let node1 = graph.nodes[edge.index1]
