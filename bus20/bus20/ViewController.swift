@@ -33,13 +33,9 @@ class ViewController: UIViewController {
         routeView = UIImageView(frame:frame)
         view.addSubview(routeView)
         
-        shuttles.append(Shuttle(hue: 0.0, edge: graph.nodes[0].edges[0]))
-        shuttles.append(Shuttle(hue: 0.125, edge: graph.nodes[11].edges[0]))
-        shuttles.append(Shuttle(hue: 0.250, edge: graph.nodes[22].edges[0]))
-        shuttles.append(Shuttle(hue: 0.375, edge: graph.nodes[33].edges[0]))
-        shuttles.append(Shuttle(hue: 0.500, edge: graph.nodes[44].edges[0]))
-        shuttles.append(Shuttle(hue: 0.625, edge: graph.nodes[55].edges[0]))
-        shuttles.append(Shuttle(hue: 0.750, edge: graph.nodes[66].edges[0]))
+        for i in 0..<8 {
+            shuttles.append(Shuttle(hue: 0.125 * CGFloat(i), edge: graph.nodes[i*10 + i].edges[0]))
+        }
 
         update()
     }
