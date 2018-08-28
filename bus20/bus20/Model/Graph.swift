@@ -40,9 +40,7 @@ struct Graph {
             let edges = node.edges.map({ (edge) -> Edge in
                 let node0 = nodes[edge.index0]
                 let node1 = nodes[edge.index1]
-                let dx = node0.x - node1.x
-                let dy = node0.y - node1.y
-                return Edge(node0: edge.index0, node1: edge.index1, length: sqrt(dx*dx + dy*dy))
+                return Edge(node0: edge.index0, node1: edge.index1, length: node0.distance(to: node1))
             })
             return Node(x: node.x, y: node.y, edges: edges)
         })
@@ -93,7 +91,7 @@ struct Graph {
         }
         for edge in nodes[start].edges {
             touch(edge: edge)
-            insert(route:Route(edge:edge))
+            insert(route:Route(edge:edge, extra:0))
         }
         
         func propagate(route:Route) {
@@ -102,7 +100,7 @@ struct Graph {
                 let type = nodes[edge.index1].type
                 if type == .empty || type == .end {
                     touch(edge: edge)
-                    insert(route:Route(route: route, edge: edge))
+                    insert(route:Route(route: route, edge: edge, extra:0))
                 }
             }
         }
@@ -143,6 +141,12 @@ struct Node {
         self.type = type
     }
     
+    func distance(to:Node) -> CGFloat {
+        let dx = to.x - self.x
+        let dy = to.y - self.y
+        return sqrt(dx * dx + dy * dy)
+    }
+    
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
         let rc = CGRect(x: x * scale - 2, y: y * scale - 2, width: 4, height: 4)
         ctx.fillEllipse(in: rc)
@@ -177,17 +181,20 @@ struct Edge {
 struct Route {
     private let edges:[Edge]
     let length:CGFloat
+    let extra:CGFloat
     
-    init(edge:Edge) {
-        edges = [edge]
-        length = edge.length
+    init(edge:Edge, extra:CGFloat) {
+        self.edges = [edge]
+        self.length = edge.length
+        self.extra = extra
     }
     
-    init(route:Route, edge:Edge) {
+    init(route:Route, edge:Edge, extra:CGFloat) {
         var edges = route.edges
         edges.append(edge)
         self.edges = edges
-        length = route.length + edge.length
+        self.length = route.length + edge.length
+        self.extra = extra
     }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
