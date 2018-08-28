@@ -56,8 +56,8 @@ struct Graph {
         UIColor.white.setFill()
         ctx.fill(frame)
         ctx.setLineWidth(1.0)
-        UIColor.gray.setFill()
-        UIColor.gray.setStroke()
+        UIColor.lightGray.setFill()
+        UIColor.lightGray.setStroke()
         
         for node in nodes {
             node.render(ctx:ctx, graph:self, scale:scale)
