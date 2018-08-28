@@ -73,11 +73,12 @@ struct Graph {
         var nodes = self.nodes
         nodes[start] = Node(node:nodes[start], type:.start)
         nodes[end] = Node(node:nodes[end], type:.end)
+        let endNode = nodes[end]
 
         var routes = [Route]()
         func insert(route:Route) {
             for i in 0..<routes.count {
-                if route.length < routes[i].length {
+                if route.length + route.extra < routes[i].length + routes[i].extra {
                     routes.insert(route, at: i)
                     return
                 }
@@ -91,7 +92,7 @@ struct Graph {
         }
         for edge in nodes[start].edges {
             touch(edge: edge)
-            insert(route:Route(edge:edge, extra:0))
+            insert(route:Route(edge:edge, extra:endNode.distance(to: nodes[edge.index1])))
         }
         
         func propagate(route:Route) {
@@ -100,7 +101,7 @@ struct Graph {
                 let type = nodes[edge.index1].type
                 if type == .empty || type == .end {
                     touch(edge: edge)
-                    insert(route:Route(route: route, edge: edge, extra:0))
+                    insert(route:Route(route: route, edge: edge, extra:endNode.distance(to: nodes[edge.index1])))
                 }
             }
         }
