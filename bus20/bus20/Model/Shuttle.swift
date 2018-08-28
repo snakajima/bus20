@@ -22,8 +22,12 @@ class Shuttle {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
             let node = graph.nodes[edge.index1]
-            let index = (Int(arc4random()) % node.edges.count)
-            edge = node.edges[index]
+            for i in 0..<node.edges.count {
+                if node.edges[i].index1 == edge.index0 {
+                    let index = i + 1 + Int(arc4random()) % (node.edges.count - 1)
+                    edge = node.edges[index % node.edges.count]
+                }
+            }
         }
         let node0 = graph.nodes[edge.index0]
         let node1 = graph.nodes[edge.index1]
