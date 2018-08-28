@@ -13,6 +13,11 @@ struct Route {
     let length:CGFloat
     let extra:CGFloat
 
+    init() {
+        edges = [Edge]()
+        length = 1.0e99
+        extra = 0
+    }
     init(edges:[Edge], length:CGFloat) {
         self.edges = edges
         self.length = length

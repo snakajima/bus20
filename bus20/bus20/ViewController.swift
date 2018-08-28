@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     }
     
     func update() {
-        let time = CGFloat(Date().timeIntervalSince(start)) * 1.0
+        let time = CGFloat(Date().timeIntervalSince(start)) * 3.0
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
