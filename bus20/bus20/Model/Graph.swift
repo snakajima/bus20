@@ -13,26 +13,27 @@ struct Graph {
     let routes:[[Route]] // shortest routes among all nodes
     
     init(w:Int, h:Int, unit:CGFloat) {
-        var nodes = [Node]()
-        for y in 0..<h {
-            for x in 0..<w {
-                let index = y * w + x
-                var edges = [Edge]()
-                if x > 0 {
-                    edges.append(Edge(node0: index, node1: index-1, length: unit))
-                }
-                if x+1 < w {
-                    edges.append(Edge(node0: index, node1: index+1, length: unit))
-                }
-                if y > 0 {
-                    edges.append(Edge(node0: index, node1: index-w, length: unit))
-                }
-                if y+1 < h {
-                    edges.append(Edge(node0: index, node1: index+w, length: unit))
-                }
-                nodes.append(Node(x: unit * (CGFloat(x + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
-                                  y: unit * (CGFloat(y + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375), edges: edges))
+        let count = w * h
+        // Create an array of Nodes without real lentgh in Edges
+        var nodes:[Node] = (0..<count).map { (index) -> Node in
+            let y = index / w
+            let x = index - y * w
+            var edges = [Edge]()
+            if x > 0 {
+                edges.append(Edge(node0: index, node1: index-1, length: unit))
             }
+            if x+1 < w {
+                edges.append(Edge(node0: index, node1: index+1, length: unit))
+            }
+            if y > 0 {
+                edges.append(Edge(node0: index, node1: index-w, length: unit))
+            }
+            if y+1 < h {
+                edges.append(Edge(node0: index, node1: index+w, length: unit))
+            }
+            return Node(x: unit * (CGFloat(x + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
+                        y: unit * (CGFloat(y + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
+                        edges: edges)
         }
         
         // calculate length
@@ -45,7 +46,7 @@ struct Graph {
             return Node(x: node.x, y: node.y, edges: edges)
         })
 
-        let count = w * h
+        // Calcurate shortest routes among all Nodes first
         routes = (0..<count).map({ (index0) -> [Route] in
             print(index0)
             return (0..<count).map({ (index1) -> Route in
