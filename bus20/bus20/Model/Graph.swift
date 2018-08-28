@@ -46,11 +46,7 @@ struct Graph {
         })
     }
     
-    func render(frame:CGRect, scale:CGFloat) -> UIImage {
-        UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
-        defer { UIGraphicsEndImageContext() }
-
-        let ctx = UIGraphicsGetCurrentContext()!
+    func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
         UIColor.white.setFill()
         ctx.fill(frame)
         ctx.setLineWidth(1.0)
@@ -60,7 +56,6 @@ struct Graph {
         for node in nodes {
             node.render(ctx:ctx, graph:self, scale:scale)
         }
-        return UIGraphicsGetImageFromCurrentImageContext()!
     }
     
     var bounds:CGRect {

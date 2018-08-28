@@ -19,32 +19,46 @@ class ViewController: UIViewController {
         let mapView = UIImageView(frame: frame)
         scale = min(frame.size.width / 11.0,
                         frame.size.height / 11.0)
-        mapView.image = graph.render(frame: frame, scale:scale)
+        UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        
+        let ctx = UIGraphicsGetCurrentContext()!
+        graph.render(ctx:ctx, frame: frame, scale:scale)
+        mapView.image = UIGraphicsGetImageFromCurrentImageContext()
+
         view.addSubview(mapView)
 
         routeView = UIImageView(frame:frame)
         view.addSubview(routeView)
         
-        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
+        update()
+    }
+    
+    func update() {
+        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.setLineWidth(10.0)
         ctx.setLineCap(.round)
         ctx.setLineJoin(.round)
-
+        
         UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         var route = graph.shortest(start: 0, end: 37)
         route.render(ctx: ctx, graph: graph, scale: scale)
-
+        
         UIColor(hue: 0.25, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         route = graph.shortest(start: 18, end: 84)
         route.render(ctx: ctx, graph: graph, scale: scale)
-
+        
         UIColor(hue: 0.50, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         route = graph.shortest(start: 78, end: 33)
         route.render(ctx: ctx, graph: graph, scale: scale)
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        DispatchQueue.main.async {
+            self.update()
+        }
     }
 
     override func didReceiveMemoryWarning() {
