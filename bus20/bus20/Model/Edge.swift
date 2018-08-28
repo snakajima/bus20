@@ -18,9 +18,9 @@ struct Edge {
         self.length = length
     }
     
-    func addPath(ctx:CGContext, graph:Graph, scale:CGFloat) {
-        let node0 = graph.nodes[index0]
-        let node1 = graph.nodes[index1]
+    func addPath(ctx:CGContext, nodes:[Node], scale:CGFloat) {
+        let node0 = nodes[index0]
+        let node1 = nodes[index1]
         ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
         ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
     }

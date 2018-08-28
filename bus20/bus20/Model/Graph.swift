@@ -53,7 +53,7 @@ struct Graph {
         UIColor.lightGray.setStroke()
         
         for node in nodes {
-            node.render(ctx:ctx, graph:self, scale:scale)
+            node.render(ctx:ctx, nodes:nodes, scale:scale)
         }
     }
     
