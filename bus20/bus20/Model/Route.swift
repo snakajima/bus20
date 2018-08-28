@@ -27,14 +27,14 @@ struct Route {
         self.extra = extra
     }
     
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
+    func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
         guard let first = edges.first else {
             return
         }
-        let node0 = graph.nodes[first.index0]
+        let node0 = nodes[first.index0]
         ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
         for edge in edges {
-            let node = graph.nodes[edge.index1]
+            let node = nodes[edge.index1]
             ctx.addLine(to: CGPoint(x: node.x * scale, y: node.y * scale))
         }
         ctx.drawPath(using: .stroke)

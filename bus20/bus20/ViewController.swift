@@ -54,15 +54,15 @@ class ViewController: UIViewController {
         
         UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         var route = graph.shortest(start: 0, end: 37)
-        route.render(ctx: ctx, graph: graph, scale: scale)
+        route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
         
         UIColor(hue: 0.25, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         route = graph.shortest(start: 18, end: 84)
-        route.render(ctx: ctx, graph: graph, scale: scale)
+        route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
         
         UIColor(hue: 0.50, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         route = graph.shortest(start: 78, end: 33)
-        route.render(ctx: ctx, graph: graph, scale: scale)
+        route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
 
         for shuttle in shuttles {
             shuttle.render(ctx: ctx, graph: graph, scale: scale, time:time)
