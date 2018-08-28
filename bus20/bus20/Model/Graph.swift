@@ -163,25 +163,19 @@ struct Edge {
 }
 
 struct Route {
-    private var edges = [Edge]()
-    var length = CGFloat(0)
+    private let edges:[Edge]
+    let length:CGFloat
     
     init(edge:Edge) {
         edges = [edge]
         length = edge.length
     }
-    init(route:Route, edge:Edge) {
-        edges = route.edges
-        edges.append(edge)
-        length = route.length + edge.length
-    }
     
-    mutating func add(edge:Edge) {
-        if let last = edges.last {
-            assert(last.index1 == edge.index0)
-        }
+    init(route:Route, edge:Edge) {
+        var edges = route.edges
         edges.append(edge)
-        length += edge.length
+        self.edges = edges
+        length = route.length + edge.length
     }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {

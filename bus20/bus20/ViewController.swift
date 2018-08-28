@@ -32,9 +32,17 @@ class ViewController: UIViewController {
         ctx.setLineWidth(10.0)
         ctx.setLineCap(.round)
         ctx.setLineJoin(.round)
-        UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
 
-        let route = graph.shortest(start: 0, end: 37)
+        UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
+        var route = graph.shortest(start: 0, end: 37)
+        route.render(ctx: ctx, graph: graph, scale: scale)
+
+        UIColor(hue: 0.25, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
+        route = graph.shortest(start: 18, end: 84)
+        route.render(ctx: ctx, graph: graph, scale: scale)
+
+        UIColor(hue: 0.50, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
+        route = graph.shortest(start: 71, end: 48)
         route.render(ctx: ctx, graph: graph, scale: scale)
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
     }
