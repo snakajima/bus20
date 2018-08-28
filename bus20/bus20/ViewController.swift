@@ -12,6 +12,8 @@ class ViewController: UIViewController {
     let graph = Graph(w: 10, h: 10, unit: 1.0)
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
+    var shuttles = [Shuttle]()
+    let start = Date()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,10 +33,13 @@ class ViewController: UIViewController {
         routeView = UIImageView(frame:frame)
         view.addSubview(routeView)
         
+        shuttles.append(Shuttle(hue: 0.0, edge: graph.nodes[0].edges[0]))
+        
         update()
     }
     
     func update() {
+        let time = CGFloat(Date().timeIntervalSince(start))
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
@@ -54,8 +59,13 @@ class ViewController: UIViewController {
         UIColor(hue: 0.50, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         route = graph.shortest(start: 78, end: 33)
         route.render(ctx: ctx, graph: graph, scale: scale)
-        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
+
+        for shuttle in shuttles {
+            shuttle.render(ctx: ctx, graph: graph, scale: scale, time:time)
+        }
         
+        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
+
         DispatchQueue.main.async {
             self.update()
         }
