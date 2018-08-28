@@ -80,16 +80,29 @@ struct Graph {
             }
         }
         for edge in nodes[start].edges {
+            touch(edge: edge)
             insert(route:Route(edge:edge))
         }
         
         func propagate(route:Route) {
+            let index = route.lastIndex
+            for edge in nodes[index].edges {
+                let type = nodes[edge.index1].type
+                if type == .empty || type == .end {
+                    touch(edge: edge)
+                    let routePlus = Route(route: route, edge: edge)
+                    insert(route:routePlus)
+                }
+            }
         }
         var shortest:Route?
         repeat {
             let route = routes.removeFirst()
             propagate(route: route)
-            shortest = routes.first!
+            let first = routes.first!
+            if nodes[first.lastIndex].type == .end {
+                shortest = first
+            }
         } while shortest == nil
         
         return shortest!
@@ -156,6 +169,11 @@ struct Route {
         edges = [edge]
         length = edge.length
     }
+    init(route:Route, edge:Edge) {
+        edges = route.edges
+        edges.append(edge)
+        length = route.length + edge.length
+    }
     
     mutating func add(edge:Edge) {
         if let last = edges.last {
@@ -176,5 +194,10 @@ struct Route {
             ctx.addLine(to: CGPoint(x: node.x * scale, y: node.y * scale))
         }
         ctx.drawPath(using: .stroke)
+    }
+    
+    var lastIndex:Int {
+        let last = edges.last!
+        return last.index1
     }
 }
