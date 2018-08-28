@@ -61,8 +61,8 @@ struct Graph {
     
     func shortest(start:Int, end:Int) -> Route {
         var nodes = self.nodes
-        nodes[start].type = .start
-        nodes[end].type = .end
+        nodes[start] = Node(node:nodes[start], type:.start)
+        nodes[end] = Node(node:nodes[end], type:.end)
 
         var routes = [Route]()
         func insert(route:Route) {
@@ -76,7 +76,7 @@ struct Graph {
         }
         func touch(edge:Edge) {
             if nodes[edge.index1].type == .empty {
-               nodes[edge.index1].type = .used
+                nodes[edge.index1] = Node(node:nodes[edge.index1], type:.used)
             }
         }
         for edge in nodes[start].edges {
@@ -115,12 +115,20 @@ struct Node {
     let x:CGFloat
     let y:CGFloat
     let edges:[Edge]
-    var type = NodeType.empty
+    let type:NodeType
     
     init(x:CGFloat, y:CGFloat, edges:[Edge]) {
         self.x = x
         self.y = y
         self.edges = edges
+        self.type = .empty
+    }
+    
+    init(node:Node, type:NodeType) {
+        self.x = node.x
+        self.y = node.y
+        self.edges = node.edges
+        self.type = type
     }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
@@ -137,15 +145,13 @@ struct Node {
 }
 
 struct Edge {
-    let index0:Int // index
-    let index1:Int // index
-    let biDirectional:Bool
+    let index0:Int
+    let index1:Int
     let length:CGFloat
-    init(node0:Int, node1:Int, length:CGFloat=1.0, biDirectional:Bool=true) {
+    init(node0:Int, node1:Int, length:CGFloat=1.0) {
         self.index0 = node0
         self.index1 = node1
         self.length = length
-        self.biDirectional = biDirectional
     }
 
     func addPath(ctx:CGContext, graph:Graph, scale:CGFloat) {
