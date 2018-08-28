@@ -20,16 +20,16 @@ struct Graph {
             let x = index - y * w
             var edges = [Edge]()
             if x > 0 {
-                edges.append(Edge(node0: index, node1: index-1, length: unit))
+                edges.append(Edge(index0: index, index1: index-1, length: unit))
             }
             if x+1 < w {
-                edges.append(Edge(node0: index, node1: index+1, length: unit))
+                edges.append(Edge(index0: index, index1: index+1, length: unit))
             }
             if y > 0 {
-                edges.append(Edge(node0: index, node1: index-w, length: unit))
+                edges.append(Edge(index0: index, index1: index-w, length: unit))
             }
             if y+1 < h {
-                edges.append(Edge(node0: index, node1: index+w, length: unit))
+                edges.append(Edge(index0: index, index1: index+w, length: unit))
             }
             return Node(x: unit * (CGFloat(x + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
                         y: unit * (CGFloat(y + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
@@ -41,7 +41,7 @@ struct Graph {
             let edges = node.edges.map({ (edge) -> Edge in
                 let node0 = nodes[edge.index0]
                 let node1 = nodes[edge.index1]
-                return Edge(node0: edge.index0, node1: edge.index1, length: node0.distance(to: node1))
+                return Edge(index0: edge.index0, index1: edge.index1, length: node0.distance(to: node1))
             })
             return Node(x: node.x, y: node.y, edges: edges)
         })

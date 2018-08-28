@@ -12,9 +12,9 @@ struct Edge {
     let index0:Int
     let index1:Int
     var length:CGFloat
-    init(node0:Int, node1:Int, length:CGFloat=1.0) {
-        self.index0 = node0
-        self.index1 = node1
+    init(index0:Int, index1:Int, length:CGFloat=1.0) {
+        self.index0 = index0
+        self.index1 = index1
         self.length = length
     }
     
