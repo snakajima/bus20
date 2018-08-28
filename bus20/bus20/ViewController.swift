@@ -16,9 +16,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let frame = view.frame
         let mapView = UIImageView(frame: frame)
-        let bounds = graph.bounds
-        let scale = min(frame.size.width / bounds.size.width,
-                        frame.size.height / bounds.size.height)
+        let scale = min(frame.size.width / 11.0,
+                        frame.size.height / 11.0)
         mapView.image = graph.render(frame: frame, scale:scale)
         view.addSubview(mapView)
 
