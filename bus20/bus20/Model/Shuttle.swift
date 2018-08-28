@@ -13,9 +13,9 @@ class Shuttle {
     var edge:Edge
     var baseTime = CGFloat(0)
     
-    init(hue:CGFloat, edge:Edge) {
+    init(hue:CGFloat, index:Int, nodes:[Node]) {
         self.hue = hue
-        self.edge = edge
+        self.edge = nodes[index].edges[0]
     }
 
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat, time:CGFloat) {

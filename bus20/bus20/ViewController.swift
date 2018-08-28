@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         viewMain.addSubview(routeView)
         
         for i in 0..<8 {
-            shuttles.append(Shuttle(hue: 0.125 * CGFloat(i), edge: graph.nodes[i*10 + i].edges[0]))
+            shuttles.append(Shuttle(hue: 0.125 * CGFloat(i), index:i*10+i, nodes:graph.nodes))
         }
 
         update()
