@@ -9,11 +9,13 @@
 import UIKit
 
 class ViewController: UIViewController {
+    @IBOutlet var viewMain:UIView!
     let graph = Graph(w: 10, h: 10, unit: 1.0)
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
     var shuttles = [Shuttle]()
     let start = Date()
+    var riders = [Rider]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,10 +30,10 @@ class ViewController: UIViewController {
         graph.render(ctx:ctx, frame: frame, scale:scale)
         mapView.image = UIGraphicsGetImageFromCurrentImageContext()
 
-        view.addSubview(mapView)
+        viewMain.addSubview(mapView)
 
         routeView = UIImageView(frame:frame)
-        view.addSubview(routeView)
+        viewMain.addSubview(routeView)
         
         for i in 0..<8 {
             shuttles.append(Shuttle(hue: 0.125 * CGFloat(i), edge: graph.nodes[i*10 + i].edges[0]))
@@ -41,7 +43,7 @@ class ViewController: UIViewController {
     }
     
     func update() {
-        let time = CGFloat(Date().timeIntervalSince(start)) * 5.0
+        let time = CGFloat(Date().timeIntervalSince(start)) * 1.0
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
@@ -66,6 +68,11 @@ class ViewController: UIViewController {
             shuttle.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         
+        ctx.setLineWidth(1.0)
+        for rider in riders {
+            rider.render(ctx: ctx, graph: graph, scale: scale)
+        }
+        
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
 
         DispatchQueue.main.async {
@@ -78,6 +85,9 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-
+    @IBAction func add(_ sender:UIBarButtonItem) {
+        print("add")
+        riders.append(Rider(graph:graph))
+    }
 }
 
