@@ -30,7 +30,8 @@ struct Graph {
                 if y+1 < h {
                     edges.append(Edge(node0: index, node1: index+w, length: unit))
                 }
-                nodes.append(Node(x: unit * CGFloat(x + 1), y: unit * CGFloat(y + 1), edges: edges))
+                nodes.append(Node(x: unit * (CGFloat(x + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
+                                  y: unit * (CGFloat(y + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375), edges: edges))
             }
         }
         self.nodes = nodes
