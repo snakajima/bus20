@@ -48,21 +48,6 @@ class ViewController: UIViewController {
         defer { UIGraphicsEndImageContext() }
         
         let ctx = UIGraphicsGetCurrentContext()!
-        ctx.setLineWidth(10.0)
-        ctx.setLineCap(.round)
-        ctx.setLineJoin(.round)
-        
-        UIColor(hue: 1.0, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
-        var route = Graph.shortest(nodes:graph.nodes, start: 0, end: 37)
-        route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
-        
-        UIColor(hue: 0.25, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
-        route = Graph.shortest(nodes:graph.nodes,start: 18, end: 84)
-        route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
-        
-        UIColor(hue: 0.50, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
-        route = Graph.shortest(nodes:graph.nodes, start: 78, end: 33)
-        route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
 
         for shuttle in shuttles {
             shuttle.render(ctx: ctx, nodes: graph.nodes, scale: scale, time:time)

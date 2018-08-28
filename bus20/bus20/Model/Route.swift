@@ -9,10 +9,16 @@
 import UIKit
 
 struct Route {
-    private let edges:[Edge]
+    let edges:[Edge]
     let length:CGFloat
     let extra:CGFloat
-    
+
+    init(edges:[Edge], length:CGFloat) {
+        self.edges = edges
+        self.length = length
+        self.extra = 0
+    }
+
     init(edge:Edge, extra:CGFloat) {
         self.edges = [edge]
         self.length = edge.length

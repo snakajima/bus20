@@ -11,23 +11,28 @@ import UIKit
 class Shuttle {
     let hue:CGFloat
     var edge:Edge
+    var route:Route
     var baseTime = CGFloat(0)
     
     init(hue:CGFloat, index:Int, nodes:[Node]) {
         self.hue = hue
-        self.edge = nodes[index].edges[0]
+        let index1 = (index + 1 + Int(arc4random()) % (nodes.count - 1)) % nodes.count
+        self.route = Graph.shortest(nodes: nodes, start: index, end: index1)
+        self.edge = self.route.edges[0]
     }
 
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat, time:CGFloat) {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
-            let node = nodes[edge.index1]
-            for i in 0..<node.edges.count {
-                if node.edges[i].index1 == edge.index0 {
-                    let index = i + 1 + Int(arc4random()) % (node.edges.count - 1)
-                    edge = node.edges[index % node.edges.count]
-                }
+            var edges = route.edges
+            edges.removeFirst()
+            if edges.isEmpty {
+                let index1 = (edge.index1 + 1 + Int(arc4random()) % (nodes.count - 1)) % nodes.count
+                self.route = Graph.shortest(nodes: nodes, start: edge.index1, end: index1)
+            } else {
+                self.route = Route(edges: edges, length: route.length - edge.length)
             }
+            self.edge = self.route.edges[0]
         }
         let node0 = nodes[edge.index0]
         let node1 = nodes[edge.index1]
@@ -35,6 +40,12 @@ class Shuttle {
         let y = node0.y + (node1.y - node0.y) * (time - baseTime) / edge.length
         let rc = CGRect(x: x * scale - 5, y: y * scale - 5, width: 10, height: 10)
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.8).setFill()
+        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         ctx.fillEllipse(in: rc)
+
+        ctx.setLineWidth(10.0)
+        ctx.setLineCap(.round)
+        ctx.setLineJoin(.round)
+        route.render(ctx: ctx, nodes: nodes, scale: scale)
     }
 }
