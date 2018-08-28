@@ -63,8 +63,8 @@ struct Graph {
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
     
-    func shortest(start:Int, end:Int) -> Route {
-        var nodes = self.nodes
+    static func shortest(nodes:[Node], start:Int, end:Int) -> Route {
+        var nodes = nodes
         nodes[start] = Node(node:nodes[start], type:.start)
         nodes[end] = Node(node:nodes[end], type:.end)
         let endNode = nodes[end]
