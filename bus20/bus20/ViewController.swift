@@ -36,7 +36,7 @@ class ViewController: UIViewController {
         viewMain.addSubview(routeView)
         
         for i in 0..<8 {
-            shuttles.append(Shuttle(hue: 0.125 * CGFloat(i), index:i*10+i, nodes:graph.nodes))
+            shuttles.append(Shuttle(hue: 0.125 * CGFloat(i), index:i*10+i, graph:graph))
         }
 
         update()
@@ -50,7 +50,7 @@ class ViewController: UIViewController {
         let ctx = UIGraphicsGetCurrentContext()!
 
         for shuttle in shuttles {
-            shuttle.render(ctx: ctx, nodes: graph.nodes, scale: scale, time:time)
+            shuttle.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         
         ctx.setLineWidth(1.0)

@@ -10,7 +10,7 @@ import UIKit
 
 struct Graph {
     let nodes:[Node]
-    var routes:[[Route]] // shortest routes among all nodes
+    let routes:[[Route]] // shortest routes among all nodes
     
     init(w:Int, h:Int, unit:CGFloat) {
         var nodes = [Node]()
@@ -46,49 +46,12 @@ struct Graph {
         })
 
         let count = w * h
-        routes = Array(repeating:Array(repeating:Route(), count:count), count:count)
-        for index in 0..<count {
-            print(index)
-            populate(start:index)
-        }
-    }
-    
-    func populate(start:Int) {
-        var nodes = self.nodes
-        var touched = 1
-        nodes[start] = Node(node:nodes[start], type:.start)
-
-        var routes = [Route]()
-        func insert(route:Route) {
-            for i in 0..<routes.count {
-                if route.length < routes[i].length {
-                    routes.insert(route, at: i)
-                    return
-                }
-            }
-            routes.append(route)
-        }
-        func touch(edge:Edge) {
-            nodes[edge.index1] = Node(node:nodes[edge.index1], type:.used)
-            touched += 1
-        }
-        for edge in nodes[start].edges {
-            touch(edge: edge)
-            insert(route:Route(edge:edge, extra:0))
-        }
-        func propagate(route:Route) {
-            let index = route.lastIndex
-            for edge in nodes[index].edges {
-                let type = nodes[edge.index1].type
-                if type == .empty {
-                    touch(edge: edge)
-                    insert(route:Route(route: route, edge: edge, extra:0))
-                }
-            }
-        }
-        repeat {
-            propagate(route: routes.removeFirst())
-        } while touched < nodes.count
+        routes = (0..<count).map({ (index0) -> [Route] in
+            print(index0)
+            return (0..<count).map({ (index1) -> Route in
+                Graph.shortest(nodes: nodes, start: index0, end: index1)
+            })
+        })
     }
     
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
@@ -109,7 +72,7 @@ struct Graph {
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
     
-    static func shortest(nodes:[Node], start:Int, end:Int) -> Route {
+    private static func shortest(nodes:[Node], start:Int, end:Int) -> Route {
         var nodes = nodes
         nodes[start] = Node(node:nodes[start], type:.start)
         nodes[end] = Node(node:nodes[end], type:.end)
