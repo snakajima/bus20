@@ -35,8 +35,9 @@ class Rider {
         let color = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: 0.8)
         color.setStroke()
         color.setFill()
+        ctx.setLineWidth(2.0)
         ctx.drawPath(using: .stroke)
-        let rc = CGRect(x: node1.x * scale - 3.0, y: node1.y * scale - 3.0, width: 6.0, height: 6.0)
+        let rc = CGRect(x: location.x * scale - 3.0, y: location.y * scale - 3.0, width: 6.0, height: 6.0)
         ctx.fillEllipse(in: rc)
     }
 }

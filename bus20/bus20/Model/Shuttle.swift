@@ -64,7 +64,7 @@ class Shuttle {
         riders.forEach { $0.location = location }
         
         let rc = CGRect(x: location.x * scale - 5, y: location.y * scale - 5, width: 10, height: 10)
-        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.8).setFill()
+        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.5).setFill()
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         ctx.fillEllipse(in: rc)
 

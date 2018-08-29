@@ -49,13 +49,12 @@ class ViewController: UIViewController {
         
         let ctx = UIGraphicsGetCurrentContext()!
 
-        for shuttle in shuttles {
-            shuttle.render(ctx: ctx, graph: graph, scale: scale, time:time)
+        shuttles.forEach() {
+            $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         
-        ctx.setLineWidth(2.0)
-        for rider in riders {
-            rider.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+        riders.forEach() {
+            $0.render(ctx: ctx, nodes: graph.nodes, scale: scale)
         }
         
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
