@@ -71,18 +71,20 @@ class ViewController: UIViewController {
     }
 
     @IBAction func add(_ sender:UIBarButtonItem) {
-        print("add")
         let rider = Rider(graph:graph)
         riders.append(rider)
         assign(rider: rider)
     }
     
     func assign(rider:Rider) {
-        let scores = shuttles.map { (shuttle) -> CGFloat in
-            let index = shuttle.edge.from
-            return graph.route(from: index, to: rider.from).length
+        let routes = shuttles.map { (shuttle) -> Route in
+            return graph.route(from: shuttle.edge.to, to: rider.from)
         }
-        print(scores)
+        let sorted = shuttles.enumerated().sorted {
+            routes[$0.offset].length < routes[$1.offset].length
+        }
+        let shuttle = sorted[0].element
+        print(shuttle.hue)
     }
 }
 
