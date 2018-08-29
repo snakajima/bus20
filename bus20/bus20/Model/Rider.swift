@@ -9,8 +9,15 @@
 import UIKit
 
 class Rider {
+    enum NodeState {
+        case none
+        case assigned
+        case riding
+    }
     let from:Int
     let to:Int
+    var state = NodeState.none
+    
     init(graph:Graph) {
         from = Int(arc4random()) % graph.nodes.count
         to = (from + Int(arc4random()) % (graph.nodes.count-1)) % graph.nodes.count

@@ -78,11 +78,11 @@ class ViewController: UIViewController {
     }
     
     func assign(rider:Rider) {
-        /*
         let scores = shuttles.map { (shuttle) -> CGFloat in
-            return 1.0
-         }
-        */
+            let index = shuttle.edge.from
+            return graph.route(from: index, to: rider.from).length
+        }
+        print(scores)
     }
 }
 

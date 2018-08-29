@@ -45,6 +45,7 @@ struct Graph {
             })
             return Node(x: node.x, y: node.y, edges: edges)
         })
+        nodes = self.nodes
 
         // Calcurate shortest routes among all Nodes first
         routes = (0..<count).map({ (index0) -> [Route] in
