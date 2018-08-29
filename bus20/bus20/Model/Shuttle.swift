@@ -71,8 +71,11 @@ class Shuttle {
         ctx.setLineWidth(10.0)
         ctx.setLineCap(.round)
         ctx.setLineJoin(.round)
-        for route in routes {
-            route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+        
+        if assigned.count + riders.count > 0 {
+            for route in routes {
+                route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+            }
         }
     }
 }

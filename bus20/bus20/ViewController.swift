@@ -53,7 +53,7 @@ class ViewController: UIViewController {
             shuttle.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         
-        ctx.setLineWidth(1.0)
+        ctx.setLineWidth(2.0)
         for rider in riders {
             rider.render(ctx: ctx, nodes: graph.nodes, scale: scale)
         }

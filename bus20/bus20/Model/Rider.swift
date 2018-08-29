@@ -32,7 +32,7 @@ class Rider {
         ctx.move(to: CGPoint(x: location.x * scale, y: location.y * scale))
         ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
 
-        let color = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 0.8, brightness: 1.0, alpha: 0.8)
+        let color = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: 0.8)
         color.setStroke()
         color.setFill()
         ctx.drawPath(using: .stroke)
