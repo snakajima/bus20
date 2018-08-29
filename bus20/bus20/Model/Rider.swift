@@ -9,16 +9,16 @@
 import UIKit
 
 class Rider {
-    let index0:Int
-    let index1:Int
+    let from:Int
+    let to:Int
     init(graph:Graph) {
-        index0 = Int(arc4random()) % graph.nodes.count
-        index1 = (index0 + Int(arc4random()) % (graph.nodes.count-1)) % graph.nodes.count
+        from = Int(arc4random()) % graph.nodes.count
+        to = (from + Int(arc4random()) % (graph.nodes.count-1)) % graph.nodes.count
     }
 
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
-        let node0 = nodes[index0]
-        let node1 = nodes[index1]
+        let node0 = nodes[from]
+        let node1 = nodes[to]
         ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
         ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
 
