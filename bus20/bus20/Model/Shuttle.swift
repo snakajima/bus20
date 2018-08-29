@@ -35,10 +35,13 @@ class Shuttle {
                     }
                 }
                 
-                let index1 = (edge.to + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
-                self.routes = [graph.route(from: edge.to, to: index1)]
+                self.routes.remove(at:0)
+                if self.routes.isEmpty {
+                    let index1 = (edge.to + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
+                    self.routes = [graph.route(from: edge.to, to: index1)]
+                }
             } else {
-                self.routes = [Route(edges: edges, length: routes[0].length - edge.length)]
+                self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)
             }
             self.edge = self.routes[0].edges[0]
         }

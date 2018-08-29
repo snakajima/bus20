@@ -92,7 +92,8 @@ class ViewController: UIViewController {
         let route = routes[first]
         var edges = route.edges
         edges.insert(shuttle.edge, at: 0)
-        shuttle.routes = [Route(edges: edges, length: route.length + shuttle.edge.length)]
+        shuttle.routes = [Route(edges: edges, length: route.length + shuttle.edge.length),
+                          graph.route(from:rider.from, to:rider.to)]
         shuttle.assigned.append(rider)
         rider.state = .assigned
         rider.hue = shuttle.hue
