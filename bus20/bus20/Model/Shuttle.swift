@@ -11,7 +11,7 @@ import UIKit
 class Shuttle {
     let hue:CGFloat
     var edge:Edge
-    var route:Route
+    var routes:[Route]
     var baseTime = CGFloat(0)
     var assigned = [Rider]()
     var riding = [Rider]()
@@ -19,14 +19,14 @@ class Shuttle {
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
         let index1 = (index + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
-        self.route = graph.route(from: index, to: index1)
-        self.edge = self.route.edges[0]
+        self.routes = [graph.route(from: index, to: index1)]
+        self.edge = self.routes[0].edges[0]
     }
 
     func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
-            var edges = route.edges
+            var edges = routes[0].edges
             edges.removeFirst()
             if edges.isEmpty {
                 for rider in assigned {
@@ -36,11 +36,11 @@ class Shuttle {
                 }
                 
                 let index1 = (edge.to + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
-                self.route = graph.route(from: edge.to, to: index1)
+                self.routes = [graph.route(from: edge.to, to: index1)]
             } else {
-                self.route = Route(edges: edges, length: route.length - edge.length)
+                self.routes = [Route(edges: edges, length: routes[0].length - edge.length)]
             }
-            self.edge = self.route.edges[0]
+            self.edge = self.routes[0].edges[0]
         }
         let node0 = graph.nodes[edge.from]
         let node1 = graph.nodes[edge.to]
@@ -55,6 +55,8 @@ class Shuttle {
         ctx.setLineWidth(10.0)
         ctx.setLineCap(.round)
         ctx.setLineJoin(.round)
-        route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+        for route in routes {
+            route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+        }
     }
 }
