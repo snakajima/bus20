@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct Rider {
+class Rider {
     let index0:Int
     let index1:Int
     init(graph:Graph) {
