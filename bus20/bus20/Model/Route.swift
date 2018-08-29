@@ -45,7 +45,7 @@ struct Route {
         let node0 = nodes[first.from]
         ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
         for edge in edges {
-            let node = nodes[edge.index1]
+            let node = nodes[edge.to]
             ctx.addLine(to: CGPoint(x: node.x * scale, y: node.y * scale))
         }
         ctx.drawPath(using: .stroke)
@@ -53,6 +53,6 @@ struct Route {
     
     var lastIndex:Int {
         let last = edges.last!
-        return last.index1
+        return last.to
     }
 }

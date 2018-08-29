@@ -27,15 +27,15 @@ class Shuttle {
             var edges = route.edges
             edges.removeFirst()
             if edges.isEmpty {
-                let index1 = (edge.index1 + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
-                self.route = graph.route(from: edge.index1, to: index1)
+                let index1 = (edge.to + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
+                self.route = graph.route(from: edge.to, to: index1)
             } else {
                 self.route = Route(edges: edges, length: route.length - edge.length)
             }
             self.edge = self.route.edges[0]
         }
         let node0 = graph.nodes[edge.from]
-        let node1 = graph.nodes[edge.index1]
+        let node1 = graph.nodes[edge.to]
         let ratio = (time - baseTime) / edge.length
         let x = node0.x + (node1.x - node0.x) * ratio
         let y = node0.y + (node1.y - node0.y) * ratio

@@ -20,16 +20,16 @@ struct Graph {
             let x = index - y * w
             var edges = [Edge]()
             if x > 0 {
-                edges.append(Edge(from: index, index1: index-1, length: unit))
+                edges.append(Edge(from: index, to: index-1, length: unit))
             }
             if x+1 < w {
-                edges.append(Edge(from: index, index1: index+1, length: unit))
+                edges.append(Edge(from: index, to: index+1, length: unit))
             }
             if y > 0 {
-                edges.append(Edge(from: index, index1: index-w, length: unit))
+                edges.append(Edge(from: index, to: index-w, length: unit))
             }
             if y+1 < h {
-                edges.append(Edge(from: index, index1: index+w, length: unit))
+                edges.append(Edge(from: index, to: index+w, length: unit))
             }
             return Node(x: unit * (CGFloat(x + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
                         y: unit * (CGFloat(y + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
@@ -40,8 +40,8 @@ struct Graph {
         self.nodes = nodes.map({ (node) -> Node in
             let edges = node.edges.map({ (edge) -> Edge in
                 let node0 = nodes[edge.from]
-                let node1 = nodes[edge.index1]
-                return Edge(from: edge.from, index1: edge.index1, length: node0.distance(to: node1))
+                let node1 = nodes[edge.to]
+                return Edge(from: edge.from, to: edge.to, length: node0.distance(to: node1))
             })
             return Node(x: node.x, y: node.y, edges: edges)
         })
@@ -94,22 +94,22 @@ struct Graph {
             routes.append(route)
         }
         func touch(edge:Edge) {
-            if nodes[edge.index1].type == .empty {
-                nodes[edge.index1] = Node(node:nodes[edge.index1], type:.used)
+            if nodes[edge.to].type == .empty {
+                nodes[edge.to] = Node(node:nodes[edge.to], type:.used)
             }
         }
         for edge in nodes[start].edges {
             touch(edge: edge)
-            insert(route:Route(edge:edge, extra:endNode.distance(to: nodes[edge.index1])))
+            insert(route:Route(edge:edge, extra:endNode.distance(to: nodes[edge.to])))
         }
         
         func propagate(route:Route) {
             let index = route.lastIndex
             for edge in nodes[index].edges {
-                let type = nodes[edge.index1].type
+                let type = nodes[edge.to].type
                 if type == .empty || type == .end {
                     touch(edge: edge)
-                    insert(route:Route(route: route, edge: edge, extra:endNode.distance(to: nodes[edge.index1])))
+                    insert(route:Route(route: route, edge: edge, extra:endNode.distance(to: nodes[edge.to])))
                 }
             }
         }
