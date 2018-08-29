@@ -50,6 +50,7 @@ class ViewController: UIViewController {
         let ctx = UIGraphicsGetCurrentContext()!
 
         shuttles.forEach() {
+            $0.update(graph:graph, time:time)
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         

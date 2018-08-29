@@ -24,7 +24,7 @@ class Shuttle {
         self.edge = self.routes[0].edges[0]
     }
 
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
+    func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
             var edges = routes[0].edges
@@ -56,6 +56,9 @@ class Shuttle {
             }
             self.edge = self.routes[0].edges[0]
         }
+    }
+    
+    func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
         let node0 = graph.nodes[edge.from]
         let node1 = graph.nodes[edge.to]
         let ratio = (time - baseTime) / edge.length
