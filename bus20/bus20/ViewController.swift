@@ -81,13 +81,19 @@ class ViewController: UIViewController {
     }
     
     func assign(rider:Rider) {
+        let shuttles = self.shuttles.filter {
+            $0.assigned.count + $0.riders.count == 0
+        }
         let routes = shuttles.map { (shuttle) -> Route in
             return graph.route(from: shuttle.edge.to, to: rider.from)
         }
         let sorted = (0..<shuttles.count).sorted {
             routes[$0].length < routes[$1].length
         }
-        let first = sorted.first!
+        guard let first = sorted.first else {
+            print("no car is available")
+            return
+        }
         let shuttle = shuttles[first]
         let route = routes[first]
         var edges = route.edges
