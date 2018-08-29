@@ -59,6 +59,10 @@ class ViewController: UIViewController {
         }
         
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
+        
+        riders = riders.filter {
+            $0.state != .riding
+        }
 
         DispatchQueue.main.async {
             self.update()
@@ -80,11 +84,19 @@ class ViewController: UIViewController {
         let routes = shuttles.map { (shuttle) -> Route in
             return graph.route(from: shuttle.edge.to, to: rider.from)
         }
-        let sorted = shuttles.enumerated().sorted {
-            routes[$0.offset].length < routes[$1.offset].length
+        let sorted = (0..<shuttles.count).sorted {
+            routes[$0].length < routes[$1].length
         }
-        let shuttle = sorted[0].element
-        print(shuttle.hue)
+        let first = sorted.first!
+        let shuttle = shuttles[first]
+        let route = routes[first]
+        var edges = route.edges
+        edges.insert(shuttle.edge, at: 0)
+        shuttle.route = Route(edges: edges, length: route.length + shuttle.edge.length)
+        shuttle.assigned.append(rider)
+        rider.state = .assigned
+        rider.hue = shuttle.hue
+
     }
 }
 

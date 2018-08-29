@@ -13,6 +13,8 @@ class Shuttle {
     var edge:Edge
     var route:Route
     var baseTime = CGFloat(0)
+    var assigned = [Rider]()
+    var riding = [Rider]()
     
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
@@ -27,6 +29,12 @@ class Shuttle {
             var edges = route.edges
             edges.removeFirst()
             if edges.isEmpty {
+                for rider in assigned {
+                    if rider.from == edge.to {
+                        rider.state = .riding
+                    }
+                }
+                
                 let index1 = (edge.to + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
                 self.route = graph.route(from: edge.to, to: index1)
             } else {
