@@ -34,7 +34,7 @@ class Shuttle {
             }
             self.edge = self.route.edges[0]
         }
-        let node0 = graph.nodes[edge.index0]
+        let node0 = graph.nodes[edge.from]
         let node1 = graph.nodes[edge.index1]
         let ratio = (time - baseTime) / edge.length
         let x = node0.x + (node1.x - node0.x) * ratio

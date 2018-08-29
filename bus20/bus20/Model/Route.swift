@@ -42,7 +42,7 @@ struct Route {
         guard let first = edges.first else {
             return
         }
-        let node0 = nodes[first.index0]
+        let node0 = nodes[first.from]
         ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
         for edge in edges {
             let node = nodes[edge.index1]
