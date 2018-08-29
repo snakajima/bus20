@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
         
         riders = riders.filter {
-            $0.state != .riding
+            $0.state != .done
         }
 
         DispatchQueue.main.async {

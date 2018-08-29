@@ -14,7 +14,7 @@ class Shuttle {
     var routes:[Route]
     var baseTime = CGFloat(0)
     var assigned = [Rider]()
-    var riding = [Rider]()
+    var riders = [Rider]()
     
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
@@ -29,9 +29,19 @@ class Shuttle {
             var edges = routes[0].edges
             edges.removeFirst()
             if edges.isEmpty {
-                for rider in assigned {
+                // We are picking up a rider
+                for (index, rider) in assigned.enumerated() {
                     if rider.from == edge.to {
                         rider.state = .riding
+                        assigned.remove(at:index)
+                        riders.append(rider)
+                    }
+                }
+                // We are dropping a rider
+                for (index, rider) in riders.enumerated() {
+                    if rider.to == edge.to {
+                        rider.state = .done
+                        riders.remove(at:index)
                     }
                 }
                 

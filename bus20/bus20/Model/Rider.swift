@@ -13,6 +13,7 @@ class Rider {
         case none
         case assigned
         case riding
+        case done
     }
     let from:Int
     let to:Int
