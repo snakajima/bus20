@@ -17,7 +17,7 @@ class Shuttle {
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
         let index1 = (index + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
-        self.route = graph.routes[index][index1]
+        self.route = graph.route(from: index, to: index1)
         self.edge = self.route.edges[0]
     }
 
@@ -28,7 +28,7 @@ class Shuttle {
             edges.removeFirst()
             if edges.isEmpty {
                 let index1 = (edge.index1 + 1 + Int(arc4random()) % (graph.nodes.count - 1)) % graph.nodes.count
-                self.route = graph.routes[edge.index1][index1]
+                self.route = graph.route(from: edge.index1, to: index1)
             } else {
                 self.route = Route(edges: edges, length: route.length - edge.length)
             }

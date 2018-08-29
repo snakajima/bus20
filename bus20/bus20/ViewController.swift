@@ -72,7 +72,17 @@ class ViewController: UIViewController {
 
     @IBAction func add(_ sender:UIBarButtonItem) {
         print("add")
-        riders.append(Rider(graph:graph))
+        let rider = Rider(graph:graph)
+        riders.append(rider)
+        assign(rider: rider)
+    }
+    
+    func assign(rider:Rider) {
+        /*
+        let scores = shuttles.map { (shuttle) -> CGFloat in
+            return 1.0
+         }
+        */
     }
 }
 
