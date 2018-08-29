@@ -15,6 +15,7 @@ class Shuttle {
     var baseTime = CGFloat(0)
     var assigned = [Rider]()
     var riders = [Rider]()
+    var location = CGPoint.zero
     
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
@@ -58,9 +59,11 @@ class Shuttle {
         let node0 = graph.nodes[edge.from]
         let node1 = graph.nodes[edge.to]
         let ratio = (time - baseTime) / edge.length
-        let x = node0.x + (node1.x - node0.x) * ratio
-        let y = node0.y + (node1.y - node0.y) * ratio
-        let rc = CGRect(x: x * scale - 5, y: y * scale - 5, width: 10, height: 10)
+        location.x = node0.x + (node1.x - node0.x) * ratio
+        location.y = node0.y + (node1.y - node0.y) * ratio
+        riders.forEach { $0.location = location }
+        
+        let rc = CGRect(x: location.x * scale - 5, y: location.y * scale - 5, width: 10, height: 10)
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.8).setFill()
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
         ctx.fillEllipse(in: rc)

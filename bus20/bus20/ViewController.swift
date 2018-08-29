@@ -75,7 +75,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction func add(_ sender:UIBarButtonItem) {
-        let rider = Rider(graph:graph)
+        let rider = Rider(nodes:graph.nodes)
         riders.append(rider)
         assign(rider: rider)
     }

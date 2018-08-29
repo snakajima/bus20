@@ -19,16 +19,17 @@ class Rider {
     let to:Int
     var state = NodeState.none
     var hue:CGFloat = 0.0
-    
-    init(graph:Graph) {
-        from = Int(arc4random()) % graph.nodes.count
-        to = (from + Int(arc4random()) % (graph.nodes.count-1)) % graph.nodes.count
+    var location:CGPoint
+
+    init(nodes:[Node]) {
+        from = Int(arc4random()) % nodes.count
+        to = (from + Int(arc4random()) % (nodes.count-1)) % nodes.count
+        location = CGPoint(x:nodes[from].x, y:nodes[from].y)
     }
 
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
-        let node0 = nodes[from]
         let node1 = nodes[to]
-        ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
+        ctx.move(to: CGPoint(x: location.x * scale, y: location.y * scale))
         ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
 
         let color = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 0.8, brightness: 1.0, alpha: 0.8)
