@@ -9,13 +9,18 @@
 import UIKit
 
 class Shuttle {
-    let hue:CGFloat
-    var edge:Edge
-    var routes:[Route]
-    var baseTime = CGFloat(0)
-    var assigned = [Rider]()
-    var riders = [Rider]()
-    var location = CGPoint.zero
+    struct RoutePlan {
+        let score:CGFloat
+        let route:Route
+    }
+    
+    private let hue:CGFloat
+    private var edge:Edge
+    private var routes:[Route]
+    private var baseTime = CGFloat(0)
+    private var assigned = [Rider]()
+    private var riders = [Rider]()
+    private var location = CGPoint.zero
     
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
@@ -103,7 +108,4 @@ class Shuttle {
     }
 }
 
-struct RoutePlan {
-    let score:CGFloat
-    let route:Route
-}
+
