@@ -73,7 +73,6 @@ class Shuttle {
         
         let rc = CGRect(x: location.x * scale - Metrics.shuttleRadius, y: location.y * scale - Metrics.shuttleRadius, width: Metrics.shuttleRadius * 2, height: Metrics.shuttleRadius * 2)
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.shuttleAlpha).setFill()
-        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.routeAlpha).setStroke()
         ctx.fillEllipse(in: rc)
 
         ctx.setLineWidth(Metrics.routeWidth)
@@ -82,6 +81,7 @@ class Shuttle {
         
         if assigned.count + riders.count > 0 {
             for route in routes {
+                UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha:  route.count > 0 ? Metrics.routeAlpha : Metrics.routeAlphaEmpty).setStroke()
                 route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
             }
         }
@@ -90,7 +90,8 @@ class Shuttle {
     func evaluate(rider:Rider, graph:Graph) -> RoutePlan {
         // Only one rider is allowed (like a Taxi)
         let routeEdge = Route(edges:[self.edge], length:self.edge.length)
-        let routeRider = graph.route(from:rider.from, to:rider.to)
+        var routeRider = graph.route(from:rider.from, to:rider.to)
+        routeRider.count = 1
         if assigned.count + riders.count > 0 {
             var routes = self.routes
             routes.append(graph.route(from: routes.last!.to, to:rider.from))
