@@ -81,4 +81,14 @@ class Shuttle {
             }
         }
     }
+    
+    // calcurate the additional cost (c) to carry the specified rider and return 1/C
+    func evaluate(rider:Rider, graph:Graph) -> CGFloat {
+        // Only one rider is allowed (like a Taxi)
+        if assigned.count + riders.count > 0 {
+            return 0.0
+        }
+        let route = graph.route(from: edge.to, to: rider.from)
+        return 1/route.length
+    }
 }
