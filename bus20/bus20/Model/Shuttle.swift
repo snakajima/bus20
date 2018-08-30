@@ -36,20 +36,20 @@ class Shuttle {
             edges.removeFirst()
             if edges.isEmpty {
                 // We are picking up a rider
-                for (index, rider) in assigned.enumerated() {
-                    if rider.from == edge.to {
-                        rider.state = .riding
-                        assigned.remove(at:index)
-                        riders.append(rider)
+                assigned.forEach {
+                    if $0.from == edge.to {
+                        $0.state = .riding
+                        riders.append($0)
                     }
                 }
+                assigned = assigned.filter { $0.state == .assigned }
                 // We are dropping a rider
-                for (index, rider) in riders.enumerated() {
-                    if rider.to == edge.to {
-                        rider.state = .done
-                        riders.remove(at:index)
+                riders.forEach {
+                    if $0.to == edge.to {
+                        $0.state = .done
                     }
                 }
+                riders = riders.filter { $0.state == .riding }
                 
                 self.routes.remove(at:0)
                 if self.routes.isEmpty {
