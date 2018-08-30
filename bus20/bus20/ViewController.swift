@@ -35,8 +35,8 @@ class ViewController: UIViewController {
         routeView = UIImageView(frame:frame)
         viewMain.addSubview(routeView)
         
-        for i in 0..<8 {
-            shuttles.append(Shuttle(hue: 0.125 * CGFloat(i), index:i*10+i, graph:graph))
+        for i in 0..<Metrics.numberOfShuttles {
+            shuttles.append(Shuttle(hue: 1.0/CGFloat(Metrics.numberOfShuttles) * CGFloat(i), index:i*10+i, graph:graph))
         }
 
         update()
