@@ -10,7 +10,7 @@ import UIKit
 
 class Shuttle {
     struct RoutePlan {
-        let score:CGFloat
+        let cost:CGFloat
         let routes:[Route]
     }
     
@@ -96,12 +96,12 @@ class Shuttle {
             routes.append(graph.route(from: routes.last!.to, to:rider.from))
             routes.append(routeRider)
             let length = routes.reduce(0) { length, route in return length + route.length }
-            return RoutePlan(score:1/length, routes:routes)
+            return RoutePlan(cost:length, routes:routes)
         }
         let routeToRider = graph.route(from: edge.to, to: rider.from)
         let routes = [routeEdge, routeToRider, routeRider]
         let length = routes.reduce(0) { length, route in return length + route.length }
-        return RoutePlan(score:1/length, routes:routes)
+        return RoutePlan(cost:length, routes:routes)
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {

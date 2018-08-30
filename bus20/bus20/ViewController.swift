@@ -83,14 +83,10 @@ class ViewController: UIViewController {
     func assign(rider:Rider) {
         let plans = shuttles.map { $0.evaluate(rider:rider, graph:graph) }
         let sorted = (0..<shuttles.count).sorted {
-            plans[$0].score > plans[$1].score
+            plans[$0].cost < plans[$1].cost
         }
         let first = sorted[0]
 
-        if plans[first].score == 0 {
-            print("no car is available")
-            return
-        }
         shuttles[first].adapt(plan:plans[first], rider:rider, graph:graph)
     }
 }
