@@ -97,10 +97,8 @@ class Shuttle {
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
-        let route = plan.route
-        var edges = route.edges
-        edges.insert(self.edge, at: 0)
-        self.routes = [Route(edges: edges, length: route.length + self.edge.length),
+        self.routes = [Route(edges:[self.edge], length:self.edge.length),
+                       plan.route,
                        graph.route(from:rider.from, to:rider.to)]
         self.assigned.append(rider)
         rider.state = .assigned
