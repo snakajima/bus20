@@ -105,7 +105,7 @@ struct Graph {
         }
         
         func propagate(route:Route) {
-            let index = route.lastIndex
+            let index = route.to
             for edge in nodes[index].edges {
                 let type = nodes[edge.to].type
                 if type == .empty || type == .end {
@@ -118,7 +118,7 @@ struct Graph {
         repeat {
             propagate(route: routes.removeFirst())
             first = routes.first!
-        } while nodes[first.lastIndex].type != .end
+        } while nodes[first.to].type != .end
         
         return first
     }

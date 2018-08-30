@@ -50,9 +50,12 @@ struct Route {
         }
         ctx.drawPath(using: .stroke)
     }
-    
-    var lastIndex:Int {
-        let last = edges.last!
-        return last.to
+
+    var from:Int {
+        return edges.first!.from
+    }
+
+    var to:Int {
+        return edges.last!.to
     }
 }
