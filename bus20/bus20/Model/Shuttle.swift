@@ -11,7 +11,7 @@ import UIKit
 class Shuttle {
     struct RoutePlan {
         let score:CGFloat
-        let route:Route
+        let routes:[Route]
     }
     
     private let hue:CGFloat
@@ -89,17 +89,18 @@ class Shuttle {
     
     func evaluate(rider:Rider, graph:Graph) -> RoutePlan {
         // Only one rider is allowed (like a Taxi)
-        let route = graph.route(from: edge.to, to: rider.from)
+        let routeEdge = Route(edges:[self.edge], length:self.edge.length)
+        let routeRider = graph.route(from:rider.from, to:rider.to)
         if assigned.count + riders.count > 0 {
-            return RoutePlan(score:0, route:route)
+            return RoutePlan(score:0, routes:[routeRider])
         }
-        return RoutePlan(score:1/route.length, route:route)
+        let routeToRider = graph.route(from: edge.to, to: rider.from)
+        let routes = [routeEdge, routeToRider, routeRider]
+        return RoutePlan(score:1/routeToRider.length, routes:routes)
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
-        self.routes = [Route(edges:[self.edge], length:self.edge.length),
-                       plan.route,
-                       graph.route(from:rider.from, to:rider.to)]
+        self.routes = plan.routes
         self.assigned.append(rider)
         rider.state = .assigned
         rider.hue = self.hue
