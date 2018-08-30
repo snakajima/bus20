@@ -90,6 +90,17 @@ class Shuttle {
         }
         return RoutePlan(score:1/route.length, route:route)
     }
+    
+    func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
+        let route = plan.route
+        var edges = route.edges
+        edges.insert(self.edge, at: 0)
+        self.routes = [Route(edges: edges, length: route.length + self.edge.length),
+                       graph.route(from:rider.from, to:rider.to)]
+        self.assigned.append(rider)
+        rider.state = .assigned
+        rider.hue = self.hue
+    }
 }
 
 struct RoutePlan {

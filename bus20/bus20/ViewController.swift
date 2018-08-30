@@ -91,16 +91,7 @@ class ViewController: UIViewController {
             print("no car is available")
             return
         }
-        let shuttle = shuttles[first]
-        let route = plans[first].route
-        var edges = route.edges
-        edges.insert(shuttle.edge, at: 0)
-        shuttle.routes = [Route(edges: edges, length: route.length + shuttle.edge.length),
-                          graph.route(from:rider.from, to:rider.to)]
-        shuttle.assigned.append(rider)
-        rider.state = .assigned
-        rider.hue = shuttle.hue
-
+        shuttles[first].adapt(plan:plans[first], rider:rider, graph:graph)
     }
 }
 
