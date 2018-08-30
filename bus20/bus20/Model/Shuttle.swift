@@ -71,12 +71,12 @@ class Shuttle {
         location.y = node0.y + (node1.y - node0.y) * ratio
         riders.forEach { $0.location = location }
         
-        let rc = CGRect(x: location.x * scale - 5, y: location.y * scale - 5, width: 10, height: 10)
-        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.5).setFill()
-        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: 0.2).setStroke()
+        let rc = CGRect(x: location.x * scale - Metrics.shuttleRadius, y: location.y * scale - Metrics.shuttleRadius, width: Metrics.shuttleRadius * 2, height: Metrics.shuttleRadius * 2)
+        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.shuttleAlpha).setFill()
+        UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.routeAlpha).setStroke()
         ctx.fillEllipse(in: rc)
 
-        ctx.setLineWidth(10.0)
+        ctx.setLineWidth(Metrics.routeWidth)
         ctx.setLineCap(.round)
         ctx.setLineJoin(.round)
         

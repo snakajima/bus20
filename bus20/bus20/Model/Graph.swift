@@ -59,7 +59,7 @@ struct Graph {
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
         UIColor.white.setFill()
         ctx.fill(frame)
-        ctx.setLineWidth(1.0)
+        ctx.setLineWidth(Metrics.roadWidth)
         UIColor.lightGray.setFill()
         UIColor.lightGray.setStroke()
         

@@ -17,6 +17,7 @@
 		7424C0852135B38500092E37 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7424C0842135B38500092E37 /* Edge.swift */; };
 		7424C0872135B3B200092E37 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7424C0862135B3B200092E37 /* Node.swift */; };
 		7424C0892135B46A00092E37 /* Shuttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7424C0882135B46A00092E37 /* Shuttle.swift */; };
+		7489E3F52137B0F1002F5F23 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7489E3F42137B0F1002F5F23 /* Metrics.swift */; };
 		74A8DB0C2135D91900DA03D0 /* Rider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A8DB0B2135D91900DA03D0 /* Rider.swift */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +34,7 @@
 		7424C0842135B38500092E37 /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		7424C0862135B3B200092E37 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		7424C0882135B46A00092E37 /* Shuttle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shuttle.swift; sourceTree = "<group>"; };
+		7489E3F42137B0F1002F5F23 /* Metrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		74A8DB0B2135D91900DA03D0 /* Rider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -81,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				7409A41B2134730A007041B0 /* Graph.swift */,
+				7489E3F42137B0F1002F5F23 /* Metrics.swift */,
 				7424C0822135B33800092E37 /* Route.swift */,
 				7424C0842135B38500092E37 /* Edge.swift */,
 				74A8DB0B2135D91900DA03D0 /* Rider.swift */,
@@ -166,6 +169,7 @@
 				7424C0892135B46A00092E37 /* Shuttle.swift in Sources */,
 				7424C0832135B33800092E37 /* Route.swift in Sources */,
 				7409A40B21347232007041B0 /* ViewController.swift in Sources */,
+				7489E3F52137B0F1002F5F23 /* Metrics.swift in Sources */,
 				74A8DB0C2135D91900DA03D0 /* Rider.swift in Sources */,
 				7424C0872135B3B200092E37 /* Node.swift in Sources */,
 				7424C0852135B38500092E37 /* Edge.swift in Sources */,

@@ -32,12 +32,12 @@ class Rider {
         ctx.move(to: CGPoint(x: location.x * scale, y: location.y * scale))
         ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
 
-        let color = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: 0.8)
+        let color = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: Metrics.riderAlpha)
         color.setStroke()
         color.setFill()
-        ctx.setLineWidth(2.0)
+        ctx.setLineWidth(Metrics.riderPathWidth)
         ctx.drawPath(using: .stroke)
-        let rc = CGRect(x: location.x * scale - 3.0, y: location.y * scale - 3.0, width: 6.0, height: 6.0)
+        let rc = CGRect(x: location.x * scale - Metrics.riderRadius, y: location.y * scale - Metrics.riderRadius, width: Metrics.riderRadius * 2.0, height: Metrics.riderRadius * 2.0)
         ctx.fillEllipse(in: rc)
     }
 }
