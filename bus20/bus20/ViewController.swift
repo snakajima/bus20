@@ -81,18 +81,18 @@ class ViewController: UIViewController {
     }
     
     func assign(rider:Rider) {
-        let values = shuttles.map { $0.evaluate(rider:rider, graph:graph) }
+        let plans = shuttles.map { $0.evaluate(rider:rider, graph:graph) }
         let sorted = (0..<shuttles.count).sorted {
-            values[$0] > values[$1]
+            plans[$0].score > plans[$1].score
         }
         let first = sorted[0]
 
-        if values[first] == 0 {
+        if plans[first].score == 0 {
             print("no car is available")
             return
         }
         let shuttle = shuttles[first]
-        let route = graph.route(from: shuttle.edge.to, to: rider.from)
+        let route = plans[first].route
         var edges = route.edges
         edges.insert(shuttle.edge, at: 0)
         shuttle.routes = [Route(edges: edges, length: route.length + shuttle.edge.length),
