@@ -92,11 +92,16 @@ class Shuttle {
         let routeEdge = Route(edges:[self.edge], length:self.edge.length)
         let routeRider = graph.route(from:rider.from, to:rider.to)
         if assigned.count + riders.count > 0 {
-            return RoutePlan(score:0, routes:[routeRider])
+            var routes = self.routes
+            routes.append(graph.route(from: routes.last!.to, to:rider.from))
+            routes.append(routeRider)
+            let length = routes.reduce(0) { length, route in return length + route.length }
+            return RoutePlan(score:1/length, routes:routes)
         }
         let routeToRider = graph.route(from: edge.to, to: rider.from)
         let routes = [routeEdge, routeToRider, routeRider]
-        return RoutePlan(score:1/routeToRider.length, routes:routes)
+        let length = routes.reduce(0) { length, route in return length + route.length }
+        return RoutePlan(score:1/length, routes:routes)
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
