@@ -88,7 +88,8 @@ class Shuttle {
         }
     }
     
-    func evaluate(rider:Rider, graph:Graph) -> [RoutePlan] {
+    // Returns the list of possible plans to carry the specified rider
+    func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
         // Only one rider is allowed (like a Taxi)
         let routeEdge = Route(edges:[self.edge], length:self.edge.length)
         var routeRider = graph.route(from:rider.from, to:rider.to)
