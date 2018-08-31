@@ -17,4 +17,8 @@ struct Random {
     static func int(_ limit:Int) -> Int {
         return Int(drand48() * Double(large)) % limit
     }
+
+    static func float(_ limit:Double) -> Double {
+        return drand48() * limit
+    }
 }

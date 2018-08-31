@@ -22,8 +22,8 @@ class Rider {
     var location:CGPoint
 
     init(nodes:[Node]) {
-        from = Int(arc4random()) % nodes.count
-        to = (from + Int(arc4random()) % (nodes.count-1)) % nodes.count
+        from = Random.int(nodes.count) 
+        to = (from + Random.int(nodes.count-1)) % nodes.count
         location = CGPoint(x:nodes[from].x, y:nodes[from].y)
     }
 

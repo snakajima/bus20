@@ -32,8 +32,8 @@ struct Graph {
             if y+1 < h {
                 edges.append(Edge(from: index, to: index+w, length: unit))
             }
-            return Node(x: unit * (CGFloat(x + 1) + CGFloat(Random.int(24))/32.0 - 0.375),
-                        y: unit * (CGFloat(y + 1) + CGFloat(Random.int(24))/32.0 - 0.375),
+            return Node(x: unit * (CGFloat(x + 1) + CGFloat(Random.float(0.75)) - 0.375),
+                        y: unit * (CGFloat(y + 1) + CGFloat(Random.float(0.75)) - 0.375),
                         edges: edges)
         }
         
