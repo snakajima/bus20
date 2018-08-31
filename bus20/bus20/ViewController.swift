@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     
     func assign(rider:Rider) {
         let plans = shuttles
-            .map({ $0.evaluate(rider:rider, graph:graph) })
+            .flatMap({ $0.evaluate(rider:rider, graph:graph) })
             .sorted {
                 $0.cost < $1.cost
             }

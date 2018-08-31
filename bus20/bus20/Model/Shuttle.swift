@@ -88,7 +88,7 @@ class Shuttle {
         }
     }
     
-    func evaluate(rider:Rider, graph:Graph) -> RoutePlan {
+    func evaluate(rider:Rider, graph:Graph) -> [RoutePlan] {
         // Only one rider is allowed (like a Taxi)
         let routeEdge = Route(edges:[self.edge], length:self.edge.length)
         var routeRider = graph.route(from:rider.from, to:rider.to)
@@ -98,12 +98,12 @@ class Shuttle {
             routes.append(graph.route(from: routes.last!.to, to:rider.from))
             routes.append(routeRider)
             let length = routes.reduce(0) { length, route in return length + route.length }
-            return RoutePlan(shuttle:self, cost:length, routes:routes)
+            return [RoutePlan(shuttle:self, cost:length, routes:routes)]
         }
         let routeToRider = graph.route(from: edge.to, to: rider.from)
         let routes = [routeEdge, routeToRider, routeRider]
         let length = routes.reduce(0) { length, route in return length + route.length }
-        return RoutePlan(shuttle:self, cost:length, routes:routes)
+        return [RoutePlan(shuttle:self, cost:length, routes:routes)]
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
