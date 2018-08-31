@@ -81,13 +81,13 @@ class ViewController: UIViewController {
     }
     
     func assign(rider:Rider) {
-        let plans = shuttles.map { $0.evaluate(rider:rider, graph:graph) }
-        let sorted = (0..<shuttles.count).sorted {
-            plans[$0].cost < plans[$1].cost
-        }
-        let first = sorted[0]
-
-        shuttles[first].adapt(plan:plans[first], rider:rider, graph:graph)
+        let plans = shuttles
+            .map({ $0.evaluate(rider:rider, graph:graph) })
+            .sorted {
+                $0.cost < $1.cost
+            }
+        let bestPlan = plans[0]
+        bestPlan.shuttle.adapt(plan:bestPlan, rider:rider, graph:graph)
     }
 }
 
