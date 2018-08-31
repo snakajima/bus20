@@ -14,6 +14,7 @@ struct Graph {
     
     init(w:Int, h:Int, unit:CGFloat) {
         let count = w * h
+        Random.seed(0)
         // Create an array of Nodes without real lentgh in Edges
         var nodes:[Node] = (0..<count).map { (index) -> Node in
             let y = index / w
@@ -31,8 +32,8 @@ struct Graph {
             if y+1 < h {
                 edges.append(Edge(from: index, to: index+w, length: unit))
             }
-            return Node(x: unit * (CGFloat(x + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
-                        y: unit * (CGFloat(y + 1) + CGFloat(arc4random() % 24)/32.0 - 0.375),
+            return Node(x: unit * (CGFloat(x + 1) + CGFloat(Random.int(24))/32.0 - 0.375),
+                        y: unit * (CGFloat(y + 1) + CGFloat(Random.int(24))/32.0 - 0.375),
                         edges: edges)
         }
         
