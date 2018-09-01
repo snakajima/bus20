@@ -105,13 +105,17 @@ class Shuttle {
         var plans = (0..<self.routes.count).flatMap { (index0) -> [RoutePlan] in
             var routes0 = self.routes
             let route = routes0[index0]
-            routes0[index0] = graph.route(from: route.from, to: rider.from)
-            routes0.insert(graph.route(from: rider.from, to: route.to), at: index0+1)
+            if route.from != rider.from && route.to != rider.from {
+                routes0[index0] = graph.route(from: route.from, to: rider.from)
+                routes0.insert(graph.route(from: rider.from, to: route.to), at: index0+1)
+            } else { print("optimized") }
             return (index0+1..<self.routes.count).flatMap { (index1) -> [RoutePlan] in
                 var routes1 = routes0
                 let route = routes1[index1]
-                routes1[index1] = graph.route(from: route.from, to: rider.to)
-                routes1.insert(graph.route(from: rider.to, to: route.to), at: index1+1)
+                if route.from != rider.to && route.to != rider.to {
+                    routes1[index1] = graph.route(from: route.from, to: rider.to)
+                    routes1.insert(graph.route(from: rider.to, to: route.to), at: index1+1)
+                } else { print("optimized") }
                 let cost = evaluate(routes: routes1, rider: rider)
                 return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes1)]
             }
