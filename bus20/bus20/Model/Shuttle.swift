@@ -72,6 +72,9 @@ class Shuttle {
             }
             self.edge = self.routes[0].edges[0]
         }
+        for index in 0..<riders.count {
+            riders[index].offset = index
+        }
     }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {

@@ -21,6 +21,7 @@ class Rider {
     var state = NodeState.none
     var hue:CGFloat = 0.0
     var location:CGPoint
+    var offset = 0 // visual offset when riding
 
     init(nodes:[Node]) {
         from = Random.int(nodes.count) 
@@ -40,7 +41,7 @@ class Rider {
         colorFill.setFill()
         ctx.setLineWidth(Metrics.riderPathWidth)
         ctx.drawPath(using: .stroke)
-        let rc = CGRect(x: location.x * scale - Metrics.riderRadius, y: location.y * scale - Metrics.riderRadius * 6.0, width: Metrics.riderRadius * 2.0, height: Metrics.riderRadius * 6.0)
+        let rc = CGRect(x: location.x * scale + Metrics.riderRadius * (2.5 * CGFloat(offset) - 1), y: location.y * scale - Metrics.riderRadius * 6.0, width: Metrics.riderRadius * 2.0, height: Metrics.riderRadius * 6.0)
         ctx.fillEllipse(in: rc)
         ctx.draw(Rider.image, in: rc)
     }
