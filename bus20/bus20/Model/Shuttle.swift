@@ -127,7 +127,9 @@ class Shuttle {
             last = edge.to
             routes0.removeAll()
         }
-        routes0.append(graph.route(from: last, to: rider.from))
+        if last != rider.from {
+            routes0.append(graph.route(from: last, to: rider.from))
+        }
         routes0.append(graph.route(from:rider.from, to:rider.to))
         let cost = evaluate(routes: routes0, rider: rider)
         plans.append(RoutePlan(shuttle:self, cost:cost - costBase, routes:routes0))
