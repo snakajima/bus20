@@ -24,8 +24,9 @@ class Rider {
 
     init(nodes:[Node]) {
         from = Random.int(nodes.count) 
-        to = (from + Random.int(nodes.count-1)) % nodes.count
+        to = (from + 1 + Random.int(nodes.count-1)) % nodes.count
         location = CGPoint(x:nodes[from].x, y:nodes[from].y)
+        assert(to != from)
     }
 
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
