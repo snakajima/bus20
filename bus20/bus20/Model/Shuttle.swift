@@ -82,7 +82,7 @@ class Shuttle {
         
         if assigned.count + riders.count > 0 {
             for route in routes {
-                UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha:  route.count > 0 ? Metrics.routeAlpha : Metrics.routeAlphaEmpty).setStroke()
+                UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.routeAlpha).setStroke()
                 route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
             }
         }
@@ -91,8 +91,7 @@ class Shuttle {
     // Returns the list of possible plans to carry the specified rider
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
         // Only one rider is allowed (like a Taxi)
-        var routeRider = graph.route(from:rider.from, to:rider.to)
-        routeRider.count = 1
+        let routeRider = graph.route(from:rider.from, to:rider.to)
         let costBase = evaluate(routes: self.routes, rider: nil)
         if assigned.count + riders.count > 0 {
             var routes = self.routes
@@ -108,7 +107,22 @@ class Shuttle {
         let cost = evaluate(routes: routes, rider: rider)
         return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
     }
+
     
+    func plans2(rider:Rider, graph:Graph) -> [RoutePlan] {
+        let costBase = evaluate(routes: self.routes, rider: nil)
+        if assigned.count + riders.count == 0 {
+            let routeToRider = graph.route(from: edge.to, to: rider.from)
+            let routeRider = graph.route(from:rider.from, to:rider.to)
+            let routes = [routeToRider, routeRider]
+            let cost = evaluate(routes: routes, rider: rider)
+            return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
+        }
+        return (0..<self.routes.count).flatMap({ (rindex0) -> [RoutePlan] in
+            return [RoutePlan]()
+        })
+    }
+
     func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
         var assigned = self.assigned
         var riders = self.riders
@@ -141,20 +155,6 @@ class Shuttle {
         self.assigned.append(rider)
         rider.state = .assigned
         rider.hue = self.hue
-    }
-
-    func plans2(rider:Rider, graph:Graph) -> [RoutePlan] {
-        if assigned.count + riders.count == 0 {
-            let routeToRider = graph.route(from: edge.to, to: rider.from)
-            var routeRider = graph.route(from:rider.from, to:rider.to)
-            routeRider.count = 1
-            let routes = [routeToRider, routeRider]
-            let length = routes.reduce(0) { length, route in return length + route.length }
-            return [RoutePlan(shuttle:self, cost:length, routes:routes)]
-        }
-        return (0..<self.routes.count).flatMap({ (rindex0) -> [RoutePlan] in
-            return [RoutePlan]()
-        })
     }
 }
 

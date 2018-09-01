@@ -12,7 +12,6 @@ struct Route {
     let edges:[Edge]
     let length:CGFloat
     let extra:CGFloat // used only when finding a shortest route
-    var count = 0 // number of riders
 
     init() {
         edges = [Edge]()
