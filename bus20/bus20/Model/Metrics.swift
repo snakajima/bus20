@@ -11,7 +11,7 @@ import UIKit
 struct Metrics {
     static let roadWidth = CGFloat(1.0)
     static let riderPathWidth = CGFloat(1.0)
-    static let riderRadius = CGFloat(3.0)
+    static let riderRadius = CGFloat(1.5)
     static let riderAlpha = CGFloat(0.8)
     static let riderPathAlpha = CGFloat(0.4)
     static let shuttleAlpha = CGFloat(0.6)
