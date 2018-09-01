@@ -93,17 +93,47 @@ class Shuttle {
         // Only one rider is allowed (like a Taxi)
         var routeRider = graph.route(from:rider.from, to:rider.to)
         routeRider.count = 1
+        let costBase = evaluate(routes: self.routes, rider: nil)
         if assigned.count + riders.count > 0 {
             var routes = self.routes
             routes.append(graph.route(from: routes.last!.to, to:rider.from))
             routes.append(routeRider)
-            let length = routes.reduce(0) { length, route in return length + route.length }
-            return [RoutePlan(shuttle:self, cost:length, routes:routes)]
+            //let length = routes.reduce(0) { length, route in return length + route.length }
+            let cost = evaluate(routes: routes, rider: rider)
+            return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
         }
         let routeToRider = graph.route(from: edge.to, to: rider.from)
         let routes = [routeToRider, routeRider]
-        let length = routes.reduce(0) { length, route in return length + route.length }
-        return [RoutePlan(shuttle:self, cost:length, routes:routes)]
+        //let length = routes.reduce(0) { length, route in return length + route.length }
+        let cost = evaluate(routes: routes, rider: rider)
+        return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
+    }
+    
+    func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
+        var assigned = self.assigned
+        var riders = self.riders
+        if let rider = rider {
+            assigned.append(rider)
+        }
+        
+        var cost = CGFloat(0)
+        riders = riders.filter({ (rider) -> Bool in
+            return routes[0].from != rider.to
+        })
+        routes.forEach { (route) in
+            assigned = assigned.filter({ (rider) -> Bool in
+                if route.from != rider.from {
+                    return true
+                }
+                riders.append(rider)
+                return false
+            })
+            cost += CGFloat(assigned.count + riders.count) * route.length
+            riders = riders.filter({ (rider) -> Bool in
+                return route.to != rider.to
+            })
+        }
+        return cost
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
@@ -114,12 +144,11 @@ class Shuttle {
     }
 
     func plans2(rider:Rider, graph:Graph) -> [RoutePlan] {
-        let routeEdge = Route(edges:[self.edge], length:self.edge.length)
         if assigned.count + riders.count == 0 {
             let routeToRider = graph.route(from: edge.to, to: rider.from)
             var routeRider = graph.route(from:rider.from, to:rider.to)
             routeRider.count = 1
-            let routes = [routeEdge, routeToRider, routeRider]
+            let routes = [routeToRider, routeRider]
             let length = routes.reduce(0) { length, route in return length + route.length }
             return [RoutePlan(shuttle:self, cost:length, routes:routes)]
         }
