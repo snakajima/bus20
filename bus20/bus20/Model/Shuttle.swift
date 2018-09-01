@@ -91,7 +91,6 @@ class Shuttle {
     // Returns the list of possible plans to carry the specified rider
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
         // Only one rider is allowed (like a Taxi)
-        let routeEdge = Route(edges:[self.edge], length:self.edge.length)
         var routeRider = graph.route(from:rider.from, to:rider.to)
         routeRider.count = 1
         if assigned.count + riders.count > 0 {
@@ -102,7 +101,7 @@ class Shuttle {
             return [RoutePlan(shuttle:self, cost:length, routes:routes)]
         }
         let routeToRider = graph.route(from: edge.to, to: rider.from)
-        let routes = [routeEdge, routeToRider, routeRider]
+        let routes = [routeToRider, routeRider]
         let length = routes.reduce(0) { length, route in return length + route.length }
         return [RoutePlan(shuttle:self, cost:length, routes:routes)]
     }
@@ -112,6 +111,21 @@ class Shuttle {
         self.assigned.append(rider)
         rider.state = .assigned
         rider.hue = self.hue
+    }
+
+    func plans2(rider:Rider, graph:Graph) -> [RoutePlan] {
+        let routeEdge = Route(edges:[self.edge], length:self.edge.length)
+        if assigned.count + riders.count == 0 {
+            let routeToRider = graph.route(from: edge.to, to: rider.from)
+            var routeRider = graph.route(from:rider.from, to:rider.to)
+            routeRider.count = 1
+            let routes = [routeEdge, routeToRider, routeRider]
+            let length = routes.reduce(0) { length, route in return length + route.length }
+            return [RoutePlan(shuttle:self, cost:length, routes:routes)]
+        }
+        return (0..<self.routes.count).flatMap({ (rindex0) -> [RoutePlan] in
+            return [RoutePlan]()
+        })
     }
 }
 
