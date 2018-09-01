@@ -100,26 +100,6 @@ class Shuttle {
     
     // Returns the list of possible plans to carry the specified rider
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
-        // Only one rider is allowed (like a Taxi)
-        let routeRider = graph.route(from:rider.from, to:rider.to)
-        let costBase = evaluate(routes: self.routes, rider: nil)
-        if assigned.count + riders.count > 0 {
-            var routes = self.routes
-            routes.append(graph.route(from: routes.last!.to, to:rider.from))
-            routes.append(routeRider)
-            //let length = routes.reduce(0) { length, route in return length + route.length }
-            let cost = evaluate(routes: routes, rider: rider)
-            return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
-        }
-        let routeToRider = graph.route(from: edge.to, to: rider.from)
-        let routes = [routeToRider, routeRider]
-        //let length = routes.reduce(0) { length, route in return length + route.length }
-        let cost = evaluate(routes: routes, rider: rider)
-        return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
-    }
-
-    
-    func plans2(rider:Rider, graph:Graph) -> [RoutePlan] {
         let costBase = evaluate(routes: self.routes, rider: nil)
         // All possible insertion cases
         var plans = (0..<self.routes.count).flatMap { (index0) -> [RoutePlan] in
@@ -183,7 +163,7 @@ class Shuttle {
             route.from
         }
         indeces.append(plan.routes.last!.to)
-        print([rider.from, "->", rider.to], indeces)
+        print([rider.from, rider.to], indeces)
         
         self.routes = plan.routes
         self.assigned.append(rider)
