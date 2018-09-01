@@ -133,7 +133,7 @@ class Shuttle {
             let route = routes[index0]
             routes0[index0] = graph.route(from: route.from, to: rider.from)
             routes0.insert(graph.route(from: rider.from, to: route.to), at: index0+1)
-            return (index0..<self.routes.count).flatMap { (index1) -> [RoutePlan] in
+            return (index0+1..<self.routes.count).flatMap { (index1) -> [RoutePlan] in
                 var routes1 = routes0
                 let route = routes1[index1]
                 routes1[index1] = graph.route(from: route.from, to: rider.to)
@@ -172,6 +172,13 @@ class Shuttle {
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
+        // debug code
+        var indeces = plan.routes.map { (route) -> Int in
+            route.from
+        }
+        indeces.append(plan.routes.last!.to)
+        print([rider.from, "->", rider.to], indeces)
+        
         self.routes = plan.routes
         self.assigned.append(rider)
         rider.state = .assigned
