@@ -118,9 +118,20 @@ class Shuttle {
             let cost = evaluate(routes: routes, rider: rider)
             return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
         }
-        return (0..<self.routes.count).flatMap({ (rindex0) -> [RoutePlan] in
-            return [RoutePlan]()
-        })
+        return (0..<self.routes.count).flatMap { (index0) -> [RoutePlan] in
+            var routes0 = self.routes
+            let route = routes[index0]
+            routes0[index0] = graph.route(from: route.from, to: rider.from)
+            routes0.insert(graph.route(from: rider.from, to: route.to), at: index0+1)
+            return (index0..<self.routes.count).flatMap { (index1) -> [RoutePlan] in
+                var routes1 = routes0
+                let route = routes1[index1]
+                routes1[index1] = graph.route(from: route.from, to: rider.to)
+                routes1.insert(graph.route(from: rider.to, to: route.to), at: index1+1)
+                let cost = evaluate(routes: routes1, rider: rider)
+                return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes1)]
+            }
+        }
     }
 
     func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
