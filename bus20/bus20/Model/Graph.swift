@@ -76,6 +76,7 @@ struct Graph {
     }
     
     func route(from:Int, to:Int) -> Route {
+        assert(from != to)
         return routes[from][to]
     }
     
