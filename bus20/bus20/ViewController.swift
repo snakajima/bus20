@@ -82,7 +82,7 @@ class ViewController: UIViewController {
     
     func assign(rider:Rider) {
         let plans = shuttles
-            .flatMap({ $0.plans(rider:rider, graph:graph) })
+            .flatMap({ $0.plans2(rider:rider, graph:graph) })
             .sorted { $0.cost < $1.cost }
         let bestPlan = plans[0]
         bestPlan.shuttle.adapt(plan:bestPlan, rider:rider, graph:graph)

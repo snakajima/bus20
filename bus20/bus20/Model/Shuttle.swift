@@ -121,16 +121,10 @@ class Shuttle {
     
     func plans2(rider:Rider, graph:Graph) -> [RoutePlan] {
         let costBase = evaluate(routes: self.routes, rider: nil)
-        if assigned.count + riders.count == 0 {
-            let routeToRider = graph.route(from: edge.to, to: rider.from)
-            let routeRider = graph.route(from:rider.from, to:rider.to)
-            let routes = [routeToRider, routeRider]
-            let cost = evaluate(routes: routes, rider: rider)
-            return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes)]
-        }
-        return (0..<self.routes.count).flatMap { (index0) -> [RoutePlan] in
+        // All possible insertion cases
+        var plans = (0..<self.routes.count).flatMap { (index0) -> [RoutePlan] in
             var routes0 = self.routes
-            let route = routes[index0]
+            let route = routes0[index0]
             routes0[index0] = graph.route(from: route.from, to: rider.from)
             routes0.insert(graph.route(from: rider.from, to: route.to), at: index0+1)
             return (index0+1..<self.routes.count).flatMap { (index1) -> [RoutePlan] in
@@ -142,6 +136,18 @@ class Shuttle {
                 return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes1)]
             }
         }
+        // Append case
+        var routes0 = self.routes
+        var last = self.routes.last!.to
+        if (assigned.count + riders.count == 0) {
+            last = edge.to
+            routes0.removeAll()
+        }
+        routes0.append(graph.route(from: last, to: rider.from))
+        routes0.append(graph.route(from:rider.from, to:rider.to))
+        let cost = evaluate(routes: routes0, rider: rider)
+        plans.append(RoutePlan(shuttle:self, cost:cost - costBase, routes:routes0))
+        return plans
     }
 
     func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
