@@ -59,3 +59,13 @@ struct Route {
         return edges.last!.to
     }
 }
+
+extension Route: CustomStringConvertible {
+    var description: String {
+        var array = edges.map { (edge) -> Int in
+            return edge.from
+        }
+        array.append(self.to)
+        return array.description
+    }
+}
