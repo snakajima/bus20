@@ -96,7 +96,7 @@ class ViewController: UIViewController {
     
     @IBAction func test(_ sender:UIBarButtonItem) {
         start(count: 1)
-        Random.seed(4)
+        Random.nextSeed() // 4
         addRider()
         addRider()
         addRider()
