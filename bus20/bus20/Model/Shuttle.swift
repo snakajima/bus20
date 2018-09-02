@@ -37,6 +37,7 @@ class Shuttle {
         self.hue = hue
         let index1 = (index + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
         self.routes = [graph.route(from: index, to: index1)]
+        print(self.routes[0])
         self.edge = self.routes[0].edges[0]
     }
 
@@ -128,7 +129,7 @@ class Shuttle {
         var last = self.routes.last!.to
         if (assigned.count + riders.count == 0) {
             last = edge.to
-            routes0.removeAll()
+            routes0 = [Route(edge: edge, extra: 0)]
         }
         if last != rider.from {
             routes0.append(graph.route(from: last, to: rider.from))
@@ -172,13 +173,11 @@ class Shuttle {
             route.from
         }
         indeces.append(plan.routes.last!.to)
-        print([rider.from, rider.to], indeces)
-        /*
+        print([rider.from, rider.to], "→", indeces)
         plan.routes.forEach { (route) in
-            print(route)
+            print(" ", route)
         }
-        */
-        
+
         self.routes = plan.routes
         self.assigned.append(rider)
         rider.state = .assigned
