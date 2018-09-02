@@ -14,7 +14,7 @@ class ViewController: UIViewController {
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
     var shuttles = [Shuttle]()
-    let start = Date()
+    var start = Date()
     var riders = [Rider]()
     
     override func viewDidLoad() {
@@ -35,11 +35,18 @@ class ViewController: UIViewController {
         routeView = UIImageView(frame:frame)
         viewMain.addSubview(routeView)
         
-        for i in 0..<Metrics.numberOfShuttles {
-            shuttles.append(Shuttle(hue: 1.0/CGFloat(Metrics.numberOfShuttles) * CGFloat(i), index:i*10+i, graph:graph))
-        }
+        start(count: Metrics.numberOfShuttles)
 
         update()
+    }
+    
+    func start(count:Int) {
+        shuttles = [Shuttle]()
+        start = Date()
+        riders = [Rider]()
+        for i in 0..<count {
+            shuttles.append(Shuttle(hue: 1.0/CGFloat(count) * CGFloat(i), index:i*10+i, graph:graph))
+        }
     }
     
     func update() {
@@ -75,9 +82,21 @@ class ViewController: UIViewController {
     }
 
     @IBAction func add(_ sender:UIBarButtonItem) {
+        addRider()
+    }
+    
+    func addRider() {
         let rider = Rider(nodes:graph.nodes)
         riders.append(rider)
         assign(rider: rider)
+    }
+    
+    @IBAction func test(_ sender:UIBarButtonItem) {
+        start(count: 1)
+        Random.seed(1)
+        addRider()
+        addRider()
+        addRider()
     }
     
     func assign(rider:Rider) {

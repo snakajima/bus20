@@ -33,6 +33,12 @@
                                             <action selector="add:" destination="BYZ-38-t0r" id="7UF-v4-fGM"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="Ulg-o9-0SP"/>
+                                    <barButtonItem title="Test" id="ZAQ-6Y-0HD">
+                                        <connections>
+                                            <action selector="test:" destination="BYZ-38-t0r" id="Gic-8m-5Jj"/>
+                                        </connections>
+                                    </barButtonItem>
                                 </items>
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWg-4h-fAv">
