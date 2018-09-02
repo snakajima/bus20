@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     var start = Date()
     var riders = [Rider]()
     var stopped = false
+    var speedMultiple = Metrics.speedMultiple
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,7 +52,7 @@ class ViewController: UIViewController {
     }
     
     func update() {
-        let time = CGFloat(Date().timeIntervalSince(start)) * Metrics.speedMultiple
+        let time = CGFloat(Date().timeIntervalSince(start)) * speedMultiple
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
@@ -95,8 +96,10 @@ class ViewController: UIViewController {
     }
     
     @IBAction func test(_ sender:UIBarButtonItem) {
+        //speedMultiple = 60.0
         start(count: 1)
-        Random.nextSeed() // 4
+        Random.seed(40) // 4, 40
+        print("Seed=", Random.seed)
         addRider()
         addRider()
         addRider()
