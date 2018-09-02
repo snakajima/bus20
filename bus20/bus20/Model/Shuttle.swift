@@ -173,9 +173,11 @@ class Shuttle {
         }
         indeces.append(plan.routes.last!.to)
         print([rider.from, rider.to], indeces)
+        /*
         plan.routes.forEach { (route) in
             print(route)
         }
+        */
         
         self.routes = plan.routes
         self.assigned.append(rider)

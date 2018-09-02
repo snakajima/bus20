@@ -37,8 +37,6 @@ class ViewController: UIViewController {
         viewMain.addSubview(routeView)
         
         start(count: Metrics.numberOfShuttles)
-
-        update()
     }
     
     func start(count:Int) {
@@ -49,6 +47,7 @@ class ViewController: UIViewController {
         for i in 0..<count {
             shuttles.append(Shuttle(hue: 1.0/CGFloat(count) * CGFloat(i), index:i*10+i, graph:graph))
         }
+        update()
     }
     
     func update() {
@@ -101,6 +100,9 @@ class ViewController: UIViewController {
         addRider()
         addRider()
         addRider()
+        addRider()
+        //addRider()
+        //addRider()
     }
     
     @IBAction func stop(_ sender:UIBarButtonItem) {
