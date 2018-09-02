@@ -34,6 +34,12 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ulg-o9-0SP"/>
+                                    <barButtonItem systemItem="stop" id="M2s-z2-Nra">
+                                        <connections>
+                                            <action selector="stop:" destination="BYZ-38-t0r" id="AJD-Ef-3tR"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="wmw-Sa-qJi"/>
                                     <barButtonItem title="Test" id="ZAQ-6Y-0HD">
                                         <connections>
                                             <action selector="test:" destination="BYZ-38-t0r" id="Gic-8m-5Jj"/>

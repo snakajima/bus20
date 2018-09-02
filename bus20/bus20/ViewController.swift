@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     var shuttles = [Shuttle]()
     var start = Date()
     var riders = [Rider]()
+    var stopped = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,7 @@ class ViewController: UIViewController {
     }
     
     func start(count:Int) {
+        stopped = false
         shuttles = [Shuttle]()
         start = Date()
         riders = [Rider]()
@@ -72,7 +74,9 @@ class ViewController: UIViewController {
         }
 
         DispatchQueue.main.async {
-            self.update()
+            if !self.stopped {
+                self.update()
+            }
         }
     }
 
@@ -97,6 +101,10 @@ class ViewController: UIViewController {
         addRider()
         addRider()
         addRider()
+    }
+    
+    @IBAction func stop(_ sender:UIBarButtonItem) {
+        stopped = true
     }
     
     func assign(rider:Rider) {
