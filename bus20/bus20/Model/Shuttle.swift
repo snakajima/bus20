@@ -112,7 +112,15 @@ class Shuttle {
             if route.from != rider.from && route.to != rider.from {
                 routes0[index0] = graph.route(from: route.from, to: rider.from)
                 routes0.insert(graph.route(from: rider.from, to: route.to), at: index0+1)
-            } else { print("optimized") }
+            } else {
+                // One of the nodes happened to match the rider's starting node.
+                print("optimized")
+                if index0 == 0 {
+                    // Corner case: The shuttle has just left the node
+                    print("skipped")
+                    return[]
+                }
+            }
             return (index0+1..<self.routes.count).flatMap { (index1) -> [RoutePlan] in
                 var routes1 = routes0
                 let route = routes1[index1]
