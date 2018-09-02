@@ -37,6 +37,7 @@ class ViewController: UIViewController {
         routeView = UIImageView(frame:frame)
         viewMain.addSubview(routeView)
         
+        Random.seed(0)
         start(count: Metrics.numberOfShuttles)
     }
     
@@ -96,10 +97,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func test(_ sender:UIBarButtonItem) {
-        //speedMultiple = 60.0
-        start(count: 1)
-        Random.seed(40) // 4, 40
+        //speedMultiple = 30.0
+        Random.seed(110) // 4, 40, 110
         print("Seed=", Random.seed)
+        
+        start(count: 1)
         addRider()
         addRider()
         addRider()

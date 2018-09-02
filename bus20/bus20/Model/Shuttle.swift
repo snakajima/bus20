@@ -45,6 +45,7 @@ class Shuttle {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
             var edges = routes[0].edges
+            //assert(edges[0].to == edge.to && edges[0].from == edge.from)
             edges.removeFirst()
             if edges.isEmpty {
                 // We are picking up a rider
@@ -145,6 +146,15 @@ class Shuttle {
         routes0.append(graph.route(from:rider.from, to:rider.to))
         let cost = evaluate(routes: routes0, rider: rider)
         plans.append(RoutePlan(shuttle:self, cost:cost - costBase, routes:routes0))
+        
+        /*
+        // debug code
+        plans.forEach { (plan) in
+            let edges = plan.routes[0].edges
+            assert(edges[0].to == edge.to && edges[0].from == edge.from)
+        }
+        */
+        
         return plans
     }
 
