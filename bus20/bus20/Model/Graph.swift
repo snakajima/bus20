@@ -55,10 +55,6 @@ struct Graph {
                 Graph.shortest(nodes: nodes, start: index0, end: index1)
             })
         })
-        
-        //57, 47
-        print(self.route(from: 57, to: 47))
-        print(Graph.shortest(nodes: nodes, start: 57, end: 47))
     }
     
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
@@ -120,13 +116,11 @@ struct Graph {
                 }
             }
         }
-        var first:Route!
-        repeat {
+        while let first = routes.first, nodes[first.to].type != .end {
             propagate(route: routes.removeFirst())
-            first = routes.first!
-        } while nodes[first.to].type != .end
+        }
         
-        return first
+        return routes.first!
     }
 }
 
