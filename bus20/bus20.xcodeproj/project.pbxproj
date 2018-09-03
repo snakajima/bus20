@@ -40,6 +40,8 @@
 		74424DB72139A79E003A4E82 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
 		74840FC2213B40CD00C84BC8 /* rider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rider.png; sourceTree = "<group>"; };
 		74840FC4213CF3BF00C84BC8 /* RoutePlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePlan.swift; sourceTree = "<group>"; };
+		74840FC6213DE51700C84BC8 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE.txt; path = ../../LICENSE.txt; sourceTree = "<group>"; };
+		74840FC7213DE59200C84BC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
 		7489E3F42137B0F1002F5F23 /* Metrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		74A8DB0B2135D91900DA03D0 /* Rider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +84,8 @@
 				7409A40F21347232007041B0 /* Assets.xcassets */,
 				7409A41121347232007041B0 /* LaunchScreen.storyboard */,
 				7409A41421347232007041B0 /* Info.plist */,
+				74840FC6213DE51700C84BC8 /* LICENSE.txt */,
+				74840FC7213DE59200C84BC8 /* README.md */,
 			);
 			path = bus20;
 			sourceTree = "<group>";
