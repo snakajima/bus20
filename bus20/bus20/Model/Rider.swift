@@ -27,14 +27,14 @@ class Rider {
     init(nodes:[Node]) {
         from = Random.int(nodes.count) 
         to = (from + 1 + Random.int(nodes.count-1)) % nodes.count
-        location = CGPoint(x:nodes[from].x, y:nodes[from].y)
+        location = nodes[from].location
         assert(to != from)
     }
 
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
         let node1 = nodes[to]
         ctx.move(to: CGPoint(x: location.x * scale, y: location.y * scale))
-        ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
+        ctx.addLine(to: CGPoint(x: node1.location.x * scale, y: node1.location.y * scale))
 
         let colorFill = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: Metrics.riderAlpha)
         let colorStroke = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: Metrics.riderPathAlpha)

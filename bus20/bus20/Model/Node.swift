@@ -17,33 +17,30 @@ struct Node {
         case used
     }
     
-    let x:CGFloat
-    let y:CGFloat
+    let location:CGPoint
     let edges:[Edge]
     let type:NodeType
     
-    init(x:CGFloat, y:CGFloat, edges:[Edge]) {
-        self.x = x
-        self.y = y
+    init(location:CGPoint, edges:[Edge]) {
+        self.location = location
         self.edges = edges
         self.type = .empty
     }
     
     init(node:Node, type:NodeType) {
-        self.x = node.x
-        self.y = node.y
+        self.location = node.location
         self.edges = node.edges
         self.type = type
     }
     
     func distance(to:Node) -> CGFloat {
-        let dx = to.x - self.x
-        let dy = to.y - self.y
+        let dx = to.location.x - self.location.x
+        let dy = to.location.y - self.location.y
         return sqrt(dx * dx + dy * dy)
     }
     
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
-        let rc = CGRect(x: x * scale - 2, y: y * scale - 2, width: 4, height: 4)
+        let rc = CGRect(x: location.x * scale - 2, y: location.y * scale - 2, width: 4, height: 4)
         ctx.fillEllipse(in: rc)
         
         ctx.beginPath()

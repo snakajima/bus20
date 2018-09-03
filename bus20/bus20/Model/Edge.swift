@@ -23,7 +23,7 @@ struct Edge {
     func addPath(ctx:CGContext, nodes:[Node], scale:CGFloat) {
         let node0 = nodes[from]
         let node1 = nodes[to]
-        ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
-        ctx.addLine(to: CGPoint(x: node1.x * scale, y: node1.y * scale))
+        ctx.move(to: CGPoint(x: node0.location.x * scale, y: node0.location.y * scale))
+        ctx.addLine(to: CGPoint(x: node1.location.x * scale, y: node1.location.y * scale))
     }
 }

@@ -44,10 +44,10 @@ struct Route {
             return
         }
         let node0 = nodes[first.from]
-        ctx.move(to: CGPoint(x: node0.x * scale, y: node0.y * scale))
+        ctx.move(to: CGPoint(x: node0.location.x * scale, y: node0.location.y * scale))
         for edge in edges {
             let node = nodes[edge.to]
-            ctx.addLine(to: CGPoint(x: node.x * scale, y: node.y * scale))
+            ctx.addLine(to: CGPoint(x: node.location.x * scale, y: node.location.y * scale))
         }
         ctx.drawPath(using: .stroke)
     }

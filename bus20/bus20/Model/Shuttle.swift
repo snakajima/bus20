@@ -74,8 +74,8 @@ class Shuttle {
         let node0 = graph.nodes[edge.from]
         let node1 = graph.nodes[edge.to]
         let ratio = (time - baseTime) / edge.length
-        location.x = node0.x + (node1.x - node0.x) * ratio
-        location.y = node0.y + (node1.y - node0.y) * ratio
+        location.x = node0.location.x + (node1.location.x - node0.location.x) * ratio
+        location.y = node0.location.y + (node1.location.y - node0.location.y) * ratio
         riders.forEach { $0.location = location }
 
         // This is only for display (UI)

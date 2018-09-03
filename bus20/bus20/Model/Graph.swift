@@ -32,8 +32,8 @@ struct Graph {
             if y+1 < h {
                 edges.append(Edge(from: index, to: index+w, length: unit))
             }
-            return Node(x: unit * (CGFloat(x + 1) + CGFloat(Random.float(0.75)) - 0.375),
-                        y: unit * (CGFloat(y + 1) + CGFloat(Random.float(0.75)) - 0.375),
+            return Node(location:CGPoint(x: unit * (CGFloat(x + 1) + CGFloat(Random.float(0.75)) - 0.375),
+                        y: unit * (CGFloat(y + 1) + CGFloat(Random.float(0.75)) - 0.375)),
                         edges: edges)
         }
         
@@ -44,7 +44,7 @@ struct Graph {
                 let node1 = nodes[edge.to]
                 return Edge(from: edge.from, to: edge.to, length: node0.distance(to: node1))
             })
-            return Node(x: node.x, y: node.y, edges: edges)
+            return Node(location: node.location, edges: edges)
         })
         nodes = self.nodes
 
@@ -70,8 +70,8 @@ struct Graph {
     }
     
     var bounds:CGRect {
-        let xs = nodes.map { $0.x }
-        let ys = nodes.map { $0.y }
+        let xs = nodes.map { $0.location.x }
+        let ys = nodes.map { $0.location.y }
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
     
