@@ -8,23 +8,8 @@
 
 import UIKit
 
+// A Shuttle represents a shuttle bus who can carry multiple riders.
 class Shuttle {
-    struct RoutePlan {
-        let shuttle:Shuttle
-        let cost:CGFloat
-        let routes:[Route]
-        
-        init(shuttle:Shuttle, cost:CGFloat, routes:[Route]) {
-            self.shuttle = shuttle
-            self.cost = cost
-            self.routes = routes
-            // Validation for debugging purpose
-            for index in 0..<routes.count-1 {
-                assert(routes[index].to == routes[index+1].from)
-            }
-        }
-    }
-    
     private let hue:CGFloat
     private var edge:Edge
     private var routes:[Route]

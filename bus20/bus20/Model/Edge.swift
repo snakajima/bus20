@@ -6,12 +6,14 @@
 //  Copyright © 2018 SATOSHI NAKAJIMA. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
+// An Edge represents a road (one directional) from one node to another
 struct Edge {
     let from:Int
     let to:Int
     var length:CGFloat
+    
     init(from:Int, to:Int, length:CGFloat=1.0) {
         self.from = from
         self.to = to

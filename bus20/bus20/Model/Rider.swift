@@ -8,6 +8,7 @@
 
 import UIKit
 
+// A Rider represents a person who needs to move from one node to another. 
 class Rider {
     static let image = UIImage(named: "rider.png")!.cgImage!
     enum NodeState {

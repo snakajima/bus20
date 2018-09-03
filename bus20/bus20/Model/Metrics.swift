@@ -6,7 +6,7 @@
 //  Copyright © 2018 SATOSHI NAKAJIMA. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
 struct Metrics {
     static let roadWidth = CGFloat(1.0)

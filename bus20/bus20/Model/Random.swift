@@ -8,7 +8,8 @@
 
 import Foundation
 
-struct Random {
+// Random is a helper class for random numbers
+class Random {
     static let large = 1 << 31
     static var seed = 0
     static func seed(_ seed:Int) {

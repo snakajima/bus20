@@ -6,8 +6,9 @@
 //  Copyright © 2018 SATOSHI NAKAJIMA. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
+// A Route represents a section of trip from one node to another consisting of connected edges.
 struct Route {
     let edges:[Edge]
     let length:CGFloat

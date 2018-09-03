@@ -6,8 +6,9 @@
 //  Copyright © 2018 SATOSHI NAKAJIMA. All rights reserved.
 //
 
-import UIKit
+import CoreGraphics
 
+// A Node represents a location where shuttles can pick up or drop riders
 struct Node {
     enum NodeType {
         case empty
