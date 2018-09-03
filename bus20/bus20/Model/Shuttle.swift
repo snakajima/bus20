@@ -111,9 +111,15 @@ class Shuttle {
     // Returns the list of possible plans to carry the specified rider
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
         var routes = self.routes
+        if let route = routes.first, route.edges.count > 1 {
+            let edge = route.edges[0]
+            routes[0] = graph.route(from: edge.from, to: edge.to)
+            routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
+        }
+ 
         let costBase = evaluate(routes: routes, rider: nil)
         // All possible insertion cases
-        var plans = (0..<routes.count).flatMap { (index0) -> [RoutePlan] in
+        var plans = (1..<routes.count).flatMap { (index0) -> [RoutePlan] in
             var routes0 = routes
             let route = routes0[index0]
             if route.from != rider.from && route.to != rider.from {
@@ -196,7 +202,8 @@ class Shuttle {
         }
 
         self.routes = plan.routes
-        self.edge = self.routes[0].edges[0]
+        // HACK: To work around a bug
+        //self.edge = self.routes[0].edges[0]
         self.assigned.append(rider)
         rider.state = .assigned
         rider.hue = self.hue
