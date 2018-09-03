@@ -40,6 +40,11 @@ class Shuttle {
         print(self.routes[0])
         self.edge = self.routes[0].edges[0]
     }
+    
+    // for debugging
+    deinit {
+        print("Shuttle:deinit")
+    }
 
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > edge.length {
@@ -105,10 +110,11 @@ class Shuttle {
     
     // Returns the list of possible plans to carry the specified rider
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
-        let costBase = evaluate(routes: self.routes, rider: nil)
+        var routes = self.routes
+        let costBase = evaluate(routes: routes, rider: nil)
         // All possible insertion cases
-        var plans = (0..<self.routes.count).flatMap { (index0) -> [RoutePlan] in
-            var routes0 = self.routes
+        var plans = (0..<routes.count).flatMap { (index0) -> [RoutePlan] in
+            var routes0 = routes
             let route = routes0[index0]
             if route.from != rider.from && route.to != rider.from {
                 routes0[index0] = graph.route(from: route.from, to: rider.from)
@@ -122,7 +128,7 @@ class Shuttle {
                     return[]
                 }
             }
-            return (index0+1..<self.routes.count).flatMap { (index1) -> [RoutePlan] in
+            return (index0+1..<routes.count).flatMap { (index1) -> [RoutePlan] in
                 var routes1 = routes0
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
@@ -133,19 +139,20 @@ class Shuttle {
                 return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes1)]
             }
         }
+        
         // Append case
-        var routes0 = self.routes
         var last = self.routes.last!.to
         if (assigned.count + riders.count == 0) {
             last = edge.to
-            routes0 = [Route(edge: edge, extra: 0)]
+            routes = [Route(edge: edge, extra: 0)]
         }
         if last != rider.from {
-            routes0.append(graph.route(from: last, to: rider.from))
+            routes.append(graph.route(from: last, to: rider.from))
         }
-        routes0.append(graph.route(from:rider.from, to:rider.to))
-        let cost = evaluate(routes: routes0, rider: rider)
-        plans.append(RoutePlan(shuttle:self, cost:cost - costBase, routes:routes0))
+        routes.append(graph.route(from:rider.from, to:rider.to))
+        let cost = evaluate(routes: routes, rider: rider)
+
+        plans.append(RoutePlan(shuttle:self, cost:cost - costBase, routes:routes))
         
         return plans
     }
