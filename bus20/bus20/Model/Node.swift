@@ -17,9 +17,9 @@ struct Node {
         case used
     }
     
-    let location:CGPoint
-    let edges:[Edge]
-    let type:NodeType
+    let location:CGPoint // The location
+    let edges:[Edge]     // Edges started from this node (one direction)
+    let type:NodeType    // Node type. Used only when we are searching a shortest route
     
     init(location:CGPoint, edges:[Edge]) {
         self.location = location

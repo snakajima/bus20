@@ -20,6 +20,7 @@ struct Edge {
         self.length = length
     }
     
+    // For rendering
     func addPath(ctx:CGContext, nodes:[Node], scale:CGFloat) {
         let node0 = nodes[from]
         let node1 = nodes[to]

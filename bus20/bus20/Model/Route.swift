@@ -13,6 +13,13 @@ struct Route {
     let edges:[Edge]
     let length:CGFloat
     let extra:CGFloat // used only when finding a shortest route
+    var from:Int {
+        return edges.first!.from
+    }
+    
+    var to:Int {
+        return edges.last!.to
+    }
 
     init() {
         edges = [Edge]()
@@ -50,14 +57,6 @@ struct Route {
             ctx.addLine(to: CGPoint(x: node.location.x * scale, y: node.location.y * scale))
         }
         ctx.drawPath(using: .stroke)
-    }
-
-    var from:Int {
-        return edges.first!.from
-    }
-
-    var to:Int {
-        return edges.last!.to
     }
 }
 
