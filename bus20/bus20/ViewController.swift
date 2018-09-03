@@ -98,7 +98,7 @@ class ViewController: UIViewController {
     
     @IBAction func test(_ sender:UIBarButtonItem) {
         //speedMultiple = 30.0
-        Random.seed(110) // 4, 40, 110
+        Random.seed(40) // 4, 40, 110
         print("Seed=", Random.seed)
         
         start(count: 1)

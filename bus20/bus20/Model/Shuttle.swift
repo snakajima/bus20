@@ -111,6 +111,8 @@ class Shuttle {
     // Returns the list of possible plans to carry the specified rider
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
         var routes = self.routes
+        
+        // Make it sure that the first route is a single-edge route
         if let route = routes.first, route.edges.count > 1 {
             let edge = route.edges[0]
             routes[0] = graph.route(from: edge.from, to: edge.to)
@@ -118,6 +120,7 @@ class Shuttle {
         }
  
         let costBase = evaluate(routes: routes, rider: nil)
+        
         // All possible insertion cases
         var plans = (1..<routes.count).flatMap { (index0) -> [RoutePlan] in
             var routes0 = routes
@@ -128,11 +131,6 @@ class Shuttle {
             } else {
                 // One of the nodes happened to match the rider's starting node.
                 print("optimized")
-                if index0 == 0 {
-                    // Corner case: The shuttle has just left the node
-                    print("skipped")
-                    return[]
-                }
             }
             return (index0+1..<routes.count).flatMap { (index1) -> [RoutePlan] in
                 var routes1 = routes0
@@ -147,12 +145,10 @@ class Shuttle {
         }
         
         // Append case
-        var last = self.routes.last!.to
         if (assigned.count + riders.count == 0) {
-            last = edge.to
-            routes = [Route(edge: edge, extra: 0)]
+            routes = [routes[0]]
         }
-        if last != rider.from {
+        if let last = routes.last?.to, last != rider.from {
             routes.append(graph.route(from: last, to: rider.from))
         }
         routes.append(graph.route(from:rider.from, to:rider.to))
@@ -202,8 +198,6 @@ class Shuttle {
         }
 
         self.routes = plan.routes
-        // HACK: To work around a bug
-        //self.edge = self.routes[0].edges[0]
         self.assigned.append(rider)
         rider.state = .assigned
         rider.hue = self.hue
