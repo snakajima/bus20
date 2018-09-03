@@ -46,14 +46,18 @@ class Shuttle {
         print("Shuttle:deinit")
     }
 
+    // Update the status of shuttle based on the curren time.
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
             var edges = routes[0].edges
             assert(edges[0].to == edge.to && edges[0].from == edge.from)
             edges.removeFirst()
+
+            // Check if we are at the end of a route section, which incidates
+            // that we are likely to pick up or drop some riders
             if edges.isEmpty {
-                // We are picking up a rider
+                // Pick riders who are waiting at the current node
                 assigned.forEach {
                     if $0.from == edge.to {
                         $0.state = .riding
@@ -61,7 +65,8 @@ class Shuttle {
                     }
                 }
                 assigned = assigned.filter { $0.state == .assigned }
-                // We are dropping a rider
+
+                // Drop riders whose destination is the current node
                 riders.forEach {
                     if $0.to == edge.to {
                         $0.state = .done
@@ -79,28 +84,32 @@ class Shuttle {
             }
             self.edge = self.routes[0].edges[0]
         }
-        for index in 0..<riders.count {
-            riders[index].offset = index
-        }
-    }
-    
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
+
+        // Update the locations of this shuttle and riders
         let node0 = graph.nodes[edge.from]
         let node1 = graph.nodes[edge.to]
         let ratio = (time - baseTime) / edge.length
         location.x = node0.x + (node1.x - node0.x) * ratio
         location.y = node0.y + (node1.y - node0.y) * ratio
         riders.forEach { $0.location = location }
-        
+
+        // This is only for display (UI)
+        for index in 0..<riders.count {
+            riders[index].offset = index
+        }
+    }
+    
+    func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
+        // Render the shuttle
         let rc = CGRect(x: location.x * scale - Metrics.shuttleRadius, y: location.y * scale - Metrics.shuttleRadius, width: Metrics.shuttleRadius * 2, height: Metrics.shuttleRadius * 2)
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.shuttleAlpha).setFill()
         ctx.fillEllipse(in: rc)
 
-        ctx.setLineWidth(Metrics.routeWidth)
-        ctx.setLineCap(.round)
-        ctx.setLineJoin(.round)
-        
+        // Render the scheduled routes
         if assigned.count + riders.count > 0 {
+            ctx.setLineWidth(Metrics.routeWidth)
+            ctx.setLineCap(.round)
+            ctx.setLineJoin(.round)
             for route in routes {
                 UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.routeAlpha).setStroke()
                 route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
@@ -119,7 +128,7 @@ class Shuttle {
             routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
         }
  
-        let costBase = evaluate(routes: routes, rider: nil)
+        let costBasis = evaluate(routes: routes, rider: nil)
         
         // All possible insertion cases
         var plans = (1..<routes.count).flatMap { (index0) -> [RoutePlan] in
@@ -140,7 +149,7 @@ class Shuttle {
                     routes1.insert(graph.route(from: rider.to, to: route.to), at: index1+1)
                 } else { print("optimized") }
                 let cost = evaluate(routes: routes1, rider: rider)
-                return [RoutePlan(shuttle:self, cost:cost - costBase, routes:routes1)]
+                return [RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes1)]
             }
         }
         
@@ -153,8 +162,7 @@ class Shuttle {
         }
         routes.append(graph.route(from:rider.from, to:rider.to))
         let cost = evaluate(routes: routes, rider: rider)
-
-        plans.append(RoutePlan(shuttle:self, cost:cost - costBase, routes:routes))
+        plans.append(RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes))
         
         return plans
     }
