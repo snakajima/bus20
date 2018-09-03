@@ -10,7 +10,7 @@ import UIKit
 
 // A Rider represents a person who needs to move from one node to another. 
 class Rider {
-    static let image = UIImage(named: "rider.png")!.cgImage!
+    static let image = UIImage(named: "rider.png")!
     enum NodeState {
         case none
         case assigned
@@ -44,6 +44,6 @@ class Rider {
         ctx.drawPath(using: .stroke)
         let rc = CGRect(x: location.x * scale + Metrics.riderRadius * (2.5 * CGFloat(offset) - 1), y: location.y * scale - Metrics.riderRadius * 6.0, width: Metrics.riderRadius * 2.0, height: Metrics.riderRadius * 6.0)
         ctx.fillEllipse(in: rc)
-        ctx.draw(Rider.image, in: rc)
+        Rider.image.draw(in: rc) // HACK: This code assumes ctx is the current UI Graphics context
     }
 }
