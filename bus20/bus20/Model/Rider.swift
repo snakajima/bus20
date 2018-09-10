@@ -20,15 +20,17 @@ class Rider {
     static let image = UIImage(named: "rider.png")!
     let from:Int
     let to:Int
+    let route:Route
     var state = RiderState.none
     var hue:CGFloat = 0.0
     var location:CGPoint
     var offset = 0 // visual offset when riding
 
-    init(nodes:[Node]) {
-        from = Random.int(nodes.count) 
-        to = (from + 1 + Random.int(nodes.count-1)) % nodes.count
-        location = nodes[from].location
+    init(graph:Graph) {
+        from = Random.int(graph.nodes.count) 
+        to = (from + 1 + Random.int(graph.nodes.count-1)) % graph.nodes.count
+        route = graph.route(from: from, to: to)
+        location = graph.nodes[from].location
         assert(to != from)
     }
 

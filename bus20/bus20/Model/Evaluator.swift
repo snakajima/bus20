@@ -94,7 +94,7 @@ class Evaluator {
     func cost() -> CGFloat {
         let cost = costs.reduce(CGFloat(0.0)) { (total, cost) -> CGFloat in
             assert(cost.state == .done)
-            let time = cost.waitTime + cost.rideTime
+            let time = cost.waitTime + cost.rideTime - cost.rider.route.length
             return total + time * time
         }
         return cost
@@ -102,7 +102,7 @@ class Evaluator {
     
     func description() -> String {
         return costs.reduce("", { (result, cost) -> String in
-            return result + String(format: "W:%.2f R:%.2f\n", cost.waitTime, cost.rideTime)
+            return result + String(format: "W:%.2f R:%.2f M:%.2f\n", cost.waitTime, cost.rideTime, cost.rider.route.length)
         })
     }
 }

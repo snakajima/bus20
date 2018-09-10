@@ -91,7 +91,7 @@ class ViewController: UIViewController {
     }
     
     func addRider() {
-        let rider = Rider(nodes:graph.nodes)
+        let rider = Rider(graph:graph)
         riders.append(rider)
         assign(rider: rider)
     }
