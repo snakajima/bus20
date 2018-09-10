@@ -159,7 +159,12 @@ class Shuttle {
         }
         
         let evaluator = Evaluator(routes: routes, assigned: assigned, riders: self.riders);
-        return evaluator.evaluate()
+        evaluator.process()
+        return evaluator.cost()
+    }
+    
+    func evaluator() -> Evaluator {
+        return Evaluator(routes: routes, assigned: assigned, riders: riders);
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {

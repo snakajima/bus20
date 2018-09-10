@@ -55,12 +55,17 @@ class Evaluator {
         assert(assigned.count == 0)
         assert(riders.count == 0)
         print("cost=", cost)
-        print("evaluate2=", evaluate())
+        //print("evaluate2=", evaluate())
 
         return cost
     }
     
-    func evaluate() -> CGFloat {
+    func process() {
+        for index in 0..<costs.count {
+            costs[index].waitTime = 0
+            costs[index].rideTime = 0
+        }
+        
         // Handle a special case where the rider is getting of at the very first node.
         for (index,cost) in costs.enumerated() {
             if cost.state == .riding && cost.rider.to == routes[0].from {
@@ -83,18 +88,21 @@ class Evaluator {
                     }
                 }
             }
-            /*
-            let costX = costs.reduce(CGFloat(0.0)) { (total, cost) -> CGFloat in
-                return total + cost.waitTime + cost.rideTime
-            }
-            print(costX)
-            */
         }
+    }
+    
+    func cost() -> CGFloat {
         let cost = costs.reduce(CGFloat(0.0)) { (total, cost) -> CGFloat in
             assert(cost.state == .done)
             let time = cost.waitTime + cost.rideTime
             return total + time * time
         }
         return cost
+    }
+    
+    func description() -> String {
+        return costs.reduce("", { (result, cost) -> String in
+            return result + String(format: "W:%.2f R:%.2f\n", cost.waitTime, cost.rideTime)
+        })
     }
 }

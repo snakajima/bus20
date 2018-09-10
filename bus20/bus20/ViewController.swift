@@ -138,6 +138,10 @@ class ViewController: UIViewController {
             .sorted { $0.cost < $1.cost }
         let bestPlan = plans[0]
         bestPlan.shuttle.adapt(plan:bestPlan, rider:rider, graph:graph)
+        
+        let evaluator = bestPlan.shuttle.evaluator()
+        evaluator.process()
+        print(evaluator.description())
     }
 }
 
