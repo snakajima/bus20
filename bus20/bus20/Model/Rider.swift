@@ -8,18 +8,19 @@
 
 import UIKit
 
+enum RiderState {
+    case none
+    case assigned
+    case riding
+    case done
+}
+
 // A Rider represents a person who needs to move from one node to another. 
 class Rider {
     static let image = UIImage(named: "rider.png")!
-    enum NodeState {
-        case none
-        case assigned
-        case riding
-        case done
-    }
     let from:Int
     let to:Int
-    var state = NodeState.none
+    var state = RiderState.none
     var hue:CGFloat = 0.0
     var location:CGPoint
     var offset = 0 // visual offset when riding
