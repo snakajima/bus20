@@ -20,6 +20,7 @@
 		74424DB82139A79E003A4E82 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74424DB72139A79E003A4E82 /* Random.swift */; };
 		74840FC3213B40CD00C84BC8 /* rider.png in Resources */ = {isa = PBXBuildFile; fileRef = 74840FC2213B40CD00C84BC8 /* rider.png */; };
 		74840FC5213CF3BF00C84BC8 /* RoutePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74840FC4213CF3BF00C84BC8 /* RoutePlan.swift */; };
+		74840FCA2146D5E400C84BC8 /* Evaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74840FC92146D5E400C84BC8 /* Evaluator.swift */; };
 		7489E3F52137B0F1002F5F23 /* Metrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7489E3F42137B0F1002F5F23 /* Metrics.swift */; };
 		74A8DB0C2135D91900DA03D0 /* Rider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A8DB0B2135D91900DA03D0 /* Rider.swift */; };
 /* End PBXBuildFile section */
@@ -42,6 +43,7 @@
 		74840FC4213CF3BF00C84BC8 /* RoutePlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePlan.swift; sourceTree = "<group>"; };
 		74840FC6213DE51700C84BC8 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE.txt; path = ../../LICENSE.txt; sourceTree = "<group>"; };
 		74840FC7213DE59200C84BC8 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../README.md; sourceTree = "<group>"; };
+		74840FC92146D5E400C84BC8 /* Evaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Evaluator.swift; sourceTree = "<group>"; };
 		7489E3F42137B0F1002F5F23 /* Metrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Metrics.swift; sourceTree = "<group>"; };
 		74A8DB0B2135D91900DA03D0 /* Rider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -100,6 +102,7 @@
 				74424DB72139A79E003A4E82 /* Random.swift */,
 				74A8DB0B2135D91900DA03D0 /* Rider.swift */,
 				7424C0882135B46A00092E37 /* Shuttle.swift */,
+				74840FC92146D5E400C84BC8 /* Evaluator.swift */,
 				7424C0862135B3B200092E37 /* Node.swift */,
 				74840FC4213CF3BF00C84BC8 /* RoutePlan.swift */,
 			);
@@ -192,6 +195,7 @@
 				74424DB82139A79E003A4E82 /* Random.swift in Sources */,
 				7424C0832135B33800092E37 /* Route.swift in Sources */,
 				7409A40B21347232007041B0 /* ViewController.swift in Sources */,
+				74840FCA2146D5E400C84BC8 /* Evaluator.swift in Sources */,
 				74840FC5213CF3BF00C84BC8 /* RoutePlan.swift in Sources */,
 				7489E3F52137B0F1002F5F23 /* Metrics.swift in Sources */,
 				74A8DB0C2135D91900DA03D0 /* Rider.swift in Sources */,

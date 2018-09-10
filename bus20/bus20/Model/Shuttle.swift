@@ -154,29 +154,12 @@ class Shuttle {
 
     func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
         var assigned = self.assigned
-        var riders = self.riders
         if let rider = rider {
             assigned.append(rider)
         }
         
-        var cost = CGFloat(0)
-        riders = riders.filter({ (rider) -> Bool in
-            return routes[0].from != rider.to
-        })
-        routes.forEach { (route) in
-            assigned = assigned.filter({ (rider) -> Bool in
-                if route.from != rider.from {
-                    return true
-                }
-                riders.append(rider)
-                return false
-            })
-            cost += CGFloat(assigned.count + riders.count) * route.length
-            riders = riders.filter({ (rider) -> Bool in
-                return route.to != rider.to
-            })
-        }
-        return cost
+        let evaluator = Evaluator(routes: routes, assigned: assigned, riders: self.riders);
+        return evaluator.evaluate()
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
