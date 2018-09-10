@@ -108,6 +108,24 @@ class ViewController: UIViewController {
         addRider()
         addRider()
         addRider()
+        let frame = view.frame
+        UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        let ctx = UIGraphicsGetCurrentContext()!
+        graph.render(ctx:ctx, frame: frame, scale:scale)
+        shuttles.forEach() {
+            $0.render(ctx: ctx, graph: graph, scale: scale, time:0)
+        }
+        
+        riders.forEach() {
+            $0.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+        }
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
+        let path = documents[0].appendingPathComponent("bus20.png")
+        print(path)
+        let data = UIImagePNGRepresentation(image)!
+        try! data.write(to: path)
     }
     
     @IBAction func stop(_ sender:UIBarButtonItem) {
