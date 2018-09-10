@@ -33,7 +33,7 @@ class Evaluator {
         assigned.forEach { self.costs.append(RiderCost(rider: $0, state: .assigned)) }
     }
     
-    func evaluate() -> CGFloat {
+    func evaluate_obsolete() -> CGFloat {
         var cost = CGFloat(0)
         riders = riders.filter({ (rider) -> Bool in
             return routes[0].from != rider.to
@@ -55,12 +55,12 @@ class Evaluator {
         assert(assigned.count == 0)
         assert(riders.count == 0)
         print("cost=", cost)
-        print("evaluate2=", evaluate2())
+        print("evaluate2=", evaluate())
 
         return cost
     }
     
-    func evaluate2() -> CGFloat {
+    func evaluate() -> CGFloat {
         // Handle a special case where the rider is getting of at the very first node.
         for (index,cost) in costs.enumerated() {
             if cost.state == .riding && cost.rider.to == routes[0].from {
@@ -92,7 +92,8 @@ class Evaluator {
         }
         let cost = costs.reduce(CGFloat(0.0)) { (total, cost) -> CGFloat in
             assert(cost.state == .done)
-            return total + cost.waitTime + cost.rideTime
+            let time = cost.waitTime + cost.rideTime
+            return total + time * time
         }
         return cost
     }
