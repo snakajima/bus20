@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     var riders = [Rider]()
     var stopped = false
     var speedMultiple = Metrics.speedMultiple
+    var fTesting = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +88,12 @@ class ViewController: UIViewController {
     }
 
     @IBAction func add(_ sender:UIBarButtonItem) {
+        if fTesting {
+            fTesting = false
+            speedMultiple = Metrics.speedMultiple
+            Random.seed(0)
+            start(count: Metrics.numberOfShuttles)
+        }
         addRider()
     }
     
@@ -97,6 +104,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func test(_ sender:UIBarButtonItem) {
+        fTesting = true
         speedMultiple = 30.0
         Random.nextSeed() // 4, 40, 110
         print("Seed=", Random.seed)
