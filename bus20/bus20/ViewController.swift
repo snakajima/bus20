@@ -131,7 +131,6 @@ class ViewController: UIViewController {
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let path = documents[0].appendingPathComponent("bus20.png")
-        print(path)
         let data = UIImagePNGRepresentation(image)!
         try! data.write(to: path)
     }
@@ -148,9 +147,10 @@ class ViewController: UIViewController {
         print("VC: bestPlan:", bestPlan.cost)
         bestPlan.shuttle.adapt(plan:bestPlan, rider:rider, graph:graph)
         
+        // Debug only
         let evaluator = bestPlan.shuttle.evaluator()
         evaluator.process()
-        print(evaluator.description())
+        //print(evaluator.description())
     }
 }
 
