@@ -133,6 +133,7 @@ class ViewController: UIViewController {
         let path = documents[0].appendingPathComponent("bus20.png")
         let data = UIImagePNGRepresentation(image)!
         try! data.write(to: path)
+        print(path)
     }
     
     @IBAction func stop(_ sender:UIBarButtonItem) {
