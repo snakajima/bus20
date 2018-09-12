@@ -48,13 +48,18 @@ struct Graph {
         })
         nodes = self.nodes
 
-        // Calcurate shortest routes among all Nodes first
-        routes = (0..<count).map({ (index0) -> [Route] in
+        // Calcurate shortest routes among all Nodes
+        let routeDummy = Route(edge:nodes[0].edges[0], extra:0)
+        var routes = (0..<count).map { (index0) -> [Route] in
+            return [routeDummy]
+        }
+        DispatchQueue.concurrentPerform(iterations: count) { (index0) in
             print(index0)
-            return (0..<count).map({ (index1) -> Route in
+            routes[index0] = (0..<count).map({ (index1) -> Route in
                 Graph.shortest(nodes: nodes, start: index0, end: index1)
             })
-        })
+        }
+        self.routes = routes
     }
     
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
