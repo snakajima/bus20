@@ -145,6 +145,7 @@ class ViewController: UIViewController {
             .flatMap({ $0.plans(rider:rider, graph:graph) })
             .sorted { $0.cost < $1.cost }
         let bestPlan = plans[0]
+        print("VC: bestPlan:", bestPlan.cost)
         bestPlan.shuttle.adapt(plan:bestPlan, rider:rider, graph:graph)
         
         let evaluator = bestPlan.shuttle.evaluator()

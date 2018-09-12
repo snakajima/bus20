@@ -20,15 +20,18 @@ struct RiderCost {
 }
 
 class Evaluator {
-    let routes:[Route];
-    var assigned:[Rider];
-    var riders:[Rider];
-    var costs:[RiderCost];
+    let routes:[Route]
+    let capacity:Int
+    var assigned:[Rider]
+    var riders:[Rider]
+    var costs:[RiderCost]
+    var costExtra = CGFloat(0)
 
-    init(routes:[Route], assigned:[Rider], riders:[Rider]) {
-        self.routes = routes;
-        self.assigned = assigned;
-        self.riders = riders;
+    init(routes:[Route], capacity:Int, assigned:[Rider], riders:[Rider]) {
+        self.routes = routes
+        self.capacity = capacity
+        self.assigned = assigned
+        self.riders = riders
         self.costs = riders.map { RiderCost(rider: $0, state: .riding) }
         assigned.forEach { self.costs.append(RiderCost(rider: $0, state: .assigned)) }
     }
@@ -65,6 +68,7 @@ class Evaluator {
             costs[index].waitTime = 0
             costs[index].rideTime = 0
         }
+        costExtra = 0
         
         // Handle a special case where the rider is getting of at the very first node.
         for (index,cost) in costs.enumerated() {
@@ -80,6 +84,9 @@ class Evaluator {
                 
                 if cost.state == .assigned {
                     costs[index].waitTime += route.length
+                }
+                if costs.filter({ $0.state == .riding }).count > capacity {
+                    costExtra += 1.0e10; // large enough penalty
                 }
                 if costs[index].state == .riding {
                     costs[index].rideTime += route.length
@@ -97,7 +104,7 @@ class Evaluator {
             let time = cost.waitTime + cost.rideTime - cost.rider.route.length
             return total + time * time
         }
-        return cost
+        return cost + costExtra
     }
     
     func description() -> String {

@@ -11,6 +11,7 @@ import UIKit
 // A Shuttle represents a shuttle bus who can carry multiple riders.
 class Shuttle {
     private let hue:CGFloat
+    private let capacity = Metrics.shuttleCapacity
     private var edge:Edge
     private var routes:[Route]
     private var baseTime = CGFloat(0)
@@ -22,7 +23,7 @@ class Shuttle {
         self.hue = hue
         let index1 = (index + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
         self.routes = [graph.route(from: index, to: index1)]
-        print(self.routes[0])
+        //print(self.routes[0])
         self.edge = self.routes[0].edges[0]
     }
     
@@ -50,6 +51,10 @@ class Shuttle {
                     }
                 }
                 assigned = assigned.filter { $0.state == .assigned }
+                
+                if riders.count > capacity {
+                    print("Over capacity", riders.count)
+                }
 
                 // Drop riders whose destination is the current node
                 riders.forEach {
@@ -158,13 +163,13 @@ class Shuttle {
             assigned.append(rider)
         }
         
-        let evaluator = Evaluator(routes: routes, assigned: assigned, riders: self.riders);
+        let evaluator = Evaluator(routes: routes, capacity:capacity, assigned: assigned, riders: self.riders);
         evaluator.process()
         return evaluator.cost()
     }
     
     func evaluator() -> Evaluator {
-        return Evaluator(routes: routes, assigned: assigned, riders: riders);
+        return Evaluator(routes: routes, capacity:capacity, assigned: assigned, riders: riders);
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
@@ -173,9 +178,9 @@ class Shuttle {
             route.from
         }
         indeces.append(plan.routes.last!.to)
-        print([rider.from, rider.to], "→", indeces)
+        //print([rider.from, rider.to], "→", indeces)
         plan.routes.forEach { (route) in
-            print(" ", route)
+            //print(" ", route)
         }
 
         self.routes = plan.routes
