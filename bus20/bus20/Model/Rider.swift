@@ -18,6 +18,8 @@ enum RiderState {
 // A Rider represents a person who needs to move from one node to another. 
 class Rider {
     static let image = UIImage(named: "rider.png")!
+    static var count = 10000 // for unique id
+    let id:Int
     let from:Int
     let to:Int
     let route:Route
@@ -26,7 +28,14 @@ class Rider {
     var location:CGPoint
     var offset = 0 // visual offset when riding
 
+    static func uniqueId() -> Int {
+        assert(Thread.main == Thread.current)
+        defer { count += count }
+        return count;
+    }
+    
     init(graph:Graph) {
+        id = Rider.uniqueId()
         from = Random.int(graph.nodes.count) 
         to = (from + 1 + Random.int(graph.nodes.count-1)) % graph.nodes.count
         route = graph.route(from: from, to: to)

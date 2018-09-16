@@ -54,7 +54,7 @@ struct Graph {
             return [routeDummy]
         }
         DispatchQueue.concurrentPerform(iterations: count) { (index0) in
-            print(index0)
+            print(index0, Thread.current)
             routes[index0] = (0..<count).map({ (index1) -> Route in
                 Graph.shortest(nodes: nodes, start: index0, end: index1)
             })
