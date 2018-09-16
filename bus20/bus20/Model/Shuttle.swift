@@ -43,6 +43,15 @@ class Shuttle {
             // Check if we are at the end of a route section, which incidates
             // that we are likely to pick up or drop some riders
             if edges.isEmpty {
+                // Drop riders whose destination is the current node
+                riders.forEach {
+                    if $0.to == edge.to {
+                        print("dropped:", $0.id)
+                        $0.state = .done
+                    }
+                }
+                riders = riders.filter { $0.state == .riding }
+                
                 // Pick riders who are waiting at the current node
                 assigned.forEach {
                     if $0.from == edge.to
@@ -58,21 +67,13 @@ class Shuttle {
                 if riders.count > capacity {
                     print("Over capacity", riders.count)
                 }
-
-                // Drop riders whose destination is the current node
-                riders.forEach {
-                    if $0.to == edge.to {
-                        $0.state = .done
-                    }
-                }
-                riders = riders.filter { $0.state == .riding }
                 
                 self.routes.remove(at:0)
                 if self.routes.isEmpty {
                     let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
                     self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
                 } else {
-                    print(routes[0].pickups)
+                    //print("route:", routes[0].pickups)
                 }
             } else {
                 self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)
