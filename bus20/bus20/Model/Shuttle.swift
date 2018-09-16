@@ -45,7 +45,9 @@ class Shuttle {
             if edges.isEmpty {
                 // Pick riders who are waiting at the current node
                 assigned.forEach {
-                    if $0.from == edge.to {
+                    if $0.from == edge.to /*
+                       && routes.count >= 2
+                       && routes[1].pickups.contains($0.id) */ {
                         $0.state = .riding
                         riders.append($0)
                     }
@@ -68,6 +70,8 @@ class Shuttle {
                 if self.routes.isEmpty {
                     let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
                     self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
+                } else {
+                    print(routes[0].pickups)
                 }
             } else {
                 self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)

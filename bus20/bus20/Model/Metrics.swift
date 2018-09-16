@@ -20,7 +20,7 @@ struct Metrics {
     static let routeWidth = CGFloat(10.0)
     static let numberOfShuttles = 4
     static let speedMultiple = CGFloat(5.0)
-    static let shuttleCapacity = 4
+    static let shuttleCapacity = 2
 }
 
 
