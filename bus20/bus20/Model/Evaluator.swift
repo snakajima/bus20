@@ -70,7 +70,7 @@ class Evaluator {
         }
         costExtra = 0
         
-        // Handle a special case where the rider is getting of at the very first node.
+        // Handle a special case where the rider is getting off at the very first node.
         for (index,cost) in costs.enumerated() {
             if cost.state == .riding && cost.rider.to == routes[0].from {
                 costs[index].state = .done
@@ -78,7 +78,9 @@ class Evaluator {
         }
         routes.forEach { (route) in
             for (index,cost) in costs.enumerated() {
-                if cost.state == .assigned && cost.rider.from == route.from {
+                if cost.state == .assigned 
+                   && route.pickups.contains(cost.rider.id) {
+                    assert(cost.rider.from == route.from)
                     costs[index].state = .riding
                 }
                 
