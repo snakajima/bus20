@@ -45,9 +45,10 @@ class Shuttle {
             if edges.isEmpty {
                 // Pick riders who are waiting at the current node
                 assigned.forEach {
-                    if $0.from == edge.to /*
+                    if $0.from == edge.to
                        && routes.count >= 2
-                       && routes[1].pickups.contains($0.id) */ {
+                       && routes[1].pickups.contains($0.id) {
+                        print("picked:", $0.id)
                         $0.state = .riding
                         riders.append($0)
                     }
@@ -140,7 +141,7 @@ class Shuttle {
                     routes0.append(graph.route(from: rider.from, to: rider.to, pickup:rider))
                 }
             } else {
-                routes0[index0] = graph.route(from: route.from, to: rider.from, pickup:nil)
+                routes0[index0] = graph.route(from: route.from, to: rider.from, basedOn:route)
                 routes0.insert(graph.route(from: rider.from, to: route.to, pickup:rider), at: index0+1)
             }
             return (index0+1..<routes.count).flatMap { (index1) -> [RoutePlan] in
@@ -190,7 +191,7 @@ class Shuttle {
             route.from
         }
         indeces.append(plan.routes.last!.to)
-        print([rider.from, rider.to], "→", indeces)
+        print(rider.id, ":", [rider.from, rider.to], "→", indeces)
         plan.routes.forEach { (route) in
             print(" ", route)
         }
