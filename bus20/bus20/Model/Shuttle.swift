@@ -132,23 +132,23 @@ class Shuttle {
             
             // Process insertion
             if route.from == rider.from {
-                routes0[index0] = graph.route(from: route.from, to: route.to, pickup:rider)
+                routes0[index0] = graph.route(from: route.from, to: route.to, basedOn:route, pickup:rider)
             } else if route.to == rider.from {
                 if index0+1 < routes.count {
                     let routeNext = routes0[index0+1]
-                    routes0[index0+1] = graph.route(from: routeNext.from, to: routeNext.to, pickup:rider)
+                    routes0[index0+1] = graph.route(from: routeNext.from, to: routeNext.to, basedOn:routeNext, pickup:rider)
                 } else {
                     routes0.append(graph.route(from: rider.from, to: rider.to, pickup:rider))
                 }
             } else {
-                routes0[index0] = graph.route(from: route.from, to: rider.from, basedOn:route)
+                routes0[index0] = graph.route(from: route.from, to: rider.from, basedOn:route, pickup:nil)
                 routes0.insert(graph.route(from: rider.from, to: route.to, pickup:rider), at: index0+1)
             }
             return (index0+1..<routes.count).flatMap { (index1) -> [RoutePlan] in
                 var routes1 = routes0
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
-                    routes1[index1] = graph.route(from: route.from, to: rider.to, basedOn: route)
+                    routes1[index1] = graph.route(from: route.from, to: rider.to, basedOn: route, pickup:nil)
                     routes1.insert(graph.route(from: rider.to, to: route.to, pickup: nil), at: index1+1)
                 } // else { print("optimized") }
                 let cost = evaluate(routes: routes1, rider: rider)

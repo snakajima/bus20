@@ -88,9 +88,12 @@ struct Graph {
         }
         return route
     }
-    func route(from:Int, to:Int, basedOn:Route) -> Route {
+    func route(from:Int, to:Int, basedOn:Route, pickup:Rider?) -> Route {
         var route = routes[from][to]
         route.pickups = basedOn.pickups
+        if let pickup = pickup {
+            route.pickups.insert(pickup.id)
+        }
         return route
     }
 
