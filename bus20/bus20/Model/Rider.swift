@@ -30,7 +30,7 @@ class Rider {
 
     static func uniqueId() -> Int {
         assert(Thread.main == Thread.current)
-        defer { count += count }
+        defer { count += 1 }
         return count;
     }
     
@@ -38,7 +38,7 @@ class Rider {
         id = Rider.uniqueId()
         from = Random.int(graph.nodes.count) 
         to = (from + 1 + Random.int(graph.nodes.count-1)) % graph.nodes.count
-        route = graph.route(from: from, to: to)
+        route = graph.route(from: from, to: to, pickup:nil)
         location = graph.nodes[from].location
         assert(to != from)
     }

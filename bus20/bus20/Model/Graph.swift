@@ -80,9 +80,13 @@ struct Graph {
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
     
-    func route(from:Int, to:Int) -> Route {
+    func route(from:Int, to:Int, pickup:Rider?) -> Route {
         assert(from != to)
-        return routes[from][to]
+        var route = routes[from][to]
+        if let pickup = pickup {
+            route.pickups.insert(pickup.id)
+        }
+        return route
     }
     
     private static func shortest(nodes:[Node], start:Int, end:Int) -> Route {

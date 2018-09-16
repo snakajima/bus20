@@ -22,7 +22,7 @@ class Shuttle {
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
         let index1 = (index + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
-        self.routes = [graph.route(from: index, to: index1)]
+        self.routes = [graph.route(from: index, to: index1, pickup:nil)]
         //print(self.routes[0])
         self.edge = self.routes[0].edges[0]
     }
@@ -67,7 +67,7 @@ class Shuttle {
                 self.routes.remove(at:0)
                 if self.routes.isEmpty {
                     let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
-                    self.routes = [graph.route(from: edge.to, to: index1)]
+                    self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
                 }
             } else {
                 self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)
@@ -114,29 +114,40 @@ class Shuttle {
         // Make it sure that the first route is a single-edge route
         if let route = routes.first, route.edges.count > 1 {
             let edge = route.edges[0]
-            routes[0] = graph.route(from: edge.from, to: edge.to)
-            routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
+            routes[0] = graph.route(from: edge.from, to: edge.to, pickup:nil)
+            routes.insert(graph.route(from: edge.to, to: route.to, pickup:nil), at: 1)
         }
  
         let costBasis = evaluate(routes: routes, rider: nil)
         
         // All possible insertion cases
         var plans = (1..<routes.count).flatMap { (index0) -> [RoutePlan] in
+            var riderToPick:Rider? = rider
             var routes0 = routes
             let route = routes0[index0]
-            if route.from != rider.from && route.to != rider.from {
-                routes0[index0] = graph.route(from: route.from, to: rider.from)
-                routes0.insert(graph.route(from: rider.from, to: route.to), at: index0+1)
+            
+            // Process insertion
+            if route.from == rider.from {
+                routes0[index0] = graph.route(from: route.from, to: route.to, pickup:riderToPick)
+                riderToPick = nil
+            } else if route.to == rider.from {
+                if index0+1 < routes.count {
+                    let routeNext = routes0[index0+1]
+                    routes0[index0+1] = graph.route(from: routeNext.from, to: routeNext.to, pickup:riderToPick)
+                } else {
+                    routes0.append(graph.route(from: rider.from, to: rider.to, pickup:riderToPick))
+                }
+                riderToPick = nil
             } else {
-                // One of the nodes happened to match the rider's starting node.
-                //print("optimized")
+                routes0[index0] = graph.route(from: route.from, to: rider.from, pickup:nil)
+                routes0.insert(graph.route(from: rider.from, to: route.to, pickup:rider), at: index0+1)
             }
             return (index0+1..<routes.count).flatMap { (index1) -> [RoutePlan] in
                 var routes1 = routes0
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
-                    routes1[index1] = graph.route(from: route.from, to: rider.to)
-                    routes1.insert(graph.route(from: rider.to, to: route.to), at: index1+1)
+                    routes1[index1] = graph.route(from: route.from, to: rider.to, pickup: nil)
+                    routes1.insert(graph.route(from: rider.to, to: route.to, pickup: nil), at: index1+1)
                 } // else { print("optimized") }
                 let cost = evaluate(routes: routes1, rider: rider)
                 return [RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes1)]
@@ -148,9 +159,9 @@ class Shuttle {
             routes = [routes[0]]
         }
         if let last = routes.last?.to, last != rider.from {
-            routes.append(graph.route(from: last, to: rider.from))
+            routes.append(graph.route(from: last, to: rider.from, pickup:nil))
         }
-        routes.append(graph.route(from:rider.from, to:rider.to))
+        routes.append(graph.route(from:rider.from, to:rider.to, pickup:rider))
         let cost = evaluate(routes: routes, rider: rider)
         plans.append(RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes))
         
