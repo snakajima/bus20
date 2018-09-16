@@ -67,6 +67,6 @@ extension Route: CustomStringConvertible {
             return edge.from
         }
         array.append(self.to)
-        return array.description
+        return pickups.description + ":" + array.description
     }
 }

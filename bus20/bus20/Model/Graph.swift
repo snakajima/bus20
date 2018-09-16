@@ -88,7 +88,12 @@ struct Graph {
         }
         return route
     }
-    
+    func route(from:Int, to:Int, basedOn:Route) -> Route {
+        var route = routes[from][to]
+        route.pickups = basedOn.pickups
+        return route
+    }
+
     private static func shortest(nodes:[Node], start:Int, end:Int) -> Route {
         var nodes = nodes
         nodes[start] = Node(node:nodes[start], type:.start)

@@ -18,7 +18,7 @@ enum RiderState {
 // A Rider represents a person who needs to move from one node to another. 
 class Rider {
     static let image = UIImage(named: "rider.png")!
-    static var count = 10000 // for unique id
+    static var count = 100 // for unique id
     let id:Int
     let from:Int
     let to:Int

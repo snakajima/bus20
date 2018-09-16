@@ -147,7 +147,7 @@ class Shuttle {
                 var routes1 = routes0
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
-                    routes1[index1] = graph.route(from: route.from, to: rider.to, pickup: nil)
+                    routes1[index1] = graph.route(from: route.from, to: rider.to, basedOn: route)
                     routes1.insert(graph.route(from: rider.to, to: route.to, pickup: nil), at: index1+1)
                 } // else { print("optimized") }
                 let cost = evaluate(routes: routes1, rider: rider)
@@ -190,9 +190,9 @@ class Shuttle {
             route.from
         }
         indeces.append(plan.routes.last!.to)
-        //print([rider.from, rider.to], "→", indeces)
+        print([rider.from, rider.to], "→", indeces)
         plan.routes.forEach { (route) in
-            //print(" ", route)
+            print(" ", route)
         }
 
         self.routes = plan.routes
