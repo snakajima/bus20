@@ -122,22 +122,19 @@ class Shuttle {
         
         // All possible insertion cases
         var plans = (1..<routes.count).flatMap { (index0) -> [RoutePlan] in
-            var riderToPick:Rider? = rider
             var routes0 = routes
             let route = routes0[index0]
             
             // Process insertion
             if route.from == rider.from {
-                routes0[index0] = graph.route(from: route.from, to: route.to, pickup:riderToPick)
-                riderToPick = nil
+                routes0[index0] = graph.route(from: route.from, to: route.to, pickup:rider)
             } else if route.to == rider.from {
                 if index0+1 < routes.count {
                     let routeNext = routes0[index0+1]
-                    routes0[index0+1] = graph.route(from: routeNext.from, to: routeNext.to, pickup:riderToPick)
+                    routes0[index0+1] = graph.route(from: routeNext.from, to: routeNext.to, pickup:rider)
                 } else {
-                    routes0.append(graph.route(from: rider.from, to: rider.to, pickup:riderToPick))
+                    routes0.append(graph.route(from: rider.from, to: rider.to, pickup:rider))
                 }
-                riderToPick = nil
             } else {
                 routes0[index0] = graph.route(from: route.from, to: rider.from, pickup:nil)
                 routes0.insert(graph.route(from: rider.from, to: route.to, pickup:rider), at: index0+1)
