@@ -35,11 +35,12 @@ class Evaluator {
         self.routes = routes
         self.capacity = capacity
         self.riders = riders
+        process()
     }
     
     // Calculate the wait time and ride time of each rider, and
     // also detect the over capacity situation (costExtra).
-    func process() {
+    private func process() {
         // Initialize costs and costExtra
         self.costs = riders.map {
             RiderCost(rider: $0, state: ($0.state == .none) ? .waiting : $0.state)

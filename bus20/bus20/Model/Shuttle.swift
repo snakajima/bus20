@@ -172,7 +172,6 @@ class Shuttle {
         }
         
         let evaluator = Evaluator(routes: routes, capacity:capacity, riders: ridersPlus);
-        evaluator.process()
         return evaluator.cost()
     }
     
