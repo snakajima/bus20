@@ -31,7 +31,7 @@ class Shuttle {
         print("Shuttle:deinit")
     }
     
-    // Update the status of shuttle based on the curren time.
+    // Update the status of a shuttle based on the curren time.
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > self.edge.length {
             baseTime += self.edge.length
@@ -63,6 +63,7 @@ class Shuttle {
                     self.routes = graph.randamRoute(from: node)
                 }
             } else {
+                // Just move to the next edge
                 var edges = routes[0].edges
                 edges.removeFirst()
                 self.routes[0] = Route(edges: edges)
@@ -70,20 +71,16 @@ class Shuttle {
         }
 
         // Update the locations of this shuttle and riders
-        let node0 = graph.nodes[self.edge.from]
-        let node1 = graph.nodes[self.edge.to]
+        let from = graph.nodes[self.edge.from]
+        let to = graph.nodes[self.edge.to]
         let ratio = (time - baseTime) / self.edge.length
-        location.x = node0.location.x + (node1.location.x - node0.location.x) * ratio
-        location.y = node0.location.y + (node1.location.y - node0.location.y) * ratio
-        riders.filter({$0.state == .riding}).forEach { $0.location = location }
-
-        // This is only for display (UI)
+        location.x = from.location.x + (to.location.x - from.location.x) * ratio
+        location.y = from.location.y + (to.location.y - from.location.y) * ratio
         var offset = 0
-        for index in 0..<riders.count {
-            if riders[index].state == .riding {
-                riders[index].offset = offset
-                offset += 1
-            }
+        riders.filter({$0.state == .riding}).forEach {
+            $0.location = location
+            $0.offset = offset
+            offset += 1
         }
     }
     
