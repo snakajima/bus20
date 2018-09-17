@@ -8,26 +8,29 @@
 
 import CoreGraphics
 
-struct RiderCost {
-    let rider:Rider
-    var state:RiderState
-    var waitTime = CGFloat(0)
-    var rideTime = CGFloat(0)
-    init(rider:Rider, state:RiderState) {
-        self.rider = rider;
-        self.state = state;
-    }
-}
-
+// An Evaluator object is created when a Shuttle needs to determine the "cost" of
+// a particular route (a series of Route objects) to move a set or riders
+// to their destinations.
 class Evaluator {
+    private struct RiderCost {
+        let rider:Rider
+        var state:RiderState
+        var waitTime = CGFloat(0)
+        var rideTime = CGFloat(0)
+        init(rider:Rider, state:RiderState) {
+            self.rider = rider;
+            self.state = state;
+        }
+    }
+
     static var verbose = false
     
-    let routes:[Route]
-    let capacity:Int
-    var assigned:[Rider]
-    var riders:[Rider]
-    var costs:[RiderCost]
-    var costExtra = CGFloat(0)
+    private let routes:[Route]
+    private let capacity:Int
+    private var assigned:[Rider]
+    private var riders:[Rider]
+    private var costs:[RiderCost]
+    private var costExtra = CGFloat(0)
 
     init(routes:[Route], capacity:Int, assigned:[Rider], riders:[Rider]) {
         self.routes = routes
@@ -36,33 +39,6 @@ class Evaluator {
         self.riders = riders
         self.costs = riders.map { RiderCost(rider: $0, state: .riding) }
         assigned.forEach { self.costs.append(RiderCost(rider: $0, state: .assigned)) }
-    }
-    
-    func evaluate_obsolete() -> CGFloat {
-        var cost = CGFloat(0)
-        riders = riders.filter({ (rider) -> Bool in
-            return routes[0].from != rider.to
-        })
-        routes.forEach { (route) in
-            assigned = assigned.filter({ (rider) -> Bool in
-                if route.from != rider.from {
-                    return true
-                }
-                riders.append(rider)
-                return false
-            })
-            cost += CGFloat(assigned.count + riders.count) * route.length
-            riders = riders.filter({ (rider) -> Bool in
-                return route.to != rider.to
-            })
-            //print(cost);
-        }
-        assert(assigned.count == 0)
-        assert(riders.count == 0)
-        print("cost=", cost)
-        //print("evaluate2=", evaluate())
-
-        return cost
     }
     
     func process() {
@@ -119,10 +95,13 @@ class Evaluator {
         }
         return cost + costExtra
     }
-    
-    func description() -> String {
+}
+
+extension Evaluator: CustomStringConvertible {
+    var description: String {
         return costs.reduce("", { (result, cost) -> String in
             return result + String(format: "W:%.2f R:%.2f M:%.2f\n", cost.waitTime, cost.rideTime, cost.rider.route.length)
         })
     }
 }
+

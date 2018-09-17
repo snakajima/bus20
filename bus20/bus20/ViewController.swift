@@ -151,7 +151,7 @@ class ViewController: UIViewController {
         // Debug only
         let evaluator = bestPlan.shuttle.evaluator()
         evaluator.process()
-        //print(evaluator.description())
+        print(evaluator)
     }
 }
 
