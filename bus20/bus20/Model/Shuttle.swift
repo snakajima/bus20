@@ -13,16 +13,17 @@ class Shuttle {
     static var verbose = false
     private let hue:CGFloat
     private let capacity = Metrics.shuttleCapacity
-    private var edge:Edge
     private var routes:[Route]
     private var baseTime = CGFloat(0)
     private var riders = [Rider]()
     private var location = CGPoint.zero
-    
+    private var edge:Edge {
+        return self.routes[0].edges[0]
+    }
+
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
         self.routes = graph.randamRoute(from: index)
-        self.edge = self.routes[0].edges[0]
     }
     
     // for debugging
@@ -32,14 +33,15 @@ class Shuttle {
     
     // Update the status of shuttle based on the curren time.
     func update(graph:Graph, time:CGFloat) {
-        while (time - baseTime) > edge.length {
-            baseTime += edge.length
+        while (time - baseTime) > self.edge.length {
+            baseTime += self.edge.length
 
             // Check if we are at the end of a route section, which incidates
             // that we are likely to pick up or drop some riders
-            if edge.to == routes[0].to {
+            let node = self.edge.to
+            if node == routes[0].to {
                 // Drop riders whose destination is the current node
-                riders.filter({$0.state == .riding && $0.to == edge.to}).forEach {
+                riders.filter({$0.state == .riding && $0.to == node}).forEach {
                     $0.state = .done
                 }
                 riders = riders.filter({$0.state != .done})
@@ -49,7 +51,7 @@ class Shuttle {
                     // Pick riders who are waiting at the current node
                     riders.filter({routes[0].pickups.contains($0.id)}).forEach {
                         assert($0.state == .waiting)
-                        assert($0.from == edge.to)
+                        assert($0.from == node)
                         $0.state = .riding
                     }
                     routes[0].pickups.removeAll()
@@ -58,20 +60,19 @@ class Shuttle {
                 } else {
                     // All done. Start a random walk.
                     assert(riders.isEmpty)
-                    self.routes = graph.randamRoute(from: edge.to)
+                    self.routes = graph.randamRoute(from: node)
                 }
             } else {
                 var edges = routes[0].edges
                 edges.removeFirst()
-                self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)
+                self.routes[0] = Route(edges: edges, length: routes[0].length - self.edge.length)
             }
-            self.edge = self.routes[0].edges[0]
         }
 
         // Update the locations of this shuttle and riders
-        let node0 = graph.nodes[edge.from]
-        let node1 = graph.nodes[edge.to]
-        let ratio = (time - baseTime) / edge.length
+        let node0 = graph.nodes[self.edge.from]
+        let node1 = graph.nodes[self.edge.to]
+        let ratio = (time - baseTime) / self.edge.length
         location.x = node0.location.x + (node1.location.x - node0.location.x) * ratio
         location.y = node0.location.y + (node1.location.y - node0.location.y) * ratio
         riders.filter({$0.state == .riding}).forEach { $0.location = location }
