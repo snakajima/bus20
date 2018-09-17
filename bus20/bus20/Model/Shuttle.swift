@@ -55,28 +55,26 @@ class Shuttle {
                 }
                 riders = riders.filter { $0.state == .riding }
                 
-                // Pick riders who are waiting at the current node
-                assigned.forEach {
-                    if $0.from == edge.to
-                       && routes.count >= 2
-                       && routes[1].pickups.contains($0.id) {
-                        if Shuttle.verbose {
-                            print("picked:", $0.id)
-                        }
-                        $0.state = .riding
-                        riders.append($0)
-                    }
-                }
-                assigned = assigned.filter { $0.state == .assigned }
-                
-                assert(riders.count <= capacity)
-                
                 self.routes.remove(at:0)
                 if self.routes.isEmpty {
                     let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
                     self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
                 } else {
-                    //print("route:", routes[0].pickups)
+                    // Pick riders who are waiting at the current node
+                    assigned.forEach {
+                        if routes[0].pickups.contains($0.id) {
+                            assert($0.from == edge.to)
+                            if Shuttle.verbose {
+                                print("picked:", $0.id)
+                            }
+                            $0.state = .riding
+                            riders.append($0)
+                        }
+                    }
+                    routes[0].pickups.removeAll()
+                    assigned = assigned.filter { $0.state == .assigned }
+                    
+                    assert(riders.count <= capacity)
                 }
             } else {
                 self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)
