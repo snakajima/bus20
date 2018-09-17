@@ -181,13 +181,11 @@ class Shuttle {
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
-        // debug code
-        var indeces = plan.routes.map { (route) -> Int in
-            route.from
-        }
-        indeces.append(plan.routes.last!.to)
-        
         if Shuttle.verbose {
+            var indeces = plan.routes.map { (route) -> Int in
+                route.from
+            }
+            indeces.append(plan.routes.last!.to)
             print("SH", rider.id, ":", [rider.from, rider.to], "→", indeces)
             plan.routes.forEach { (route) in
                 print(" ", route)
@@ -195,8 +193,6 @@ class Shuttle {
         }
 
         self.routes = plan.routes
-
-        rider.state = .waiting
         rider.hue = self.hue
         self.riders.append(rider)
     }

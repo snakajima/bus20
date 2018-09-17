@@ -9,7 +9,6 @@
 import UIKit
 
 enum RiderState {
-    case none
     case waiting
     case riding
     case done
@@ -23,7 +22,7 @@ class Rider {
     let from:Int
     let to:Int
     let route:Route
-    var state = RiderState.none
+    var state = RiderState.waiting
     var hue:CGFloat = 0.0
     var location:CGPoint
     var offset = 0 // visual offset when riding
