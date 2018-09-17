@@ -93,9 +93,11 @@ class Evaluator {
                 if cost.state == .assigned {
                     costs[index].waitTime += route.length
                 }
-                if costs.filter({ $0.state == .riding }).count > capacity {
-                    costExtra += 1.0e10; // large enough penalty
-                }
+            }
+            if costs.filter({ $0.state == .riding }).count > capacity {
+                costExtra += 1.0e10; // large enough penalty
+            }
+            for (index,cost) in costs.enumerated() {
                 if costs[index].state == .riding {
                     costs[index].rideTime += route.length
                     if cost.rider.to == route.to {
