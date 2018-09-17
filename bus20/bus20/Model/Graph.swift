@@ -9,6 +9,7 @@
 import UIKit
 
 struct Graph {
+    static var verbose = false
     let nodes:[Node]
     private let routes:[[Route]] // shortest routes among all nodes
     
@@ -54,7 +55,9 @@ struct Graph {
             return [routeDummy]
         }
         DispatchQueue.concurrentPerform(iterations: count) { (index0) in
-            print(index0, Thread.current)
+            if Graph.verbose {
+                print(index0, Thread.current)
+            }
             routes[index0] = (0..<count).map({ (index1) -> Route in
                 Graph.shortest(nodes: nodes, start: index0, end: index1)
             })

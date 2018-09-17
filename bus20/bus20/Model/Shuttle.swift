@@ -195,9 +195,12 @@ class Shuttle {
             route.from
         }
         indeces.append(plan.routes.last!.to)
-        print(rider.id, ":", [rider.from, rider.to], "→", indeces)
-        plan.routes.forEach { (route) in
-            print(" ", route)
+        
+        if Shuttle.verbose {
+            print("SH", rider.id, ":", [rider.from, rider.to], "→", indeces)
+            plan.routes.forEach { (route) in
+                print(" ", route)
+            }
         }
 
         self.routes = plan.routes
