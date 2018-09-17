@@ -16,7 +16,6 @@ class Shuttle {
     private var edge:Edge
     private var routes:[Route]
     private var baseTime = CGFloat(0)
-    private var assigned = [Rider]()
     private var riders = [Rider]()
     private var location = CGPoint.zero
     
@@ -45,7 +44,7 @@ class Shuttle {
             // that we are likely to pick up or drop some riders
             if edges.isEmpty {
                 // Drop riders whose destination is the current node
-                riders.forEach {
+                riders.filter({$0.state == .riding}).forEach {
                     if $0.to == edge.to {
                         if Shuttle.verbose {
                             print("dropped:", $0.id)
@@ -53,7 +52,6 @@ class Shuttle {
                         $0.state = .done
                     }
                 }
-                riders = riders.filter { $0.state == .riding }
                 
                 self.routes.remove(at:0)
                 if self.routes.isEmpty {
@@ -61,20 +59,19 @@ class Shuttle {
                     self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
                 } else {
                     // Pick riders who are waiting at the current node
-                    assigned.forEach {
+                    riders.forEach {
                         if routes[0].pickups.contains($0.id) {
+                            assert($0.state == .assigned)
                             assert($0.from == edge.to)
                             if Shuttle.verbose {
                                 print("picked:", $0.id)
                             }
                             $0.state = .riding
-                            riders.append($0)
                         }
                     }
                     routes[0].pickups.removeAll()
-                    assigned = assigned.filter { $0.state == .assigned }
                     
-                    assert(riders.count <= capacity)
+                    assert(riders.filter({$0.state == .riding}).count <= capacity)
                 }
             } else {
                 self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)
@@ -88,11 +85,15 @@ class Shuttle {
         let ratio = (time - baseTime) / edge.length
         location.x = node0.location.x + (node1.location.x - node0.location.x) * ratio
         location.y = node0.location.y + (node1.location.y - node0.location.y) * ratio
-        riders.forEach { $0.location = location }
+        riders.filter({$0.state == .riding}).forEach { $0.location = location }
 
         // This is only for display (UI)
+        var offset = 0
         for index in 0..<riders.count {
-            riders[index].offset = index
+            if riders[index].state == .riding {
+                riders[index].offset = offset
+                offset += 1
+            }
         }
     }
     
@@ -103,7 +104,7 @@ class Shuttle {
         ctx.fillEllipse(in: rc)
 
         // Render the scheduled routes
-        if assigned.count + riders.count > 0 {
+        if riders.count > 0 {
             ctx.setLineWidth(Metrics.routeWidth)
             ctx.setLineCap(.round)
             ctx.setLineJoin(.round)
@@ -159,7 +160,7 @@ class Shuttle {
         }
         
         // Append case
-        if (assigned.count + riders.count == 0) {
+        if (riders.count == 0) {
             routes = [routes[0]]
         }
         if let last = routes.last?.to, last != rider.from {
@@ -173,18 +174,18 @@ class Shuttle {
     }
 
     func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
-        var assignedExtra = self.assigned
+        var ridersPlus = riders
         if let rider = rider {
-            assignedExtra.append(rider)
+            ridersPlus.append(rider)
         }
         
-        let evaluator = Evaluator(routes: routes, capacity:capacity, riders: self.riders + assignedExtra);
+        let evaluator = Evaluator(routes: routes, capacity:capacity, riders: ridersPlus);
         evaluator.process()
         return evaluator.cost()
     }
     
     func evaluator() -> Evaluator {
-        return Evaluator(routes: routes, capacity:capacity, riders: riders + assigned);
+        return Evaluator(routes: routes, capacity:capacity, riders: riders);
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
@@ -202,9 +203,10 @@ class Shuttle {
         }
 
         self.routes = plan.routes
-        self.assigned.append(rider)
+
         rider.state = .assigned
         rider.hue = self.hue
+        self.riders.append(rider)
     }
 }
 
