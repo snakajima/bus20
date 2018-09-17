@@ -36,44 +36,35 @@ class Shuttle {
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > edge.length {
             baseTime += edge.length
-            var edges = routes[0].edges
-            assert(edges[0].to == edge.to && edges[0].from == edge.from)
-            edges.removeFirst()
 
             // Check if we are at the end of a route section, which incidates
             // that we are likely to pick up or drop some riders
-            if edges.isEmpty {
+            if edge.to == routes[0].to {
                 // Drop riders whose destination is the current node
-                riders.filter({$0.state == .riding}).forEach {
-                    if $0.to == edge.to {
-                        if Shuttle.verbose {
-                            print("dropped:", $0.id)
-                        }
-                        $0.state = .done
-                    }
+                riders.filter({$0.state == .riding && $0.to == edge.to}).forEach {
+                    $0.state = .done
                 }
                 
-                self.routes.remove(at:0)
-                if self.routes.isEmpty {
-                    let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
-                    self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
-                } else {
+                self.routes.removeFirst()
+                if !self.routes.isEmpty {
                     // Pick riders who are waiting at the current node
-                    riders.forEach {
-                        if routes[0].pickups.contains($0.id) {
-                            assert($0.state == .waiting)
-                            assert($0.from == edge.to)
-                            if Shuttle.verbose {
-                                print("picked:", $0.id)
-                            }
-                            $0.state = .riding
-                        }
+                    riders.filter({routes[0].pickups.contains($0.id)}).forEach {
+                        assert($0.state == .waiting)
+                        assert($0.from == edge.to)
+                        $0.state = .riding
                     }
                     routes[0].pickups.removeAll()
                     
                     assert(riders.filter({$0.state == .riding}).count <= capacity)
+                } else {
+                    // All done. Start a random walk.
+                    assert(riders.filter({$0.state != .done}).isEmpty)
+                    let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
+                    self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
                 }
             } else {
+                var edges = routes[0].edges
+                edges.removeFirst()
                 self.routes[0] = Route(edges: edges, length: routes[0].length - edge.length)
             }
             self.edge = self.routes[0].edges[0]
