@@ -65,6 +65,11 @@ struct Graph {
         self.routes = routes
     }
     
+    func randamRoute(from:Int) -> [Route] {
+        let to = (from + 1 + Random.int(self.nodes.count - 1)) % self.nodes.count
+        return [self.route(from: from, to: to, pickup:nil)]
+    }
+
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
         UIColor.white.setFill()
         ctx.fill(frame)

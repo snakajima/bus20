@@ -21,9 +21,7 @@ class Shuttle {
     
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
-        let index1 = (index + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
-        self.routes = [graph.route(from: index, to: index1, pickup:nil)]
-        //print(self.routes[0])
+        self.routes = graph.randamRoute(from: index)
         self.edge = self.routes[0].edges[0]
     }
     
@@ -31,7 +29,7 @@ class Shuttle {
     deinit {
         print("Shuttle:deinit")
     }
-
+    
     // Update the status of shuttle based on the curren time.
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > edge.length {
@@ -60,8 +58,7 @@ class Shuttle {
                 } else {
                     // All done. Start a random walk.
                     assert(riders.isEmpty)
-                    let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
-                    self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
+                    self.routes = graph.randamRoute(from: edge.to)
                 }
             } else {
                 var edges = routes[0].edges
