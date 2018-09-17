@@ -61,7 +61,7 @@ class Shuttle {
                     // Pick riders who are waiting at the current node
                     riders.forEach {
                         if routes[0].pickups.contains($0.id) {
-                            assert($0.state == .assigned)
+                            assert($0.state == .waiting)
                             assert($0.from == edge.to)
                             if Shuttle.verbose {
                                 print("picked:", $0.id)
@@ -204,7 +204,7 @@ class Shuttle {
 
         self.routes = plan.routes
 
-        rider.state = .assigned
+        rider.state = .waiting
         rider.hue = self.hue
         self.riders.append(rider)
     }

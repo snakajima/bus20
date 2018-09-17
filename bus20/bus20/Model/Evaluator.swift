@@ -42,7 +42,7 @@ class Evaluator {
     func process() {
         // Initialize costs and costExtra
         self.costs = riders.map {
-            RiderCost(rider: $0, state: ($0.state == .none) ? .assigned : $0.state)
+            RiderCost(rider: $0, state: ($0.state == .none) ? .waiting : $0.state)
         }
         costExtra = 0
         
@@ -58,7 +58,7 @@ class Evaluator {
             for (index,cost) in costs.enumerated() {
                 if route.pickups.contains(cost.rider.id) {
                     assert(cost.rider.from == route.from)
-                    assert(cost.state == .assigned)
+                    assert(cost.state == .waiting)
                     costs[index].state = .riding
                     
                     if Evaluator.verbose {
@@ -66,7 +66,7 @@ class Evaluator {
                     }
                 }
                 
-                if cost.state == .assigned {
+                if cost.state == .waiting {
                     costs[index].waitTime += route.length
                 }
             }

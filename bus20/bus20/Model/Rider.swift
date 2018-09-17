@@ -10,7 +10,7 @@ import UIKit
 
 enum RiderState {
     case none
-    case assigned
+    case waiting
     case riding
     case done
 }
