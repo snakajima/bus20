@@ -150,9 +150,7 @@ class ViewController: UIViewController {
         
         // Debug only
         let evaluator = bestPlan.shuttle.evaluator()
-        Evaluator.verbose = true
         evaluator.process()
-        Evaluator.verbose = false
         //print(evaluator.description())
     }
 }

@@ -10,6 +10,7 @@ import UIKit
 
 // A Shuttle represents a shuttle bus who can carry multiple riders.
 class Shuttle {
+    static var verbose = false
     private let hue:CGFloat
     private let capacity = Metrics.shuttleCapacity
     private var edge:Edge
@@ -46,7 +47,9 @@ class Shuttle {
                 // Drop riders whose destination is the current node
                 riders.forEach {
                     if $0.to == edge.to {
-                        print("dropped:", $0.id)
+                        if Shuttle.verbose {
+                            print("dropped:", $0.id)
+                        }
                         $0.state = .done
                     }
                 }
@@ -57,16 +60,16 @@ class Shuttle {
                     if $0.from == edge.to
                        && routes.count >= 2
                        && routes[1].pickups.contains($0.id) {
-                        print("picked:", $0.id)
+                        if Shuttle.verbose {
+                            print("picked:", $0.id)
+                        }
                         $0.state = .riding
                         riders.append($0)
                     }
                 }
                 assigned = assigned.filter { $0.state == .assigned }
                 
-                if riders.count > capacity {
-                    print("Over capacity", riders.count)
-                }
+                assert(riders.count <= capacity)
                 
                 self.routes.remove(at:0)
                 if self.routes.isEmpty {
