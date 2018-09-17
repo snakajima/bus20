@@ -173,18 +173,18 @@ class Shuttle {
     }
 
     func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
-        var assigned = self.assigned
+        var assignedExtra = self.assigned
         if let rider = rider {
-            assigned.append(rider)
+            assignedExtra.append(rider)
         }
         
-        let evaluator = Evaluator(routes: routes, capacity:capacity, assigned: assigned, riders: self.riders);
+        let evaluator = Evaluator(routes: routes, capacity:capacity, riders: self.riders + assignedExtra);
         evaluator.process()
         return evaluator.cost()
     }
     
     func evaluator() -> Evaluator {
-        return Evaluator(routes: routes, capacity:capacity, assigned: assigned, riders: riders);
+        return Evaluator(routes: routes, capacity:capacity, riders: riders + assigned);
     }
     
     func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {

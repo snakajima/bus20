@@ -27,15 +27,13 @@ class Evaluator {
     
     private let routes:[Route]
     private let capacity:Int
-    private var assigned:[Rider]
     private var riders:[Rider]
     private var costs = [RiderCost]()
     private var costExtra = CGFloat(0)
 
-    init(routes:[Route], capacity:Int, assigned:[Rider], riders:[Rider]) {
+    init(routes:[Route], capacity:Int, riders:[Rider]) {
         self.routes = routes
         self.capacity = capacity
-        self.assigned = assigned
         self.riders = riders
     }
     
@@ -43,8 +41,9 @@ class Evaluator {
     // also detect the over capacity situation (costExtra).
     func process() {
         // Initialize costs and costExtra
-        self.costs = riders.map { RiderCost(rider: $0, state: .riding) }
-        assigned.forEach { self.costs.append(RiderCost(rider: $0, state: .assigned)) }
+        self.costs = riders.map {
+            RiderCost(rider: $0, state: ($0.state == .none) ? .assigned : $0.state)
+        }
         costExtra = 0
         
         // Handle a special case where the rider is getting off at the very first node.
@@ -92,7 +91,7 @@ class Evaluator {
         }
     }
     
-    // Calculate the cost of this route. 
+    // Calculate the cost of this route.
     func cost() -> CGFloat {
         let cost = costs.reduce(CGFloat(0.0)) { (total, cost) -> CGFloat in
             assert(cost.state == .done)
