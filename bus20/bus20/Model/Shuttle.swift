@@ -65,7 +65,7 @@ class Shuttle {
             } else {
                 var edges = routes[0].edges
                 edges.removeFirst()
-                self.routes[0] = Route(edges: edges, length: routes[0].length - self.edge.length)
+                self.routes[0] = Route(edges: edges)
             }
         }
 

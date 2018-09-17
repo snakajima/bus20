@@ -27,9 +27,9 @@ struct Route {
         length = 1.0e99
         extra = 0
     }
-    init(edges:[Edge], length:CGFloat) {
+    init(edges:[Edge]) {
         self.edges = edges
-        self.length = length
+        self.length = edges.reduce(0) { $0 + $1.length }
         self.extra = 0
     }
 
@@ -40,9 +40,7 @@ struct Route {
     }
     
     init(route:Route, edge:Edge, extra:CGFloat) {
-        var edges = route.edges
-        edges.append(edge)
-        self.edges = edges
+        self.edges = route.edges + [edge]
         self.length = route.length + edge.length
         self.extra = extra
     }
