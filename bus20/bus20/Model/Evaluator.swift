@@ -43,7 +43,7 @@ class Evaluator {
     private func process() {
         // Initialize costs and costExtra
         self.costs = riders.map {
-            RiderCost(rider: $0, state: ($0.state == .none) ? .waiting : $0.state)
+            RiderCost(rider: $0, state: $0.state)
         }
         costExtra = 0
         
