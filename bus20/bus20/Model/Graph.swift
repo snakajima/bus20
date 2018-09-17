@@ -9,6 +9,7 @@
 import UIKit
 
 struct Graph {
+    static var verbose = false
     let nodes:[Node]
     private let routes:[[Route]] // shortest routes among all nodes
     
@@ -54,7 +55,9 @@ struct Graph {
             return [routeDummy]
         }
         DispatchQueue.concurrentPerform(iterations: count) { (index0) in
-            print(index0)
+            if Graph.verbose {
+                print(index0, Thread.current)
+            }
             routes[index0] = (0..<count).map({ (index1) -> Route in
                 Graph.shortest(nodes: nodes, start: index0, end: index1)
             })
@@ -80,11 +83,23 @@ struct Graph {
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
     
-    func route(from:Int, to:Int) -> Route {
+    func route(from:Int, to:Int, pickup:Rider?) -> Route {
         assert(from != to)
-        return routes[from][to]
+        var route = routes[from][to]
+        if let pickup = pickup {
+            route.pickups.insert(pickup.id)
+        }
+        return route
     }
-    
+    func route(from:Int, to:Int, basedOn:Route, pickup:Rider?) -> Route {
+        var route = routes[from][to]
+        route.pickups = basedOn.pickups
+        if let pickup = pickup {
+            route.pickups.insert(pickup.id)
+        }
+        return route
+    }
+
     private static func shortest(nodes:[Node], start:Int, end:Int) -> Route {
         var nodes = nodes
         nodes[start] = Node(node:nodes[start], type:.start)

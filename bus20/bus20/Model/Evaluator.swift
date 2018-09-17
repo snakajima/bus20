@@ -20,6 +20,8 @@ struct RiderCost {
 }
 
 class Evaluator {
+    static var verbose = false
+    
     let routes:[Route]
     let capacity:Int
     var assigned:[Rider]
@@ -70,7 +72,7 @@ class Evaluator {
         }
         costExtra = 0
         
-        // Handle a special case where the rider is getting of at the very first node.
+        // Handle a special case where the rider is getting off at the very first node.
         for (index,cost) in costs.enumerated() {
             if cost.state == .riding && cost.rider.to == routes[0].from {
                 costs[index].state = .done
@@ -78,20 +80,31 @@ class Evaluator {
         }
         routes.forEach { (route) in
             for (index,cost) in costs.enumerated() {
-                if cost.state == .assigned && cost.rider.from == route.from {
+                if cost.state == .assigned
+                   && route.pickups.contains(cost.rider.id) {
+                    assert(cost.rider.from == route.from)
                     costs[index].state = .riding
+                    
+                    if Evaluator.verbose {
+                        print("EV:picked:", cost.rider.id)
+                    }
                 }
                 
                 if cost.state == .assigned {
                     costs[index].waitTime += route.length
                 }
-                if costs.filter({ $0.state == .riding }).count > capacity {
-                    costExtra += 1.0e10; // large enough penalty
-                }
+            }
+            if costs.filter({ $0.state == .riding }).count > capacity {
+                costExtra += 1.0e10; // large enough penalty
+            }
+            for (index,cost) in costs.enumerated() {
                 if costs[index].state == .riding {
                     costs[index].rideTime += route.length
                     if cost.rider.to == route.to {
                         costs[index].state = .done
+                        if Evaluator.verbose {
+                            print("EV:dropped:", cost.rider.id)
+                        }
                     }
                 }
             }

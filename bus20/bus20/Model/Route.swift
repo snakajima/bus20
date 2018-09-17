@@ -13,6 +13,7 @@ struct Route {
     let edges:[Edge]
     let length:CGFloat
     let extra:CGFloat // used only when finding a shortest route
+    var pickups = Set<Int>() // identifiers of riders to be picked up 
     var from:Int {
         return edges.first!.from
     }
@@ -66,6 +67,6 @@ extension Route: CustomStringConvertible {
             return edge.from
         }
         array.append(self.to)
-        return array.description
+        return pickups.description + ":" + array.description
     }
 }
