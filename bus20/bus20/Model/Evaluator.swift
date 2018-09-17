@@ -20,6 +20,8 @@ struct RiderCost {
 }
 
 class Evaluator {
+    static var verbose = false
+    
     let routes:[Route]
     let capacity:Int
     var assigned:[Rider]
@@ -78,10 +80,14 @@ class Evaluator {
         }
         routes.forEach { (route) in
             for (index,cost) in costs.enumerated() {
-                if cost.state == .assigned 
+                if cost.state == .assigned
                    && route.pickups.contains(cost.rider.id) {
                     assert(cost.rider.from == route.from)
                     costs[index].state = .riding
+                    
+                    if Evaluator.verbose {
+                        print("EV:picked:", cost.rider.id)
+                    }
                 }
                 
                 if cost.state == .assigned {
@@ -94,6 +100,9 @@ class Evaluator {
                     costs[index].rideTime += route.length
                     if cost.rider.to == route.to {
                         costs[index].state = .done
+                        if Evaluator.verbose {
+                            print("EV:dropped:", cost.rider.id)
+                        }
                     }
                 }
             }
