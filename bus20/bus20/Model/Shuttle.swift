@@ -44,6 +44,7 @@ class Shuttle {
                 riders.filter({$0.state == .riding && $0.to == edge.to}).forEach {
                     $0.state = .done
                 }
+                riders = riders.filter({$0.state != .done})
                 
                 self.routes.removeFirst()
                 if !self.routes.isEmpty {
@@ -58,7 +59,7 @@ class Shuttle {
                     assert(riders.filter({$0.state == .riding}).count <= capacity)
                 } else {
                     // All done. Start a random walk.
-                    assert(riders.filter({$0.state != .done}).isEmpty)
+                    assert(riders.isEmpty)
                     let index1 = (edge.to + 1 + Random.int(graph.nodes.count - 1)) % graph.nodes.count
                     self.routes = [graph.route(from: edge.to, to: index1, pickup:nil)]
                 }

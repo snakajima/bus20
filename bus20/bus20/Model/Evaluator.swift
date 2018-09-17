@@ -60,10 +60,6 @@ class Evaluator {
                     assert(cost.rider.from == route.from)
                     assert(cost.state == .waiting)
                     costs[index].state = .riding
-                    
-                    if Evaluator.verbose {
-                        print("EV:picked:", cost.rider.id)
-                    }
                 }
                 
                 if cost.state == .waiting {
@@ -82,9 +78,6 @@ class Evaluator {
                     costs[index].rideTime += route.length
                     if cost.rider.to == route.to {
                         costs[index].state = .done
-                        if Evaluator.verbose {
-                            print("EV:dropped:", cost.rider.id)
-                        }
                     }
                 }
             }
