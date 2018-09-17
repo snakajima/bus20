@@ -29,7 +29,7 @@ class Evaluator {
     private let capacity:Int
     private var assigned:[Rider]
     private var riders:[Rider]
-    private var costs:[RiderCost]
+    private var costs = [RiderCost]()
     private var costExtra = CGFloat(0)
 
     init(routes:[Route], capacity:Int, assigned:[Rider], riders:[Rider]) {
@@ -37,15 +37,14 @@ class Evaluator {
         self.capacity = capacity
         self.assigned = assigned
         self.riders = riders
-        self.costs = riders.map { RiderCost(rider: $0, state: .riding) }
-        assigned.forEach { self.costs.append(RiderCost(rider: $0, state: .assigned)) }
     }
     
+    // Calculate the wait time and ride time of each rider, and
+    // also detect the over capacity situation (costExtra).
     func process() {
-        for index in 0..<costs.count {
-            costs[index].waitTime = 0
-            costs[index].rideTime = 0
-        }
+        // Initialize costs and costExtra
+        self.costs = riders.map { RiderCost(rider: $0, state: .riding) }
+        assigned.forEach { self.costs.append(RiderCost(rider: $0, state: .assigned)) }
         costExtra = 0
         
         // Handle a special case where the rider is getting off at the very first node.
@@ -54,11 +53,13 @@ class Evaluator {
                 costs[index].state = .done
             }
         }
+        
         routes.forEach { (route) in
+            // pick up riders at the begenning of this section
             for (index,cost) in costs.enumerated() {
-                if cost.state == .assigned
-                   && route.pickups.contains(cost.rider.id) {
+                if route.pickups.contains(cost.rider.id) {
                     assert(cost.rider.from == route.from)
+                    assert(cost.state == .assigned)
                     costs[index].state = .riding
                     
                     if Evaluator.verbose {
@@ -70,9 +71,13 @@ class Evaluator {
                     costs[index].waitTime += route.length
                 }
             }
+            
+            // detect over capacity
             if costs.filter({ $0.state == .riding }).count > capacity {
                 costExtra += 1.0e10; // large enough penalty
             }
+            
+            // drop riders at the end of section
             for (index,cost) in costs.enumerated() {
                 if costs[index].state == .riding {
                     costs[index].rideTime += route.length
@@ -87,6 +92,7 @@ class Evaluator {
         }
     }
     
+    // Calculate the cost of this route. 
     func cost() -> CGFloat {
         let cost = costs.reduce(CGFloat(0.0)) { (total, cost) -> CGFloat in
             assert(cost.state == .done)
