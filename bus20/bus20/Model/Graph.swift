@@ -62,6 +62,10 @@ struct Graph {
         let to = (from + 1 + Random.int(self.nodes.count - 1)) % self.nodes.count
         return [self.route(from: from, to: to)]
     }
+    
+    func location(at index:Int) -> CGPoint {
+        return nodes[index].location
+    }
 
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
         UIColor.white.setFill()

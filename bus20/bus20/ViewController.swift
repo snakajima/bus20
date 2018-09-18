@@ -66,7 +66,7 @@ class ViewController: UIViewController {
         }
         
         riders.forEach() {
-            $0.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+            $0.render(ctx: ctx, graph: graph, scale: scale)
         }
         
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
@@ -126,7 +126,7 @@ class ViewController: UIViewController {
         }
         
         riders.forEach() {
-            $0.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+            $0.render(ctx: ctx, graph: graph, scale: scale)
         }
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)

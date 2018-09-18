@@ -42,10 +42,10 @@ class Rider {
         assert(to != from)
     }
 
-    func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
-        let node1 = nodes[to]
+    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
+        let locationTo = graph.location(at: to)
         ctx.move(to: CGPoint(x: location.x * scale, y: location.y * scale))
-        ctx.addLine(to: CGPoint(x: node1.location.x * scale, y: node1.location.y * scale))
+        ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
 
         let colorFill = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: Metrics.riderAlpha)
         let colorStroke = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: Metrics.riderPathAlpha)
