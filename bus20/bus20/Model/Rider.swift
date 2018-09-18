@@ -37,7 +37,7 @@ class Rider {
         id = Rider.uniqueId()
         from = Random.int(graph.nodes.count) 
         to = (from + 1 + Random.int(graph.nodes.count-1)) % graph.nodes.count
-        route = graph.route(from: from, to: to, pickup:nil)
+        route = graph.route(from: from, to: to)
         location = graph.nodes[from].location
         assert(to != from)
     }

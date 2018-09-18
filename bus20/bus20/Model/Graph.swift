@@ -60,7 +60,7 @@ struct Graph {
     
     func randamRoute(from:Int) -> [Route] {
         let to = (from + 1 + Random.int(self.nodes.count - 1)) % self.nodes.count
-        return [self.route(from: from, to: to, pickup:nil)]
+        return [self.route(from: from, to: to)]
     }
 
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
@@ -81,12 +81,12 @@ struct Graph {
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
     
-    func route(from:Int, to:Int, pickup:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
+    func route(from:Int, to:Int, rider:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
         assert(from != to)
         var route = routes[from][to]
         route.pickups = pickups ?? Set<Int>()
-        if let pickup = pickup {
-            route.pickups.insert(pickup.id)
+        if let rider = rider {
+            route.pickups.insert(rider.id)
         }
         return route
     }
