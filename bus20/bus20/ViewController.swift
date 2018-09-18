@@ -16,7 +16,6 @@ class ViewController: UIViewController {
     var shuttles = [Shuttle]()
     var start = Date()
     var riders = [Rider]()
-    var stopped = false
     var speedMultiple = Metrics.speedMultiple
     var fTesting = false
     
@@ -43,7 +42,6 @@ class ViewController: UIViewController {
     }
     
     func start(count:Int) {
-        stopped = false
         shuttles = [Shuttle]()
         start = Date()
         riders = [Rider]()
@@ -76,9 +74,7 @@ class ViewController: UIViewController {
         }
 
         DispatchQueue.main.async {
-            if !self.stopped {
-                self.update()
-            }
+            self.update()
         }
     }
 
@@ -139,8 +135,8 @@ class ViewController: UIViewController {
         print(shuttles[0])
     }
     
-    @IBAction func stop(_ sender:UIBarButtonItem) {
-        stopped = true
+    @IBAction func emulate(_ sender:UIBarButtonItem) {
+        print("emulate:to be implemented")
     }
     
     func assign(rider:Rider) {

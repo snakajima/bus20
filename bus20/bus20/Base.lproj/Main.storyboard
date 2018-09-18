@@ -34,9 +34,9 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ulg-o9-0SP"/>
-                                    <barButtonItem systemItem="stop" id="M2s-z2-Nra">
+                                    <barButtonItem systemItem="play" id="M2s-z2-Nra">
                                         <connections>
-                                            <action selector="stop:" destination="BYZ-38-t0r" id="AJD-Ef-3tR"/>
+                                            <action selector="emulate:" destination="BYZ-38-t0r" id="1Bp-i6-xir"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wmw-Sa-qJi"/>
