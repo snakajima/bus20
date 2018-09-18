@@ -106,7 +106,6 @@ class ViewController: UIViewController {
     
     func addRider() {
         let rider = Rider(graph:graph)
-        riders.append(rider)
         assign(rider: rider)
     }
     
@@ -161,6 +160,7 @@ class ViewController: UIViewController {
     }
     
     func assign(rider:Rider) {
+        riders.append(rider)
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
         print("\nVC: bestPlan:", bestPlan.cost)
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
