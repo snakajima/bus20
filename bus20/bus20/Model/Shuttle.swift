@@ -165,11 +165,7 @@ class Shuttle {
     }
 
     func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
-        var ridersPlus = riders
-        if let rider = rider {
-            ridersPlus.append(rider)
-        }
-        
+        let ridersPlus = riders + [rider].compactMap { $0 }
         let evaluator = Evaluator(routes: routes, capacity:capacity, riders: ridersPlus);
         return evaluator.cost()
     }
