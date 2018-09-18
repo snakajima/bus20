@@ -31,7 +31,7 @@ class Shuttle {
         print("Shuttle:deinit")
     }
     
-    // Update the status of a shuttle based on the curren time.
+    // Update the status of a shuttle based on the time.
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > self.edge.length {
             baseTime += self.edge.length
@@ -84,6 +84,7 @@ class Shuttle {
         }
     }
     
+    // Renders the shuttle itself, and the scheduled route (only when it has riders)
     func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
         // Render the shuttle
         let rc = CGRect(x: location.x * scale - Metrics.shuttleRadius, y: location.y * scale - Metrics.shuttleRadius, width: Metrics.shuttleRadius * 2, height: Metrics.shuttleRadius * 2)
@@ -102,9 +103,9 @@ class Shuttle {
         }
     }
     
-    // Returns the list of possible plans to carry one additional rider,
-    // along with the relative cost.
-    // Note: Notice that this code takes a full advantage of Swift, which allows
+    // Returns the list of possible route plans to carry one additional rider,
+    // along with their relative costs.
+    // Notice that this code takes a full advantage of Swift, which allows
     // value oriented programming.
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
         var routes = self.routes // notice that we make a copy
@@ -164,29 +165,36 @@ class Shuttle {
         return plans
     }
 
-    func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
+    // Calcurate the cost of the specified route, optinally with one additional rider.
+    private func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
         let ridersPlus = riders + [rider].compactMap { $0 }
         let evaluator = Evaluator(routes: routes, capacity:capacity, riders: ridersPlus);
         return evaluator.cost()
     }
     
-    func evaluator() -> Evaluator {
+    private func evaluator() -> Evaluator {
         return Evaluator(routes: routes, capacity:capacity, riders: riders);
     }
     
-    func adapt(plan:RoutePlan, rider:Rider, graph:Graph) {
+    func debugDump() {
+        let evaluator = self.evaluator()
+        print(evaluator)
+    }
+    
+    // Adapt the specified route along with an additional rider
+    func adapt(routes:[Route], rider:Rider) {
         if Shuttle.verbose {
-            var indeces = plan.routes.map { (route) -> Int in
+            var indeces = routes.map { (route) -> Int in
                 route.from
             }
-            indeces.append(plan.routes.last!.to)
+            indeces.append(routes.last!.to)
             print("SH", rider.id, ":", [rider.from, rider.to], "→", indeces)
-            plan.routes.forEach { (route) in
+            routes.forEach { (route) in
                 print(" ", route)
             }
         }
 
-        self.routes = plan.routes
+        self.routes = routes
         rider.hue = self.hue
         self.riders.append(rider)
     }
