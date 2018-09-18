@@ -123,7 +123,7 @@ struct Graph {
                 let type = nodes[edge.to].type
                 if type == .empty || type == .end {
                     touch(edge: edge)
-                    insert(route:Route(route: route, edge: edge, extra:endNode.distance(to: nodes[edge.to])))
+                    insert(route:Route(edges: route.edges + [edge], extra:endNode.distance(to: nodes[edge.to])))
                 }
             }
         }

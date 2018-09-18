@@ -28,12 +28,6 @@ struct Route {
         self.extra = extra
     }
 
-    init(route:Route, edge:Edge, extra:CGFloat) {
-        self.edges = route.edges + [edge]
-        self.length = route.length + edge.length
-        self.extra = extra
-    }
-    
     func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
         guard let first = edges.first else {
             return
