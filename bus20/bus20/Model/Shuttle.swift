@@ -98,7 +98,7 @@ class Shuttle {
             ctx.setLineJoin(.round)
             for route in routes {
                 UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.routeAlpha).setStroke()
-                route.render(ctx: ctx, nodes: graph.nodes, scale: scale)
+                route.render(ctx:ctx, graph:graph, scale:scale)
             }
         }
     }
