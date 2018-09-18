@@ -11,10 +11,10 @@ import UIKit
 class ViewController: UIViewController {
     struct ScheduledRider {
         let rider:Rider
-        let rideTime:Int
-        init(graph:Graph, limit:Int) {
+        let rideTime:CGFloat
+        init(graph:Graph, limit:CGFloat) {
             rider = Rider(graph:graph)
-            rideTime = Random.int(limit)
+            rideTime = CGFloat(Random.float(Double(limit)))
         }
     }
     
@@ -63,6 +63,12 @@ class ViewController: UIViewController {
     
     func update() {
         let time = CGFloat(Date().timeIntervalSince(start)) * speedMultiple
+        
+        while let rider = scheduled.first, rider.rideTime < time {
+            assign(rider: rider.rider)
+            scheduled.removeFirst()
+        }
+        
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
@@ -148,15 +154,18 @@ class ViewController: UIViewController {
         print("emulate:to be implemented")
         Rider.resetId()
         Random.seed(0)
-        scheduled = Array(0..<10).map({ (_) -> ScheduledRider in
-            return ScheduledRider(graph:graph, limit:10 * 1000)
-        })
+        scheduled = Array(0..<50).map({ (_) -> ScheduledRider in
+            return ScheduledRider(graph:graph, limit:60.0)
+        }).sorted { $0.rideTime < $1.rideTime }
         
         start(count: Metrics.numberOfShuttles)
+        /*
         scheduled.forEach {
+            print($0.rideTime)
             riders.append($0.rider)
             assign(rider: $0.rider)
         }
+        */
     }
     
     func assign(rider:Rider) {
