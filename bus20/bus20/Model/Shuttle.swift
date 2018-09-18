@@ -198,6 +198,13 @@ class Shuttle {
         rider.hue = self.hue
         self.riders.append(rider)
     }
+    
+    static func bestPlan(shuttles:[Shuttle], graph:Graph, rider:Rider) -> RoutePlan {
+        let plans = shuttles
+            .flatMap({ $0.plans(rider:rider, graph:graph) })
+            .sorted { $0.cost < $1.cost }
+        return plans[0]
+    }
 }
 
 
