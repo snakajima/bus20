@@ -154,8 +154,8 @@ class ViewController: UIViewController {
         print("emulate:to be implemented")
         Rider.resetId()
         Random.seed(0)
-        scheduled = Array(0..<50).map({ (_) -> ScheduledRider in
-            return ScheduledRider(graph:graph, limit:60.0)
+        scheduled = Array(0..<Metrics.riderCount).map({ (_) -> ScheduledRider in
+            return ScheduledRider(graph:graph, limit:Metrics.playDuration)
         }).sorted { $0.rideTime < $1.rideTime }
         
         start(count: Metrics.numberOfShuttles)
@@ -175,7 +175,7 @@ class ViewController: UIViewController {
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
         
         // Debug only
-        bestPlan.shuttle.debugDump()
+        //bestPlan.shuttle.debugDump()
     }
 }
 

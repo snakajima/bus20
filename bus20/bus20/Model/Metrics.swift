@@ -18,9 +18,11 @@ struct Metrics {
     static let shuttleRadius = CGFloat(5.0)
     static let routeAlpha = CGFloat(0.1)
     static let routeWidth = CGFloat(10.0)
-    static let numberOfShuttles = 4
+    static let numberOfShuttles = 8
     static let speedMultiple = CGFloat(5.0)
-    static let shuttleCapacity = 2
+    static let shuttleCapacity = 5
+    static let playDuration = CGFloat(60.0)
+    static let riderCount = 100
 }
 
 
