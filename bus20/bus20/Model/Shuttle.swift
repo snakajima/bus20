@@ -38,9 +38,8 @@ class Shuttle {
 
             // Check if we are at the end of a route section, which incidates
             // that we are likely to pick up or drop some riders
-            let node = self.edge.to
-            if node == routes[0].to {
-                assert(routes[0].edges.count == 1)
+            if routes[0].edges.count == 1 {
+                let node = routes[0].to
                 // Drop riders whose destination is the current node
                 riders.filter({$0.state == .riding && $0.to == node}).forEach {
                     $0.state = .done
