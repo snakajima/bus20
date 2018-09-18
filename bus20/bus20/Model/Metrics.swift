@@ -9,6 +9,9 @@
 import CoreGraphics
 
 struct Metrics {
+    static let graphWidth = 10
+    static let graphHeight = 10
+    static let edgeLength = CGFloat(1.0)
     static let roadWidth = CGFloat(1.0)
     static let riderPathWidth = CGFloat(1.0)
     static let riderRadius = CGFloat(1.5)

@@ -19,7 +19,7 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet var viewMain:UIView!
-    let graph = Graph(w: 10, h: 10, unit: 1.0)
+    let graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
     var shuttles = [Shuttle]()
@@ -33,8 +33,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         let frame = view.frame
         let mapView = UIImageView(frame: frame)
-        scale = min(frame.size.width / 11.0,
-                        frame.size.height / 11.0)
+        scale = min(frame.size.width / CGFloat(Metrics.graphWidth + 1),
+                        frame.size.height / CGFloat(Metrics.graphHeight+1))
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         
