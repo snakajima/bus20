@@ -14,13 +14,8 @@ struct Route {
     let length:CGFloat
     let extra:CGFloat // used only when finding a shortest route
     var pickups = Set<Int>() // identifiers of riders to be picked up 
-    var from:Int {
-        return edges.first!.from
-    }
-    
-    var to:Int {
-        return edges.last!.to
-    }
+    var from:Int { return edges.first!.from }
+    var to:Int { return edges.last!.to }
 
     init(edges:[Edge], extra:CGFloat = 0) {
         self.edges = edges

@@ -1,5 +1,5 @@
 //
-//  Node.swift
+//  RoutePlan.swift
 //  bus20
 //
 //  Created by SATOSHI NAKAJIMA on 8/27/18.
