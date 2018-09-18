@@ -207,4 +207,14 @@ class Shuttle {
     }
 }
 
+extension Shuttle: CustomStringConvertible {
+    var description: String {
+        let array:[[String]] = [["[Routes]"],
+            routes.map {" " + $0.description},
+            ["[Riders]"],
+            riders.map {" " + $0.description}]
+        return array.flatMap({$0}).joined(separator:"\n")
+    }
+}
+
 

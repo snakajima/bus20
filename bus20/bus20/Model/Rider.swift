@@ -56,3 +56,9 @@ class Rider {
         Rider.image.draw(in: rc) // HACK: This code assumes ctx is the current UI Graphics context
     }
 }
+
+extension Rider: CustomStringConvertible {
+    var description: String {
+        return String(format: "%3d->%3d:%d", from, to, id)
+    }
+}

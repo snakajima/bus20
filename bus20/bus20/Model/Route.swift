@@ -36,10 +36,7 @@ struct Route {
 
 extension Route: CustomStringConvertible {
     var description: String {
-        var array = edges.map { (edge) -> Int in
-            return edge.from
-        }
-        array.append(self.to)
-        return pickups.description + ":" + array.description
+        return String(format: "%3d->%3d:%@", from, to,
+                      pickups.map{String($0)}.joined(separator: ","))
     }
 }

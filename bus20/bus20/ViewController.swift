@@ -134,6 +134,8 @@ class ViewController: UIViewController {
         let data = UIImagePNGRepresentation(image)!
         try! data.write(to: path)
         print(path)
+        
+        print(shuttles[0])
     }
     
     @IBAction func stop(_ sender:UIBarButtonItem) {
