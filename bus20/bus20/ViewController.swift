@@ -9,6 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController {
+    struct ScheduledRider {
+        let rider:Rider
+        let rideTime:Int
+        init(graph:Graph, limit:Int) {
+            rider = Rider(graph:graph)
+            rideTime = Random.int(limit)
+        }
+    }
+    
     @IBOutlet var viewMain:UIView!
     let graph = Graph(w: 10, h: 10, unit: 1.0)
     var routeView:UIImageView!
@@ -18,6 +27,7 @@ class ViewController: UIViewController {
     var riders = [Rider]()
     var speedMultiple = Metrics.speedMultiple
     var fTesting = false
+    var scheduled = [ScheduledRider]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -137,6 +147,17 @@ class ViewController: UIViewController {
     
     @IBAction func emulate(_ sender:UIBarButtonItem) {
         print("emulate:to be implemented")
+        Rider.resetId()
+        Random.seed(0)
+        scheduled = Array(0..<10).map({ (_) -> ScheduledRider in
+            return ScheduledRider(graph:graph, limit:10 * 1000)
+        })
+        
+        start(count: Metrics.numberOfShuttles)
+        scheduled.forEach {
+            riders.append($0.rider)
+            assign(rider: $0.rider)
+        }
     }
     
     func assign(rider:Rider) {
