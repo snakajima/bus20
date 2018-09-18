@@ -99,6 +99,7 @@
                                     <constraint firstAttribute="height" constant="44" id="ZwE-F5-hyh"/>
                                 </constraints>
                                 <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="LkL-7z-NCX"/>
                                     <barButtonItem systemItem="done" id="wVd-K5-O1k">
                                         <connections>
                                             <action selector="done:" destination="F8r-Gh-Rfg" id="9tO-Ah-k7T"/>
@@ -106,19 +107,111 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="8bT-M8-CNi">
+                                <rect key="frame" x="261" y="32" width="94" height="29"/>
+                                <connections>
+                                    <action selector="valueChanged:" destination="F8r-Gh-Rfg" eventType="valueChanged" id="PSf-Mb-Iwy"/>
+                                </connections>
+                            </stepper>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oFx-Ya-uKK">
+                                <rect key="frame" x="20" y="159" width="335" height="29"/>
+                                <segments>
+                                    <segment title="50"/>
+                                    <segment title="100"/>
+                                    <segment title="200"/>
+                                </segments>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shuttles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86R-oJ-X2u">
+                                <rect key="frame" x="20" y="36" width="221" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="6NK-Q0-MMo"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passengers/Shuttle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vkW-Ou-U6L">
+                                <rect key="frame" x="20" y="84" width="221" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="phL-D1-jbV"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Passengers/Hour" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U4G-kl-yaD">
+                                <rect key="frame" x="20" y="130" width="335" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="vdi-8S-zDc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="ICl-fB-cyS">
+                                <rect key="frame" x="20" y="236" width="335" height="29"/>
+                                <segments>
+                                    <segment title="x60"/>
+                                    <segment title="x300"/>
+                                    <segment title="x1200"/>
+                                </segments>
+                            </segmentedControl>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emulation Speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-ai-K44">
+                                <rect key="frame" x="20" y="207" width="335" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="xgD-LG-81y"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="1" minimumValue="1" maximumValue="50" translatesAutoresizingMaskIntoConstraints="NO" id="Nru-Ci-ird">
+                                <rect key="frame" x="261" y="81" width="94" height="29"/>
+                                <connections>
+                                    <action selector="valueChanged:" destination="F8r-Gh-Rfg" eventType="valueChanged" id="b28-bn-XWu"/>
+                                </connections>
+                            </stepper>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="oFx-Ya-uKK" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="5MX-Hb-Xg0"/>
+                            <constraint firstItem="ICl-fB-cyS" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="7Ue-IU-kur"/>
                             <constraint firstItem="v0Q-fy-NDG" firstAttribute="trailing" secondItem="hIb-wi-8FI" secondAttribute="trailing" id="7k5-jO-mS1"/>
+                            <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="Nru-Ci-ird" secondAttribute="trailing" constant="20" id="8Ad-jz-Na8"/>
+                            <constraint firstItem="ICl-fB-cyS" firstAttribute="top" secondItem="fF4-ai-K44" secondAttribute="bottom" constant="8" id="9lS-yx-N9b"/>
+                            <constraint firstItem="vkW-Ou-U6L" firstAttribute="top" secondItem="86R-oJ-X2u" secondAttribute="bottom" constant="27" id="B90-Zz-WAq"/>
+                            <constraint firstItem="Nru-Ci-ird" firstAttribute="top" secondItem="8bT-M8-CNi" secondAttribute="bottom" constant="20" id="DXg-Yp-R48"/>
+                            <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="oFx-Ya-uKK" secondAttribute="trailing" constant="20" id="EWR-vK-ZpG"/>
+                            <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="U4G-kl-yaD" secondAttribute="trailing" constant="20" id="F5C-fd-qeV"/>
+                            <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="8bT-M8-CNi" secondAttribute="trailing" constant="20" id="J4W-ji-jJf"/>
+                            <constraint firstItem="fF4-ai-K44" firstAttribute="top" secondItem="oFx-Ya-uKK" secondAttribute="bottom" constant="20" id="NYc-nb-v8T"/>
                             <constraint firstItem="v0Q-fy-NDG" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" id="ST5-xm-T3m"/>
+                            <constraint firstItem="fF4-ai-K44" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="Tof-3a-Yea"/>
                             <constraint firstItem="v0Q-fy-NDG" firstAttribute="bottom" secondItem="hIb-wi-8FI" secondAttribute="bottom" id="Tws-bx-UsQ"/>
+                            <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="fF4-ai-K44" secondAttribute="trailing" constant="20" id="X76-T6-6yK"/>
+                            <constraint firstItem="vkW-Ou-U6L" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="XoZ-wu-aBO"/>
+                            <constraint firstItem="oFx-Ya-uKK" firstAttribute="top" secondItem="U4G-kl-yaD" secondAttribute="bottom" constant="8" id="Yui-Aa-nZf"/>
+                            <constraint firstItem="8bT-M8-CNi" firstAttribute="top" secondItem="hIb-wi-8FI" secondAttribute="top" constant="12" id="biR-z2-faq"/>
+                            <constraint firstItem="86R-oJ-X2u" firstAttribute="top" secondItem="hIb-wi-8FI" secondAttribute="top" constant="16" id="ezZ-jI-WeF"/>
+                            <constraint firstItem="U4G-kl-yaD" firstAttribute="top" secondItem="Nru-Ci-ird" secondAttribute="bottom" constant="20" id="fYT-4I-qMO"/>
+                            <constraint firstItem="8bT-M8-CNi" firstAttribute="leading" secondItem="86R-oJ-X2u" secondAttribute="trailing" constant="20" id="lev-An-qnG"/>
+                            <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="ICl-fB-cyS" secondAttribute="trailing" constant="20" id="oGv-cQ-lvn"/>
+                            <constraint firstItem="U4G-kl-yaD" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="oov-Ni-l6M"/>
+                            <constraint firstItem="86R-oJ-X2u" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="uHo-yz-Ngs"/>
+                            <constraint firstItem="Nru-Ci-ird" firstAttribute="leading" secondItem="vkW-Ou-U6L" secondAttribute="trailing" constant="20" id="xc8-WE-fHi"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="hIb-wi-8FI"/>
                     </view>
+                    <connections>
+                        <outlet property="labelCapacity" destination="vkW-Ou-U6L" id="Hjo-PN-oss"/>
+                        <outlet property="labelShuttles" destination="86R-oJ-X2u" id="aoP-Gz-nLW"/>
+                        <outlet property="stepperCapacity" destination="Nru-Ci-ird" id="vlL-Za-Mgk"/>
+                        <outlet property="stepperShuttles" destination="8bT-M8-CNi" id="rQQ-aB-Zin"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JZs-lk-J54" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="838" y="175"/>
+            <point key="canvasLocation" x="837.60000000000002" y="174.96251874062969"/>
         </scene>
     </scenes>
 </document>

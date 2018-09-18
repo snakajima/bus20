@@ -9,23 +9,33 @@
 import UIKit
 
 class PropertyViewController: UIViewController {
+    @IBOutlet var labelShuttles:UILabel!
+    @IBOutlet var labelCapacity:UILabel!
+    @IBOutlet var stepperShuttles:UIStepper!
+    @IBOutlet var stepperCapacity:UIStepper!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        stepperShuttles.value = Double(Metrics.numberOfShuttles)
+        stepperCapacity.value = Double(Metrics.shuttleCapacity)
+        updateLabels()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func updateLabels() {
+        labelShuttles.text = String(format: "%d shuttles", Metrics.numberOfShuttles)
+        labelCapacity.text = String(format: "%d passenger/shuttle", Metrics.shuttleCapacity)
     }
-    */
+    
+    @IBAction func valueChanged(_ sender:UIStepper) {
+        if sender == stepperShuttles {
+            Metrics.numberOfShuttles = Int(sender.value)
+        } else if sender == stepperCapacity {
+            Metrics.shuttleCapacity = Int(sender.value)
+        }
+        updateLabels()
+    }
+
     @IBAction func done(_:UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
