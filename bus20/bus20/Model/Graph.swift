@@ -20,22 +20,15 @@ struct Graph {
         var nodes:[Node] = (0..<count).map { (index) -> Node in
             let y = index / w
             let x = index - y * w
-            var edges = [Edge]()
-            if x > 0 {
-                edges.append(Edge(from: index, to: index-1, length: unit))
-            }
-            if x+1 < w {
-                edges.append(Edge(from: index, to: index+1, length: unit))
-            }
-            if y > 0 {
-                edges.append(Edge(from: index, to: index-w, length: unit))
-            }
-            if y+1 < h {
-                edges.append(Edge(from: index, to: index+w, length: unit))
-            }
+            let edges = [
+                (x > 0) ? Edge(from: index, to: index-1, length: unit) : nil,
+                (x < w-1) ? Edge(from: index, to: index+1, length: unit) : nil,
+                (y > 0) ? Edge(from: index, to: index-w, length: unit) : nil,
+                (y < h-1) ? Edge(from: index, to: index+w, length: unit) : nil,
+            ]
             return Node(location:CGPoint(x: unit * (CGFloat(x + 1) + CGFloat(Random.float(0.75)) - 0.375),
                         y: unit * (CGFloat(y + 1) + CGFloat(Random.float(0.75)) - 0.375)),
-                        edges: edges)
+                        edges: edges.compactMap {$0})
         }
         
         // calculate length
