@@ -81,17 +81,10 @@ struct Graph {
         return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
     }
     
-    func route(from:Int, to:Int, pickup:Rider?) -> Route {
+    func route(from:Int, to:Int, pickup:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
         assert(from != to)
         var route = routes[from][to]
-        if let pickup = pickup {
-            route.pickups.insert(pickup.id)
-        }
-        return route
-    }
-    func route(from:Int, to:Int, basedOn:Route, pickup:Rider?) -> Route {
-        var route = routes[from][to]
-        route.pickups = basedOn.pickups
+        route.pickups = pickups ?? Set<Int>()
         if let pickup = pickup {
             route.pickups.insert(pickup.id)
         }
