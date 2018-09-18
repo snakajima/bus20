@@ -39,13 +39,13 @@ struct Node {
         return sqrt(dx * dx + dy * dy)
     }
     
-    func render(ctx:CGContext, nodes:[Node], scale:CGFloat) {
+    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
         let rc = CGRect(x: location.x * scale - 2, y: location.y * scale - 2, width: 4, height: 4)
         ctx.fillEllipse(in: rc)
         
         ctx.beginPath()
         for edge in edges {
-            edge.addPath(ctx: ctx, nodes: nodes, scale: scale)
+            edge.addPath(ctx: ctx, graph: graph, scale: scale)
         }
         ctx.closePath()
         ctx.drawPath(using: .stroke)

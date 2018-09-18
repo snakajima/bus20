@@ -12,7 +12,7 @@ import CoreGraphics
 struct Edge {
     let from:Int
     let to:Int
-    var length:CGFloat
+    let length:CGFloat
     
     init(from:Int, to:Int, length:CGFloat=1.0) {
         self.from = from
@@ -21,10 +21,10 @@ struct Edge {
     }
     
     // For rendering
-    func addPath(ctx:CGContext, nodes:[Node], scale:CGFloat) {
-        let node0 = nodes[from]
-        let node1 = nodes[to]
-        ctx.move(to: CGPoint(x: node0.location.x * scale, y: node0.location.y * scale))
-        ctx.addLine(to: CGPoint(x: node1.location.x * scale, y: node1.location.y * scale))
+    func addPath(ctx:CGContext, graph:Graph, scale:CGFloat) {
+        let locationFrom = graph.location(at: from)
+        let locationTo = graph.location(at: to)
+        ctx.move(to: CGPoint(x: locationFrom.x * scale, y: locationFrom.y * scale))
+        ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
     }
 }
