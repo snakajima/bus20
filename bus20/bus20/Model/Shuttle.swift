@@ -102,22 +102,26 @@ class Shuttle {
         }
     }
     
-    // Returns the list of possible plans to carry the specified rider
+    // Returns the list of possible plans to carry one additional rider,
+    // along with the relative cost.
+    // Note: Notice that this code takes a full advantage of Swift, which allows
+    // value oriented programming.
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
-        var routes = self.routes
+        var routes = self.routes // notice that we make a copy
         
-        // Make it sure that the first route is a single-edge route
+        // Make it sure that the first route is a single-edge route,
+        // so that we can change the route if necessary.
         if let route = routes.first, route.edges.count > 1 {
             let edge = route.edges[0]
             routes[0] = graph.route(from: edge.from, to: edge.to, pickup:nil)
             routes.insert(graph.route(from: edge.to, to: route.to, pickup:nil), at: 1)
         }
- 
+
         let costBasis = evaluate(routes: routes, rider: nil)
         
         // All possible insertion cases
         var plans = (1..<routes.count).flatMap { (index0) -> [RoutePlan] in
-            var routes0 = routes
+            var routes0 = routes // notice that we make another copy (for each)
             let route = routes0[index0]
             
             // Process insertion
@@ -135,7 +139,7 @@ class Shuttle {
                 routes0.insert(graph.route(from: rider.from, to: route.to, pickup:rider), at: index0+1)
             }
             return (index0+1..<routes.count).flatMap { (index1) -> [RoutePlan] in
-                var routes1 = routes0
+                var routes1 = routes0 // notice that we make yet another copy
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
                     routes1[index1] = graph.route(from: route.from, to: rider.to, basedOn: route, pickup:nil)
