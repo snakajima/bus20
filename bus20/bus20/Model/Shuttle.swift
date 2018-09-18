@@ -23,7 +23,7 @@ class Shuttle {
 
     init(hue:CGFloat, index:Int, graph:Graph) {
         self.hue = hue
-        self.routes = graph.randamRoute(from: index)
+        self.routes = [graph.randamRoute(from: index)]
     }
     
     // for debugging
@@ -60,7 +60,7 @@ class Shuttle {
                 } else {
                     // All done. Start a random walk.
                     assert(riders.isEmpty)
-                    self.routes = graph.randamRoute(from: node)
+                    self.routes = [graph.randamRoute(from: node)]
                 }
             } else {
                 // Just move to the next edge
@@ -71,11 +71,11 @@ class Shuttle {
         }
 
         // Update the locations of this shuttle and riders
-        let from = graph.nodes[self.edge.from]
-        let to = graph.nodes[self.edge.to]
+        let locationFrom = graph.location(at: self.edge.from)
+        let locationTo = graph.location(at: self.edge.to)
         let ratio = (time - baseTime) / self.edge.length
-        location.x = from.location.x + (to.location.x - from.location.x) * ratio
-        location.y = from.location.y + (to.location.y - from.location.y) * ratio
+        location.x = locationFrom.x + (locationTo.x - locationFrom.x) * ratio
+        location.y = locationFrom.y + (locationTo.y - locationFrom.y) * ratio
         var offset = 0
         riders.filter({$0.state == .riding}).forEach {
             $0.location = location

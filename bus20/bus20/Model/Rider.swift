@@ -19,13 +19,13 @@ class Rider {
     static let image = UIImage(named: "rider.png")!
     static var count = 100 // for unique id
     let id:Int
-    let from:Int
-    let to:Int
     let route:Route
     var state = RiderState.waiting
     var hue:CGFloat = 0.0
     var location:CGPoint
     var offset = 0 // visual offset when riding
+    var from:Int { return route.from }
+    var to:Int { return route.to }
 
     static func uniqueId() -> Int {
         assert(Thread.main == Thread.current)
@@ -35,10 +35,8 @@ class Rider {
     
     init(graph:Graph) {
         id = Rider.uniqueId()
-        from = Random.int(graph.nodes.count) 
-        to = (from + 1 + Random.int(graph.nodes.count-1)) % graph.nodes.count
-        route = graph.route(from: from, to: to)
-        location = graph.nodes[from].location
+        route = graph.randamRoute()
+        location = graph.location(at: route.from)
         assert(to != from)
     }
 

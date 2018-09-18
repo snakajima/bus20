@@ -10,7 +10,7 @@ import UIKit
 
 struct Graph {
     static var verbose = false
-    let nodes:[Node]
+    private let nodes:[Node]
     private let routes:[[Route]] // shortest routes among all nodes
     
     init(w:Int, h:Int, unit:CGFloat) {
@@ -58,9 +58,10 @@ struct Graph {
         self.routes = routes
     }
     
-    func randamRoute(from:Int) -> [Route] {
+    func randamRoute(from:Int? = nil) -> Route {
+        let from = from ?? Random.int(self.nodes.count)
         let to = (from + 1 + Random.int(self.nodes.count - 1)) % self.nodes.count
-        return [self.route(from: from, to: to)]
+        return self.route(from: from, to: to)
     }
     
     func location(at index:Int) -> CGPoint {
