@@ -144,7 +144,7 @@ class ViewController: UIViewController {
     
     func assign(rider:Rider) {
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
-        print("VC: bestPlan:", bestPlan.cost)
+        print("\nVC: bestPlan:", bestPlan.cost)
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
         
         // Debug only

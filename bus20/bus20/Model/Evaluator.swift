@@ -98,9 +98,10 @@ class Evaluator {
 
 extension Evaluator: CustomStringConvertible {
     var description: String {
-        return costs.reduce("", { (result, cost) -> String in
-            return result + String(format: "W:%.2f R:%.2f M:%.2f\n", cost.waitTime, cost.rideTime, cost.rider.route.length)
-        })
+        return costs.map{
+            String(format: "W:%.2f R:%.2f M:%.2f",
+                   $0.waitTime, $0.rideTime, $0.rider.route.length)
+        }.joined(separator: "\n")
     }
 }
 

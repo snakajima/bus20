@@ -179,6 +179,7 @@ class Shuttle {
     func debugDump() {
         let evaluator = self.evaluator()
         print(evaluator)
+        print(self)
     }
     
     // Adapt the specified route along with an additional rider
@@ -209,10 +210,13 @@ class Shuttle {
 
 extension Shuttle: CustomStringConvertible {
     var description: String {
-        let array:[[String]] = [["[Routes]"],
+        let array:[[String]] = [
+            ["[Edge]" + edge.description],
+            ["[Routes]"],
             routes.map {" " + $0.description},
             ["[Riders]"],
-            riders.map {" " + $0.description}]
+            riders.map {" " + $0.description}
+        ]
         return array.flatMap({$0}).joined(separator:"\n")
     }
 }

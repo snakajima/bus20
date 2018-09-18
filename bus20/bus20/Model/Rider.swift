@@ -59,6 +59,14 @@ class Rider {
 
 extension Rider: CustomStringConvertible {
     var description: String {
-        return String(format: "%3d->%3d:%d", from, to, id)
+        return String(format: "%3d->%3d:%d %@", from, to, id, stateDescription)
+    }
+    
+    var stateDescription: String {
+        switch(state) {
+        case .waiting: return "W"
+        case .riding: return "R"
+        case .done: return "D"
+        }
     }
 }

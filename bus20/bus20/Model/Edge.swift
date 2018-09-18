@@ -28,3 +28,9 @@ struct Edge {
         ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
     }
 }
+
+extension Edge: CustomStringConvertible {
+    var description: String {
+        return String(format: "%d->%d", from, to)
+    }
+}
