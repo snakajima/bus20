@@ -153,7 +153,7 @@ class ViewController: UIViewController {
     @IBAction func emulate(_ sender:UIBarButtonItem) {
         print("emulate:to be implemented")
         Rider.resetId()
-        Random.seed(0)
+        Random.nextSeed()
         scheduled = Array(0..<50).map({ (_) -> ScheduledRider in
             return ScheduledRider(graph:graph, limit:60.0)
         }).sorted { $0.rideTime < $1.rideTime }
