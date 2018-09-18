@@ -152,6 +152,7 @@ class ViewController: UIViewController {
     
     @IBAction func emulate(_ sender:UIBarButtonItem) {
         print("emulate:to be implemented")
+        speedMultiple = Metrics.speedMultiple
         Rider.resetId()
         Random.seed(0)
         scheduled = Array(0..<Metrics.riderCount).map({ (_) -> ScheduledRider in

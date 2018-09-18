@@ -13,12 +13,26 @@ class PropertyViewController: UIViewController {
     @IBOutlet var labelCapacity:UILabel!
     @IBOutlet var stepperShuttles:UIStepper!
     @IBOutlet var stepperCapacity:UIStepper!
+    @IBOutlet var segmentRiders:UISegmentedControl!
+    @IBOutlet var segmentSpeed:UISegmentedControl!
+    let riders = [50, 100, 200]
+    let speeds:[CGFloat] = [1, 5, 30]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         stepperShuttles.value = Double(Metrics.numberOfShuttles)
         stepperCapacity.value = Double(Metrics.shuttleCapacity)
+        for i in 0..<riders.count {
+            if Metrics.riderCount == riders[i] {
+                segmentRiders.selectedSegmentIndex=i
+            }
+        }
+        for i in 0..<speeds.count {
+            if Metrics.speedMultiple == speeds[i] {
+                segmentSpeed.selectedSegmentIndex=i
+            }
+        }
         updateLabels()
     }
     
@@ -34,6 +48,14 @@ class PropertyViewController: UIViewController {
             Metrics.shuttleCapacity = Int(sender.value)
         }
         updateLabels()
+    }
+    
+    @IBAction func segmentValueChanged(_ sender:UISegmentedControl) {
+        if sender == segmentRiders {
+            Metrics.riderCount = riders[sender.selectedSegmentIndex]
+        } else if sender == segmentSpeed {
+            Metrics.speedMultiple = speeds[sender.selectedSegmentIndex]
+        }
     }
 
     @IBAction func done(_:UIBarButtonItem) {

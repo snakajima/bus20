@@ -120,6 +120,9 @@
                                     <segment title="100"/>
                                     <segment title="200"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentValueChanged:" destination="F8r-Gh-Rfg" eventType="valueChanged" id="vBp-VD-gKH"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shuttles" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="86R-oJ-X2u">
                                 <rect key="frame" x="20" y="36" width="221" height="21"/>
@@ -153,8 +156,11 @@
                                 <segments>
                                     <segment title="x60"/>
                                     <segment title="x300"/>
-                                    <segment title="x1200"/>
+                                    <segment title="x1800"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentValueChanged:" destination="F8r-Gh-Rfg" eventType="valueChanged" id="mhG-zr-NuG"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Emulation Speed" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fF4-ai-K44">
                                 <rect key="frame" x="20" y="207" width="335" height="21"/>
@@ -205,6 +211,8 @@
                     <connections>
                         <outlet property="labelCapacity" destination="vkW-Ou-U6L" id="Hjo-PN-oss"/>
                         <outlet property="labelShuttles" destination="86R-oJ-X2u" id="aoP-Gz-nLW"/>
+                        <outlet property="segmentRiders" destination="oFx-Ya-uKK" id="A81-uH-eWI"/>
+                        <outlet property="segmentSpeed" destination="ICl-fB-cyS" id="gwb-nO-j4F"/>
                         <outlet property="stepperCapacity" destination="Nru-Ci-ird" id="vlL-Za-Mgk"/>
                         <outlet property="stepperShuttles" destination="8bT-M8-CNi" id="rQQ-aB-Zin"/>
                     </connections>
