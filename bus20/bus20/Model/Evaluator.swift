@@ -47,13 +47,6 @@ class Evaluator {
         }
         costExtra = 0
         
-        // Handle a special case where the rider is getting off at the very first node.
-        for (index,cost) in costs.enumerated() {
-            if cost.state == .riding && cost.rider.to == routes[0].from {
-                costs[index].state = .done
-            }
-        }
-        
         routes.forEach { (route) in
             // pick up riders at the begenning of this section
             for (index,cost) in costs.enumerated() {
