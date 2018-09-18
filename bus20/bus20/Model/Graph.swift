@@ -43,7 +43,7 @@ struct Graph {
         nodes = self.nodes
 
         // Calcurate shortest routes among all Nodes
-        let routeDummy = Route(edge:nodes[0].edges[0], extra:0)
+        let routeDummy = Route(edges:[nodes[0].edges[0]], extra:0)
         var routes = (0..<count).map { (index0) -> [Route] in
             return [routeDummy]
         }
@@ -114,7 +114,7 @@ struct Graph {
         }
         for edge in nodes[start].edges {
             touch(edge: edge)
-            insert(route:Route(edge:edge, extra:endNode.distance(to: nodes[edge.to])))
+            insert(route:Route(edges:[edge], extra:endNode.distance(to: nodes[edge.to])))
         }
         
         func propagate(route:Route) {

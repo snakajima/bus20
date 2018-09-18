@@ -22,23 +22,12 @@ struct Route {
         return edges.last!.to
     }
 
-    init() {
-        edges = [Edge]()
-        length = 1.0e99
-        extra = 0
-    }
-    init(edges:[Edge]) {
+    init(edges:[Edge], extra:CGFloat = 0) {
         self.edges = edges
         self.length = edges.reduce(0) { $0 + $1.length }
-        self.extra = 0
-    }
-
-    init(edge:Edge, extra:CGFloat) {
-        self.edges = [edge]
-        self.length = edge.length
         self.extra = extra
     }
-    
+
     init(route:Route, edge:Edge, extra:CGFloat) {
         self.edges = route.edges + [edge]
         self.length = route.length + edge.length
