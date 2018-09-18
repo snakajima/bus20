@@ -32,6 +32,9 @@ class Rider {
         defer { count += 1 }
         return count;
     }
+    static func resetId() {
+        count = 100
+    }
     
     init(graph:Graph) {
         id = Rider.uniqueId()

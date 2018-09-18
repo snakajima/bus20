@@ -92,6 +92,7 @@ class ViewController: UIViewController {
             fTesting = false
             speedMultiple = Metrics.speedMultiple
             Random.seed(0)
+            Rider.resetId()
             start(count: Metrics.numberOfShuttles)
         }
         addRider()
