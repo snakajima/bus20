@@ -55,6 +55,7 @@ class ViewController: UIViewController {
         shuttles = [Shuttle]()
         start = Date()
         riders = [Rider]()
+        scheduled.removeAll()
         for i in 0..<count {
             shuttles.append(Shuttle(hue: 1.0/CGFloat(count) * CGFloat(i), graph:graph))
         }
@@ -151,15 +152,17 @@ class ViewController: UIViewController {
     }
     
     @IBAction func emulate(_ sender:UIBarButtonItem) {
-        print("emulate:to be implemented")
+        if fTesting {
+            fTesting = false
+        }
         speedMultiple = Metrics.speedMultiple
         Rider.resetId()
         Random.seed(0)
+        
+        start(count: Metrics.numberOfShuttles)
         scheduled = Array(0..<Metrics.riderCount).map({ (_) -> ScheduledRider in
             return ScheduledRider(graph:graph, limit:Metrics.playDuration)
         }).sorted { $0.rideTime < $1.rideTime }
-        
-        start(count: Metrics.numberOfShuttles)
         /*
         scheduled.forEach {
             print($0.rideTime)
