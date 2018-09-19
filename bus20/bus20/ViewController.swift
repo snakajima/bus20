@@ -20,6 +20,7 @@ class ViewController: UIViewController {
     
     @IBOutlet var viewMain:UIView!
     let graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
+    let label = UILabel(frame: .zero) // to render text
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
     var shuttles = [Shuttle]()
@@ -75,6 +76,8 @@ class ViewController: UIViewController {
         
         let ctx = UIGraphicsGetCurrentContext()!
 
+        label.text = String(format: "%2d:%02d", Int(time / 60), Int(time) % 60)
+        label.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
         shuttles.forEach() {
             $0.update(graph:graph, time:time)
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
