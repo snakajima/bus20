@@ -122,7 +122,9 @@ class Shuttle {
         
         // All possible insertion cases
         var plansArray = Array(repeating: [RoutePlan](), count:routes.count - 1)
-        for index0 in 1..<routes.count {
+        //for index0 in 1..<routes.count {
+        DispatchQueue.concurrentPerform(iterations: routes.count-1) { (index00) in
+            let index0 = index00+1
             var routes0 = routes // notice that we make another copy (for each)
             let route = routes0[index0]
             

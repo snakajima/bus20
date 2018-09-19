@@ -80,16 +80,12 @@ class ViewController: UIViewController {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         
-        riders.forEach() {
+        riders.filter({ $0.state != .done }).forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale)
         }
         
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
         
-        riders = riders.filter {
-            $0.state != .done
-        }
-
         DispatchQueue.main.async {
             self.update()
         }
@@ -177,7 +173,7 @@ class ViewController: UIViewController {
         let before = Date()
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
         let delta = Date().timeIntervalSince(before)
-        print(String(format:"bestPlan:%.0f, time:%.4f", bestPlan.cost, delta))
+        print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d", bestPlan.cost, delta, riders.count))
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
         
         // Debug only
