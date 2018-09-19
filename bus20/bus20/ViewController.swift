@@ -19,8 +19,9 @@ class ViewController: UIViewController {
     }
     
     @IBOutlet var viewMain:UIView!
+    @IBOutlet var label:UILabel!
     let graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
-    let label = UILabel(frame: .zero) // to render text
+    let labelTime = UILabel(frame: .zero) // to render text
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
     var shuttles = [Shuttle]()
@@ -39,7 +40,7 @@ class ViewController: UIViewController {
         let frame = view.frame
         let mapView = UIImageView(frame: frame)
         scale = min(frame.size.width / CGFloat(Metrics.graphWidth + 1),
-                        frame.size.height / CGFloat(Metrics.graphHeight+1))
+                        frame.size.height / CGFloat(Metrics.graphHeight+1)) / Metrics.edgeLength
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         
@@ -58,6 +59,7 @@ class ViewController: UIViewController {
     
     func start(count:Int) {
         done = false
+        label.text = ""
         totalCount = 0
         busyCount = 0
         totalOccupancy = 0
@@ -82,8 +84,8 @@ class ViewController: UIViewController {
         
         let ctx = UIGraphicsGetCurrentContext()!
 
-        label.text = String(format: "%2d:%02d", Int(time / 60), Int(time) % 60)
-        label.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
+        labelTime.text = String(format: "%2d:%02d", Int(time / 60), Int(time) % 60)
+        labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
         shuttles.forEach() {
             $0.update(graph:graph, time:time)
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
@@ -114,9 +116,12 @@ class ViewController: UIViewController {
         let wait = riders.reduce(CGFloat(0.0)) { $0 + $1.pickupTime - $1.startTime }
         let ride = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime }
         let extra = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime - $1.route.length }
-        print(String(format: "w:%.2f, r:%.2f, e:%.2f, u:%.1f%%, o:%.1f%%",
+        print(String(format: "w:%.1f, r:%.1f, e:%.1f, u:%.1f%%, o:%.1f%%",
                      wait/count, ride/count, extra/count,
                      busyCount * 100 / totalCount, totalOccupancy * 100 / totalCount ))
+        label.text = String(format: "Avarage Wait: %.1fmin\nAvarage Ride: %.1fmin\nAverage Detour: %.1fmin\nShuttle Utilization: %.1f%%\nOccupancy: %.1f%%",
+                                wait/count, ride/count, extra/count,
+                                busyCount * 100 / totalCount, totalOccupancy * 100 / totalCount )
     }
 
     override func didReceiveMemoryWarning() {

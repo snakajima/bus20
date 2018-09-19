@@ -55,9 +55,21 @@
                             </toolbar>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tWg-4h-fAv">
                                 <rect key="frame" x="0.0" y="442" width="375" height="181"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dPi-0F-R8u">
+                                        <rect key="frame" x="8" y="8" width="359" height="165"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="181" id="CfH-qH-h6B"/>
+                                    <constraint firstItem="dPi-0F-R8u" firstAttribute="top" secondItem="tWg-4h-fAv" secondAttribute="top" constant="8" id="JfT-dR-PTC"/>
+                                    <constraint firstAttribute="trailing" secondItem="dPi-0F-R8u" secondAttribute="trailing" constant="8" id="V6V-Um-qiI"/>
+                                    <constraint firstItem="dPi-0F-R8u" firstAttribute="leading" secondItem="tWg-4h-fAv" secondAttribute="leading" constant="8" id="YnC-HN-8ei"/>
+                                    <constraint firstAttribute="bottom" secondItem="dPi-0F-R8u" secondAttribute="bottom" constant="8" id="fVk-uq-1Fm"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -78,6 +90,7 @@
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="label" destination="dPi-0F-R8u" id="QYC-tG-eQp"/>
                         <outlet property="viewMain" destination="P9k-2a-iWR" id="0da-d5-nuC"/>
                     </connections>
                 </viewController>
