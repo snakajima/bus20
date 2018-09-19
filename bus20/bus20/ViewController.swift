@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     var done = false
     var totalCount:CGFloat = 0
     var busyCount:CGFloat = 0
-    var fullCount:CGFloat = 0
+    var totalRatio:CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         done = false
         totalCount = 0
         busyCount = 0
-        fullCount = 0
+        totalRatio = 0
         start = Date()
         riders = [Rider]()
         scheduled = [ScheduledRider]()
@@ -89,8 +89,8 @@ class ViewController: UIViewController {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
             
             totalCount += 1
+            totalRatio += $0.ratio
             if $0.isBusy { busyCount += 1 }
-            if $0.isFull { fullCount += 1 }
         }
         
         let activeRiders = riders.filter({ $0.state != .done })
@@ -114,9 +114,9 @@ class ViewController: UIViewController {
         let wait = riders.reduce(CGFloat(0.0)) { $0 + $1.pickupTime - $1.startTime }
         let ride = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime }
         let extra = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime - $1.route.length }
-        print(String(format: "w:%.2f, r:%.2f, e:%.2f, u:%.1f%%, f:%.1f%%",
+        print(String(format: "w:%.2f, r:%.2f, e:%.2f, u:%.1f%%, r:%.1f%%",
                      wait/count, ride/count, extra/count,
-                     busyCount * 100 / totalCount, fullCount * 100 / totalCount))
+                     busyCount * 100 / totalCount, totalRatio * 100 / totalCount ))
     }
 
     override func didReceiveMemoryWarning() {
@@ -184,7 +184,7 @@ class ViewController: UIViewController {
         Random.seed(0)
         
         start(count: Metrics.numberOfShuttles)
-        scheduled = Array(0..<Metrics.riderCount).map({ (_) -> ScheduledRider in
+        scheduled = Array(0..<Metrics.riderCount * Int(Metrics.playDuration / 60)).map({ (_) -> ScheduledRider in
             return ScheduledRider(graph:graph, limit:Metrics.playDuration)
         }).sorted { $0.rideTime < $1.rideTime }
         /*
@@ -198,7 +198,7 @@ class ViewController: UIViewController {
     
     func assign(rider:Rider) {
         riders.append(rider)
-        let before = Date()
+        //let before = Date()
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
         //let delta = Date().timeIntervalSince(before)
         //print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d", bestPlan.cost, delta, riders.count))
