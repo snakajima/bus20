@@ -56,7 +56,7 @@ class ViewController: UIViewController {
         start = Date()
         riders = [Rider]()
         for i in 0..<count {
-            shuttles.append(Shuttle(hue: 1.0/CGFloat(count) * CGFloat(i), index:i*10+i, graph:graph))
+            shuttles.append(Shuttle(hue: 1.0/CGFloat(count) * CGFloat(i), graph:graph))
         }
         update()
     }

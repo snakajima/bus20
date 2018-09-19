@@ -21,9 +21,9 @@ class Shuttle {
         return self.routes[0].edges[0]
     }
 
-    init(hue:CGFloat, index:Int, graph:Graph) {
+    init(hue:CGFloat, graph:Graph) {
         self.hue = hue
-        self.routes = [graph.randamRoute(from: index)]
+        self.routes = [graph.randamRoute()]
     }
     
     // for debugging
