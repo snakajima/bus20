@@ -121,7 +121,8 @@ class Shuttle {
         let costBasis = evaluate(routes: routes, rider: nil)
         
         // All possible insertion cases
-        var plans = (1..<routes.count).flatMap { (index0) -> [RoutePlan] in
+        var plansArray = Array(repeating: [RoutePlan](), count:routes.count - 1)
+        for index0 in 1..<routes.count {
             var routes0 = routes // notice that we make another copy (for each)
             let route = routes0[index0]
             
@@ -139,7 +140,7 @@ class Shuttle {
                 routes0[index0] = graph.route(from: route.from, to: rider.from, rider:nil, pickups:route.pickups)
                 routes0.insert(graph.route(from: rider.from, to: route.to, rider:rider), at: index0+1)
             }
-            return (index0+1..<routes.count).map { (index1) -> RoutePlan in
+            plansArray[index0-1] = (index0+1..<routes.count).map { (index1) -> RoutePlan in
                 var routes1 = routes0 // notice that we make yet another copy
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
@@ -150,6 +151,7 @@ class Shuttle {
                 return RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes1)
             }
         }
+        var plans = plansArray.flatMap { $0 }
         
         // Append case
         if (riders.count == 0) {
