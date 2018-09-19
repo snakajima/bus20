@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     var speedMultiple = Metrics.speedMultiple
     var fTesting = false
     var scheduled = [ScheduledRider]()
+    var done = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -57,6 +58,7 @@ class ViewController: UIViewController {
         start = Date()
         riders = [Rider]()
         scheduled.removeAll()
+        done = false
         for i in 0..<count {
             shuttles.append(Shuttle(hue: 1.0/CGFloat(count) * CGFloat(i), graph:graph))
         }
@@ -67,6 +69,7 @@ class ViewController: UIViewController {
         let time = CGFloat(Date().timeIntervalSince(start)) * speedMultiple
         
         while let rider = scheduled.first, rider.rideTime < time {
+            rider.rider.startTime = time
             assign(rider: rider.rider)
             scheduled.removeFirst()
         }
@@ -83,8 +86,13 @@ class ViewController: UIViewController {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
         }
         
-        riders.filter({ $0.state != .done }).forEach() {
+        let activeRiders = riders.filter({ $0.state != .done })
+        activeRiders.forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale)
+        }
+        if done == false && riders.count > 0 && activeRiders.count == 0 {
+            done = true
+            print("###done###")
         }
         
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!

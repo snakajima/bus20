@@ -42,6 +42,7 @@ class Shuttle {
                 let node = routes[0].to
                 // Drop riders whose destination is the current node
                 riders.filter({$0.state == .riding && $0.to == node}).forEach {
+                    $0.dropTime = time
                     $0.state = .done
                 }
                 riders = riders.filter({$0.state != .done})
@@ -52,6 +53,7 @@ class Shuttle {
                     riders.filter({routes[0].pickups.contains($0.id)}).forEach {
                         assert($0.state == .waiting)
                         assert($0.from == node)
+                        $0.pickupTime = time
                         $0.state = .riding
                     }
                     routes[0].pickups.removeAll()

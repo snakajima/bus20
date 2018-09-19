@@ -26,6 +26,9 @@ class Rider {
     var offset = 0 // visual offset when riding
     var from:Int { return route.from }
     var to:Int { return route.to }
+    var startTime = CGFloat(0)
+    var pickupTime = CGFloat(0)
+    var dropTime = CGFloat(0)
 
     static func uniqueId() -> Int {
         assert(Thread.main == Thread.current)
