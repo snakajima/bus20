@@ -24,7 +24,7 @@ struct Metrics {
     static var numberOfShuttles = 8
     static var speedMultiple = CGFloat(5.0)
     static var shuttleCapacity = 5
-    static let playDuration = CGFloat(120.0)
+    static let playDuration = CGFloat(180.0)
     static var riderCount = 50
 }
 

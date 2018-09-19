@@ -32,7 +32,7 @@ class ViewController: UIViewController {
     var done = false
     var totalCount:CGFloat = 0
     var busyCount:CGFloat = 0
-    var totalRatio:CGFloat = 0
+    var totalOccupancy:CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
         done = false
         totalCount = 0
         busyCount = 0
-        totalRatio = 0
+        totalOccupancy = 0
         start = Date()
         riders = [Rider]()
         scheduled = [ScheduledRider]()
@@ -89,7 +89,7 @@ class ViewController: UIViewController {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
             
             totalCount += 1
-            totalRatio += $0.ratio
+            totalOccupancy += $0.ocupancy
             if $0.isBusy { busyCount += 1 }
         }
         
@@ -114,9 +114,9 @@ class ViewController: UIViewController {
         let wait = riders.reduce(CGFloat(0.0)) { $0 + $1.pickupTime - $1.startTime }
         let ride = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime }
         let extra = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime - $1.route.length }
-        print(String(format: "w:%.2f, r:%.2f, e:%.2f, u:%.1f%%, r:%.1f%%",
+        print(String(format: "w:%.2f, r:%.2f, e:%.2f, u:%.1f%%, o:%.1f%%",
                      wait/count, ride/count, extra/count,
-                     busyCount * 100 / totalCount, totalRatio * 100 / totalCount ))
+                     busyCount * 100 / totalCount, totalOccupancy * 100 / totalCount ))
     }
 
     override func didReceiveMemoryWarning() {
