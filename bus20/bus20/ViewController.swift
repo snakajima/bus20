@@ -90,9 +90,12 @@ class ViewController: UIViewController {
             $0.update(graph:graph, time:time)
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
             
-            totalCount += 1
-            totalOccupancy += $0.ocupancy
-            if $0.isBusy { busyCount += 1 }
+            // Exclude the beginning and tail end from the Shuttle stats
+            if time > Metrics.playDuration / 6 && time < Metrics.playDuration {
+                totalCount += 1
+                totalOccupancy += $0.ocupancy
+                if $0.isBusy { busyCount += 1 }
+            }
         }
         
         let activeRiders = riders.filter({ $0.state != .done })
