@@ -28,7 +28,7 @@ class Shuttle {
     
     // for debugging
     deinit {
-        print("Shuttle:deinit")
+        //print("Shuttle:deinit")
     }
     
     // Update the status of a shuttle based on the time.

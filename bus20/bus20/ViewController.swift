@@ -92,7 +92,7 @@ class ViewController: UIViewController {
         }
         if done == false && riders.count > 0 && activeRiders.count == 0 {
             done = true
-            print("###done###")
+            postProcess()
         }
         
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
@@ -100,6 +100,14 @@ class ViewController: UIViewController {
         DispatchQueue.main.async {
             self.update()
         }
+    }
+    
+    func postProcess() {
+        let count = CGFloat(riders.count)
+        let wait = riders.reduce(CGFloat(0.0)) { $0 + $1.pickupTime - $1.startTime }
+        let extra = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.startTime - $1.route.length }
+        print(String(format: "w: %.2f, e: %.2f",
+                     wait / count, extra / count))
     }
 
     override func didReceiveMemoryWarning() {
@@ -184,7 +192,7 @@ class ViewController: UIViewController {
         let before = Date()
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
         let delta = Date().timeIntervalSince(before)
-        print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d", bestPlan.cost, delta, riders.count))
+        //print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d", bestPlan.cost, delta, riders.count))
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
         
         // Debug only
