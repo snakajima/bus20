@@ -54,14 +54,11 @@ class ViewController: UIViewController {
     }
     
     func start(count:Int) {
-        shuttles = [Shuttle]()
+        done = false
         start = Date()
         riders = [Rider]()
-        scheduled.removeAll()
-        done = false
-        for i in 0..<count {
-            shuttles.append(Shuttle(hue: 1.0/CGFloat(count) * CGFloat(i), graph:graph))
-        }
+        scheduled = [ScheduledRider]()
+        shuttles = (0..<count).map { Shuttle(hue: 1.0/CGFloat(count) * CGFloat($0), graph:graph) }
         update()
     }
     
