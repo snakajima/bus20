@@ -30,7 +30,10 @@ class ViewController: UIViewController {
     var fTesting = false
     var scheduled = [ScheduledRider]()
     var done = false
-    
+    var totalCount:CGFloat = 0
+    var busyCount:CGFloat = 0
+    var fullCount:CGFloat = 0
+
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = view.frame
@@ -55,6 +58,9 @@ class ViewController: UIViewController {
     
     func start(count:Int) {
         done = false
+        totalCount = 0
+        busyCount = 0
+        fullCount = 0
         start = Date()
         riders = [Rider]()
         scheduled = [ScheduledRider]()
@@ -81,6 +87,10 @@ class ViewController: UIViewController {
         shuttles.forEach() {
             $0.update(graph:graph, time:time)
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
+            
+            totalCount += 1
+            if $0.isBusy { busyCount += 1 }
+            if $0.isFull { fullCount += 1 }
         }
         
         let activeRiders = riders.filter({ $0.state != .done })
@@ -104,8 +114,9 @@ class ViewController: UIViewController {
         let wait = riders.reduce(CGFloat(0.0)) { $0 + $1.pickupTime - $1.startTime }
         let ride = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime }
         let extra = riders.reduce(CGFloat(0.0)) { $0 + $1.dropTime - $1.pickupTime - $1.route.length }
-        print(String(format: "w:%.2f, r:%.2f, e:%.2f",
-                     wait/count, ride/count, extra/count))
+        print(String(format: "w:%.2f, r:%.2f, e:%.2f, u:%.1f%%, f:%.1f%%",
+                     wait/count, ride/count, extra/count,
+                     busyCount * 100 / totalCount, fullCount * 100 / totalCount))
     }
 
     override func didReceiveMemoryWarning() {

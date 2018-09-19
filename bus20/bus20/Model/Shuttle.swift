@@ -20,7 +20,9 @@ class Shuttle {
     private var edge:Edge {
         return self.routes[0].edges[0]
     }
-
+    var isBusy:Bool { return !riders.isEmpty }
+    var isFull:Bool { return riders.filter({ $0.state == .riding }).count == capacity }
+    
     init(hue:CGFloat, graph:Graph) {
         self.hue = hue
         self.routes = [graph.randamRoute()]
