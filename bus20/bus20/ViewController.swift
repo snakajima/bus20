@@ -171,8 +171,10 @@ class ViewController: UIViewController {
     
     func assign(rider:Rider) {
         riders.append(rider)
+        let before = Date()
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
-        print("\nVC: bestPlan:", bestPlan.cost)
+        let delta = Date().timeIntervalSince(before)
+        print(String(format:"bestPlan:%.0f, time:%.4f", bestPlan.cost, delta))
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
         
         // Debug only
