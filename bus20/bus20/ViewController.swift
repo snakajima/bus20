@@ -74,9 +74,9 @@ class ViewController: UIViewController {
         let time = CGFloat(Date().timeIntervalSince(start)) * speedMultiple
         
         while let rider = scheduled.first, rider.rideTime < time {
+            scheduled.removeFirst()
             rider.rider.startTime = time
             assign(rider: rider.rider)
-            scheduled.removeFirst()
         }
         
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
             
             // Exclude the beginning and tail end from the Shuttle stats
-            if time > Metrics.playDuration / 6 && time < Metrics.playDuration {
+            if time > Metrics.playDuration / 3 && time < Metrics.playDuration {
                 totalCount += 1
                 totalOccupancy += $0.ocupancy
                 if $0.isBusy { busyCount += 1 }
@@ -122,7 +122,8 @@ class ViewController: UIViewController {
         print(String(format: "w:%.1f, r:%.1f, e:%.1f, u:%.1f%%, o:%.1f%%",
                      wait/count, ride/count, extra/count,
                      busyCount * 100 / totalCount, totalOccupancy * 100 / totalCount ))
-        label.text = String(format: "Avarage Wait: %.1fmin\nAvarage Ride: %.1fmin\nAverage Detour: %.1fmin\nShuttle Utilization: %.1f%%\nOccupancy: %.1f%%",
+        label.text = String(format: "Number of Shuttles: %d\nShuttle Capacity: %d\nPassengers/Hour: %d\nAvarage Wait: %.1f min\nAvarage Ride: %.1f min\nAverage Detour: %.1f min\nShuttle Utilization: %.1f%%\nOccupancy Rate: %.1f%%",
+                            Metrics.numberOfShuttles, Metrics.shuttleCapacity, Metrics.riderCount,
                                 wait/count, ride/count, extra/count,
                                 busyCount * 100 / totalCount, totalOccupancy * 100 / totalCount )
     }
@@ -206,11 +207,16 @@ class ViewController: UIViewController {
     
     func assign(rider:Rider) {
         riders.append(rider)
-        //let before = Date()
+        let before = Date()
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
-        //let delta = Date().timeIntervalSince(before)
+        let delta = Date().timeIntervalSince(before)
         //print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d", bestPlan.cost, delta, riders.count))
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
+        if delta > 0.5 {
+            done = true
+            scheduled.removeAll()
+            label.text = "This setting is too complext for this device to process."
+        }
         
         // Debug only
         //bestPlan.shuttle.debugDump()
