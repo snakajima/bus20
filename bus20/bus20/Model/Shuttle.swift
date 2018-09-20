@@ -113,33 +113,37 @@ class Shuttle {
     // Notice that this code takes a full advantage of Swift, which allows
     // value oriented programming.
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
-        var routes:[Route] =  { () -> [Route] in
-            var routes = self.routes 
+        let routesBase:[Route] =  { () -> [Route] in
+            var routes = self.routes
             // Make it sure that the first route is a single-edge route,
             // so that we can change the route if necessary.
             if let route = routes.first, route.edges.count > 1 {
                 let edge = route.edges[0]
                 routes[0] = graph.route(from: edge.from, to: edge.to)
-                routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
+                if riders.count > 0 {
+                    routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
+                } else {
+                    assert(routes.count == 1)
+                }
             }
             return routes
         }()
 
-        let costBasis = evaluate(routes: routes, rider: nil)
+        let costBasis = evaluate(routes: routesBase, rider: nil)
         
         // All possible insertion cases
-        var plansArray = Array(repeating: [RoutePlan](), count:routes.count - 1)
-        //for index0 in 1..<routes.count {
-        DispatchQueue.concurrentPerform(iterations: routes.count-1) { (index00) in
+        var plansArray = Array(repeating: [RoutePlan](), count:routesBase.count - 1)
+        //for index0 in 1..<routesBase.count {
+        DispatchQueue.concurrentPerform(iterations: routesBase.count-1) { (index00) in
             let index0 = index00+1
-            var routes0 = routes // notice that we make another copy (for each)
+            var routes0 = routesBase // notice that we make another copy (for each)
             let route = routes0[index0]
             
             // Process insertion
             if route.from == rider.from {
                 routes0[index0] = graph.route(from: route.from, to: route.to, rider:rider, pickups:route.pickups)
             } else if route.to == rider.from {
-                if index0+1 < routes.count {
+                if index0+1 < routes0.count {
                     let routeNext = routes0[index0+1]
                     routes0[index0+1] = graph.route(from: routeNext.from, to: routeNext.to, rider:rider, pickups:routeNext.pickups)
                 } else {
@@ -149,7 +153,7 @@ class Shuttle {
                 routes0[index0] = graph.route(from: route.from, to: rider.from, rider:nil, pickups:route.pickups)
                 routes0.insert(graph.route(from: rider.from, to: route.to, rider:rider), at: index0+1)
             }
-            plansArray[index0-1] = (index0+1..<routes.count).map { (index1) -> RoutePlan in
+            plansArray[index0-1] = (index0+1..<routes0.count).map { (index1) -> RoutePlan in
                 var routes1 = routes0 // notice that we make yet another copy
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
@@ -163,15 +167,16 @@ class Shuttle {
         var plans = plansArray.flatMap { $0 }
         
         // Append case
+        var routes0 = routesBase
         if (riders.count == 0) {
-            routes = [routes[0]]
+            routes0 = [routes0[0]]
         }
-        if let last = routes.last?.to, last != rider.from {
-            routes.append(graph.route(from: last, to: rider.from))
+        if let last = routes0.last?.to, last != rider.from {
+            routes0.append(graph.route(from: last, to: rider.from))
         }
-        routes.append(graph.route(from:rider.from, to:rider.to, rider:rider))
-        let cost = evaluate(routes: routes, rider: rider)
-        plans.append(RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes))
+        routes0.append(graph.route(from:rider.from, to:rider.to, rider:rider))
+        let cost = evaluate(routes: routes0, rider: rider)
+        plans.append(RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes0))
         
         return plans
     }
