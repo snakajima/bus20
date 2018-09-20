@@ -113,15 +113,17 @@ class Shuttle {
     // Notice that this code takes a full advantage of Swift, which allows
     // value oriented programming.
     func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
-        var routes = self.routes // notice that we make a copy
-        
-        // Make it sure that the first route is a single-edge route,
-        // so that we can change the route if necessary.
-        if let route = routes.first, route.edges.count > 1 {
-            let edge = route.edges[0]
-            routes[0] = graph.route(from: edge.from, to: edge.to)
-            routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
-        }
+        var routes:[Route] =  { () -> [Route] in
+            var routes = self.routes 
+            // Make it sure that the first route is a single-edge route,
+            // so that we can change the route if necessary.
+            if let route = routes.first, route.edges.count > 1 {
+                let edge = route.edges[0]
+                routes[0] = graph.route(from: edge.from, to: edge.to)
+                routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
+            }
+            return routes
+        }()
 
         let costBasis = evaluate(routes: routes, rider: nil)
         
