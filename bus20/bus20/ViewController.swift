@@ -197,7 +197,8 @@ class ViewController: UIViewController {
         let before = Date()
         let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
         let delta = Date().timeIntervalSince(before)
-        //print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d", bestPlan.cost, delta, riders.count))
+        let maxDepth = shuttles.reduce(0) { max($0, $1.depth) }
+        print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d, depth:%d", bestPlan.cost, delta, riders.count, maxDepth))
         bestPlan.shuttle.adapt(routes:bestPlan.routes, rider:rider)
         if delta > 0.5 {
             done = true

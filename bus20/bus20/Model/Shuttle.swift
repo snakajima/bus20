@@ -21,6 +21,7 @@ class Shuttle {
         return self.routes[0].edges[0]
     }
     var isBusy:Bool { return !riders.isEmpty }
+    var depth:Int { return routes.count }
     var ocupancy:CGFloat { return CGFloat(riders.filter({ $0.state == .riding }).count) / CGFloat(capacity) }
     
     init(hue:CGFloat, graph:Graph) {
