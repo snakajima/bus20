@@ -28,7 +28,6 @@ class ViewController: UIViewController {
     var start = Date()
     var riders = [Rider]()
     var speedMultiple = Metrics.speedMultiple
-    var fTesting = false
     var scheduled = [ScheduledRider]()
     var done = false
     var totalCount:CGFloat = 0
@@ -59,6 +58,8 @@ class ViewController: UIViewController {
     
     func start(count:Int) {
         done = false
+        speedMultiple = Metrics.speedMultiple
+        Rider.resetId()
         label.text = ""
         totalCount = 0
         busyCount = 0
@@ -134,13 +135,6 @@ class ViewController: UIViewController {
     }
 
     @IBAction func add(_ sender:UIBarButtonItem) {
-        if fTesting {
-            fTesting = false
-            speedMultiple = Metrics.speedMultiple
-            Random.seed(0)
-            Rider.resetId()
-            start(count: Metrics.numberOfShuttles)
-        }
         addRider()
     }
     
@@ -150,8 +144,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func test(_ sender:UIBarButtonItem) {
-        fTesting = true
-        speedMultiple = 30.0
         Random.nextSeed() // 4, 40, 110
         print("Seed=", Random.seed)
         
@@ -185,11 +177,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func emulate(_ sender:UIBarButtonItem) {
-        if fTesting {
-            fTesting = false
-        }
-        speedMultiple = Metrics.speedMultiple
-        Rider.resetId()
         Random.seed(0)
         
         start(count: Metrics.numberOfShuttles)

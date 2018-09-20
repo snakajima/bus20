@@ -129,6 +129,7 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oFx-Ya-uKK">
                                 <rect key="frame" x="20" y="159" width="335" height="29"/>
                                 <segments>
+                                    <segment title="25"/>
                                     <segment title="50"/>
                                     <segment title="100"/>
                                     <segment title="200"/>
