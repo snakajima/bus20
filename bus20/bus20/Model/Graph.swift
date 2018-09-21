@@ -32,14 +32,7 @@ struct Graph {
         }
 
         // calculate length
-        self.nodes = nodes.map({ (node) -> Node in
-            let edges = node.edges.map({ (edge) -> Edge in
-                let node0 = nodes[edge.from]
-                let node1 = nodes[edge.to]
-                return Edge(from: edge.from, to: edge.to, length: node0.distance(to: node1))
-            })
-            return Node(location: node.location, edges: edges)
-        })
+        self.nodes = Graph.updateLength(nodes: nodes)
         self.routes = Graph.allShortestRoute(nodes: self.nodes)
     }
     init() {
@@ -56,8 +49,18 @@ struct Graph {
             let location = node_edges["location"] as! NSDictionary
             return Node(location:CGPoint(x: location["x"] as! CGFloat, y: location["y"] as! CGFloat), edges: edges)
         }
-        self.nodes = nodes
+        self.nodes = Graph.updateLength(nodes: nodes)
         self.routes = Graph.allShortestRoute(nodes: self.nodes)
+    }
+    static func updateLength(nodes: [Node]) -> [Node] {
+        return nodes.map({ (node) -> Node in
+            let edges = node.edges.map({ (edge) -> Edge in
+                let node0 = nodes[edge.from]
+                let node1 = nodes[edge.to]
+                return Edge(from: edge.from, to: edge.to, length: node0.distance(to: node1))
+            })
+            return Node(location: node.location, edges: edges)
+        })
     }
     static func allShortestRoute(nodes: [Node]) -> [[Route]] {
         let count = nodes.count
