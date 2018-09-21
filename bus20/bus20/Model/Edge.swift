@@ -28,7 +28,7 @@ struct Edge {
         ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
     }
 
-    var dictionary:Dictionary<String, Any> {
+    var dictionary:[String:Any] {
         return [
             "from": self.from,
             "to": self.to,

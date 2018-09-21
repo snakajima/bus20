@@ -39,7 +39,7 @@ struct Graph {
     static func getJsonData() -> Data? {
         let file = "../map"
         let path = Bundle.main.path(forResource: file, ofType: "json")!
-        return try? Data(contentsOf: URL(fileURLWithPath: path)) 
+        return try? Data(contentsOf: URL(fileURLWithPath: path))
     }
     
     enum GraphError: Error {
@@ -53,8 +53,10 @@ struct Graph {
         guard let json = try JSONSerialization.jsonObject(with:jsonData) as? NSDictionary else {
             throw GraphError.invalidJsonError
         }
-        let nodes:[Node] = (json["nodes"] as! NSArray).map{ (node_any) -> Node in
-            let node = node_any as! NSDictionary
+        guard let nodeArray = json["nodes"] as? [[String:Any]] else {
+            throw GraphError.invalidJsonError
+        }
+        let nodes:[Node] = nodeArray.map{ (node) -> Node in
             let edges = (node["edges"] as! NSArray).map{ (edge_any) -> Edge in
                 let edge = edge_any as! NSDictionary
                 return Edge(from: edge["from"] as! Int, to: edge["to"] as! Int , length: edge["length"] as! CGFloat)
@@ -117,7 +119,7 @@ struct Graph {
         }
     }
 
-    var dictionary:Dictionary<String, Any>  {
+    var dictionary:[String:Any]  {
         return [
             "nodes": self.nodes.map { $0.dictionary}
         ]
