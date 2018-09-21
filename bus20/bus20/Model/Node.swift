@@ -50,5 +50,15 @@ struct Node {
         ctx.closePath()
         ctx.drawPath(using: .stroke)
     }
+
+    var dictionary:Dictionary<String, Any> {
+        return [
+          "location": [
+            "x": self.location.x,
+            "y": self.location.y,
+          ],
+          "edges": edges.map { $0.dictionary }
+        ];
+    }
 }
 
