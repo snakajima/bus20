@@ -50,16 +50,23 @@ struct Graph {
         guard let jsonData =  Graph.getJsonData() else {
             throw GraphError.invalidJsonError
         }
-        guard let json = try JSONSerialization.jsonObject(with:jsonData) as? NSDictionary else {
+        guard let json = try JSONSerialization.jsonObject(with:jsonData) as? [String:Any] else {
             throw GraphError.invalidJsonError
         }
         guard let nodeArray = json["nodes"] as? [[String:Any]] else {
             throw GraphError.invalidJsonError
         }
-        let nodes:[Node] = nodeArray.map{ (node) -> Node in
-            let edges = (node["edges"] as! NSArray).map{ (edge_any) -> Edge in
-                let edge = edge_any as! NSDictionary
-                return Edge(from: edge["from"] as! Int, to: edge["to"] as! Int , length: edge["length"] as! CGFloat)
+        let nodes:[Node] = try nodeArray.map{ (node) -> Node in
+            guard let edgeArray = node["edges"] as? [[String:Any]] else {
+                throw GraphError.invalidJsonError
+            }
+            let edges = try edgeArray.map{ (edge) -> Edge in
+                guard let from = edge["from"] as? Int,
+                      let to = edge["to"] as? Int,
+                      let length = edge["length"] as? CGFloat else {
+                        throw GraphError.invalidJsonError
+                }
+                return Edge(from:from , to:to  , length:length )
             }
             let location = node["location"] as! NSDictionary
             return Node(location:CGPoint(x: location["x"] as! CGFloat, y: location["y"] as! CGFloat), edges: edges)
