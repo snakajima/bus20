@@ -17,7 +17,7 @@ struct Graph {
         let count = w * h
         Random.seed(0)
         // Create an array of Nodes without real lentgh in Edges
-        var nodes:[Node] = (0..<count).map { (index) -> Node in
+        let nodes:[Node] = (0..<count).map { (index) -> Node in
             let y = index / w
             let x = index - y * w
             let edges = [
@@ -38,15 +38,15 @@ struct Graph {
     init() {
         let data: Data =  Graph.sample.data(using: String.Encoding.utf8)!
 
-        let json = try! JSONSerialization.jsonObject(with: data)
-        let json_nodes = json as! NSDictionary
-        let nodes:[Node] = (json_nodes["nodes"] as! NSArray).map{ (node) -> Node in
-            let node_edges = node as! NSDictionary
-            let edges = (node_edges["edges"] as! NSArray).map{ (edg) -> Edge in
-                let edge = edg as! NSDictionary
+        let json_any = try! JSONSerialization.jsonObject(with: data)
+        let json = json_any as! NSDictionary
+        let nodes:[Node] = (json["nodes"] as! NSArray).map{ (node_any) -> Node in
+            let node = node_any as! NSDictionary
+            let edges = (node["edges"] as! NSArray).map{ (edge_any) -> Edge in
+                let edge = edge_any as! NSDictionary
                 return Edge(from: edge["from"] as! Int, to: edge["to"] as! Int , length: edge["length"] as! CGFloat)
             }
-            let location = node_edges["location"] as! NSDictionary
+            let location = node["location"] as! NSDictionary
             return Node(location:CGPoint(x: location["x"] as! CGFloat, y: location["y"] as! CGFloat), edges: edges)
         }
         self.nodes = Graph.updateLength(nodes: nodes)
