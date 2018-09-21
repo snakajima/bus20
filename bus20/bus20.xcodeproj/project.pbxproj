@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0DE36EAE21558736004850C6 /* map.json in Resources */ = {isa = PBXBuildFile; fileRef = 0DE36EAD21558736004850C6 /* map.json */; };
 		7409A40921347232007041B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7409A40821347232007041B0 /* AppDelegate.swift */; };
 		7409A40B21347232007041B0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7409A40A21347232007041B0 /* ViewController.swift */; };
 		7409A40E21347232007041B0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7409A40C21347232007041B0 /* Main.storyboard */; };
@@ -27,6 +28,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0DE36EAD21558736004850C6 /* map.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = map.json; sourceTree = "<group>"; };
 		7409A40521347232007041B0 /* bus20.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bus20.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7409A40821347232007041B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7409A40A21347232007041B0 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				7409A40A21347232007041B0 /* ViewController.swift */,
 				74840FCB2151BA5500C84BC8 /* PropertyViewController.swift */,
 				7409A40C21347232007041B0 /* Main.storyboard */,
+				0DE36EAD21558736004850C6 /* map.json */,
 				7409A40F21347232007041B0 /* Assets.xcassets */,
 				7409A41121347232007041B0 /* LaunchScreen.storyboard */,
 				7409A41421347232007041B0 /* Info.plist */,
@@ -182,6 +185,7 @@
 				7409A41321347232007041B0 /* LaunchScreen.storyboard in Resources */,
 				7409A41021347232007041B0 /* Assets.xcassets in Resources */,
 				74840FC3213B40CD00C84BC8 /* rider.png in Resources */,
+				0DE36EAE21558736004850C6 /* map.json in Resources */,
 				7409A40E21347232007041B0 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
