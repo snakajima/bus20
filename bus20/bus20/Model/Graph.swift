@@ -56,7 +56,7 @@ struct Graph {
         guard let nodeArray = json["nodes"] as? [[String:Any]] else {
             throw GraphError.invalidJsonError
         }
-        let nodes:[Node] = try nodeArray.map{ (node) -> Node in
+        self.nodes = try nodeArray.map{ (node) -> Node in
             guard let edgeArray = node["edges"] as? [[String:Any]] else {
                 throw GraphError.invalidJsonError
             }
@@ -68,14 +68,16 @@ struct Graph {
                 }
                 return Edge(from:from , to:to  , length:length )
             }
-            let location = node["location"] as! NSDictionary
-            return Node(location:CGPoint(x: location["x"] as! CGFloat, y: location["y"] as! CGFloat), edges: edges)
+            guard let location = node["location"] as? [String:Any],
+                  let x = location["x"] as? CGFloat,
+                  let y = location["y"] as? CGFloat else {
+                throw GraphError.invalidJsonError
+            }
+            return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
-        self.nodes = Graph.updateLength(nodes: nodes)
         self.routes = Graph.allShortestRoute(nodes: self.nodes)
-        
-        
     }
+
     static func updateLength(nodes: [Node]) -> [Node] {
         return nodes.map({ (node) -> Node in
             let edges = node.edges.map({ (edge) -> Edge in

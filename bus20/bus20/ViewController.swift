@@ -20,8 +20,8 @@ class ViewController: UIViewController {
     
     @IBOutlet var viewMain:UIView!
     @IBOutlet var label:UILabel!
-    //let graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
-    let graph = try! Graph()
+    let graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
+    //let graph = try! Graph()
     let labelTime = UILabel(frame: .zero) // to render text
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
