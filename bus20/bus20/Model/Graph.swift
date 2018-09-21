@@ -30,7 +30,7 @@ struct Graph {
                         y: unit * (CGFloat(y + 1) + CGFloat(Random.float(0.75)) - 0.375)),
                         edges: edges.compactMap {$0})
         }
-        
+
         // calculate length
         self.nodes = nodes.map({ (node) -> Node in
             let edges = node.edges.map({ (edge) -> Edge in
@@ -78,6 +78,22 @@ struct Graph {
         for node in nodes {
             node.render(ctx:ctx, graph:self, scale:scale)
         }
+    }
+
+    func toData() -> Dictionary<String, Any>  {
+        let data = [
+            "nodes": self.nodes.map({ (node) -> Dictionary<String, Any> in
+                                      return node.toData()
+                                  })
+        ]
+        return data;
+    }
+    
+    func toJson() -> String {
+        let data = toData();
+        let jsonData =  try! JSONSerialization.data(withJSONObject: data);
+        let jsonStr = String(bytes: jsonData, encoding: .utf8)!
+        return jsonStr;
     }
     
     var bounds:CGRect {

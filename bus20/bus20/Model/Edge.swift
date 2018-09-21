@@ -27,6 +27,14 @@ struct Edge {
         ctx.move(to: CGPoint(x: locationFrom.x * scale, y: locationFrom.y * scale))
         ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
     }
+
+    func toData() -> Dictionary<String, Any> {
+        return [
+            "from": self.from,
+            "to": self.to,
+            "length": self.length,
+        ];
+    }
 }
 
 extension Edge: CustomStringConvertible {
