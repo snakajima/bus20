@@ -51,7 +51,7 @@ struct Node {
         ctx.drawPath(using: .stroke)
     }
 
-    var dictionary:Dictionary<String, Any> {
+    var dictionary:[String:Any] {
         return [
           "location": [
             "x": self.location.x,

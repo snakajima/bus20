@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     @IBOutlet var viewMain:UIView!
     @IBOutlet var label:UILabel!
     let graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
+    //let graph = try! Graph()
     let labelTime = UILabel(frame: .zero) // to render text
     var routeView:UIImageView!
     var scale = CGFloat(1.0)
@@ -209,6 +210,18 @@ class ViewController: UIViewController {
         
         // Debug only
         //bestPlan.shuttle.debugDump()
+    }
+    
+    static func getJsonString() -> String {
+        let file = "../map"
+        let path = Bundle.main.path(forResource: file, ofType: "json")!
+        
+        var ret = "";
+        if let data = NSData(contentsOfFile: path){
+            ret = try! (String(NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue)!))
+        }
+        return ret;
+        
     }
 }
 

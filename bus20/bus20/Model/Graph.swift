@@ -17,7 +17,7 @@ struct Graph {
         let count = w * h
         Random.seed(0)
         // Create an array of Nodes without real lentgh in Edges
-        var nodes:[Node] = (0..<count).map { (index) -> Node in
+        let nodes:[Node] = (0..<count).map { (index) -> Node in
             let y = index / w
             let x = index - y * w
             let edges = [
@@ -32,7 +32,54 @@ struct Graph {
         }
 
         // calculate length
-        self.nodes = nodes.map({ (node) -> Node in
+        self.nodes = Graph.updateLength(nodes: nodes)
+        self.routes = Graph.allShortestRoute(nodes: self.nodes)
+    }
+    
+    static func getJsonData() -> Data? {
+        let file = "../map"
+        let path = Bundle.main.path(forResource: file, ofType: "json")!
+        return try? Data(contentsOf: URL(fileURLWithPath: path))
+    }
+    
+    enum GraphError: Error {
+        case invalidJsonError
+    }
+    
+    init() throws {
+        guard let jsonData =  Graph.getJsonData() else {
+            throw GraphError.invalidJsonError
+        }
+        guard let json = try JSONSerialization.jsonObject(with:jsonData) as? [String:Any] else {
+            throw GraphError.invalidJsonError
+        }
+        guard let nodeArray = json["nodes"] as? [[String:Any]] else {
+            throw GraphError.invalidJsonError
+        }
+        self.nodes = try nodeArray.map{ (node) -> Node in
+            guard let edgeArray = node["edges"] as? [[String:Any]] else {
+                throw GraphError.invalidJsonError
+            }
+            let edges = try edgeArray.map{ (edge) -> Edge in
+                guard let from = edge["from"] as? Int,
+                      let to = edge["to"] as? Int,
+                      let length = edge["length"] as? CGFloat else {
+                        throw GraphError.invalidJsonError
+                }
+                return Edge(from:from , to:to  , length:length )
+            }
+            guard let location = node["location"] as? [String:Any],
+                  let x = location["x"] as? CGFloat,
+                  let y = location["y"] as? CGFloat else {
+                throw GraphError.invalidJsonError
+            }
+            return Node(location:CGPoint(x:x , y:y ), edges: edges)
+        }
+        self.routes = Graph.allShortestRoute(nodes: self.nodes)
+    }
+
+    static func updateLength(nodes: [Node]) -> [Node] {
+        return nodes.map({ (node) -> Node in
             let edges = node.edges.map({ (edge) -> Edge in
                 let node0 = nodes[edge.from]
                 let node1 = nodes[edge.to]
@@ -40,8 +87,9 @@ struct Graph {
             })
             return Node(location: node.location, edges: edges)
         })
-        nodes = self.nodes
-
+    }
+    static func allShortestRoute(nodes: [Node]) -> [[Route]] {
+        let count = nodes.count
         // Calcurate shortest routes among all Nodes
         let routeDummy = Route(edges:[nodes[0].edges[0]], extra:0)
         var routes = (0..<count).map { (index0) -> [Route] in
@@ -55,7 +103,7 @@ struct Graph {
                 Graph.shortest(nodes: nodes, start: index0, end: index1)
             })
         }
-        self.routes = routes
+        return routes;
     }
     
     func randamRoute(from:Int? = nil) -> Route {
@@ -80,7 +128,7 @@ struct Graph {
         }
     }
 
-    var dictionary:Dictionary<String, Any>  {
+    var dictionary:[String:Any]  {
         return [
             "nodes": self.nodes.map { $0.dictionary}
         ]
