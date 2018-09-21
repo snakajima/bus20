@@ -35,19 +35,18 @@ struct Graph {
         self.nodes = Graph.updateLength(nodes: nodes)
         self.routes = Graph.allShortestRoute(nodes: self.nodes)
     }
-    static func getJsonString() -> String {
+    
+    static func getJsonString() -> String? {
         let file = "../map"
         let path = Bundle.main.path(forResource: file, ofType: "json")!
-
-        var ret = "";
-        if let data = NSData(contentsOfFile: path){
-            ret = try! (String(NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue)!))
+        if let data = try? Data(contentsOf: URL(fileURLWithPath: path)) {
+            return String(data: data, encoding: .utf8)
         }
-        return ret;
-
+        return nil;
     }
+    
     init() {
-        let json_any = try! JSONSerialization.jsonObject(with: Graph.getJsonString().data(using: String.Encoding.utf8)!)
+        let json_any = try! JSONSerialization.jsonObject(with: Graph.getJsonString()!.data(using: String.Encoding.utf8)!)
         let json = json_any as! NSDictionary
         let nodes:[Node] = (json["nodes"] as! NSArray).map{ (node_any) -> Node in
             let node = node_any as! NSDictionary
