@@ -51,15 +51,13 @@ struct Node {
         ctx.drawPath(using: .stroke)
     }
 
-    func toData() -> Dictionary<String, Any> {
+    var dictionary:Dictionary<String, Any> {
         return [
           "location": [
             "x": self.location.x,
             "y": self.location.y,
           ],
-          "edges": edges.map({ (edge) -> Any in
-                                 return edge.toData();
-                             })
+          "edges": edges.map { $0.dictionary }
         ];
     }
 }

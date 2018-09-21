@@ -80,20 +80,15 @@ struct Graph {
         }
     }
 
-    func toData() -> Dictionary<String, Any>  {
-        let data = [
-            "nodes": self.nodes.map({ (node) -> Dictionary<String, Any> in
-                                      return node.toData()
-                                  })
+    var dictionary:Dictionary<String, Any>  {
+        return [
+            "nodes": self.nodes.map { $0.dictionary}
         ]
-        return data;
     }
     
-    func toJson() -> String {
-        let data = toData();
-        let jsonData =  try! JSONSerialization.data(withJSONObject: data);
-        let jsonStr = String(bytes: jsonData, encoding: .utf8)!
-        return jsonStr;
+    var json: String {
+        let jsonData =  try! JSONSerialization.data(withJSONObject: dictionary);
+        return String(bytes: jsonData, encoding: .utf8)!
     }
     
     var bounds:CGRect {
