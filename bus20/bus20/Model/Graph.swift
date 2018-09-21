@@ -40,8 +40,27 @@ struct Graph {
             })
             return Node(location: node.location, edges: edges)
         })
-        nodes = self.nodes
+        self.routes = Graph.allShortestRoute(nodes: self.nodes)
+    }
+    init() {
+        let data: Data =  Graph.sample.data(using: String.Encoding.utf8)!
 
+        let json = try! JSONSerialization.jsonObject(with: data)
+        let json_nodes = json as! NSDictionary
+        let nodes:[Node] = (json_nodes["nodes"] as! NSArray).map{ (node) -> Node in
+            let node_edges = node as! NSDictionary
+            let edges = (node_edges["edges"] as! NSArray).map{ (edg) -> Edge in
+                let edge = edg as! NSDictionary
+                return Edge(from: edge["from"] as! Int, to: edge["to"] as! Int , length: edge["length"] as! CGFloat)
+            }
+            let location = node_edges["location"] as! NSDictionary
+            return Node(location:CGPoint(x: location["x"] as! CGFloat, y: location["y"] as! CGFloat), edges: edges)
+        }
+        self.nodes = nodes
+        self.routes = Graph.allShortestRoute(nodes: self.nodes)
+    }
+    static func allShortestRoute(nodes: [Node]) -> [[Route]] {
+        let count = nodes.count
         // Calcurate shortest routes among all Nodes
         let routeDummy = Route(edges:[nodes[0].edges[0]], extra:0)
         var routes = (0..<count).map { (index0) -> [Route] in
@@ -55,7 +74,7 @@ struct Graph {
                 Graph.shortest(nodes: nodes, start: index0, end: index1)
             })
         }
-        self.routes = routes
+        return routes;
     }
     
     func randamRoute(from:Int? = nil) -> Route {
@@ -148,6 +167,10 @@ struct Graph {
         }
         
         return routes.first!
+    }
+
+    static var sample: String {
+        return "{\"nodes\":[{\"location\":{\"y\":1.1874264853637229,\"x\":0.75312102707971729},\"edges\":[{\"from\":0,\"to\":1,\"length\":0.94847773133838398},{\"from\":0,\"to\":3,\"length\":0.81419156491909228}]},{\"location\":{\"y\":1.2778489202703067,\"x\":1.6972787417176756},\"edges\":[{\"from\":1,\"to\":0,\"length\":0.94847773133838398},{\"from\":1,\"to\":2,\"length\":1.3621797415558023},{\"from\":1,\"to\":4,\"length\":1.0774270837014885}]},{\"location\":{\"y\":1.2143494441297555,\"x\":3.0579776300963308},\"edges\":[{\"from\":2,\"to\":1,\"length\":1.3621797415558023},{\"from\":2,\"to\":5,\"length\":0.68307760584005073}]},{\"location\":{\"y\":1.9015747024403158,\"x\":1.1441456150939802},\"edges\":[{\"from\":3,\"to\":4,\"length\":1.1708120876310373},{\"from\":3,\"to\":0,\"length\":0.81419156491909228},{\"from\":3,\"to\":6,\"length\":0.91908954849875946}]},{\"location\":{\"y\":2.1838213238375488,\"x\":2.2804280576463567},\"edges\":[{\"from\":4,\"to\":3,\"length\":1.1708120876310373},{\"from\":4,\"to\":5,\"length\":0.73982598883618211},{\"from\":4,\"to\":1,\"length\":1.0774270837014885},{\"from\":4,\"to\":7,\"length\":1.0851253359454138}]},{\"location\":{\"y\":1.8902961523200315,\"x\":2.9595344318198338},\"edges\":[{\"from\":5,\"to\":4,\"length\":0.73982598883618211},{\"from\":5,\"to\":2,\"length\":0.68307760584005073},{\"from\":5,\"to\":8,\"length\":1.2043143111162355}]},{\"location\":{\"y\":2.8201665008121601,\"x\":1.1743897240019043},\"edges\":[{\"from\":6,\"to\":7,\"length\":0.84089728964487287},{\"from\":6,\"to\":3,\"length\":0.91908954849875946}]},{\"location\":{\"y\":3.2075924634192123,\"x\":1.920720331192908},\"edges\":[{\"from\":7,\"to\":6,\"length\":0.84089728964487287},{\"from\":7,\"to\":8,\"length\":1.3465213984108553},{\"from\":7,\"to\":4,\"length\":1.0851253359454138}]},{\"location\":{\"y\":3.0568411503620823,\"x\":3.2587763531852145},\"edges\":[{\"from\":8,\"to\":7,\"length\":1.3465213984108553},{\"from\":8,\"to\":5,\"length\":1.2043143111162355}]}]}"
     }
 }
 
