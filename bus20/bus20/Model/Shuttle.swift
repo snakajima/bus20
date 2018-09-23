@@ -37,6 +37,7 @@ class Shuttle {
     // Update the status of a shuttle based on the time.
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > self.edge.length {
+            let delta = (time - baseTime) - self.edge.length
             baseTime += self.edge.length
 
             // Check if we are at the end of a route section, which incidates
@@ -45,7 +46,7 @@ class Shuttle {
                 let node = routes[0].to
                 // Drop riders whose destination is the current node
                 riders.filter({$0.state == .riding && $0.to == node}).forEach {
-                    $0.dropTime = time
+                    $0.dropTime = time - delta
                     $0.state = .done
                 }
                 riders = riders.filter({$0.state != .done})
@@ -56,7 +57,7 @@ class Shuttle {
                     riders.filter({routes[0].pickups.contains($0.id)}).forEach {
                         assert($0.state == .waiting)
                         assert($0.from == node)
-                        $0.pickupTime = time
+                        $0.pickupTime = time - delta
                         $0.state = .riding
                     }
                     routes[0].pickups.removeAll()
