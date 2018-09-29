@@ -34,6 +34,11 @@ class Shuttle {
         //print("Shuttle:deinit")
     }
     
+    func reset() {
+        baseTime = CGFloat(0)
+        riders = [Rider]()
+    }
+    
     // Update the status of a shuttle based on the time.
     func update(graph:Graph, time:CGFloat) {
         while (time - baseTime) > self.edge.length {

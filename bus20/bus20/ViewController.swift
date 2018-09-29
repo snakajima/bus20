@@ -34,6 +34,7 @@ class ViewController: UIViewController {
     var totalCount:CGFloat = 0
     var busyCount:CGFloat = 0
     var totalOccupancy:CGFloat = 0
+    var fTesting = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,8 +59,7 @@ class ViewController: UIViewController {
         start(count: Metrics.numberOfShuttles)
     }
     
-    func start(count:Int) {
-        done = false
+    func start(count:Int, fTesting:Bool = false) {
         speedMultiple = Metrics.speedMultiple
         Rider.resetId()
         label.text = ""
@@ -69,7 +69,13 @@ class ViewController: UIViewController {
         start = Date()
         riders = [Rider]()
         scheduled = [ScheduledRider]()
-        shuttles = (0..<count).map { Shuttle(hue: 1.0/CGFloat(count) * CGFloat($0), graph:graph) }
+        if self.fTesting && shuttles.count == count && done {
+            shuttles.forEach { $0.reset() }
+        } else {
+            shuttles = (0..<count).map { Shuttle(hue: 1.0/CGFloat(count) * CGFloat($0), graph:graph) }
+        }
+        self.fTesting = fTesting
+        done = false
         update()
     }
     
@@ -129,6 +135,10 @@ class ViewController: UIViewController {
                             Metrics.numberOfShuttles, Metrics.shuttleCapacity, Metrics.riderCount,
                                 wait/count, ride/count, extra/count,
                                 busyCount * 100 / totalCount, totalOccupancy * 100 / totalCount )
+        
+        if fTesting {
+            test(nil)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -145,11 +155,11 @@ class ViewController: UIViewController {
         assign(rider: rider)
     }
     
-    @IBAction func test(_ sender:UIBarButtonItem) {
+    @IBAction func test(_ sender:UIBarButtonItem?) {
         Random.nextSeed() // 4, 40, 110
         print("Seed=", Random.seed)
         
-        start(count: 1)
+        start(count: 1, fTesting:true)
         for _ in 0..<6 {
             addRider()
         }
