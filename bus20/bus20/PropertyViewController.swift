@@ -16,7 +16,7 @@ class PropertyViewController: UIViewController {
     @IBOutlet var segmentRiders:UISegmentedControl!
     @IBOutlet var segmentSpeed:UISegmentedControl!
     let riders = [25, 50, 100, 200]
-    let speeds:[CGFloat] = [1, 5, 30]
+    let speeds:[CGFloat] = [1, 3, 6, 30]
 
     override func viewDidLoad() {
         super.viewDidLoad()

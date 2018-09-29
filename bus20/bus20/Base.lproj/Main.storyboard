@@ -169,7 +169,8 @@
                                 <rect key="frame" x="20" y="236" width="335" height="29"/>
                                 <segments>
                                     <segment title="x60"/>
-                                    <segment title="x300"/>
+                                    <segment title="x180"/>
+                                    <segment title="x360"/>
                                     <segment title="x1800"/>
                                 </segments>
                                 <connections>

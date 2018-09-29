@@ -150,12 +150,9 @@ class ViewController: UIViewController {
         print("Seed=", Random.seed)
         
         start(count: 1)
-        addRider()
-        addRider()
-        addRider()
-        addRider()
-        addRider()
-        addRider()
+        for _ in 0..<6 {
+            addRider()
+        }
         let frame = view.frame
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
