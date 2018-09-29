@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.13.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.9"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -40,13 +40,13 @@
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="wmw-Sa-qJi"/>
-                                    <barButtonItem title="Test" id="ZAQ-6Y-0HD">
+                                    <barButtonItem title="Test" image="playone.png" id="ZAQ-6Y-0HD">
                                         <connections>
                                             <action selector="test:" destination="BYZ-38-t0r" id="Gic-8m-5Jj"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Ued-dt-Vzv"/>
-                                    <barButtonItem systemItem="edit" id="9jl-tU-3us">
+                                    <barButtonItem image="settings.png" id="9jl-tU-3us">
                                         <connections>
                                             <segue destination="F8r-Gh-Rfg" kind="show" id="CBk-2x-Zmf"/>
                                         </connections>
@@ -236,4 +236,8 @@
             <point key="canvasLocation" x="837.60000000000002" y="174.96251874062969"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="playone.png" width="240" height="240"/>
+        <image name="settings.png" width="240" height="240"/>
+    </resources>
 </document>
