@@ -12,7 +12,7 @@ import UIKit
 class Shuttle {
     static var verbose = false
     private let hue:CGFloat
-    private let capacity = Metrics.shuttleCapacity
+    private var capacity = Metrics.shuttleCapacity
     private var routes:[Route]
     private var baseTime = CGFloat(0)
     private var riders = [Rider]()
@@ -35,6 +35,7 @@ class Shuttle {
     }
     
     func reset() {
+        capacity = Metrics.shuttleCapacity
         baseTime = CGFloat(0)
         riders = [Rider]()
     }

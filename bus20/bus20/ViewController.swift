@@ -62,7 +62,9 @@ class ViewController: UIViewController {
     func start(count:Int, fTesting:Bool = false) {
         speedMultiple = Metrics.speedMultiple
         Rider.resetId()
-        label.text = ""
+        if !self.fTesting || !fTesting {
+            label.text = ""
+        }
         totalCount = 0
         busyCount = 0
         totalOccupancy = 0
@@ -100,7 +102,7 @@ class ViewController: UIViewController {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
             
             // Exclude the beginning and tail end from the Shuttle stats
-            if time > Metrics.playDuration / 3 && time < Metrics.playDuration {
+            if (time > Metrics.playDuration / 3 && time < Metrics.playDuration) || fTesting {
                 totalCount += 1
                 totalOccupancy += $0.ocupancy
                 if $0.isBusy { busyCount += 1 }
