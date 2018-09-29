@@ -237,7 +237,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="playone.png" width="48" height="48"/>
-        <image name="settings.png" width="48" height="48"/>
+        <image name="playone.png" width="30" height="30"/>
+        <image name="settings.png" width="32" height="32"/>
     </resources>
 </document>
