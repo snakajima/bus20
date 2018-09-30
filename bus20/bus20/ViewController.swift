@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     let graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
     //let graph = try! Graph()
     let labelTime = UILabel(frame: .zero) // to render text
-    var routeView:UIImageView!
+    var routeView:OwnerRenderView!
     var scale = CGFloat(1.0)
     var shuttles = [Shuttle]()
     var start = Date()
@@ -53,7 +53,9 @@ class ViewController: UIViewController {
 
         viewMain.addSubview(mapView)
 
-        routeView = UIImageView(frame:frame)
+        routeView = OwnerRenderView(frame:frame)
+        routeView.delegate = self
+        routeView.isOpaque = false
         viewMain.addSubview(routeView)
         
         Random.seed(0)
@@ -118,10 +120,7 @@ class ViewController: UIViewController {
     }
     
     func render() {
-        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
-        defer { UIGraphicsEndImageContext() }
-        draw(.zero)
-        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
+        routeView.setNeedsDisplay()
     }
     
     func postProcess() {
@@ -240,6 +239,7 @@ class ViewController: UIViewController {
 extension ViewController : OwnerRenderViewDelegate {
     func draw(_ rect:CGRect) {
         let ctx = UIGraphicsGetCurrentContext()!
+        ctx.clear(rect)
         shuttles.forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
         }
