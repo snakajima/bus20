@@ -120,14 +120,7 @@ class ViewController: UIViewController {
     func render() {
         UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
-        let ctx = UIGraphicsGetCurrentContext()!
-        shuttles.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
-        }
-        let activeRiders = riders.filter({ $0.state != .done })
-        activeRiders.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale)
-        }
+        draw(.zero)
         routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
     }
     
@@ -244,3 +237,15 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController : OwnerRenderViewDelegate {
+    func draw(_ rect:CGRect) {
+        let ctx = UIGraphicsGetCurrentContext()!
+        shuttles.forEach() {
+            $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
+        }
+        let activeRiders = riders.filter({ $0.state != .done })
+        activeRiders.forEach() {
+            $0.render(ctx: ctx, graph: graph, scale: scale)
+        }
+    }
+}
