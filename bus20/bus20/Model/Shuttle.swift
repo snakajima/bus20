@@ -131,7 +131,7 @@ class Shuttle {
                     routes.insert(graph.route(from: edge.to, to: route.to), at: 1)
                 } else {
                     // This case happens if there is an extra route
-                    //assert(routes.count == 1)
+                    routes = [routes[0]]
                 }
             }
             return routes
