@@ -161,6 +161,11 @@ class Shuttle {
                 routes0[index0] = graph.route(from: route.from, to: rider.from, rider:nil, pickups:route.pickups)
                 routes0.insert(graph.route(from: rider.from, to: route.to, rider:rider), at: index0+1)
             }
+            // Debug Only: Validation
+            for index in 0..<routes0.count-1 {
+                assert(routes0[index].to == routes0[index+1].from)
+            }
+
             plansArray[index0-1] = (index0+1..<routes0.count).map { (index1) -> RoutePlan in
                 var routes1 = routes0 // notice that we make yet another copy
                 let route = routes1[index1]
