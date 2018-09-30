@@ -158,7 +158,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func test(_ sender:UIBarButtonItem?) {
-        Random.nextSeed() // 4, 40, 110
+        if let _ = sender {
+            Random.seed(0)
+        } else {
+            Random.nextSeed() // 4, 40, 110
+        }
         print("Seed=", Random.seed)
         
         start(count: 1, fTesting:true)
@@ -180,7 +184,7 @@ class ViewController: UIViewController {
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let path = documents[0].appendingPathComponent("bus20.png")
-        let data = UIImagePNGRepresentation(image)!
+        let data = image.pngData()!
         try! data.write(to: path)
         print(path)
         
@@ -227,7 +231,7 @@ class ViewController: UIViewController {
         
         var ret = "";
         if let data = NSData(contentsOfFile: path){
-            ret = try! (String(NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue)!))
+            ret = String(NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue)!)
         }
         return ret;
         
