@@ -93,8 +93,6 @@ class ViewController: UIViewController {
             assign(rider: rider.rider)
         }
         
-        labelTime.text = String(format: "%2d:%02d", Int(time / 60), Int(time) % 60)
-        labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
         shuttles.forEach() {
             $0.update(graph:graph, time:time)
             
@@ -113,10 +111,6 @@ class ViewController: UIViewController {
         }
         timeUpdated = time
         render()
-        
-        DispatchQueue.main.async {
-            self.update()
-        }
     }
     
     func render() {
@@ -240,12 +234,17 @@ extension ViewController : OwnerRenderViewDelegate {
     func draw(_ rect:CGRect) {
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(rect)
+        labelTime.text = String(format: "%2d:%02d", Int(timeUpdated / 60), Int(timeUpdated) % 60)
+        labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
         shuttles.forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
         }
         let activeRiders = riders.filter({ $0.state != .done })
         activeRiders.forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale)
+        }
+        DispatchQueue.main.async {
+            self.update()
         }
     }
 }
