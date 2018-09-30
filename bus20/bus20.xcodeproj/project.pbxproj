@@ -27,6 +27,7 @@
 		74A8DB0C2135D91900DA03D0 /* Rider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74A8DB0B2135D91900DA03D0 /* Rider.swift */; };
 		74BE311E2160369C003DEDFC /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 74BE311D2160369C003DEDFC /* settings.png */; };
 		74BE3120216036A3003DEDFC /* playone.png in Resources */ = {isa = PBXBuildFile; fileRef = 74BE311F216036A3003DEDFC /* playone.png */; };
+		74BE312421609A6B003DEDFC /* OwnerRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BE312321609A6B003DEDFC /* OwnerRenderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,7 @@
 		74A8DB0B2135D91900DA03D0 /* Rider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rider.swift; sourceTree = "<group>"; };
 		74BE311D2160369C003DEDFC /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		74BE311F216036A3003DEDFC /* playone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playone.png; sourceTree = "<group>"; };
+		74BE312321609A6B003DEDFC /* OwnerRenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerRenderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				7409A41A2134729B007041B0 /* Model */,
 				7409A40821347232007041B0 /* AppDelegate.swift */,
 				7409A40A21347232007041B0 /* ViewController.swift */,
+				74BE312321609A6B003DEDFC /* OwnerRenderView.swift */,
 				74840FCB2151BA5500C84BC8 /* PropertyViewController.swift */,
 				7409A40C21347232007041B0 /* Main.storyboard */,
 				0DE36EAD21558736004850C6 /* map.json */,
@@ -206,6 +209,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74BE312421609A6B003DEDFC /* OwnerRenderView.swift in Sources */,
 				7409A41C2134730A007041B0 /* Graph.swift in Sources */,
 				7424C0892135B46A00092E37 /* Shuttle.swift in Sources */,
 				74424DB82139A79E003A4E82 /* Random.swift in Sources */,
