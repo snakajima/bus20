@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     var busyCount:CGFloat = 0
     var totalOccupancy:CGFloat = 0
     var fTesting = false
+    var timeUpdated = CGFloat(0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,16 +91,10 @@ class ViewController: UIViewController {
             assign(rider: rider.rider)
         }
         
-        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
-        defer { UIGraphicsEndImageContext() }
-        
-        let ctx = UIGraphicsGetCurrentContext()!
-
         labelTime.text = String(format: "%2d:%02d", Int(time / 60), Int(time) % 60)
         labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
         shuttles.forEach() {
             $0.update(graph:graph, time:time)
-            $0.render(ctx: ctx, graph: graph, scale: scale, time:time)
             
             // Exclude the beginning and tail end from the Shuttle stats
             if (time > Metrics.playDuration / 3 && time < Metrics.playDuration) || fTesting {
@@ -110,19 +105,30 @@ class ViewController: UIViewController {
         }
         
         let activeRiders = riders.filter({ $0.state != .done })
-        activeRiders.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale)
-        }
         if done == false && riders.count > 0 && activeRiders.count == 0 {
             done = true
             postProcess()
         }
-        
-        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
+        timeUpdated = time
+        render()
         
         DispatchQueue.main.async {
             self.update()
         }
+    }
+    
+    func render() {
+        UIGraphicsBeginImageContextWithOptions(view.frame.size, false, 0.0)
+        defer { UIGraphicsEndImageContext() }
+        let ctx = UIGraphicsGetCurrentContext()!
+        shuttles.forEach() {
+            $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
+        }
+        let activeRiders = riders.filter({ $0.state != .done })
+        activeRiders.forEach() {
+            $0.render(ctx: ctx, graph: graph, scale: scale)
+        }
+        routeView.image = UIGraphicsGetImageFromCurrentImageContext()!
     }
     
     func postProcess() {
