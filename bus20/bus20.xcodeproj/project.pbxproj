@@ -28,6 +28,7 @@
 		74BE311E2160369C003DEDFC /* settings.png in Resources */ = {isa = PBXBuildFile; fileRef = 74BE311D2160369C003DEDFC /* settings.png */; };
 		74BE3120216036A3003DEDFC /* playone.png in Resources */ = {isa = PBXBuildFile; fileRef = 74BE311F216036A3003DEDFC /* playone.png */; };
 		74BE312421609A6B003DEDFC /* OwnerRenderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74BE312321609A6B003DEDFC /* OwnerRenderView.swift */; };
+		74BE312621626C70003DEDFC /* bus20icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 74BE312521626C70003DEDFC /* bus20icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		74BE311D2160369C003DEDFC /* settings.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = settings.png; sourceTree = "<group>"; };
 		74BE311F216036A3003DEDFC /* playone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playone.png; sourceTree = "<group>"; };
 		74BE312321609A6B003DEDFC /* OwnerRenderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OwnerRenderView.swift; sourceTree = "<group>"; };
+		74BE312521626C70003DEDFC /* bus20icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bus20icon.png; path = bus20/Assets.xcassets/AppIcon.appiconset/bus20icon.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 		74840FC1213B407800C84BC8 /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				74BE312521626C70003DEDFC /* bus20icon.png */,
 				74840FC2213B40CD00C84BC8 /* rider.png */,
 				74BE311D2160369C003DEDFC /* settings.png */,
 				74BE311F216036A3003DEDFC /* playone.png */,
@@ -197,6 +200,7 @@
 				7409A41021347232007041B0 /* Assets.xcassets in Resources */,
 				74BE3120216036A3003DEDFC /* playone.png in Resources */,
 				74840FC3213B40CD00C84BC8 /* rider.png in Resources */,
+				74BE312621626C70003DEDFC /* bus20icon.png in Resources */,
 				0DE36EAE21558736004850C6 /* map.json in Resources */,
 				7409A40E21347232007041B0 /* Main.storyboard in Resources */,
 			);
