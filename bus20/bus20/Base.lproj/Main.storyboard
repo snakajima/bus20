@@ -172,7 +172,8 @@
                                     <segment title="x60"/>
                                     <segment title="x180"/>
                                     <segment title="x360"/>
-                                    <segment title="x1800"/>
+                                    <segment title="x720"/>
+                                    <segment title="x1440"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentValueChanged:" destination="F8r-Gh-Rfg" eventType="valueChanged" id="mhG-zr-NuG"/>

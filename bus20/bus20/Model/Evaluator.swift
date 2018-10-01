@@ -44,8 +44,12 @@ class Evaluator {
         // Initialize costs and costExtra
         self.costs = riders.map {
             var cost = RiderCost(rider: $0, state: $0.state)
-            cost.waitTime = $0.pickupTime - $0.startTime
-            cost.rideTime = time - $0.pickupTime
+            if $0.pickupTime > 0 {
+                cost.waitTime = $0.pickupTime - $0.startTime
+                cost.rideTime = time - $0.pickupTime
+            } else {
+                cost.waitTime = time - $0.startTime
+            }
             return cost
         }
         costExtra = 0
