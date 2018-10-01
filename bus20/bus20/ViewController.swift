@@ -106,7 +106,7 @@ class ViewController: UIViewController {
         }
         
         let activeRiders = riders.filter({ $0.state != .done })
-        if done == false && riders.count > 0 && activeRiders.count == 0 {
+        if done == false && scheduled.count == 0 && riders.count > 0 && activeRiders.count == 0 {
             done = true
             postProcess()
         }

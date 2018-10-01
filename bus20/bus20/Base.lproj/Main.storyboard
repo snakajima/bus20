@@ -120,7 +120,7 @@
                                     </barButtonItem>
                                 </items>
                             </toolbar>
-                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minimumValue="2" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="8bT-M8-CNi">
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minimumValue="1" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="8bT-M8-CNi">
                                 <rect key="frame" x="261" y="32" width="94" height="29"/>
                                 <connections>
                                     <action selector="valueChanged:" destination="F8r-Gh-Rfg" eventType="valueChanged" id="PSf-Mb-Iwy"/>
@@ -129,6 +129,7 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="oFx-Ya-uKK">
                                 <rect key="frame" x="20" y="159" width="335" height="29"/>
                                 <segments>
+                                    <segment title="10"/>
                                     <segment title="25"/>
                                     <segment title="50"/>
                                     <segment title="100"/>
