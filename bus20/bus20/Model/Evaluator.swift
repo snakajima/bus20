@@ -31,19 +31,22 @@ class Evaluator {
     private var costs = [RiderCost]()
     private var costExtra = CGFloat(0)
 
-    init(routes:[Route], capacity:Int, riders:[Rider]) {
+    init(routes:[Route], capacity:Int, riders:[Rider], time:CGFloat) {
         self.routes = routes
         self.capacity = capacity
         self.riders = riders
-        process()
+        process(time:time)
     }
     
     // Calculate the wait time and ride time of each rider, and
     // also detect the over capacity situation (costExtra).
-    private func process() {
+    private func process(time:CGFloat) {
         // Initialize costs and costExtra
         self.costs = riders.map {
-            RiderCost(rider: $0, state: $0.state)
+            var cost = RiderCost(rider: $0, state: $0.state)
+            cost.waitTime = $0.pickupTime - $0.startTime
+            cost.rideTime = time - $0.pickupTime
+            return cost
         }
         costExtra = 0
         

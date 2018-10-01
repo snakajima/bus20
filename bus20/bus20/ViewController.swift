@@ -72,6 +72,7 @@ class ViewController: UIViewController {
         busyCount = 0
         totalOccupancy = 0
         start = Date()
+        timeUpdated = 0.0
         riders = [Rider]()
         scheduled = [ScheduledRider]()
         if self.fTesting && shuttles.count == count && done {
@@ -90,7 +91,7 @@ class ViewController: UIViewController {
         while let rider = scheduled.first, rider.rideTime < time {
             scheduled.removeFirst()
             rider.rider.startTime = time
-            assign(rider: rider.rider)
+            assign(rider: rider.rider, time:time)
         }
         
         shuttles.forEach() {
@@ -141,12 +142,12 @@ class ViewController: UIViewController {
     }
 
     @IBAction func add(_ sender:UIBarButtonItem) {
-        addRider()
+        addRider(time:timeUpdated)
     }
     
-    func addRider() {
+    func addRider(time:CGFloat) {
         let rider = Rider(graph:graph)
-        assign(rider: rider)
+        assign(rider: rider, time:time)
     }
     
     @IBAction func test(_ sender:UIBarButtonItem?) {
@@ -159,7 +160,7 @@ class ViewController: UIViewController {
         
         start(count: 1, fTesting:true)
         for _ in 0..<6 {
-            addRider()
+            addRider(time:timeUpdated)
         }
         let frame = view.frame
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
@@ -199,10 +200,10 @@ class ViewController: UIViewController {
         */
     }
     
-    func assign(rider:Rider) {
+    func assign(rider:Rider, time:CGFloat) {
         riders.append(rider)
         let before = Date()
-        let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider)
+        let bestPlan = Shuttle.bestPlan(shuttles: shuttles, graph: graph, rider: rider, time:time)
         let delta = Date().timeIntervalSince(before)
         let maxDepth = shuttles.reduce(0) { max($0, $1.depth) }
         print(String(format:"bestPlan:%.0f, time:%.4f, riders:%d, depth:%d", bestPlan.cost, delta, riders.count, maxDepth))

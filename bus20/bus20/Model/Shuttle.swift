@@ -119,7 +119,7 @@ class Shuttle {
     // along with their relative costs.
     // Notice that this code takes a full advantage of Swift, which allows
     // value oriented programming.
-    func plans(rider:Rider, graph:Graph) -> [RoutePlan] {
+    func plans(rider:Rider, graph:Graph, time:CGFloat) -> [RoutePlan] {
         let routesBase:[Route] =  { () -> [Route] in
             var routes = self.routes
             // Make it sure that the first route is a single-edge route,
@@ -137,7 +137,7 @@ class Shuttle {
             return routes
         }()
 
-        let costBasis = evaluate(routes: routesBase, rider: nil)
+        let costBasis = evaluate(routes: routesBase, time:time, rider: nil)
         
         // All possible insertion cases
         var plansArray = Array(repeating: [RoutePlan](), count:routesBase.count - 1)
@@ -173,7 +173,7 @@ class Shuttle {
                     routes1[index1] = graph.route(from: route.from, to: rider.to, rider:nil, pickups:route.pickups)
                     routes1.insert(graph.route(from: rider.to, to: route.to), at: index1+1)
                 } // else { print("optimized") }
-                let cost = evaluate(routes: routes1, rider: rider)
+                let cost = evaluate(routes: routes1, time:time, rider: rider)
                 return RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes1)
             }
         }
@@ -188,25 +188,25 @@ class Shuttle {
             routes0.append(graph.route(from: last, to: rider.from))
         }
         routes0.append(graph.route(from:rider.from, to:rider.to, rider:rider))
-        let cost = evaluate(routes: routes0, rider: rider)
+        let cost = evaluate(routes: routes0, time:time, rider: rider)
         plans.append(RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes0))
         
         return plans
     }
 
     // Calcurate the cost of the specified route, optinally with one additional rider.
-    private func evaluate(routes:[Route], rider:Rider?) -> CGFloat {
+    private func evaluate(routes:[Route], time:CGFloat, rider:Rider?) -> CGFloat {
         let ridersPlus = riders + [rider].compactMap { $0 }
-        let evaluator = Evaluator(routes: routes, capacity:capacity, riders: ridersPlus);
+        let evaluator = Evaluator(routes: routes, capacity:capacity, riders: ridersPlus, time:time);
         return evaluator.cost()
     }
     
-    private func evaluator() -> Evaluator {
-        return Evaluator(routes: routes, capacity:capacity, riders: riders);
+    private func evaluator(time:CGFloat) -> Evaluator {
+        return Evaluator(routes: routes, capacity:capacity, riders: riders, time:time);
     }
     
-    func debugDump() {
-        let evaluator = self.evaluator()
+    func debugDump(time:CGFloat) {
+        let evaluator = self.evaluator(time:time)
         print(evaluator)
         print(self)
     }
@@ -229,9 +229,9 @@ class Shuttle {
         self.riders.append(rider)
     }
     
-    static func bestPlan(shuttles:[Shuttle], graph:Graph, rider:Rider) -> RoutePlan {
+    static func bestPlan(shuttles:[Shuttle], graph:Graph, rider:Rider, time:CGFloat) -> RoutePlan {
         let plans = shuttles
-            .flatMap({ $0.plans(rider:rider, graph:graph) })
+            .flatMap({ $0.plans(rider:rider, graph:graph, time:time) })
             .sorted { $0.cost < $1.cost }
         return plans[0]
     }
