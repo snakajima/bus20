@@ -33,7 +33,7 @@ struct Graph {
 
         // calculate length
         self.nodes = Graph.updateLength(nodes: nodes)
-        self.routes = Graph.allShortestRoute(nodes: self.nodes)
+        self.routes = Graph.allShortestRoutes(nodes: self.nodes)
     }
     
     static func getJsonData() -> Data? {
@@ -75,7 +75,7 @@ struct Graph {
             }
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
-        self.routes = Graph.allShortestRoute(nodes: self.nodes)
+        self.routes = Graph.allShortestRoutes(nodes: self.nodes)
     }
 
     static func updateLength(nodes: [Node]) -> [Node] {
@@ -88,22 +88,20 @@ struct Graph {
             return Node(location: node.location, edges: edges)
         })
     }
-    static func allShortestRoute(nodes: [Node]) -> [[Route]] {
-        let count = nodes.count
-        // Calcurate shortest routes among all Nodes
-        let routeDummy = Route(edges:[nodes[0].edges[0]], extra:0)
-        var routes = (0..<count).map { (index0) -> [Route] in
-            return [routeDummy]
-        }
-        DispatchQueue.concurrentPerform(iterations: count) { (index0) in
-            if Graph.verbose {
-                print(index0, Thread.current)
-            }
-            routes[index0] = (0..<count).map({ (index1) -> Route in
-                Graph.shortest(nodes: nodes, start: index0, end: index1)
-            })
+    
+    // Calcurate shortest routes among all Nodes
+    static func allShortestRoutes(nodes: [Node]) -> [[Route]] {
+        var routes = [[Route]](repeating: [Route](), count: nodes.count)
+        DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
+            routes[from] = shortestRoutes(nodes: nodes, from: from)
         }
         return routes;
+    }
+    
+    static func shortestRoutes(nodes:[Node], from:Int) -> [Route] {
+        return (0..<nodes.count).map({ (to) -> Route in
+            Graph.shortest(nodes: nodes, start: from, end: to)
+        })
     }
     
     func randamRoute(from:Int? = nil) -> Route {
