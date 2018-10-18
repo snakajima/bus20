@@ -94,19 +94,21 @@ struct Graph {
         var routes = [[Route]](repeating: [Route](), count: nodes.count)
         let start = Date()
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
-            routes[from] = shortestRoutes2(nodes: nodes, from: from)
+            routes[from] = shortestRoutesO2(nodes: nodes, from: from)
         }
         print("Graph:time=", Date().timeIntervalSince(start))
         return routes;
     }
 
-    static func shortestRoutes(nodes:[Node], from:Int) -> [Route] {
+    // O(n^3) algorithm (obsolete)
+    static func shortestRoutesO3(nodes:[Node], from:Int) -> [Route] {
         return (0..<nodes.count).map({ (to) -> Route in
             Graph.shortest(nodes: nodes, start: from, end: to)
         })
     }
     
-    static func shortestRoutes2(nodes:[Node], from:Int) -> [Route] {
+    // O(n^2) algorithm
+    static func shortestRoutesO2(nodes:[Node], from:Int) -> [Route] {
         let routeDummy = Route(edges:[nodes[0].edges[0]], extra:0)
         var shortestRoutes = [Route](repeating: routeDummy, count: nodes.count)
         
@@ -133,9 +135,20 @@ struct Graph {
             let index = route.to
             for edge in nodes[index].edges {
                 let type = nodes[edge.to].type
+                let newRoute = Route(edges: route.edges + [edge])
                 if type == .empty {
                     touch(edge: edge)
-                    insert(route:Route(edges: route.edges + [edge]))
+                    shortestRoutes[edge.to] = newRoute
+                    insert(route:newRoute)
+                } else if newRoute.length < shortestRoutes[edge.to].length {
+                    for i in 0..<routes.count {
+                        if routes[i].to == edge.to {
+                            routes.remove(at: i)
+                            shortestRoutes[edge.to] = newRoute
+                            insert(route:newRoute)
+                            break
+                        }
+                    }
                 }
             }
         }
