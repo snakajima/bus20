@@ -92,18 +92,68 @@ struct Graph {
     // Calcurate shortest routes among all Nodes
     static func allShortestRoutes(nodes: [Node]) -> [[Route]] {
         var routes = [[Route]](repeating: [Route](), count: nodes.count)
+        let start = Date()
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
-            routes[from] = shortestRoutes(nodes: nodes, from: from)
+            routes[from] = shortestRoutes2(nodes: nodes, from: from)
         }
+        print("Graph:time=", Date().timeIntervalSince(start))
         return routes;
     }
-    
+
     static func shortestRoutes(nodes:[Node], from:Int) -> [Route] {
         return (0..<nodes.count).map({ (to) -> Route in
             Graph.shortest(nodes: nodes, start: from, end: to)
         })
     }
     
+    static func shortestRoutes2(nodes:[Node], from:Int) -> [Route] {
+        let routeDummy = Route(edges:[nodes[0].edges[0]], extra:0)
+        var shortestRoutes = [Route](repeating: routeDummy, count: nodes.count)
+        
+        var nodes = nodes // Make a copy
+        
+        nodes[from] = Node(node:nodes[from], type:.start)
+        
+        var routes = [Route]()
+        func insert(route:Route) {
+            for i in 0..<routes.count {
+                if route.length < routes[i].length {
+                    routes.insert(route, at: i)
+                    return
+                }
+            }
+            routes.append(route)
+        }
+        func touch(edge:Edge) {
+            if nodes[edge.to].type == .empty {
+                nodes[edge.to] = Node(node:nodes[edge.to], type:.used)
+            }
+        }
+        func propagate(route:Route) {
+            let index = route.to
+            for edge in nodes[index].edges {
+                let type = nodes[edge.to].type
+                if type == .empty {
+                    touch(edge: edge)
+                    insert(route:Route(edges: route.edges + [edge]))
+                }
+            }
+        }
+        
+        for edge in nodes[from].edges {
+            touch(edge: edge)
+            insert(route:Route(edges:[edge]))
+        }
+        
+        for _ in 0..<nodes.count-1 {
+            let route = routes.removeFirst()
+            shortestRoutes[route.to] = route
+            propagate(route: route)
+        }
+
+        return shortestRoutes
+    }
+
     func randamRoute(from:Int? = nil) -> Route {
         let from = from ?? Random.int(self.nodes.count)
         let to = (from + 1 + Random.int(self.nodes.count - 1)) % self.nodes.count
