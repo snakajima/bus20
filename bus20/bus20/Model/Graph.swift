@@ -36,8 +36,7 @@ struct Graph {
         self.routes = Graph.allShortestRoutes(nodes: self.nodes)
     }
     
-    static func getJsonData() -> Data? {
-        let file = "../map"
+    static func getJsonData(file:String) -> Data? {
         let path = Bundle.main.path(forResource: file, ofType: "json")!
         return try? Data(contentsOf: URL(fileURLWithPath: path))
     }
@@ -46,8 +45,8 @@ struct Graph {
         case invalidJsonError
     }
     
-    init() throws {
-        guard let jsonData =  Graph.getJsonData() else {
+    init(file:String) throws {
+        guard let jsonData =  Graph.getJsonData(file:file) else {
             throw GraphError.invalidJsonError
         }
         guard let json = try JSONSerialization.jsonObject(with:jsonData) as? [String:Any] else {

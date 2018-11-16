@@ -42,7 +42,7 @@ class MapsTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         var graph:Graph? = nil
         if indexPath.section == 1 {
-            graph = try? Graph()
+            graph = try? Graph(file:"../map")
         }
         self.performSegue(withIdentifier: "Emulator", sender: graph)
     }
