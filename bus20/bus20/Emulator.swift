@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  Emulator.swift
 //  bus20
 //
 //  Created by SATOSHI NAKAJIMA on 8/27/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class Emulator: UIViewController {
     struct ScheduledRider {
         let rider:Rider
         let rideTime:CGFloat
@@ -231,7 +231,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController : OwnerRenderViewDelegate {
+extension Emulator : OwnerRenderViewDelegate {
     func draw(_ rect:CGRect) {
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(rect)
