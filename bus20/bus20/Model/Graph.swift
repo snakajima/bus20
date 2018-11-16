@@ -11,7 +11,7 @@ import UIKit
 struct Graph {
     static var verbose = false
     private let nodes:[Node]
-    private let routes:[[Route]] // shortest routes among all nodes
+    private let shortestRoutes:[[Route]] // shortest routes among all nodes
     
     init(w:Int, h:Int, unit:CGFloat) {
         let count = w * h
@@ -33,7 +33,7 @@ struct Graph {
 
         // calculate length
         self.nodes = Graph.updateLength(nodes: nodes)
-        self.routes = Graph.allShortestRoutes(nodes: self.nodes)
+        self.shortestRoutes = Graph.allShortestRoutes(nodes: self.nodes)
     }
     
     static func getJsonData(file:String) -> Data? {
@@ -75,7 +75,7 @@ struct Graph {
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
         print("Graph:nodes.count", nodes.count)
-        self.routes = Graph.allShortestRoutes(nodes: self.nodes)
+        self.shortestRoutes = Graph.allShortestRoutes(nodes: self.nodes)
     }
 
     static func updateLength(nodes: [Node]) -> [Node] {
@@ -224,7 +224,7 @@ struct Graph {
 
     func route(from:Int, to:Int, rider:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
         assert(from != to)
-        var route = routes[from][to]
+        var route = shortestRoutes[from][to]
         route.pickups = pickups ?? Set<Int>()
         if let rider = rider {
             route.pickups.insert(rider.id)
