@@ -18,22 +18,63 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="cfT-yT-E0L" kind="relationship" relationship="rootViewController" id="ed3-KX-jF0"/>
+                        <segue destination="HGT-QN-eHc" kind="relationship" relationship="rootViewController" id="czs-Ei-8yI"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I7u-3q-con" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-570" y="149"/>
+            <point key="canvasLocation" x="-985" y="138"/>
         </scene>
         <!--Emulator-->
         <scene sceneID="PGq-85-PGL">
             <objects>
-                <viewControllerPlaceholder storyboardName="Emulator" id="cfT-yT-E0L" sceneMemberID="viewController">
+                <viewControllerPlaceholder storyboardIdentifier="emulate" storyboardName="Emulator" id="cfT-yT-E0L" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="t5G-wB-5FT"/>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3NK-Lq-l2O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="470" y="120"/>
+            <point key="canvasLocation" x="566" y="137"/>
+        </scene>
+        <!--Maps Table View Controller-->
+        <scene sceneID="KIC-aa-QRg">
+            <objects>
+                <tableViewController id="HGT-QN-eHc" customClass="MapsTableViewController" customModule="bus20" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="fNx-Y9-892">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="map" textLabel="USG-H4-scb" style="IBUITableViewCellStyleDefault" id="mT0-Ce-dk3">
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="mT0-Ce-dk3" id="c27-HY-yJQ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="USG-H4-scb">
+                                            <rect key="frame" x="16" y="0.0" width="343" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="HGT-QN-eHc" id="Ijd-qN-bmq"/>
+                            <outlet property="delegate" destination="HGT-QN-eHc" id="Wv3-uK-mY0"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" id="bJv-rz-FwK"/>
+                    <connections>
+                        <segue destination="cfT-yT-E0L" kind="show" identifier="Emulator" id="bC2-0B-oM3"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dnB-0W-cVG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-108" y="137"/>
         </scene>
     </scenes>
 </document>
