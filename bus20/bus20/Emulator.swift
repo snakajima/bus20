@@ -25,6 +25,7 @@ class Emulator: UIViewController {
     let labelTime = UILabel(frame: .zero) // to render text
     var routeView:OwnerRenderView!
     var scale = CGFloat(1.0)
+    var offset = CGPoint.zero
     var shuttles = [Shuttle]()
     var start = Date()
     var riders = [Rider]()
@@ -41,12 +42,18 @@ class Emulator: UIViewController {
         super.viewDidLoad()
         let frame = view.frame
         let mapView = UIImageView(frame: frame)
-        scale = min(frame.size.width / CGFloat(Metrics.graphWidth + 1),
-                        frame.size.height / CGFloat(Metrics.graphHeight+1)) / Metrics.edgeLength
+        let bounds = graph.boundingBox
+        scale = min(frame.size.width / bounds.width,
+                        frame.size.height / bounds.height)
+        offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
+        
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         
         let ctx = UIGraphicsGetCurrentContext()!
+        UIColor.white.setFill()
+        ctx.fill(frame)
+        ctx.translateBy(x: offset.x, y: offset.y)
         graph.render(ctx:ctx, frame: frame, scale:scale)
         print("EM:graph=", graph.json);
         mapView.image = UIGraphicsGetImageFromCurrentImageContext()
@@ -235,6 +242,7 @@ extension Emulator : OwnerRenderViewDelegate {
     func draw(_ rect:CGRect) {
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(rect)
+        ctx.translateBy(x: offset.x, y: offset.y)
         labelTime.text = String(format: "%2d:%02d", Int(timeUpdated / 60), Int(timeUpdated) % 60)
         labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
         shuttles.forEach() {

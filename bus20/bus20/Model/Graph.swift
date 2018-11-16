@@ -178,8 +178,6 @@ struct Graph {
     }
 
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
-        UIColor.white.setFill()
-        ctx.fill(frame)
         ctx.setLineWidth(Metrics.roadWidth)
         UIColor.lightGray.setFill()
         UIColor.lightGray.setStroke()
@@ -200,12 +198,30 @@ struct Graph {
         return String(bytes: jsonData, encoding: .utf8)!
     }
     
-    var bounds:CGRect {
+    var boundingBox:CGRect {
         let xs = nodes.map { $0.location.x }
         let ys = nodes.map { $0.location.y }
-        return CGRect(x: xs.min()!, y: ys.min()!, width: xs.max()!, height: ys.max()!)
+        let origin = CGPoint(x: xs.min()!, y: ys.min()!)
+        let size = CGSize(width: xs.max()! - origin.x, height: ys.max()! - origin.y)
+        return CGRect(origin: origin, size: size)
     }
+    /*
+     var boundingBox:CGRect {
+     var origin = nodes[0].location
+     nodes.forEach { (node) in
+     origin.x = min(node.location.x, origin.x)
+     origin.y = min(node.location.y, origin.y)
+     }
+     var size = CGSize.zero
+     nodes.forEach { (node) in
+     size.width = min(node.location.x - origin.x, size.width)
+     size.height = min(node.location.y - origin.y, size.height)
+     }
+     return CGRect(origin: origin, size: size)
+     }
+     */
     
+
     func route(from:Int, to:Int, rider:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
         assert(from != to)
         var route = routes[from][to]
