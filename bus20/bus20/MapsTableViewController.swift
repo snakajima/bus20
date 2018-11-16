@@ -40,12 +40,20 @@ class MapsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        self.performSegue(withIdentifier: "Emulator", sender: indexPath)
+        var graph:Graph? = nil
+        if indexPath.section == 1 {
+            graph = try? Graph()
+        }
+        self.performSegue(withIdentifier: "Emulator", sender: graph)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if let emulator = segue.destination as? Emulator,
+            let graph = sender as? Graph {
+            emulator.graph = graph
+        }
     }
 
 }
