@@ -55,7 +55,7 @@ class Emulator: UIViewController {
         ctx.fill(frame)
         ctx.translateBy(x: offset.x, y: offset.y)
         graph.render(ctx:ctx, frame: frame, scale:scale)
-        print("EM:graph=", graph.json);
+        //print("EM:graph=", graph.json);
         mapView.image = UIGraphicsGetImageFromCurrentImageContext()
 
         viewMain.addSubview(mapView)
@@ -225,17 +225,6 @@ class Emulator: UIViewController {
         //bestPlan.shuttle.debugDump()
     }
     
-    static func getJsonString() -> String {
-        let file = "../map"
-        let path = Bundle.main.path(forResource: file, ofType: "json")!
-        
-        var ret = "";
-        if let data = NSData(contentsOfFile: path){
-            ret = String(NSString(data: data as Data, encoding: String.Encoding.utf8.rawValue)!)
-        }
-        return ret;
-        
-    }
 }
 
 extension Emulator : OwnerRenderViewDelegate {

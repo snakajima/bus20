@@ -94,9 +94,14 @@ struct Graph {
         var routes = [[Route]](repeating: [Route](), count: nodes.count)
         let start = Date()
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
+            print("Graph:from=", from)
             routes[from] = shortestRoutesO2(nodes: nodes, from: from)
         }
         print("Graph:time=", Date().timeIntervalSince(start))
+        
+        routes.forEach {
+            assert($0.count == nodes.count)
+        }
         return routes;
     }
 
@@ -164,6 +169,7 @@ struct Graph {
             propagate(route: route)
         }
 
+        assert(shortestRoutes.count == nodes.count)
         return shortestRoutes
     }
 
