@@ -9,6 +9,9 @@
 import UIKit
 
 class MapsTableViewController: UITableViewController {
+    let maps = [
+        "map", "bus_stop"
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +32,16 @@ class MapsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return (section == 0) ? 1 : maps.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "map", for: indexPath)
-        cell.textLabel!.text = "ABC"
+        if indexPath.section == 1 {
+            cell.textLabel!.text = maps[indexPath.row]
+        } else {
+            cell.textLabel!.text = "Random"
+        }
         return cell
     }
     
@@ -42,7 +49,7 @@ class MapsTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
         var graph:Graph? = nil
         if indexPath.section == 1 {
-            graph = try? Graph(file:"../map")
+            graph = try? Graph(file:maps[indexPath.row])
         }
         self.performSegue(withIdentifier: "Emulator", sender: graph)
     }
