@@ -74,6 +74,7 @@ struct Graph {
             }
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
+        print("Graph:nodes.count", nodes.count)
         self.routes = Graph.allShortestRoutes(nodes: self.nodes)
     }
 

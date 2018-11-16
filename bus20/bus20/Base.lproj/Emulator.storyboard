@@ -106,20 +106,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="v0Q-fy-NDG">
-                                <rect key="frame" x="0.0" y="623" width="375" height="44"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="44" id="ZwE-F5-hyh"/>
-                                </constraints>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="LkL-7z-NCX"/>
-                                    <barButtonItem systemItem="done" id="wVd-K5-O1k">
-                                        <connections>
-                                            <action selector="done:" destination="F8r-Gh-Rfg" id="9tO-Ah-k7T"/>
-                                        </connections>
-                                    </barButtonItem>
-                                </items>
-                            </toolbar>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minimumValue="1" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="8bT-M8-CNi">
                                 <rect key="frame" x="261" y="76" width="94" height="29"/>
                                 <connections>
@@ -199,7 +185,6 @@
                         <constraints>
                             <constraint firstItem="oFx-Ya-uKK" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="5MX-Hb-Xg0"/>
                             <constraint firstItem="ICl-fB-cyS" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="7Ue-IU-kur"/>
-                            <constraint firstItem="v0Q-fy-NDG" firstAttribute="trailing" secondItem="hIb-wi-8FI" secondAttribute="trailing" id="7k5-jO-mS1"/>
                             <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="Nru-Ci-ird" secondAttribute="trailing" constant="20" id="8Ad-jz-Na8"/>
                             <constraint firstItem="ICl-fB-cyS" firstAttribute="top" secondItem="fF4-ai-K44" secondAttribute="bottom" constant="8" id="9lS-yx-N9b"/>
                             <constraint firstItem="vkW-Ou-U6L" firstAttribute="top" secondItem="86R-oJ-X2u" secondAttribute="bottom" constant="27" id="B90-Zz-WAq"/>
@@ -208,9 +193,7 @@
                             <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="U4G-kl-yaD" secondAttribute="trailing" constant="20" id="F5C-fd-qeV"/>
                             <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="8bT-M8-CNi" secondAttribute="trailing" constant="20" id="J4W-ji-jJf"/>
                             <constraint firstItem="fF4-ai-K44" firstAttribute="top" secondItem="oFx-Ya-uKK" secondAttribute="bottom" constant="20" id="NYc-nb-v8T"/>
-                            <constraint firstItem="v0Q-fy-NDG" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" id="ST5-xm-T3m"/>
                             <constraint firstItem="fF4-ai-K44" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="Tof-3a-Yea"/>
-                            <constraint firstItem="v0Q-fy-NDG" firstAttribute="bottom" secondItem="hIb-wi-8FI" secondAttribute="bottom" id="Tws-bx-UsQ"/>
                             <constraint firstItem="hIb-wi-8FI" firstAttribute="trailing" secondItem="fF4-ai-K44" secondAttribute="trailing" constant="20" id="X76-T6-6yK"/>
                             <constraint firstItem="vkW-Ou-U6L" firstAttribute="leading" secondItem="hIb-wi-8FI" secondAttribute="leading" constant="20" id="XoZ-wu-aBO"/>
                             <constraint firstItem="oFx-Ya-uKK" firstAttribute="top" secondItem="U4G-kl-yaD" secondAttribute="bottom" constant="8" id="Yui-Aa-nZf"/>

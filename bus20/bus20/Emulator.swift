@@ -48,7 +48,7 @@ class Emulator: UIViewController {
         
         let ctx = UIGraphicsGetCurrentContext()!
         graph.render(ctx:ctx, frame: frame, scale:scale)
-        print(graph.json);
+        print("EM:graph=", graph.json);
         mapView.image = UIGraphicsGetImageFromCurrentImageContext()
 
         viewMain.addSubview(mapView)
