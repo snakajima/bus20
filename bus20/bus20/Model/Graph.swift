@@ -11,7 +11,7 @@ import UIKit
 struct Graph {
     static var verbose = false
     private let nodes:[Node]
-    private let shortestRoutes:[[Route]] // shortest routes among all nodes
+    var shortestRoutes = [[Route]]() // shortest routes among all nodes
     
     init(w:Int, h:Int, unit:CGFloat) {
         let count = w * h
@@ -33,7 +33,12 @@ struct Graph {
 
         // calculate length
         self.nodes = Graph.updateLength(nodes: nodes)
-        self.shortestRoutes = Graph.allShortestRoutes(nodes: self.nodes)
+    }
+    
+    mutating func extraInit(_ callback:@escaping ([[Route]])->()) {
+        Graph.allShortestRoutes(nodes: self.nodes) {
+            callback($0)
+        }
     }
     
     static func getJsonData(file:String) -> Data? {
@@ -75,7 +80,6 @@ struct Graph {
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
         print("Graph:nodes.count", nodes.count)
-        self.shortestRoutes = Graph.allShortestRoutes(nodes: self.nodes)
     }
 
     static func updateLength(nodes: [Node]) -> [Node] {
@@ -90,19 +94,27 @@ struct Graph {
     }
     
     // Calcurate shortest routes among all Nodes
-    static func allShortestRoutes(nodes: [Node]) -> [[Route]] {
+    static func allShortestRoutes(nodes: [Node], callback:@escaping ([[Route]])->()) {
         var routes = [[Route]](repeating: [Route](), count: nodes.count)
         let start = Date()
+        let lockQueue = DispatchQueue(label: "myQueue")
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
-            print("Graph:from=", from)
-            routes[from] = shortestRoutesO2(nodes: nodes, from: from)
+            let result = shortestRoutesO2(nodes: nodes, from: from)
+            lockQueue.async {
+                routes[from] = result
+            }
         }
         print("Graph:time=", Date().timeIntervalSince(start))
-        
-        routes.forEach {
-            assert($0.count == nodes.count)
+
+        // Test code
+        lockQueue.async {
+            routes.forEach {
+                assert($0.count == nodes.count)
+            }
+            DispatchQueue.main.async {
+                callback(routes)
+            }
         }
-        return routes;
     }
 
     // O(n^3) algorithm (obsolete)

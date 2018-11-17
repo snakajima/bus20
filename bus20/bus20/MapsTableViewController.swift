@@ -47,11 +47,19 @@ class MapsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        var graph:Graph? = nil
-        if indexPath.section == 1 {
-            graph = try? Graph(file:maps[indexPath.row])
+        var graph:Graph
+        if indexPath.section == 0 {
+            graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
+        } else {
+            guard let g = try? Graph(file:maps[indexPath.row]) else {
+                return
+            }
+            graph = g
         }
-        self.performSegue(withIdentifier: "Emulator", sender: graph)
+        graph.extraInit {
+            graph.shortestRoutes = $0
+            self.performSegue(withIdentifier: "Emulator", sender: graph)
+        }
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
