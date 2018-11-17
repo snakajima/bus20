@@ -97,7 +97,7 @@ struct Graph {
     static func allShortestRoutes(nodes: [Node], callback:@escaping ([[Route]])->()) {
         var routes = [[Route]](repeating: [Route](), count: nodes.count)
         let start = Date()
-        let lockQueue = DispatchQueue(label: "myQueue")
+        let lockQueue = DispatchQueue(label: "lockQueue")
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
             let result = shortestRoutesO2(nodes: nodes, from: from)
             lockQueue.async {

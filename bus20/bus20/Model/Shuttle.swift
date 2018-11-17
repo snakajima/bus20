@@ -141,8 +141,11 @@ class Shuttle {
         
         // All possible insertion cases
         var plansArray = Array(repeating: [RoutePlan](), count:routesBase.count - 1)
+        let dispatchGroup = DispatchGroup()
+        let lockQueue = DispatchQueue(label: "lockQueue")
         //for index0 in 1..<routesBase.count {
         DispatchQueue.concurrentPerform(iterations: routesBase.count-1) { (index00) in
+            dispatchGroup.enter()
             let index0 = index00+1
             var routes0 = routesBase // notice that we make another copy (for each)
             let route = routes0[index0]
@@ -166,7 +169,7 @@ class Shuttle {
                 assert(routes0[index].to == routes0[index+1].from)
             }
 
-            plansArray[index0-1] = (index0+1..<routes0.count).map { (index1) -> RoutePlan in
+            let plans = (index0+1..<routes0.count).map { (index1) -> RoutePlan in
                 var routes1 = routes0 // notice that we make yet another copy
                 let route = routes1[index1]
                 if route.from != rider.to && route.to != rider.to {
@@ -176,7 +179,13 @@ class Shuttle {
                 let cost = evaluate(routes: routes1, time:time, rider: rider)
                 return RoutePlan(shuttle:self, cost:cost - costBasis, routes:routes1)
             }
+            lockQueue.async {
+                plansArray[index0-1] = plans
+                dispatchGroup.leave()
+            }
         }
+        
+        dispatchGroup.wait()
         var plans = plansArray.flatMap { $0 }
         
         // Append case
