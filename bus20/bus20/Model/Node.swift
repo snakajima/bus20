@@ -34,6 +34,8 @@ struct Node {
         self.type = type
     }
     
+    var isSignificant:Bool { return edges.count != 2 }
+    
     func distance(to:Node) -> CGFloat {
         let dx = to.location.x - self.location.x
         let dy = to.location.y - self.location.y

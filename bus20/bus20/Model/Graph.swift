@@ -118,7 +118,29 @@ struct Graph {
     static func shortestRoutesO2(nodes:[Node], from:Int) -> [Int:Route] {
         let routeEmpty = Route(edges:[nodes[0].edges[0]], extra:0)
         var shortestRoutes = [Int:Route]()
-        
+
+        if !nodes[from].isSignificant {
+            func routeToSignificant(from:Int, edgeIndex:Int) -> Route {
+                var edge = nodes[from].edges[edgeIndex]
+                var edges = [edge]
+                var node = nodes[edge.to]
+                while !node.isSignificant {
+                    assert(nodes[from].edges.count==2)
+                    if node.edges[0].to != edge.from {
+                        edge = node.edges[0]
+                    } else {
+                        edge = node.edges[1]
+                    }
+                    edges.append(edge)
+                    node = nodes[edge.to]
+                }
+                return Route(edges: edges)
+            }
+            assert(nodes[from].edges.count==2)
+            let routes = [routeToSignificant(from: from, edgeIndex: 0),
+                          routeToSignificant(from: from, edgeIndex: 1)]
+            print("Graph:skip shortes", from, routes)
+        }
         var nodes = nodes // Make a copy
         
         nodes[from] = Node(node:nodes[from], type:.start)
