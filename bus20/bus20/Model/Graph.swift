@@ -120,10 +120,11 @@ struct Graph {
         var shortestRoutes = [Int:Route]()
 
         if !nodes[from].isSignificant {
-            func routeToSignificant(from:Int, edgeIndex:Int) -> Route {
+            func routesToSignificant(from:Int, edgeIndex:Int) -> [Route] {
                 var edge = nodes[from].edges[edgeIndex]
                 var edges = [edge]
                 var node = nodes[edge.to]
+                var routes = [Route(edges: edges)]
                 while !node.isSignificant {
                     assert(nodes[from].edges.count==2)
                     if node.edges[0].to != edge.from {
@@ -133,12 +134,13 @@ struct Graph {
                     }
                     edges.append(edge)
                     node = nodes[edge.to]
+                    routes.append(Route(edges: edges))
                 }
-                return Route(edges: edges)
+                return routes
             }
             assert(nodes[from].edges.count==2)
-            let routes = [routeToSignificant(from: from, edgeIndex: 0),
-                          routeToSignificant(from: from, edgeIndex: 1)]
+            let routes = [routesToSignificant(from: from, edgeIndex: 0),
+                          routesToSignificant(from: from, edgeIndex: 1)].flatMap {$0}
             print("Graph:skip shortes", from, routes)
         }
         var nodes = nodes // Make a copy
