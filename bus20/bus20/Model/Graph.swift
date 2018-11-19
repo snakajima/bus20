@@ -136,6 +136,7 @@ struct Graph {
                     node = nodes[edge.to]
                     routes.append(Route(edges: edges))
                 }
+                assert(nodes[routes.last!.to].isSignificant)
                 return routes
             }
             assert(nodes[from].edges.count==2)
