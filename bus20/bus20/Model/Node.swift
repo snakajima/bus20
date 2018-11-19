@@ -44,7 +44,8 @@ struct Node {
     }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
-        let rc = CGRect(x: location.x * scale - 2, y: location.y * scale - 2, width: 4, height: 4)
+        let r:CGFloat = isSignificant ? 2 : 1
+        let rc = CGRect(x: location.x * scale - r, y: location.y * scale - r, width: r*2, height: r*2)
         ctx.fillEllipse(in: rc)
         
         ctx.beginPath()
