@@ -56,10 +56,7 @@ class MapsTableViewController: UITableViewController {
             }
             graph = g
         }
-        graph.extraInit {
-            graph.shortestRoutes = $0
-            self.performSegue(withIdentifier: "Emulator", sender: graph)
-        }
+        self.performSegue(withIdentifier: "Emulator", sender: graph)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

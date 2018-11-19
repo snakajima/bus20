@@ -10,14 +10,13 @@ import UIKit
 
 struct Graph {
     static var verbose = false
-    private let nodes:[Node]
-    var shortestRoutes = [[Route]]() // shortest routes among all nodes
+    private var nodes:[Node]
     
     init(w:Int, h:Int, unit:CGFloat) {
         let count = w * h
         Random.seed(0)
         // Create an array of Nodes without real lentgh in Edges
-        let nodes:[Node] = (0..<count).map { (index) -> Node in
+        var nodes:[Node] = (0..<count).map { (index) -> Node in
             let y = index / w
             let x = index - y * w
             let edges = [
@@ -32,13 +31,8 @@ struct Graph {
         }
 
         // calculate length
-        self.nodes = Graph.updateLength(nodes: nodes)
-    }
-    
-    mutating func extraInit(_ callback:@escaping ([[Route]])->()) {
-        Graph.allShortestRoutes(nodes: self.nodes) {
-            callback($0)
-        }
+        nodes = Graph.updateLength(nodes: nodes)
+        self.nodes = Graph.getShortestRoutes(nodes: nodes)
     }
     
     static func getJsonData(file:String) -> Data? {
@@ -60,7 +54,7 @@ struct Graph {
         guard let nodeArray = json["nodes"] as? [[String:Any]] else {
             throw GraphError.invalidJsonError
         }
-        self.nodes = try nodeArray.map{ (node) -> Node in
+        var nodes = try nodeArray.map{ (node) -> Node in
             guard let edgeArray = node["edges"] as? [[String:Any]] else {
                 throw GraphError.invalidJsonError
             }
@@ -80,6 +74,8 @@ struct Graph {
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
         print("Graph:nodes.count", nodes.count)
+        nodes = Graph.updateLength(nodes: nodes)
+        self.nodes = Graph.getShortestRoutes(nodes: nodes)
     }
 
     static func updateLength(nodes: [Node]) -> [Node] {
@@ -91,6 +87,24 @@ struct Graph {
             })
             return Node(location: node.location, edges: edges)
         })
+    }
+
+    static func getShortestRoutes(nodes nodesIn:[Node]) -> [Node] {
+        var nodes = nodesIn
+        let start = Date()
+        let lockQueue = DispatchQueue(label: "lockQueue")
+        let dispatchGroup = DispatchGroup()
+        DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
+            dispatchGroup.enter()
+            let result = Graph.shortestRoutesO2Alt(nodes: nodes, from: from)
+            lockQueue.async {
+                nodes[from].shortestRoutes = result
+                dispatchGroup.leave()
+            }
+        }
+        dispatchGroup.wait()
+        print("Graph:time=", Date().timeIntervalSince(start))
+        return nodes
     }
     
     // Calcurate shortest routes among all Nodes
@@ -185,6 +199,67 @@ struct Graph {
         return shortestRoutes
     }
 
+    // O(n^2) algorithm
+    static func shortestRoutesO2Alt(nodes:[Node], from:Int) -> [Int:Route] {
+        let routeEmpty = Route(edges:[nodes[0].edges[0]], extra:0)
+        var shortestRoutes = [Int:Route]()
+        
+        var nodes = nodes // Make a copy
+        
+        nodes[from] = Node(node:nodes[from], type:.start)
+        
+        var routes = [Route]()
+        func insert(route:Route) {
+            for i in 0..<routes.count {
+                if route.length < routes[i].length {
+                    routes.insert(route, at: i)
+                    return
+                }
+            }
+            routes.append(route)
+        }
+        func touch(edge:Edge) {
+            if nodes[edge.to].type == .empty {
+                nodes[edge.to] = Node(node:nodes[edge.to], type:.used)
+            }
+        }
+        func propagate(route:Route) {
+            let index = route.to
+            for edge in nodes[index].edges {
+                let type = nodes[edge.to].type
+                let newRoute = Route(edges: route.edges + [edge])
+                if type == .empty {
+                    touch(edge: edge)
+                    shortestRoutes[edge.to] = newRoute
+                    insert(route:newRoute)
+                } else if newRoute.length < (shortestRoutes[edge.to] ?? routeEmpty).length {
+                    for i in 0..<routes.count {
+                        if routes[i].to == edge.to {
+                            routes.remove(at: i)
+                            shortestRoutes[edge.to] = newRoute
+                            insert(route:newRoute)
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        
+        for edge in nodes[from].edges {
+            touch(edge: edge)
+            insert(route:Route(edges:[edge]))
+        }
+        
+        for _ in 0..<nodes.count-1 {
+            let route = routes.removeFirst()
+            shortestRoutes[route.to] = route
+            propagate(route: route)
+        }
+        
+        assert(shortestRoutes.count == nodes.count - 1)
+        return shortestRoutes
+    }
+
     func randamRoute(from:Int? = nil) -> Route {
         let from = from ?? Random.int(self.nodes.count)
         let to = (from + 1 + Random.int(self.nodes.count - 1)) % self.nodes.count
@@ -242,7 +317,7 @@ struct Graph {
 
     func route(from:Int, to:Int, rider:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
         assert(from != to)
-        var route = shortestRoutes[from][to]
+        var route = nodes[from].shortestRoutes[to]! // HACK
         route.pickups = pickups ?? Set<Int>()
         if let rider = rider {
             route.pickups.insert(rider.id)

@@ -20,6 +20,7 @@ struct Node {
     let location:CGPoint // The location
     let edges:[Edge]     // Edges started from this node (one direction)
     let type:NodeType    // Node type. Used only when we are searching a shortest route
+    var shortestRoutes = [Int:Route]() // shortest route to other nodes (Int is the index of the other node)
     
     init(location:CGPoint, edges:[Edge]) {
         self.location = location
