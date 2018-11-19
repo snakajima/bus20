@@ -75,8 +75,17 @@ struct Graph {
         }
         print("Graph:nodes.count", nodes.count)
         print("Graph:snodes.count", nodes.filter({$0.isSignificant}).count)
-        nodes = Graph.updateLength(nodes: nodes)
+        nodes = Graph.scaleLength(nodes: nodes, scale:0.001)
         self.nodes = Graph.getShortestRoutes(nodes: nodes)
+    }
+    
+    static func scaleLength(nodes: [Node], scale:CGFloat) -> [Node] {
+        return nodes.map({ (node) -> Node in
+            let edges = node.edges.map({ (edge) -> Edge in
+                return Edge(from: edge.from, to: edge.to, length: edge.length * scale)
+            })
+            return Node(location: node.location, edges: edges)
+        })
     }
 
     static func updateLength(nodes: [Node]) -> [Node] {
