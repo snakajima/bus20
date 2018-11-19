@@ -125,7 +125,8 @@ struct Graph {
                 var edge = nodes[from].edges[edgeIndex]
                 var edges = [edge]
                 var node = nodes[edge.to]
-                var routes = [edge.to:Route(edges: edges)]
+                var routes = [Int:Route]()
+                routes[edge.to] = Route(edges: edges)
                 while !node.isSignificant {
                     assert(nodes[from].edges.count==2)
                     if node.edges[0].to != edge.from {
@@ -142,8 +143,11 @@ struct Graph {
             assert(nodes[from].edges.count==2)
             let (routes0, index0) = routesToSignificant(from: from, edgeIndex: 0)
             let (routes1, index1) = routesToSignificant(from: from, edgeIndex: 1)
-            let routes = [routes0, routes1].flatMap { $0 }
-            print("Graph:skip shortes", from, routes)
+            let routes = routes0.merging(routes1) { (route, _) -> Route in
+                return route
+            }
+            print("Graph:skip shortes", from, routes, [index0, index1])
+            //return (routes, [index0, index1])
         }
         var nodes = nodes // Make a copy
         
