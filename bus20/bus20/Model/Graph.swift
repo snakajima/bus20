@@ -96,7 +96,7 @@ struct Graph {
         let dispatchGroup = DispatchGroup()
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
             dispatchGroup.enter()
-            let result = Graph.shortestRoutesO2Alt(nodes: nodes, from: from)
+            let result = Graph.shortestRoutesO2(nodes: nodes, from: from)
             lockQueue.async {
                 nodes[from].shortestRoutes = result
                 dispatchGroup.leave()
@@ -107,30 +107,6 @@ struct Graph {
         return nodes
     }
     
-    // Calcurate shortest routes among all Nodes
-    static func allShortestRoutes(nodes: [Node], callback:@escaping ([[Route]])->()) {
-        var routes = [[Route]](repeating: [Route](), count: nodes.count)
-        let start = Date()
-        let lockQueue = DispatchQueue(label: "lockQueue")
-        DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
-            let result = shortestRoutesO2(nodes: nodes, from: from)
-            lockQueue.async {
-                routes[from] = result
-            }
-        }
-        print("Graph:time=", Date().timeIntervalSince(start))
-
-        // Test code
-        lockQueue.async {
-            routes.forEach {
-                assert($0.count == nodes.count)
-            }
-            DispatchQueue.main.async {
-                callback(routes)
-            }
-        }
-    }
-
     // O(n^3) algorithm (obsolete)
     static func shortestRoutesO3(nodes:[Node], from:Int) -> [Route] {
         return (0..<nodes.count).map({ (to) -> Route in
@@ -139,68 +115,7 @@ struct Graph {
     }
     
     // O(n^2) algorithm
-    static func shortestRoutesO2(nodes:[Node], from:Int) -> [Route] {
-        let routeDummy = Route(edges:[nodes[0].edges[0]], extra:0)
-        var shortestRoutes = [Route](repeating: routeDummy, count: nodes.count)
-        
-        var nodes = nodes // Make a copy
-        
-        nodes[from] = Node(node:nodes[from], type:.start)
-        
-        var routes = [Route]()
-        func insert(route:Route) {
-            for i in 0..<routes.count {
-                if route.length < routes[i].length {
-                    routes.insert(route, at: i)
-                    return
-                }
-            }
-            routes.append(route)
-        }
-        func touch(edge:Edge) {
-            if nodes[edge.to].type == .empty {
-                nodes[edge.to] = Node(node:nodes[edge.to], type:.used)
-            }
-        }
-        func propagate(route:Route) {
-            let index = route.to
-            for edge in nodes[index].edges {
-                let type = nodes[edge.to].type
-                let newRoute = Route(edges: route.edges + [edge])
-                if type == .empty {
-                    touch(edge: edge)
-                    shortestRoutes[edge.to] = newRoute
-                    insert(route:newRoute)
-                } else if newRoute.length < shortestRoutes[edge.to].length {
-                    for i in 0..<routes.count {
-                        if routes[i].to == edge.to {
-                            routes.remove(at: i)
-                            shortestRoutes[edge.to] = newRoute
-                            insert(route:newRoute)
-                            break
-                        }
-                    }
-                }
-            }
-        }
-        
-        for edge in nodes[from].edges {
-            touch(edge: edge)
-            insert(route:Route(edges:[edge]))
-        }
-        
-        for _ in 0..<nodes.count-1 {
-            let route = routes.removeFirst()
-            shortestRoutes[route.to] = route
-            propagate(route: route)
-        }
-
-        assert(shortestRoutes.count == nodes.count)
-        return shortestRoutes
-    }
-
-    // O(n^2) algorithm
-    static func shortestRoutesO2Alt(nodes:[Node], from:Int) -> [Int:Route] {
+    static func shortestRoutesO2(nodes:[Node], from:Int) -> [Int:Route] {
         let routeEmpty = Route(edges:[nodes[0].edges[0]], extra:0)
         var shortestRoutes = [Int:Route]()
         
