@@ -96,9 +96,10 @@ struct Graph {
         let dispatchGroup = DispatchGroup()
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
             dispatchGroup.enter()
-            let result = Graph.shortestRoutesO2(nodes: nodes, from: from)
+            let (result, snodes) = Graph.shortestRoutesO2(nodes: nodes, from: from)
             lockQueue.async {
                 nodes[from].shortestRoutes = result
+                nodes[from].snodes = snodes
                 dispatchGroup.leave()
             }
         }
@@ -115,7 +116,7 @@ struct Graph {
     }
     
     // O(n^2) algorithm
-    static func shortestRoutesO2(nodes:[Node], from:Int) -> [Int:Route] {
+    static func shortestRoutesO2(nodes:[Node], from:Int) -> ([Int:Route], [Int]) {
         let routeEmpty = Route(edges:[nodes[0].edges[0]], extra:0)
         var shortestRoutes = [Int:Route]()
 
@@ -197,7 +198,7 @@ struct Graph {
         }
         
         assert(shortestRoutes.count == nodes.count - 1)
-        return shortestRoutes
+        return (shortestRoutes, [])
     }
 
     func randamRoute(from:Int? = nil) -> Route {
