@@ -270,15 +270,10 @@ struct Graph {
      }
      */
     
-
-    func route(from:Int, to:Int, rider:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
+    private func shortestRoute(from:Int, to:Int) ->Route {
         assert(from != to)
         let node = nodes[from]
-        if var route = node.shortestRoutes[to] {
-            route.pickups = pickups ?? Set<Int>()
-            if let rider = rider {
-                route.pickups.insert(rider.id)
-            }
+        if let route = node.shortestRoutes[to] {
             return route
         }
         assert(!node.isSignificant)
@@ -293,8 +288,11 @@ struct Graph {
         let route11 = nodes[node1].shortestRoutes[to]!
         assert(route10.to == route11.from)
         let route1 = Route(edges:route10.edges + route11.edges)
-        var route = route0.length < route1.length ? route0 : route1
-        
+        return route0.length < route1.length ? route0 : route1
+    }
+
+    func route(from:Int, to:Int, rider:Rider? = nil, pickups:Set<Int>? = nil) -> Route {
+        var route = shortestRoute(from: from, to: to)
         route.pickups = pickups ?? Set<Int>()
         if let rider = rider {
             route.pickups.insert(rider.id)
