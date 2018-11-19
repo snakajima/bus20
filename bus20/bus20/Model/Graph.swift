@@ -120,11 +120,11 @@ struct Graph {
         var shortestRoutes = [Int:Route]()
 
         if !nodes[from].isSignificant {
-            func routesToSignificant(from:Int, edgeIndex:Int) -> [Route] {
+            func routesToSignificant(from:Int, edgeIndex:Int) -> [Int:Route] {
                 var edge = nodes[from].edges[edgeIndex]
                 var edges = [edge]
                 var node = nodes[edge.to]
-                var routes = [Route(edges: edges)]
+                var routes = [edge.to:Route(edges: edges)]
                 while !node.isSignificant {
                     assert(nodes[from].edges.count==2)
                     if node.edges[0].to != edge.from {
@@ -134,9 +134,8 @@ struct Graph {
                     }
                     edges.append(edge)
                     node = nodes[edge.to]
-                    routes.append(Route(edges: edges))
+                    routes[edge.to] = Route(edges: edges)
                 }
-                assert(nodes[routes.last!.to].isSignificant)
                 return routes
             }
             assert(nodes[from].edges.count==2)
