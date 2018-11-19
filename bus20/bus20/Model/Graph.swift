@@ -74,6 +74,7 @@ struct Graph {
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
         print("Graph:nodes.count", nodes.count)
+        print("Graph:snodes.count", nodes.filter({$0.isSignificant}).count)
         nodes = Graph.updateLength(nodes: nodes)
         self.nodes = Graph.getShortestRoutes(nodes: nodes)
     }
@@ -146,7 +147,7 @@ struct Graph {
             let routes = routes0.merging(routes1) { (route, _) -> Route in
                 return route
             }
-            print("Graph:skip shortes", from, routes, [index0, index1])
+            //print("Graph:skip shortes", from, routes, [index0, index1])
             return (routes, [index0, index1])
         }
         var nodes = nodes // Make a copy
