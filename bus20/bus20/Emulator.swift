@@ -38,16 +38,9 @@ class Emulator: UIViewController {
     var totalOccupancy:CGFloat = 0
     var fTesting = false
     var timeUpdated = CGFloat(0)
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    
+    func renderMap() {
         let frame = view.frame
-        mapView = UIImageView(frame: frame)
-        let bounds = graph.boundingBox
-        scale = min(frame.size.width / bounds.width,
-                        frame.size.height / bounds.height)
-        offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
-        
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         
@@ -58,7 +51,17 @@ class Emulator: UIViewController {
         graph.render(ctx:ctx, frame: frame, scale:scale)
         //print("EM:graph=", graph.json);
         mapView.image = UIGraphicsGetImageFromCurrentImageContext()
+    }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let frame = view.frame
+        mapView = UIImageView(frame: frame)
+        let bounds = graph.boundingBox
+        scale = min(frame.size.width / bounds.width,
+                        frame.size.height / bounds.height)
+        offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
+        renderMap()
         viewMain.addSubview(mapView)
 
         routeView = OwnerRenderView(frame:frame)
@@ -232,9 +235,9 @@ extension Emulator : OwnerRenderViewDelegate {
     func draw(_ rect:CGRect) {
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(rect)
-        ctx.translateBy(x: offset.x, y: offset.y)
         labelTime.text = String(format: "%2d:%02d", Int(timeUpdated / 60), Int(timeUpdated) % 60)
         labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
+        ctx.translateBy(x: offset.x, y: offset.y)
         shuttles.forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
         }
@@ -255,6 +258,9 @@ extension Emulator : OwnerRenderViewDelegate {
             routeView.transform = mapView.transform
         case .ended:
             print("pan:emded")
+            offset.x += move.x
+            offset.y += move.y
+            renderMap()
             mapView.transform = .identity
             routeView.transform = .identity
         default:
