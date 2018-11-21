@@ -272,14 +272,19 @@ extension Emulator : OwnerRenderViewDelegate {
     
     @IBAction func pinch(_ sender:UIPinchGestureRecognizer) {
         switch(sender.state) {
-        case .began:
-            print("pinch:began")
-        case .changed:
-            print("pinch:changed")
+        case .began, .changed:
+            mapView.transform = CGAffineTransform(scaleX: sender.scale, y: sender.scale)
+            routeView.transform = mapView.transform
         case .ended:
             print("pinch:emded")
+            scale *= sender.scale
+            renderMap()
+            mapView.transform = .identity
+            routeView.transform = .identity
         default:
             print("pinch:cancelled")
+            mapView.transform = .identity
+            routeView.transform = .identity
         }
     }
 }
