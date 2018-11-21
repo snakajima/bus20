@@ -40,7 +40,7 @@ class Emulator: UIViewController {
     var timeUpdated = CGFloat(0)
     
     func renderMap() {
-        let frame = view.frame
+        let frame = viewMain.bounds
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         
@@ -55,7 +55,7 @@ class Emulator: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let frame = view.frame
+        let frame = viewMain.bounds
         mapView = UIImageView(frame: frame)
         let bounds = graph.boundingBox
         scale = min(frame.size.width / bounds.width,
@@ -277,7 +277,10 @@ extension Emulator : OwnerRenderViewDelegate {
             routeView.transform = mapView.transform
         case .ended:
             print("pinch:emded")
+            let size = viewMain.bounds.size
             scale *= sender.scale
+            offset.x += (size.width - size.width * sender.scale) / 2.0
+            offset.y += (size.height - size.height * sender.scale) / 2.0
             renderMap()
             mapView.transform = .identity
             routeView.transform = .identity
