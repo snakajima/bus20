@@ -21,6 +21,11 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P9k-2a-iWR">
                                 <rect key="frame" x="0.0" y="64" width="375" height="378"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="CgS-sD-gXB" appends="YES" id="isq-mn-LaY"/>
+                                    <outletCollection property="gestureRecognizers" destination="FTp-0T-ChW" appends="YES" id="jbK-s3-ddt"/>
+                                </connections>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pGJ-Ox-ZwA">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
@@ -95,6 +100,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="CgS-sD-gXB">
+                    <connections>
+                        <action selector="pan:" destination="BYZ-38-t0r" id="tU4-C6-8OZ"/>
+                    </connections>
+                </panGestureRecognizer>
+                <pinchGestureRecognizer id="FTp-0T-ChW">
+                    <connections>
+                        <action selector="pinch:" destination="BYZ-38-t0r" id="XWr-dg-Q2x"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="140" y="133.5832083958021"/>
         </scene>

@@ -23,6 +23,7 @@ class Emulator: UIViewController {
     var graph:Graph! // Must be set by the caller
     //let graph = try! Graph()
     let labelTime = UILabel(frame: .zero) // to render text
+    var mapView:UIImageView!
     var routeView:OwnerRenderView!
     var scale = CGFloat(1.0)
     var offset = CGPoint.zero
@@ -41,7 +42,7 @@ class Emulator: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = view.frame
-        let mapView = UIImageView(frame: frame)
+        mapView = UIImageView(frame: frame)
         let bounds = graph.boundingBox
         scale = min(frame.size.width / bounds.width,
                         frame.size.height / bounds.height)
@@ -245,4 +246,35 @@ extension Emulator : OwnerRenderViewDelegate {
             self.update()
         }
     }
+    
+    @IBAction func pan(_ sender:UIPanGestureRecognizer) {
+        let move = sender.translation(in: view)
+        switch(sender.state) {
+        case .began, .changed:
+            mapView.transform = CGAffineTransform(translationX: move.x, y: move.y)
+            routeView.transform = mapView.transform
+        case .ended:
+            print("pan:emded")
+            mapView.transform = .identity
+            routeView.transform = .identity
+        default:
+            print("pan:cancelled")
+            mapView.transform = .identity
+            routeView.transform = .identity
+        }
+    }
+    
+    @IBAction func pinch(_ sender:UIPinchGestureRecognizer) {
+        switch(sender.state) {
+        case .began:
+            print("pinch:began")
+        case .changed:
+            print("pinch:changed")
+        case .ended:
+            print("pinch:emded")
+        default:
+            print("pinch:cancelled")
+        }
+    }
 }
+

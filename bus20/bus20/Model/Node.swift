@@ -44,9 +44,11 @@ struct Node {
     }
     
     func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
-        let r:CGFloat = isSignificant ? 2 : 1
-        let rc = CGRect(x: location.x * scale - r, y: location.y * scale - r, width: r*2, height: r*2)
-        ctx.fillEllipse(in: rc)
+        if edges.count == 1 {
+            let r:CGFloat = 3
+            let rc = CGRect(x: location.x * scale - r, y: location.y * scale - r, width: r*2, height: r*2)
+            ctx.fillEllipse(in: rc)
+        }
         
         ctx.beginPath()
         for edge in edges {
