@@ -257,14 +257,12 @@ extension Emulator : OwnerRenderViewDelegate {
             mapView.transform = CGAffineTransform(translationX: move.x, y: move.y)
             routeView.transform = mapView.transform
         case .ended:
-            print("pan:emded")
             offset.x += move.x
             offset.y += move.y
             renderMap()
             mapView.transform = .identity
             routeView.transform = .identity
         default:
-            print("pan:cancelled")
             mapView.transform = .identity
             routeView.transform = .identity
         }
@@ -276,16 +274,14 @@ extension Emulator : OwnerRenderViewDelegate {
             mapView.transform = CGAffineTransform(scaleX: sender.scale, y: sender.scale)
             routeView.transform = mapView.transform
         case .ended:
-            print("pinch:emded")
             let size = viewMain.bounds.size
             scale *= sender.scale
-            offset.x += (size.width - size.width * sender.scale) / 2.0
-            offset.y += (size.height - size.height * sender.scale) / 2.0
+            offset.x = offset.x * sender.scale + (size.width - size.width * sender.scale) / 2.0
+            offset.y = offset.y * sender.scale + (size.height - size.height * sender.scale) / 2.0
             renderMap()
             mapView.transform = .identity
             routeView.transform = .identity
         default:
-            print("pinch:cancelled")
             mapView.transform = .identity
             routeView.transform = .identity
         }
