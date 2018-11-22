@@ -102,6 +102,19 @@ struct Graph {
     // Prepare nodes for various operations
     static func parepareNodes(nodes nodesIn:[Node]) -> [Node] {
         var nodes = nodesIn
+        
+        // Prepare connetions (outgoing)
+        for i in 0..<nodes.count {
+            nodes[i].connections = Set(nodes[i].edges.map {$0.to})
+        }
+        // Prepare connetions (incoming)
+        for i in 0..<nodes.count {
+            let node = nodes[i]
+            node.edges.forEach { (edge) in
+                nodes[edge.to].connections.insert(i)
+            }
+        }
+
         let start = Date()
         let lockQueue = DispatchQueue(label: "lockQueue")
         let dispatchGroup = DispatchGroup()
