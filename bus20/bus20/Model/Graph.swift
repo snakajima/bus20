@@ -32,7 +32,7 @@ struct Graph {
 
         // calculate length
         nodes = Graph.updateLength(nodes: nodes)
-        self.nodes = Graph.getShortestRoutes(nodes: nodes)
+        self.nodes = Graph.parepareNodes(nodes: nodes)
     }
     
     static func getJsonData(file:String) -> Data? {
@@ -76,7 +76,7 @@ struct Graph {
         print("Graph:nodes.count", nodes.count)
         print("Graph:snodes.count", nodes.filter({$0.isSignificant}).count)
         nodes = Graph.scaleLength(nodes: nodes, scale:0.001)
-        self.nodes = Graph.getShortestRoutes(nodes: nodes)
+        self.nodes = Graph.parepareNodes(nodes: nodes)
     }
     
     static func scaleLength(nodes: [Node], scale:CGFloat) -> [Node] {
@@ -99,7 +99,8 @@ struct Graph {
         })
     }
 
-    static func getShortestRoutes(nodes nodesIn:[Node]) -> [Node] {
+    // Prepare nodes for various operations
+    static func parepareNodes(nodes nodesIn:[Node]) -> [Node] {
         var nodes = nodesIn
         let start = Date()
         let lockQueue = DispatchQueue(label: "lockQueue")
