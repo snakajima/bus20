@@ -138,7 +138,7 @@ struct Graph {
                 var routes = [Int:Route]()
                 routes[edge.to] = Route(edges: edges)
                 while !node.isSignificant {
-                    assert(nodes[from].edges.count==2)
+                    assert(node.edges.count==2)
                     if node.edges[0].to != edge.from {
                         edge = node.edges[0]
                     } else {
