@@ -73,8 +73,6 @@ struct Graph {
             }
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
-        print("Graph:nodes.count", nodes.count)
-        print("Graph:snodes.count", nodes.filter({$0.isSignificant}).count)
         nodes = Graph.scaleLength(nodes: nodes, scale:0.001)
         self.nodes = Graph.parepareNodes(nodes: nodes)
     }
@@ -114,6 +112,8 @@ struct Graph {
                 nodes[edge.to].connections.insert(i)
             }
         }
+        print("Graph:nodes.count", nodes.count)
+        print("Graph:snodes.count", nodes.filter({$0.isSignificant}).count)
 
         let start = Date()
         let lockQueue = DispatchQueue(label: "lockQueue")
@@ -152,7 +152,7 @@ struct Graph {
                 var routes = [Int:Route]()
                 routes[edge.to] = Route(edges: edges)
                 while !node.isSignificant {
-                    assert(node.edges.count==2)
+                    //assert(node.edges.count==2)
                     if node.edges[0].to != edge.from {
                         edge = node.edges[0]
                     } else {

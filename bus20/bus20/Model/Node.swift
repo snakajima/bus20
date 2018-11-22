@@ -36,7 +36,19 @@ struct Node {
         self.type = type
     }
     
-    var isSignificant:Bool { return edges.count != 2 }
+    // Insigifincant node on two way road
+    var isNodeOnTwoWayRoad:Bool {
+        return edges.count == 2 && connections.count==2
+    }
+    
+    // Insigifincant node on one way road
+    var isNodeOnOneWayRoad:Bool {
+        return edges.count == 1 && connections.count==2
+    }
+    
+    var isSignificant:Bool {
+        return !isNodeOnTwoWayRoad //!(isNodeOnOneWayRoad || isNodeOnTwoWayRoad)
+    }
     
     func distance(to:Node) -> CGFloat {
         let dx = to.location.x - self.location.x
