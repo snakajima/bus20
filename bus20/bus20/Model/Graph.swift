@@ -46,22 +46,27 @@ struct Graph {
     
     init(file:String) throws {
         guard let jsonData =  Graph.getJsonData(file:file) else {
+            print("Graph:failed to load JsonData")
             throw GraphError.invalidJsonError
         }
         guard let json = try JSONSerialization.jsonObject(with:jsonData) as? [String:Any] else {
+            print("Graph:failed to parse JsonData")
             throw GraphError.invalidJsonError
         }
         guard let nodeArray = json["nodes"] as? [[String:Any]] else {
+            print("Graph:invalid nodes")
             throw GraphError.invalidJsonError
         }
         var nodes = try nodeArray.map{ (node) -> Node in
             guard let edgeArray = node["edges"] as? [[String:Any]] else {
+                print("Graph:no edges")
                 throw GraphError.invalidJsonError
             }
             let edges = try edgeArray.map{ (edge) -> Edge in
                 guard let from = edge["from"] as? Int,
                       let to = edge["to"] as? Int,
                       let length = edge["length"] as? CGFloat else {
+                        print("Graph:invalid edges")
                         throw GraphError.invalidJsonError
                 }
                 return Edge(from:from , to:to  , length:length )
@@ -69,6 +74,7 @@ struct Graph {
             guard let location = node["location"] as? [String:Any],
                   let x = location["x"] as? CGFloat,
                   let y = location["y"] as? CGFloat else {
+                print("Graph:invalid location")
                 throw GraphError.invalidJsonError
             }
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
