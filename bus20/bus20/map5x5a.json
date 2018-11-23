@@ -189,7 +189,6 @@
     {
         "location": { "y": 4, "x": 2 },
         "edges": [
-            { "from": 22, "to": 21, "length": 3000 },
             { "from": 22, "to": 23, "length": 3000 }
         ]
     },
@@ -197,7 +196,6 @@
         "location": { "y": 4, "x": 3 },
         "edges": [
             { "from": 23, "to": 18, "length": 3000 },
-            { "from": 23, "to": 22, "length": 3000 },
             { "from": 23, "to": 24, "length": 3000 }
         ]
     },

@@ -243,7 +243,8 @@ struct Graph {
     func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
         ctx.setLineWidth(Metrics.roadWidth)
         UIColor.lightGray.setFill()
-        UIColor.lightGray.setStroke()
+        UIColor(white: 0.0, alpha: 0.2).setStroke()
+        //UIColor.lightGray.setStroke()
         
         for node in nodes {
             node.render(ctx:ctx, graph:self, scale:scale)
