@@ -1,0 +1,75 @@
+{
+    "nodes": [
+    {
+        "location": { "y": 0, "x": 0 },
+        "edges": [
+            { "from": 0, "to": 1, "length": 3000 },
+            { "from": 0, "to": 3, "length": 3000 }
+        ]
+    },
+    {
+        "location": { "y": 0, "x": 1 },
+        "edges": [
+            { "from": 1, "to": 0, "length": 3000 },
+            { "from": 1, "to": 2, "length": 3000 },
+            { "from": 1, "to": 4, "length": 3000 }
+        ]
+    },
+    {
+        "location": { "y": 0, "x": 2 },
+        "edges": [
+            { "from": 2, "to": 1, "length": 3000 },
+            { "from": 2, "to": 5, "length": 3000 }
+        ]
+    },
+
+    {
+        "location": { "y": 1, "x": 0 },
+        "edges": [
+            { "from": 3, "to": 0, "length": 3000 },
+            { "from": 3, "to": 4, "length": 3000 },
+            { "from": 3, "to": 6, "length": 3000 }
+        ]
+    },
+    {
+        "location": { "y": 1, "x": 1 },
+        "edges": [
+            { "from": 4, "to": 1, "length": 3000 },
+            { "from": 4, "to": 3, "length": 3000 },
+            { "from": 4, "to": 5, "length": 3000 },
+            { "from": 4, "to": 7, "length": 3000 }
+        ]
+    },
+    {
+        "location": { "y": 1, "x": 2 },
+        "edges": [
+            { "from": 5, "to": 2, "length": 3000 },
+            { "from": 5, "to": 4, "length": 3000 },
+            { "from": 5, "to": 8, "length": 3000 }
+        ]
+    },
+    
+    {
+        "location": { "y": 2, "x": 0 },
+        "edges": [
+            { "from": 6, "to": 3, "length": 3000 },
+            { "from": 6, "to": 7, "length": 3000 }
+        ]
+    },
+    {
+        "location": { "y": 2, "x": 1 },
+        "edges": [
+            { "from": 7, "to": 4, "length": 3000 },
+            { "from": 7, "to": 6, "length": 3000 },
+            { "from": 7, "to": 8, "length": 3000 }
+        ]
+    },
+    {
+        "location": { "y": 2, "x": 2 },
+        "edges": [
+            { "from": 8, "to": 5, "length": 3000 },
+            { "from": 8, "to": 7, "length": 3000 }
+        ]
+    }
+    ]
+}
