@@ -164,8 +164,11 @@ struct Graph {
                 }
                 return (routes, edge.to)
             }
-            assert(nodes[from].edges.count==2)
+            //assert(nodes[from].edges.count==2)
             let (routes0, index0) = routesToSignificant(from: from, edgeIndex: 0)
+            if nodes[from].edges.count == 1 {
+                return (routes0, [index0])
+            }
             let (routes1, index1) = routesToSignificant(from: from, edgeIndex: 1)
             let routes = routes0.merging(routes1) { (route, _) -> Route in
                 return route
@@ -292,13 +295,16 @@ struct Graph {
             return route
         }
         assert(!node.isSignificant)
-        assert(node.snodes.count == 2)
+        //assert(node.snodes.count == 2)
         let node0 = node.snodes[0]
-        let node1 = node.snodes[1]
         let route00 = node.shortestRoutes[node0]!
         let route01 = nodes[node0].shortestRoutes[to]!
         assert(route00.to == route01.from)
         let route0 = Route(edges:route00.edges + route01.edges)
+        if node.snodes.count == 1 {
+            return route0
+        }
+        let node1 = node.snodes[1]
         let route10 = node.shortestRoutes[node1]!
         let route11 = nodes[node1].shortestRoutes[to]!
         assert(route10.to == route11.from)

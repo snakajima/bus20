@@ -47,7 +47,7 @@ struct Node {
     }
     
     var isSignificant:Bool {
-        return !isNodeOnTwoWayRoad //!(isNodeOnOneWayRoad || isNodeOnTwoWayRoad)
+        return !(isNodeOnOneWayRoad || isNodeOnTwoWayRoad)
     }
     
     func distance(to:Node) -> CGFloat {
