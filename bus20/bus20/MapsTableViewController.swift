@@ -10,7 +10,7 @@ import UIKit
 
 class MapsTableViewController: UITableViewController {
     let maps = [
-        "map", "map2", "map5x5", "bus_stop"
+        "map", "map2", "map5x5", "map5x5a", "bus_stop"
     ]
 
     override func viewDidLoad() {

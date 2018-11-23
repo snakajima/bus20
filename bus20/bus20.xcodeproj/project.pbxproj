@@ -13,6 +13,7 @@
 		74052FF8219E4E7100FF50BC /* MapsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74052FF7219E4E7100FF50BC /* MapsTableViewController.swift */; };
 		74052FFA21A78EED00FF50BC /* map2.json in Resources */ = {isa = PBXBuildFile; fileRef = 74052FF921A78EED00FF50BC /* map2.json */; };
 		74052FFC21A7924700FF50BC /* map5x5.json in Resources */ = {isa = PBXBuildFile; fileRef = 74052FFB21A7924700FF50BC /* map5x5.json */; };
+		74052FFE21A7962500FF50BC /* map5x5a.json in Resources */ = {isa = PBXBuildFile; fileRef = 74052FFD21A7962500FF50BC /* map5x5a.json */; };
 		7409A40921347232007041B0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7409A40821347232007041B0 /* AppDelegate.swift */; };
 		7409A40B21347232007041B0 /* Emulator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7409A40A21347232007041B0 /* Emulator.swift */; };
 		7409A40E21347232007041B0 /* Emulator.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7409A40C21347232007041B0 /* Emulator.storyboard */; };
@@ -43,6 +44,7 @@
 		74052FF7219E4E7100FF50BC /* MapsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapsTableViewController.swift; sourceTree = "<group>"; };
 		74052FF921A78EED00FF50BC /* map2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map2.json; sourceTree = "<group>"; };
 		74052FFB21A7924700FF50BC /* map5x5.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map5x5.json; sourceTree = "<group>"; };
+		74052FFD21A7962500FF50BC /* map5x5a.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = map5x5a.json; sourceTree = "<group>"; };
 		7409A40521347232007041B0 /* bus20.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bus20.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7409A40821347232007041B0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7409A40A21347232007041B0 /* Emulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Emulator.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				0DE36EAD21558736004850C6 /* map.json */,
 				74052FF921A78EED00FF50BC /* map2.json */,
 				74052FFB21A7924700FF50BC /* map5x5.json */,
+				74052FFD21A7962500FF50BC /* map5x5a.json */,
 				7409A40F21347232007041B0 /* Assets.xcassets */,
 				7409A41121347232007041B0 /* LaunchScreen.storyboard */,
 				7409A41421347232007041B0 /* Info.plist */,
@@ -215,6 +218,7 @@
 				74BE311E2160369C003DEDFC /* settings.png in Resources */,
 				7409A41321347232007041B0 /* LaunchScreen.storyboard in Resources */,
 				7409A41021347232007041B0 /* Assets.xcassets in Resources */,
+				74052FFE21A7962500FF50BC /* map5x5a.json in Resources */,
 				74BE3120216036A3003DEDFC /* playone.png in Resources */,
 				74840FC3213B40CD00C84BC8 /* rider.png in Resources */,
 				74052FFC21A7924700FF50BC /* map5x5.json in Resources */,
