@@ -178,7 +178,7 @@
         "location": { "y": 4, "x": 0 },
         "edges": [
             { "from": 20, "to": 15, "length": 3000 },
-            { "from": 20, "to": 22, "length": 3000 }
+            { "from": 20, "to": 21, "length": 3000 }
         ]
     },
     {
