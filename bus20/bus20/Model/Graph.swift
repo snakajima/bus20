@@ -232,7 +232,9 @@ struct Graph {
         
         for edge in nodes[from].edges {
             touch(edge: edge)
-            insert(route:Route(edges:[edge]))
+            let route = Route(edges:[edge])
+            shortestRoutes[edge.to] = route
+            insert(route:route)
         }
         
         for _ in 0..<nodes.count-1 {
