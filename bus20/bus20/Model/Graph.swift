@@ -150,6 +150,8 @@ struct Graph {
         let routeEmpty = Route(edges:[nodes[0].edges[0]], extra:0)
         var shortestRoutes = [Int:Route]()
 
+        // If the "from" node is not significant, return the routes to two closest
+        // significant nodes along with their indeces.
         if !nodes[from].isSignificant {
             func routesToSignificant(from:Int, edgeIndex:Int) -> ([Int:Route], Int) {
                 var edge = nodes[from].edges[edgeIndex]
@@ -182,11 +184,14 @@ struct Graph {
             //print("Graph:skip shortes", from, routes, [index0, index1])
             return (routes, [index0, index1])
         }
-        var nodes = nodes // Make a copy
-        
-        nodes[from] = Node(node:nodes[from], type:.start)
-        
+
+        // The "from" node is significant. We need to find the shortests routes to
+        // all other nodes.
         var routes = [Route]()
+        var nodes = nodes // Make a copy
+        nodes[from] = Node(node:nodes[from], type:.start)
+
+        // Insert route into routes sorted (shortest first)
         func insert(route:Route) {
             for i in 0..<routes.count {
                 if route.length < routes[i].length {
@@ -196,11 +201,13 @@ struct Graph {
             }
             routes.append(route)
         }
+        
         func touch(edge:Edge) {
             if nodes[edge.to].type == .empty {
                 nodes[edge.to] = Node(node:nodes[edge.to], type:.used)
             }
         }
+        
         func propagate(route:Route) {
             let index = route.to
             for edge in nodes[index].edges {
