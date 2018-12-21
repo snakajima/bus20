@@ -55,9 +55,15 @@ class MapsTableViewController: UITableViewController {
                 graph = try Graph(file:maps[indexPath.row])
             } catch Graph.GraphError.invalidJsonError(let message) {
                 print("GraphError", message)
+                let alert = UIAlertController(title: "Invalid Data", message: message, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
                 return
             } catch {
                 print("Unexpected Error")
+                let alert = UIAlertController(title: "Unexpected Error", message: "Unknown", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
                 return
             }
         }

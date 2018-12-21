@@ -60,22 +60,22 @@ struct Graph {
         var nodes = try nodeArray.enumerated().map{ (index, node) -> Node in
             guard let edgeArray = node["edges"] as? [[String:Any]] else {
                 print("Graph:no edges")
-                throw GraphError.invalidJsonError("No edge")
+                throw GraphError.invalidJsonError("No edge: node index=\(index)")
             }
             let edges = try edgeArray.map{ (edge) -> Edge in
                 guard let from = edge["from"] as? Int,
                       let to = edge["to"] as? Int,
                       let length = edge["length"] as? CGFloat else {
                         print("Graph:invalid edges")
-                        throw GraphError.invalidJsonError("Invalid edges, node index=\(index)")
+                        throw GraphError.invalidJsonError("Invalid edges: node index=\(index)")
                 }
                 if index != from {
                     print("Edge mismatch", index, from)
-                    throw GraphError.invalidJsonError("Edge mismatch, node index=\(index)")
+                    throw GraphError.invalidJsonError("Edge mismatch: node index=\(index)")
                 }
                 if index == to {
                     print("Edge mismatch", index)
-                    throw GraphError.invalidJsonError("Edge to self, node index=\(index)")
+                    throw GraphError.invalidJsonError("Edge to self: node index=\(index)")
                 }
                 return Edge(from:from , to:to  , length:length )
             }
