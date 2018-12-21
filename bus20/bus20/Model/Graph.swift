@@ -57,7 +57,7 @@ struct Graph {
             print("Graph:invalid nodes")
             throw GraphError.invalidJsonError
         }
-        var nodes = try nodeArray.map{ (node) -> Node in
+        var nodes = try nodeArray.enumerated().map{ (index, node) -> Node in
             guard let edgeArray = node["edges"] as? [[String:Any]] else {
                 print("Graph:no edges")
                 throw GraphError.invalidJsonError
@@ -68,6 +68,9 @@ struct Graph {
                       let length = edge["length"] as? CGFloat else {
                         print("Graph:invalid edges")
                         throw GraphError.invalidJsonError
+                }
+                if index != from {
+                    print("Edge mismatch", index, from)
                 }
                 return Edge(from:from , to:to  , length:length )
             }
