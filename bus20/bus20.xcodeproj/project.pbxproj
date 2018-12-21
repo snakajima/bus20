@@ -26,6 +26,7 @@
 		7424C0872135B3B200092E37 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7424C0862135B3B200092E37 /* Node.swift */; };
 		7424C0892135B46A00092E37 /* Shuttle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7424C0882135B46A00092E37 /* Shuttle.swift */; };
 		74424DB82139A79E003A4E82 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74424DB72139A79E003A4E82 /* Random.swift */; };
+		74720FCD21CDA9F50018DBF0 /* bus_stop2.json in Resources */ = {isa = PBXBuildFile; fileRef = 74720FCC21CDA9F50018DBF0 /* bus_stop2.json */; };
 		74840FC3213B40CD00C84BC8 /* rider.png in Resources */ = {isa = PBXBuildFile; fileRef = 74840FC2213B40CD00C84BC8 /* rider.png */; };
 		74840FC5213CF3BF00C84BC8 /* RoutePlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74840FC4213CF3BF00C84BC8 /* RoutePlan.swift */; };
 		74840FCA2146D5E400C84BC8 /* Evaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74840FC92146D5E400C84BC8 /* Evaluator.swift */; };
@@ -60,6 +61,7 @@
 		7424C0862135B3B200092E37 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		7424C0882135B46A00092E37 /* Shuttle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shuttle.swift; sourceTree = "<group>"; };
 		74424DB72139A79E003A4E82 /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
+		74720FCC21CDA9F50018DBF0 /* bus_stop2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = bus_stop2.json; sourceTree = "<group>"; };
 		74840FC2213B40CD00C84BC8 /* rider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rider.png; sourceTree = "<group>"; };
 		74840FC4213CF3BF00C84BC8 /* RoutePlan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoutePlan.swift; sourceTree = "<group>"; };
 		74840FC6213DE51700C84BC8 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; name = LICENSE.txt; path = ../../LICENSE.txt; sourceTree = "<group>"; };
@@ -114,6 +116,7 @@
 				7409A40C21347232007041B0 /* Emulator.storyboard */,
 				74052FF3219E4AB900FF50BC /* Main.storyboard */,
 				74052FF5219E4D8700FF50BC /* bus_stop.json */,
+				74720FCC21CDA9F50018DBF0 /* bus_stop2.json */,
 				0DE36EAD21558736004850C6 /* map.json */,
 				74052FF921A78EED00FF50BC /* map2.json */,
 				74052FFF21A7E9A800FF50BC /* map3.json */,
@@ -216,6 +219,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74720FCD21CDA9F50018DBF0 /* bus_stop2.json in Resources */,
 				74052FFA21A78EED00FF50BC /* map2.json in Resources */,
 				74052FF6219E4D8700FF50BC /* bus_stop.json in Resources */,
 				74BE311E2160369C003DEDFC /* settings.png in Resources */,

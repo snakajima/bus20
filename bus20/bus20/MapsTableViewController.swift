@@ -10,7 +10,7 @@ import UIKit
 
 class MapsTableViewController: UITableViewController {
     let maps = [
-        "map", "map2", "map3", "map5x5", "map5x5a", "bus_stop"
+        "map", "map2", "map3", "map5x5", "map5x5a", "bus_stop", "bus_stop2"
     ]
 
     override func viewDidLoad() {
@@ -51,10 +51,15 @@ class MapsTableViewController: UITableViewController {
         if indexPath.section == 0 {
             graph = Graph(w: Metrics.graphWidth, h: Metrics.graphHeight, unit: Metrics.edgeLength)
         } else {
-            guard let g = try? Graph(file:maps[indexPath.row]) else {
+            do {
+                graph = try Graph(file:maps[indexPath.row])
+            } catch Graph.GraphError.invalidJsonError(let message) {
+                print("GraphError", message)
+                return
+            } catch {
+                print("Unexpected Error")
                 return
             }
-            graph = g
         }
         self.performSegue(withIdentifier: "Emulator", sender: graph)
     }

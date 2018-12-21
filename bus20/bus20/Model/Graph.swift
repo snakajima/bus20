@@ -41,36 +41,41 @@ struct Graph {
     }
     
     enum GraphError: Error {
-        case invalidJsonError
+        case invalidJsonError(_ str:String)
     }
     
     init(file:String) throws {
         guard let jsonData =  Graph.getJsonData(file:file) else {
             print("Graph:failed to load JsonData")
-            throw GraphError.invalidJsonError
+            throw GraphError.invalidJsonError("Failed to load")
         }
         guard let json = try JSONSerialization.jsonObject(with:jsonData) as? [String:Any] else {
             print("Graph:failed to parse JsonData")
-            throw GraphError.invalidJsonError
+            throw GraphError.invalidJsonError("Parsing Error")
         }
         guard let nodeArray = json["nodes"] as? [[String:Any]] else {
             print("Graph:invalid nodes")
-            throw GraphError.invalidJsonError
+            throw GraphError.invalidJsonError("Invalid nodes")
         }
         var nodes = try nodeArray.enumerated().map{ (index, node) -> Node in
             guard let edgeArray = node["edges"] as? [[String:Any]] else {
                 print("Graph:no edges")
-                throw GraphError.invalidJsonError
+                throw GraphError.invalidJsonError("No edge")
             }
             let edges = try edgeArray.map{ (edge) -> Edge in
                 guard let from = edge["from"] as? Int,
                       let to = edge["to"] as? Int,
                       let length = edge["length"] as? CGFloat else {
                         print("Graph:invalid edges")
-                        throw GraphError.invalidJsonError
+                        throw GraphError.invalidJsonError("Invalid edges, node index=\(index)")
                 }
                 if index != from {
                     print("Edge mismatch", index, from)
+                    throw GraphError.invalidJsonError("Edge mismatch, node index=\(index)")
+                }
+                if index == to {
+                    print("Edge mismatch", index)
+                    throw GraphError.invalidJsonError("Edge to self, node index=\(index)")
                 }
                 return Edge(from:from , to:to  , length:length )
             }
@@ -78,7 +83,7 @@ struct Graph {
                   let x = location["x"] as? CGFloat,
                   let y = location["y"] as? CGFloat else {
                 print("Graph:invalid location")
-                throw GraphError.invalidJsonError
+                throw GraphError.invalidJsonError("Invalid location")
             }
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
