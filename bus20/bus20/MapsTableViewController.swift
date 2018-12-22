@@ -12,6 +12,9 @@ class MapsTableViewController: UITableViewController {
     let maps = [
         "map", "map2", "map3", "map5x5", "map5x5a", "bus_stop", "bus_stop2"
     ]
+    let sectionTitles = [
+        "Generated", "Loaded"
+    ]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,7 +32,10 @@ class MapsTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of sections
         return 2
     }
-
+    
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return sectionTitles[section]
+    }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return (section == 0) ? 1 : maps.count
