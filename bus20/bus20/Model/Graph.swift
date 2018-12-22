@@ -32,7 +32,7 @@ struct Graph {
 
         // calculate length
         nodes = Graph.updateLength(nodes: nodes)
-        self.nodes = Graph.parepareNodes(nodes: nodes)
+        self.nodes = try! Graph.parepareNodes(nodes: nodes)
     }
     
     static func getJsonData(file:String) -> Data? {
@@ -88,7 +88,7 @@ struct Graph {
             return Node(location:CGPoint(x:x , y:y ), edges: edges)
         }
         nodes = Graph.scaleLength(nodes: nodes, scale:0.001)
-        self.nodes = Graph.parepareNodes(nodes: nodes)
+        self.nodes = try Graph.parepareNodes(nodes: nodes)
     }
     
     static func scaleLength(nodes: [Node], scale:CGFloat) -> [Node] {
@@ -112,7 +112,7 @@ struct Graph {
     }
 
     // Prepare nodes for various operations
-    static func parepareNodes(nodes nodesIn:[Node]) -> [Node] {
+    static func parepareNodes(nodes nodesIn:[Node]) throws -> [Node] {
         var nodes = nodesIn
         
         // Prepare connetions (outgoing)
@@ -132,9 +132,13 @@ struct Graph {
         let start = Date()
         let lockQueue = DispatchQueue(label: "lockQueue")
         let dispatchGroup = DispatchGroup()
+        var errorAny:Error? = nil
         DispatchQueue.concurrentPerform(iterations: nodes.count) { (from) in
             dispatchGroup.enter()
-            let (result, snodes) = Graph.shortestRoutesO2(nodes: nodes, from: from)
+            let (result, snodes, error) = Graph.shortestRoutesO2(nodes: nodes, from: from)
+            if error != nil {
+                errorAny = error
+            }
             lockQueue.async {
                 nodes[from].shortestRoutes = result
                 nodes[from].snodes = snodes
@@ -143,6 +147,9 @@ struct Graph {
         }
         dispatchGroup.wait()
         print("Graph:time=", Date().timeIntervalSince(start))
+        if let error = errorAny {
+            throw error
+        }
         return nodes
     }
     
@@ -154,7 +161,7 @@ struct Graph {
     }
     
     // O(n^2) algorithm
-    static func shortestRoutesO2(nodes:[Node], from:Int) -> ([Int:Route], [Int]) {
+    static func shortestRoutesO2(nodes:[Node], from:Int) -> ([Int:Route], [Int], Error?) {
         let routeEmpty = Route(edges:[nodes[0].edges[0]], extra:0)
         var shortestRoutes = [Int:Route]()
 
@@ -183,14 +190,14 @@ struct Graph {
             //assert(nodes[from].edges.count==2)
             let (routes0, index0) = routesToSignificant(from: from, edgeIndex: 0)
             if nodes[from].edges.count == 1 {
-                return (routes0, [index0])
+                return (routes0, [index0], nil)
             }
             let (routes1, index1) = routesToSignificant(from: from, edgeIndex: 1)
             let routes = routes0.merging(routes1) { (route, _) -> Route in
                 return route
             }
             //print("Graph:skip shortes", from, routes, [index0, index1])
-            return (routes, [index0, index1])
+            return (routes, [index0, index1], nil)
         }
 
         // The "from" node is significant. We need to find the shortests routes to
@@ -245,15 +252,21 @@ struct Graph {
             insert(route:route)
         }
         
-        for _ in 0..<nodes.count-1 {
-            let route = routes.removeFirst()
+        //for _ in 0..<nodes.count-1 {
+        while let route = routes.first {
+            routes.removeFirst()
             shortestRoutes[route.to] = route
             propagate(route: route)
         }
         
         // BUGBUG: Find out why we hit this assert with bus_stop
-        //assert(shortestRoutes.count == nodes.count - 1)
-        return (shortestRoutes, [])
+        var error:Error? = nil
+        if shortestRoutes.count != nodes.count - 1 {
+            print("Invalid graph: nodes=\(nodes.count), routes=\(shortestRoutes.count)")
+            //assert(shortestRoutes.count == nodes.count - 1)
+            error = GraphError.invalidJsonError("Invalid graph: nodes=\(nodes.count), routes=\(shortestRoutes.count)")
+        }
+        return (shortestRoutes, [], error)
     }
 
     func randamRoute(from:Int? = nil) -> Route {
