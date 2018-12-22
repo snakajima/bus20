@@ -85,7 +85,8 @@ struct Graph {
                 print("Graph:invalid location")
                 throw GraphError.invalidJsonError("Invalid location")
             }
-            return Node(location:CGPoint(x:x , y:y ), edges: edges)
+            // BUGBUG: Assuming nothern hemisphere
+            return Node(location:CGPoint(x:x , y:-y ), edges: edges)
         }
         nodes = Graph.scaleLength(nodes: nodes, scale:0.001)
         self.nodes = try Graph.parepareNodes(nodes: nodes)
