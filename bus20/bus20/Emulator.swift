@@ -23,7 +23,7 @@ class Emulator: UIViewController {
     var graph:Graph! // Must be set by the caller
     //let graph = try! Graph()
     let labelTime = UILabel(frame: .zero) // to render text
-    var mapView:UIImageView!
+    var graphView:UIImageView!
     var routeView:OwnerRenderView!
     var scale = CGFloat(1.0)
     var offset = CGPoint.zero
@@ -49,19 +49,19 @@ class Emulator: UIViewController {
         ctx.translateBy(x: offset.x, y: offset.y)
         graph.render(ctx:ctx, frame: frame, scale:scale)
         //print("EM:graph=", graph.json);
-        mapView.image = UIGraphicsGetImageFromCurrentImageContext()
+        graphView.image = UIGraphicsGetImageFromCurrentImageContext()
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = viewMain.bounds
-        mapView = UIImageView(frame: frame)
+        graphView = UIImageView(frame: frame)
         let bounds = graph.boundingBox
         scale = min(frame.size.width / bounds.width,
                         frame.size.height / bounds.height)
         offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
         renderMap()
-        viewMain.addSubview(mapView)
+        viewMain.addSubview(graphView)
 
         routeView = OwnerRenderView(frame:frame)
         routeView.delegate = self
@@ -253,16 +253,16 @@ extension Emulator : OwnerRenderViewDelegate {
         let move = sender.translation(in: view)
         switch(sender.state) {
         case .began, .changed:
-            mapView.transform = CGAffineTransform(translationX: move.x, y: move.y)
-            routeView.transform = mapView.transform
+            graphView.transform = CGAffineTransform(translationX: move.x, y: move.y)
+            routeView.transform = graphView.transform
         case .ended:
             offset.x += move.x
             offset.y += move.y
             renderMap()
-            mapView.transform = .identity
+            graphView.transform = .identity
             routeView.transform = .identity
         default:
-            mapView.transform = .identity
+            graphView.transform = .identity
             routeView.transform = .identity
         }
     }
@@ -270,18 +270,18 @@ extension Emulator : OwnerRenderViewDelegate {
     @IBAction func pinch(_ sender:UIPinchGestureRecognizer) {
         switch(sender.state) {
         case .began, .changed:
-            mapView.transform = CGAffineTransform(scaleX: sender.scale, y: sender.scale)
-            routeView.transform = mapView.transform
+            graphView.transform = CGAffineTransform(scaleX: sender.scale, y: sender.scale)
+            routeView.transform = graphView.transform
         case .ended:
             let size = viewMain.bounds.size
             scale *= sender.scale
             offset.x = offset.x * sender.scale + (size.width - size.width * sender.scale) / 2.0
             offset.y = offset.y * sender.scale + (size.height - size.height * sender.scale) / 2.0
             renderMap()
-            mapView.transform = .identity
+            graphView.transform = .identity
             routeView.transform = .identity
         default:
-            mapView.transform = .identity
+            graphView.transform = .identity
             routeView.transform = .identity
         }
     }
