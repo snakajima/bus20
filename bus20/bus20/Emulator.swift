@@ -41,12 +41,11 @@ class Emulator: UIViewController {
     
     func renderMap() {
         let frame = viewMain.bounds
-        UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
         let ctx = UIGraphicsGetCurrentContext()!
-        UIColor.white.setFill()
-        ctx.fill(frame)
+        ctx.clear(frame)
         ctx.translateBy(x: offset.x, y: offset.y)
         graph.render(ctx:ctx, frame: frame, scale:scale)
         //print("EM:graph=", graph.json);
