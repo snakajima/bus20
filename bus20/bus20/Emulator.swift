@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class Emulator: UIViewController {
     struct ScheduledRider {
@@ -24,6 +25,7 @@ class Emulator: UIViewController {
     //let graph = try! Graph()
     let labelTime = UILabel(frame: .zero) // to render text
     var graphView:UIImageView!
+    var mapView:MKMapView!
     var routeView:OwnerRenderView!
     var scale = CGFloat(1.0)
     var offset = CGPoint.zero
@@ -55,6 +57,9 @@ class Emulator: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = viewMain.bounds
+        mapView = MKMapView(frame: frame)
+        viewMain.addSubview(mapView)
+        
         graphView = UIImageView(frame: frame)
         let bounds = graph.boundingBox
         scale = min(frame.size.width / bounds.width,
