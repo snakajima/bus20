@@ -52,6 +52,10 @@ class Emulator: UIViewController {
         graph.render(ctx:ctx, frame: frame, scale:scale)
         //print("EM:graph=", graph.json);
         graphView.image = UIGraphicsGetImageFromCurrentImageContext()
+        let center = CLLocationCoordinate2D(latitude: 49.78, longitude: 3.02)
+        let span = MKCoordinateSpan(latitudeDelta: 10, longitudeDelta: 10)
+        let region = MKCoordinateRegion(center: center, span: span)
+        mapView.region = mapView.regionThatFits(region)
     }
 
     override func viewDidLoad() {
