@@ -58,7 +58,7 @@ class Emulator: UIViewController {
         super.viewDidLoad()
         let frame = viewMain.bounds
         mapView = MKMapView(frame: frame)
-        viewMain.addSubview(mapView)
+        //viewMain.addSubview(mapView)
         
         graphView = UIImageView(frame: frame)
         let bounds = graph.boundingBox
@@ -72,9 +72,23 @@ class Emulator: UIViewController {
         routeView.delegate = self
         routeView.isOpaque = false
         viewMain.addSubview(routeView)
-        
+
         Random.seed(0)
         start(count: Metrics.numberOfShuttles)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        let frame = viewMain.bounds
+        mapView.frame = frame
+        graphView.frame = frame
+        routeView.frame = frame
+        
+        let bounds = graph.boundingBox
+        scale = min(frame.size.width / bounds.width,
+                    frame.size.height / bounds.height)
+        offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
+        renderMap()
     }
     
     func start(count:Int, fTesting:Bool = false) {
