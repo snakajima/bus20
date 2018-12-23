@@ -58,7 +58,7 @@ class Emulator: UIViewController {
         super.viewDidLoad()
         let frame = viewMain.bounds
         mapView = MKMapView(frame: frame)
-        //viewMain.addSubview(mapView)
+        viewMain.addSubview(mapView)
         
         graphView = UIImageView(frame: frame)
         let bounds = graph.boundingBox
@@ -274,15 +274,18 @@ extension Emulator : OwnerRenderViewDelegate {
         case .began, .changed:
             graphView.transform = CGAffineTransform(translationX: move.x, y: move.y)
             routeView.transform = graphView.transform
+            mapView.transform = graphView.transform
         case .ended:
             offset.x += move.x
             offset.y += move.y
             renderMap()
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         default:
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         }
     }
     
@@ -291,6 +294,7 @@ extension Emulator : OwnerRenderViewDelegate {
         case .began, .changed:
             graphView.transform = CGAffineTransform(scaleX: sender.scale, y: sender.scale)
             routeView.transform = graphView.transform
+            mapView.transform = graphView.transform
         case .ended:
             let size = viewMain.bounds.size
             scale *= sender.scale
@@ -299,9 +303,11 @@ extension Emulator : OwnerRenderViewDelegate {
             renderMap()
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         default:
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         }
     }
 }
