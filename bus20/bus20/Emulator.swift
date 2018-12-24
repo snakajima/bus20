@@ -59,7 +59,8 @@ class Emulator: UIViewController {
 
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(frame)
-        ctx.translateBy(x: offset.x * scaleX / scale, y: offset.y * scaleY / scale)
+        ctx.translateBy(x: (offset.x - frame.size.width/2) * scaleX / scale + frame.size.width/2,
+                        y: (offset.y - frame.size.height/2) * scaleY / scale + frame.size.height/2)
         graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
         //print("EM:graph=", graph.json);
         graphView.image = UIGraphicsGetImageFromCurrentImageContext()
@@ -263,11 +264,14 @@ class Emulator: UIViewController {
 
 extension Emulator : OwnerRenderViewDelegate {
     func draw(_ rect:CGRect) {
+        //let frame = viewMain.bounds
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(rect)
         labelTime.text = String(format: "%2d:%02d", Int(timeUpdated / 60), Int(timeUpdated) % 60)
         labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
         ctx.translateBy(x: offset.x, y: offset.y)
+        //ctx.translateBy(x: (offset.x - frame.size.width/2) * scaleX / scale + frame.size.width/2,
+                        //y: (offset.y - frame.size.height/2) * scaleY / scale + frame.size.height/2)
         shuttles.forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
         }
