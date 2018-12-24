@@ -56,11 +56,19 @@ class Emulator: UIViewController {
         scaleY = frame.size.height / CGFloat(spanFits.latitudeDelta)
         scaleX = frame.size.width / CGFloat(spanFits.longitudeDelta)
         print("scales", scale, scaleX, scaleY)
+        /*
+        let centerFits = CLLocationCoordinate2D(latitude: Double(offset.y/scaleY) - spanFits.latitudeDelta/2.0, longitude: -Double(offset.x/scaleX) + spanFits.longitudeDelta/2.0)
+        mapView.region = mapView.regionThatFits(MKCoordinateRegion(center: centerFits, span: spanFits))
+        */
 
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(frame)
+        /*
         ctx.translateBy(x: (offset.x - frame.size.width/2) * scaleX / scale + frame.size.width/2,
                         y: (offset.y - frame.size.height/2) * scaleY / scale + frame.size.height/2)
+        */
+        ctx.translateBy(x: offset.x * scaleX / scale,
+                        y: offset.y * scaleY / scale)
         graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
         //print("EM:graph=", graph.json);
         graphView.image = UIGraphicsGetImageFromCurrentImageContext()
