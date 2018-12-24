@@ -59,8 +59,8 @@ class Emulator: UIViewController {
 
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(frame)
-        ctx.translateBy(x: offset.x, y: offset.y)
-        graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scale, height: scale))
+        ctx.translateBy(x: offset.x * scaleX / scale, y: offset.y * scaleY / scale)
+        graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
         //print("EM:graph=", graph.json);
         graphView.image = UIGraphicsGetImageFromCurrentImageContext()
         
