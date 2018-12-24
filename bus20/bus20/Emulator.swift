@@ -28,6 +28,8 @@ class Emulator: UIViewController {
     var mapView:MKMapView!
     var routeView:OwnerRenderView!
     var scale = CGFloat(1.0)
+    var scaleX = CGFloat(1.0)
+    var scaleY = CGFloat(1.0)
     var offset = CGPoint.zero
     var shuttles = [Shuttle]()
     var start = Date()
@@ -56,6 +58,11 @@ class Emulator: UIViewController {
         let center = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - span.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + span.longitudeDelta/2.0) 
         let region = MKCoordinateRegion(center: center, span: span)
         mapView.region = mapView.regionThatFits(region)
+        
+        let spanFits = mapView.region.span
+        scaleY = frame.size.height / CGFloat(spanFits.latitudeDelta)
+        scaleX = frame.size.width / CGFloat(spanFits.longitudeDelta)
+        print("scales", scale, scaleX, scaleY)
     }
 
     override func viewDidLoad() {
