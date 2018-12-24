@@ -23,12 +23,12 @@ struct Route {
         self.extra = extra
     }
 
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
+    func render(ctx:CGContext, graph:Graph, scale:CGSize) {
         let locationFrom = graph.location(at: edges[0].from)
-        ctx.move(to: CGPoint(x: locationFrom.x * scale, y: locationFrom.y * scale))
+        ctx.move(to: CGPoint(x: locationFrom.x * scale.width, y: locationFrom.y * scale.height))
         for edge in edges {
             let locationTo = graph.location(at: edge.to)
-            ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
+            ctx.addLine(to: CGPoint(x: locationTo.x * scale.width, y: locationTo.y * scale.height))
         }
         ctx.drawPath(using: .stroke)
     }

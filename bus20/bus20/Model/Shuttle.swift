@@ -97,9 +97,9 @@ class Shuttle {
     }
     
     // Renders the shuttle itself, and the scheduled route (only when it has riders)
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat, time:CGFloat) {
+    func render(ctx:CGContext, graph:Graph, scale:CGSize, time:CGFloat) {
         // Render the shuttle
-        let rc = CGRect(x: location.x * scale - Metrics.shuttleRadius, y: location.y * scale - Metrics.shuttleRadius, width: Metrics.shuttleRadius * 2, height: Metrics.shuttleRadius * 2)
+        let rc = CGRect(x: location.x * scale.width - Metrics.shuttleRadius, y: location.y * scale.height - Metrics.shuttleRadius, width: Metrics.shuttleRadius * 2, height: Metrics.shuttleRadius * 2)
         UIColor(hue: hue, saturation: 1.0, brightness: 1.0, alpha: Metrics.shuttleAlpha).setFill()
         ctx.fillEllipse(in: rc)
 

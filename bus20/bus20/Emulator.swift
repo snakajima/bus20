@@ -218,11 +218,11 @@ class Emulator: UIViewController {
         let ctx = UIGraphicsGetCurrentContext()!
         graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
         shuttles.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale, time:0)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY), time:0)
         }
         
         riders.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY))
         }
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -277,15 +277,17 @@ extension Emulator : OwnerRenderViewDelegate {
         ctx.clear(rect)
         labelTime.text = String(format: "%2d:%02d", Int(timeUpdated / 60), Int(timeUpdated) % 60)
         labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
-        ctx.translateBy(x: offset.x, y: offset.y)
+        //ctx.translateBy(x: offset.x, y: offset.y)
+        ctx.translateBy(x: offset.x * scaleX / scale,
+                        y: offset.y * scaleY / scale)
         //ctx.translateBy(x: (offset.x - frame.size.width/2) * scaleX / scale + frame.size.width/2,
                         //y: (offset.y - frame.size.height/2) * scaleY / scale + frame.size.height/2)
         shuttles.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY), time:timeUpdated)
         }
         let activeRiders = riders.filter({ $0.state != .done })
         activeRiders.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY))
         }
         DispatchQueue.main.async {
             self.update()
