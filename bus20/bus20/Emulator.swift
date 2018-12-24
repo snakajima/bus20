@@ -48,21 +48,22 @@ class Emulator: UIViewController {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
-        let ctx = UIGraphicsGetCurrentContext()!
-        ctx.clear(frame)
-        ctx.translateBy(x: offset.x, y: offset.y)
-        graph.render(ctx:ctx, frame: frame, scale:scale)
-        //print("EM:graph=", graph.json);
-        graphView.image = UIGraphicsGetImageFromCurrentImageContext()
         let span = MKCoordinateSpan(latitudeDelta: Double(frame.size.height/scale), longitudeDelta: Double(frame.size.width/scale))
-        let center = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - span.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + span.longitudeDelta/2.0) 
+        let center = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - span.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + span.longitudeDelta/2.0)
         let region = MKCoordinateRegion(center: center, span: span)
         mapView.region = mapView.regionThatFits(region)
-        
         let spanFits = mapView.region.span
         scaleY = frame.size.height / CGFloat(spanFits.latitudeDelta)
         scaleX = frame.size.width / CGFloat(spanFits.longitudeDelta)
         print("scales", scale, scaleX, scaleY)
+
+        let ctx = UIGraphicsGetCurrentContext()!
+        ctx.clear(frame)
+        ctx.translateBy(x: offset.x, y: offset.y)
+        graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scale, height: scale))
+        //print("EM:graph=", graph.json);
+        graphView.image = UIGraphicsGetImageFromCurrentImageContext()
+        
     }
 
     override func viewDidLoad() {
@@ -206,7 +207,7 @@ class Emulator: UIViewController {
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         let ctx = UIGraphicsGetCurrentContext()!
-        graph.render(ctx:ctx, frame: frame, scale:scale)
+        graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
         shuttles.forEach() {
             $0.render(ctx: ctx, graph: graph, scale: scale, time:0)
         }

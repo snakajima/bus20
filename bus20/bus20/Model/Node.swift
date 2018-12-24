@@ -56,10 +56,10 @@ struct Node {
         return sqrt(dx * dx + dy * dy)
     }
     
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
+    func render(ctx:CGContext, graph:Graph, scale:CGSize) {
         if isSignificant {
             let r:CGFloat = 2
-            let rc = CGRect(x: location.x * scale - r, y: location.y * scale - r, width: r*2, height: r*2)
+            let rc = CGRect(x: location.x * scale.width - r, y: location.y * scale.height - r, width: r*2, height: r*2)
             ctx.fillEllipse(in: rc)
         }
         
