@@ -280,7 +280,7 @@ struct Graph {
         return nodes[index].location
     }
 
-    func render(ctx:CGContext, frame:CGRect, scale:CGFloat) {
+    func render(ctx:CGContext, frame:CGRect, scale:CGSize) {
         ctx.setLineWidth(Metrics.roadWidth)
         UIColor.lightGray.setFill()
         UIColor(white: 0.0, alpha: 0.2).setStroke()

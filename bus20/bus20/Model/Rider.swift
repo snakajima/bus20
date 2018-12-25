@@ -46,10 +46,10 @@ class Rider {
         assert(to != from)
     }
 
-    func render(ctx:CGContext, graph:Graph, scale:CGFloat) {
+    func render(ctx:CGContext, graph:Graph, scale:CGSize) {
         let locationTo = graph.location(at: to)
-        ctx.move(to: CGPoint(x: location.x * scale, y: location.y * scale))
-        ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
+        ctx.move(to: CGPoint(x: location.x * scale.width, y: location.y * scale.height))
+        ctx.addLine(to: CGPoint(x: locationTo.x * scale.width, y: locationTo.y * scale.height))
 
         let colorFill = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: Metrics.riderAlpha)
         let colorStroke = (state == .none) ? UIColor.black : UIColor(hue: hue, saturation: 1.0, brightness: 0.5, alpha: Metrics.riderPathAlpha)
@@ -57,7 +57,7 @@ class Rider {
         colorFill.setFill()
         ctx.setLineWidth(Metrics.riderPathWidth)
         ctx.drawPath(using: .stroke)
-        let rc = CGRect(x: location.x * scale + Metrics.riderRadius * (2.5 * CGFloat(offset) - 1), y: location.y * scale - Metrics.riderRadius * 6.0, width: Metrics.riderRadius * 2.0, height: Metrics.riderRadius * 6.0)
+        let rc = CGRect(x: location.x * scale.width + Metrics.riderRadius * (2.5 * CGFloat(offset) - 1), y: location.y * scale.height - Metrics.riderRadius * 6.0, width: Metrics.riderRadius * 2.0, height: Metrics.riderRadius * 6.0)
         ctx.fillEllipse(in: rc)
         Rider.image.draw(in: rc) // HACK: This code assumes ctx is the current UI Graphics context
     }

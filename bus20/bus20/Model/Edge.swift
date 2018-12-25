@@ -21,11 +21,11 @@ struct Edge {
     }
     
     // For rendering
-    func addPath(ctx:CGContext, graph:Graph, scale:CGFloat) {
+    func addPath(ctx:CGContext, graph:Graph, scale:CGSize) {
         let locationFrom = graph.location(at: from)
         let locationTo = graph.location(at: to)
-        ctx.move(to: CGPoint(x: locationFrom.x * scale, y: locationFrom.y * scale))
-        ctx.addLine(to: CGPoint(x: locationTo.x * scale, y: locationTo.y * scale))
+        ctx.move(to: CGPoint(x: locationFrom.x * scale.width, y: locationFrom.y * scale.height))
+        ctx.addLine(to: CGPoint(x: locationTo.x * scale.width, y: locationTo.y * scale.height))
     }
 
     var dictionary:[String:Any] {

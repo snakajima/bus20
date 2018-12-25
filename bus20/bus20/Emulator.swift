@@ -28,6 +28,8 @@ class Emulator: UIViewController {
     var mapView:MKMapView!
     var routeView:OwnerRenderView!
     var scale = CGFloat(1.0)
+    var scaleX = CGFloat(1.0)
+    var scaleY = CGFloat(1.0)
     var offset = CGPoint.zero
     var shuttles = [Shuttle]()
     var start = Date()
@@ -46,19 +48,37 @@ class Emulator: UIViewController {
         UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
         defer { UIGraphicsEndImageContext() }
         
+        let span = MKCoordinateSpan(latitudeDelta: Double(frame.size.height/scale), longitudeDelta: Double(frame.size.width/scale))
+        let center = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - span.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + span.longitudeDelta/2.0)
+        let region = MKCoordinateRegion(center: center, span: span)
+        mapView.region = mapView.regionThatFits(region)
+        let spanFits = mapView.region.span
+        scaleY = frame.size.height / CGFloat(spanFits.latitudeDelta)
+        scaleX = frame.size.width / CGFloat(spanFits.longitudeDelta)
+        print("scales", scale, scaleX, scaleY)
+
+        let centerFits = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - spanFits.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + spanFits.longitudeDelta/2.0)
+        mapView.region = mapView.regionThatFits(MKCoordinateRegion(center: centerFits, span: spanFits))
+
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(frame)
-        ctx.translateBy(x: offset.x, y: offset.y)
-        graph.render(ctx:ctx, frame: frame, scale:scale)
+        /*
+        ctx.translateBy(x: (offset.x - frame.size.width/2) * scaleX / scale + frame.size.width/2,
+                        y: (offset.y - frame.size.height/2) * scaleY / scale + frame.size.height/2)
+        */
+        ctx.translateBy(x: offset.x * scaleX / scale,
+                        y: offset.y * scaleY / scale)
+        graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
         //print("EM:graph=", graph.json);
         graphView.image = UIGraphicsGetImageFromCurrentImageContext()
+        
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         let frame = viewMain.bounds
         mapView = MKMapView(frame: frame)
-        //viewMain.addSubview(mapView)
+        viewMain.addSubview(mapView)
         
         graphView = UIImageView(frame: frame)
         let bounds = graph.boundingBox
@@ -195,13 +215,13 @@ class Emulator: UIViewController {
         UIGraphicsBeginImageContextWithOptions(frame.size, true, 0.0)
         defer { UIGraphicsEndImageContext() }
         let ctx = UIGraphicsGetCurrentContext()!
-        graph.render(ctx:ctx, frame: frame, scale:scale)
+        graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
         shuttles.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale, time:0)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY), time:0)
         }
         
         riders.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY))
         }
         let image = UIGraphicsGetImageFromCurrentImageContext()!
         let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
@@ -251,17 +271,22 @@ class Emulator: UIViewController {
 
 extension Emulator : OwnerRenderViewDelegate {
     func draw(_ rect:CGRect) {
+        //let frame = viewMain.bounds
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(rect)
         labelTime.text = String(format: "%2d:%02d", Int(timeUpdated / 60), Int(timeUpdated) % 60)
         labelTime.drawText(in: CGRect(x: 2, y: 2, width: 100, height: 20))
-        ctx.translateBy(x: offset.x, y: offset.y)
+        //ctx.translateBy(x: offset.x, y: offset.y)
+        ctx.translateBy(x: offset.x * scaleX / scale,
+                        y: offset.y * scaleY / scale)
+        //ctx.translateBy(x: (offset.x - frame.size.width/2) * scaleX / scale + frame.size.width/2,
+                        //y: (offset.y - frame.size.height/2) * scaleY / scale + frame.size.height/2)
         shuttles.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale, time:timeUpdated)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY), time:timeUpdated)
         }
         let activeRiders = riders.filter({ $0.state != .done })
         activeRiders.forEach() {
-            $0.render(ctx: ctx, graph: graph, scale: scale)
+            $0.render(ctx: ctx, graph: graph, scale: CGSize(width: scaleX, height: scaleY))
         }
         DispatchQueue.main.async {
             self.update()
@@ -274,15 +299,18 @@ extension Emulator : OwnerRenderViewDelegate {
         case .began, .changed:
             graphView.transform = CGAffineTransform(translationX: move.x, y: move.y)
             routeView.transform = graphView.transform
+            mapView.transform = graphView.transform
         case .ended:
             offset.x += move.x
             offset.y += move.y
             renderMap()
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         default:
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         }
     }
     
@@ -291,6 +319,7 @@ extension Emulator : OwnerRenderViewDelegate {
         case .began, .changed:
             graphView.transform = CGAffineTransform(scaleX: sender.scale, y: sender.scale)
             routeView.transform = graphView.transform
+            mapView.transform = graphView.transform
         case .ended:
             let size = viewMain.bounds.size
             scale *= sender.scale
@@ -299,9 +328,11 @@ extension Emulator : OwnerRenderViewDelegate {
             renderMap()
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         default:
             graphView.transform = .identity
             routeView.transform = .identity
+            mapView.transform = .identity
         }
     }
 }
