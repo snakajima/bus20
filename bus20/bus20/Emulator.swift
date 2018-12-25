@@ -56,10 +56,9 @@ class Emulator: UIViewController {
         scaleY = frame.size.height / CGFloat(spanFits.latitudeDelta)
         scaleX = frame.size.width / CGFloat(spanFits.longitudeDelta)
         print("scales", scale, scaleX, scaleY)
-        /*
-        let centerFits = CLLocationCoordinate2D(latitude: Double(offset.y/scaleY) - spanFits.latitudeDelta/2.0, longitude: -Double(offset.x/scaleX) + spanFits.longitudeDelta/2.0)
+
+        let centerFits = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - spanFits.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + spanFits.longitudeDelta/2.0)
         mapView.region = mapView.regionThatFits(MKCoordinateRegion(center: centerFits, span: spanFits))
-        */
 
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(frame)
