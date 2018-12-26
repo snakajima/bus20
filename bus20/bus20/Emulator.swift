@@ -62,10 +62,6 @@ class Emulator: UIViewController {
 
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(frame)
-        /*
-        ctx.translateBy(x: (offset.x - frame.size.width/2) * scaleX / scale + frame.size.width/2,
-                        y: (offset.y - frame.size.height/2) * scaleY / scale + frame.size.height/2)
-        */
         ctx.translateBy(x: offset.x * scaleX / scale,
                         y: offset.y * scaleY / scale)
         graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
@@ -81,11 +77,6 @@ class Emulator: UIViewController {
         viewMain.addSubview(mapView)
         
         graphView = UIImageView(frame: frame)
-        let bounds = graph.boundingBox
-        scale = min(frame.size.width / bounds.width,
-                        frame.size.height / bounds.height)
-        offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
-        renderMap()
         viewMain.addSubview(graphView)
 
         routeView = OwnerRenderView(frame:frame)
@@ -104,10 +95,13 @@ class Emulator: UIViewController {
         graphView.frame = frame
         routeView.frame = frame
         
-        let bounds = graph.boundingBox
-        scale = min(frame.size.width / bounds.width,
-                    frame.size.height / bounds.height)
-        offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
+        // If this is the very first call, initialize scale and offset.
+        if graphView.image == nil {
+            let bounds = graph.boundingBox
+            scale = min(frame.size.width / bounds.width,
+                        frame.size.height / bounds.height)
+            offset = CGPoint(x: -bounds.origin.x * scale, y: -bounds.origin.y * scale)
+        }
         renderMap()
     }
     
