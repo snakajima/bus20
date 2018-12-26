@@ -44,30 +44,27 @@ class Emulator: UIViewController {
     var timeUpdated = CGFloat(0)
     
     func renderMap() {
+        // First, figure out the right span (spanFits) with rough span and center
         let frame = viewMain.bounds
-        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
-        defer { UIGraphicsEndImageContext() }
-        
         let span = MKCoordinateSpan(latitudeDelta: Double(frame.size.height/scale), longitudeDelta: Double(frame.size.width/scale))
         let center = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - span.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + span.longitudeDelta/2.0)
-        let region = MKCoordinateRegion(center: center, span: span)
-        mapView.region = mapView.regionThatFits(region)
-        let spanFits = mapView.region.span
+        let spanFits = mapView.regionThatFits(MKCoordinateRegion(center: center, span: span)).span
+        
+        // Then, determine the scaleX and scaleY from it, and set the appropriate spand and center
         scaleY = frame.size.height / CGFloat(spanFits.latitudeDelta)
         scaleX = frame.size.width / CGFloat(spanFits.longitudeDelta)
-        print("scales", scale, scaleX, scaleY)
-
         let centerFits = CLLocationCoordinate2D(latitude: Double(offset.y/scale) - spanFits.latitudeDelta/2.0, longitude: -Double(offset.x/scale) + spanFits.longitudeDelta/2.0)
         mapView.region = mapView.regionThatFits(MKCoordinateRegion(center: centerFits, span: spanFits))
 
+        // Render the graph using the same scale and offset
+        UIGraphicsBeginImageContextWithOptions(frame.size, false, 0.0)
+        defer { UIGraphicsEndImageContext() }
         let ctx = UIGraphicsGetCurrentContext()!
         ctx.clear(frame)
-        ctx.translateBy(x: offset.x * scaleX / scale,
-                        y: offset.y * scaleY / scale)
+        ctx.translateBy(x: offset.x * scaleX / scale, y: offset.y * scaleY / scale)
         graph.render(ctx:ctx, frame: frame, scale:CGSize(width: scaleX, height: scaleY))
-        //print("EM:graph=", graph.json);
+
         graphView.image = UIGraphicsGetImageFromCurrentImageContext()
-        
     }
 
     override func viewDidLoad() {
