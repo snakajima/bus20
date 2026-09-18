@@ -1,0 +1,1796 @@
+{
+  "schemaVersion": "bus20-run-log/1",
+  "protocolVersion": "bus20-protocol/1",
+  "scenarioId": "nyc-like-medium-dev-01",
+  "scenarioDigest": "sha256:35517637a0365ea6f35325631dd947e1e053ababdc598f918b23446d14cf4b32",
+  "mapDigest": "sha256:7b7e6f7bc804d58b76523dc25122a21e6aae490e702aa10a2c7102579222b7de",
+  "policy": {
+    "id": "claude:claude-opus-5:low:numeric:auto",
+    "kind": "general-llm",
+    "provider": "anthropic",
+    "modelId": "claude-opus-5",
+    "promptVersion": "bus20-prompt/2",
+    "settings": {
+      "effort": "low",
+      "presentation": "numeric",
+      "timeoutMs": 120000,
+      "maxRetries": 2,
+      "maxOutputTokens": 4096,
+      "choiceMode": "auto",
+      "flatLimit": 40
+    }
+  },
+  "termination": {
+    "kind": "drained",
+    "finalTimeMs": 3785627
+  },
+  "journeys": [
+    {
+      "requestId": "r01",
+      "vehicleId": "v2",
+      "pickupTimeMs": 410303,
+      "dropoffTimeMs": 543730
+    },
+    {
+      "requestId": "r03",
+      "vehicleId": "v3",
+      "pickupTimeMs": 519639,
+      "dropoffTimeMs": 558015
+    },
+    {
+      "requestId": "r02",
+      "vehicleId": "v1",
+      "pickupTimeMs": 597361,
+      "dropoffTimeMs": 748176
+    },
+    {
+      "requestId": "r05",
+      "vehicleId": "v1",
+      "pickupTimeMs": 722939,
+      "dropoffTimeMs": 786889
+    },
+    {
+      "requestId": "r04",
+      "vehicleId": "v4",
+      "pickupTimeMs": 552168,
+      "dropoffTimeMs": 833887
+    },
+    {
+      "requestId": "r06",
+      "vehicleId": "v1",
+      "pickupTimeMs": 863088,
+      "dropoffTimeMs": 928325
+    },
+    {
+      "requestId": "r08",
+      "vehicleId": "v2",
+      "pickupTimeMs": 960253,
+      "dropoffTimeMs": 1133193
+    },
+    {
+      "requestId": "r07",
+      "vehicleId": "v3",
+      "pickupTimeMs": 996691,
+      "dropoffTimeMs": 1218299
+    },
+    {
+      "requestId": "r12",
+      "vehicleId": "v4",
+      "pickupTimeMs": 1179887,
+      "dropoffTimeMs": 1326954
+    },
+    {
+      "requestId": "r10",
+      "vehicleId": "v3",
+      "pickupTimeMs": 1054984,
+      "dropoffTimeMs": 1460994
+    },
+    {
+      "requestId": "r14",
+      "vehicleId": "v1",
+      "pickupTimeMs": 1416483,
+      "dropoffTimeMs": 1472213
+    },
+    {
+      "requestId": "r16",
+      "vehicleId": "v2",
+      "pickupTimeMs": 1526264,
+      "dropoffTimeMs": 1560519
+    },
+    {
+      "requestId": "r11",
+      "vehicleId": "v4",
+      "pickupTimeMs": 1198032,
+      "dropoffTimeMs": 1579151
+    },
+    {
+      "requestId": "r09",
+      "vehicleId": "v1",
+      "pickupTimeMs": 1271963,
+      "dropoffTimeMs": 1591858
+    },
+    {
+      "requestId": "r15",
+      "vehicleId": "v2",
+      "pickupTimeMs": 1380326,
+      "dropoffTimeMs": 1594774
+    },
+    {
+      "requestId": "r13",
+      "vehicleId": "v2",
+      "pickupTimeMs": 1270776,
+      "dropoffTimeMs": 1723645
+    },
+    {
+      "requestId": "r18",
+      "vehicleId": "v3",
+      "pickupTimeMs": 1612331,
+      "dropoffTimeMs": 1793205
+    },
+    {
+      "requestId": "r17",
+      "vehicleId": "v3",
+      "pickupTimeMs": 1649584,
+      "dropoffTimeMs": 1923542
+    },
+    {
+      "requestId": "r20",
+      "vehicleId": "v1",
+      "pickupTimeMs": 1854527,
+      "dropoffTimeMs": 1937817
+    },
+    {
+      "requestId": "r22",
+      "vehicleId": "v2",
+      "pickupTimeMs": 1899441,
+      "dropoffTimeMs": 1961661
+    },
+    {
+      "requestId": "r19",
+      "vehicleId": "v2",
+      "pickupTimeMs": 1773320,
+      "dropoffTimeMs": 2055901
+    },
+    {
+      "requestId": "r21",
+      "vehicleId": "v4",
+      "pickupTimeMs": 1942282,
+      "dropoffTimeMs": 2379880
+    },
+    {
+      "requestId": "r25",
+      "vehicleId": "v1",
+      "pickupTimeMs": 2262826,
+      "dropoffTimeMs": 2383424
+    },
+    {
+      "requestId": "r24",
+      "vehicleId": "v2",
+      "pickupTimeMs": 2228986,
+      "dropoffTimeMs": 2393069
+    },
+    {
+      "requestId": "r23",
+      "vehicleId": "v3",
+      "pickupTimeMs": 2047580,
+      "dropoffTimeMs": 2405825
+    },
+    {
+      "requestId": "r26",
+      "vehicleId": "v4",
+      "pickupTimeMs": 2266046,
+      "dropoffTimeMs": 2475542
+    },
+    {
+      "requestId": "r28",
+      "vehicleId": "v2",
+      "pickupTimeMs": 2349954,
+      "dropoffTimeMs": 2554302
+    },
+    {
+      "requestId": "r29",
+      "vehicleId": "v4",
+      "pickupTimeMs": 2406275,
+      "dropoffTimeMs": 2664391
+    },
+    {
+      "requestId": "r27",
+      "vehicleId": "v2",
+      "pickupTimeMs": 2436851,
+      "dropoffTimeMs": 2681069
+    },
+    {
+      "requestId": "r31",
+      "vehicleId": "v3",
+      "pickupTimeMs": 2579972,
+      "dropoffTimeMs": 2717769
+    },
+    {
+      "requestId": "r35",
+      "vehicleId": "v3",
+      "pickupTimeMs": 2810622,
+      "dropoffTimeMs": 2858723
+    },
+    {
+      "requestId": "r30",
+      "vehicleId": "v1",
+      "pickupTimeMs": 2558784,
+      "dropoffTimeMs": 2871340
+    },
+    {
+      "requestId": "r33",
+      "vehicleId": "v4",
+      "pickupTimeMs": 2683225,
+      "dropoffTimeMs": 2922921
+    },
+    {
+      "requestId": "r36",
+      "vehicleId": "v3",
+      "pickupTimeMs": 2941678,
+      "dropoffTimeMs": 3072258
+    },
+    {
+      "requestId": "r34",
+      "vehicleId": "v2",
+      "pickupTimeMs": 2776282,
+      "dropoffTimeMs": 3125729
+    },
+    {
+      "requestId": "r32",
+      "vehicleId": "v2",
+      "pickupTimeMs": 2698820,
+      "dropoffTimeMs": 3172530
+    },
+    {
+      "requestId": "r37",
+      "vehicleId": "v4",
+      "pickupTimeMs": 2983426,
+      "dropoffTimeMs": 3261584
+    },
+    {
+      "requestId": "r40",
+      "vehicleId": "v3",
+      "pickupTimeMs": 3321557,
+      "dropoffTimeMs": 3430968
+    },
+    {
+      "requestId": "r38",
+      "vehicleId": "v4",
+      "pickupTimeMs": 3145407,
+      "dropoffTimeMs": 3489592
+    },
+    {
+      "requestId": "r39",
+      "vehicleId": "v3",
+      "pickupTimeMs": 3430968,
+      "dropoffTimeMs": 3543500
+    },
+    {
+      "requestId": "r41",
+      "vehicleId": "v4",
+      "pickupTimeMs": 3507117,
+      "dropoffTimeMs": 3619804
+    },
+    {
+      "requestId": "r42",
+      "vehicleId": "v3",
+      "pickupTimeMs": 3649742,
+      "dropoffTimeMs": 3785627
+    }
+  ],
+  "decisions": [
+    {
+      "stateVersion": 0,
+      "nowMs": 347693,
+      "requestId": "r01",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 0,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3201.42175,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 1866,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.00973,
+        "optionsOffered": 4,
+        "candidatesOffered": 4
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfsQ7HsRmYp5v4ERqGu",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 1,
+      "nowMs": 371636,
+      "requestId": "r02",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 1,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4696.400874999999,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2584,
+        "outputTokens": 150,
+        "cacheReadTokens": 0,
+        "costUsd": 0.01667,
+        "optionsOffered": 9,
+        "candidatesOffered": 9
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfsgDu4LwBoGFhCm6qM",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 2,
+      "nowMs": 482232,
+      "requestId": "r03",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 2,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2503.105707999999,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2931,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.015055,
+        "optionsOffered": 11,
+        "candidatesOffered": 11
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfsyKJvAHJnE5XFHTfE",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 3,
+      "nowMs": 512672,
+      "requestId": "r04",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 3,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3484.5300420000003,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3649,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.018645,
+        "optionsOffered": 16,
+        "candidatesOffered": 16
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBftA3iwSiAyT7aiqW6x",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 4,
+      "nowMs": 583647,
+      "requestId": "r05",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 4,
+        "candidateId": "v1:1:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 6018.7970829999995,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2929,
+        "outputTokens": 280,
+        "cacheReadTokens": 0,
+        "costUsd": 0.021645,
+        "optionsOffered": 11,
+        "candidatesOffered": 11
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBftQxAtpsthqKnHfCKq",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:1:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 5,
+      "nowMs": 676768,
+      "requestId": "r06",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 5,
+        "candidateId": "v1:3:4"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 6918.527542,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3488,
+        "outputTokens": 363,
+        "cacheReadTokens": 0,
+        "costUsd": 0.026515,
+        "optionsOffered": 15,
+        "candidatesOffered": 15
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBftrU5KqMqMvBXHA9L7",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:3:4\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 6,
+      "nowMs": 812846,
+      "requestId": "r07",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 6,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2730.552208000001,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2931,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.015055,
+        "optionsOffered": 11,
+        "candidatesOffered": 11
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfuNDzCVyy8Rv7UgNHd",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 7,
+      "nowMs": 842022,
+      "requestId": "r08",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 7,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2844.9718749999993,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3302,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.01691,
+        "optionsOffered": 14,
+        "candidatesOffered": 14
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfuZiXx2szFieCfCcMR",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 8,
+      "nowMs": 960225,
+      "requestId": "r09",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 8,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 9197.559791999996,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3300,
+        "outputTokens": 473,
+        "cacheReadTokens": 0,
+        "costUsd": 0.028325,
+        "optionsOffered": 14,
+        "candidatesOffered": 14
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfumvGC6i2i9uDP3Ywm",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 9,
+      "nowMs": 1053913,
+      "requestId": "r10",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 9,
+        "candidateId": "v3:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4028.0379170000015,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3276,
+        "outputTokens": 194,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02123,
+        "optionsOffered": 13,
+        "candidatesOffered": 13
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfvTPKd2wzAqhoouKQE",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 10,
+      "nowMs": 1071147,
+      "requestId": "r11",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 10,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2682.6894580000007,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3723,
+        "outputTokens": 49,
+        "cacheReadTokens": 0,
+        "costUsd": 0.01984,
+        "optionsOffered": 16,
+        "candidatesOffered": 16
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfvkcAb9JHrbYqYJSA5",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 11,
+      "nowMs": 1156774,
+      "requestId": "r12",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 11,
+        "candidateId": "v4:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2728.5635419999962,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4088,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02084,
+        "optionsOffered": 19,
+        "candidatesOffered": 19
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfvx5ENUmiRyUPz8Po8",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:0:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 12,
+      "nowMs": 1205506,
+      "requestId": "r13",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 12,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2611.134167000004,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4168,
+        "outputTokens": 40,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02184,
+        "optionsOffered": 19,
+        "candidatesOffered": 19
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfw9reZ2e5HdAa1YfyG",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 13,
+      "nowMs": 1273731,
+      "requestId": "r14",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 13,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4419.391708000003,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3693,
+        "outputTokens": 136,
+        "cacheReadTokens": 0,
+        "costUsd": 0.021865,
+        "optionsOffered": 15,
+        "candidatesOffered": 15
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfwLjzf1RsMGVuV2ZrY",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 14,
+      "nowMs": 1319393,
+      "requestId": "r15",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 14,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 5113.111042000004,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4627,
+        "outputTokens": 55,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02451,
+        "optionsOffered": 22,
+        "candidatesOffered": 22
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfwfap6vLWkipdjHGHD",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 15,
+      "nowMs": 1391341,
+      "requestId": "r16",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 15,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 5720.346499999992,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4621,
+        "outputTokens": 261,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02963,
+        "optionsOffered": 22,
+        "candidatesOffered": 22
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfx3ZAD1tUhryzMaqnj",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 16,
+      "nowMs": 1511842,
+      "requestId": "r17",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 16,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2675.8482499999955,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4504,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02292,
+        "optionsOffered": 22,
+        "candidatesOffered": 22
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfxU4YcBasSYXEJse6C",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 17,
+      "nowMs": 1514136,
+      "requestId": "r18",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 17,
+        "candidateId": "v3:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4822.657917000004,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 5222,
+        "outputTokens": 142,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02966,
+        "optionsOffered": 27,
+        "candidatesOffered": 27
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfxfX84MkHJZ4SviigC",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 18,
+      "nowMs": 1646051,
+      "requestId": "r19",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 18,
+        "candidateId": "v2:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3282.6560000000027,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3488,
+        "outputTokens": 80,
+        "cacheReadTokens": 0,
+        "costUsd": 0.01944,
+        "optionsOffered": 15,
+        "candidatesOffered": 15
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfy22Qg2gjYqkj3adeJ",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:1:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 19,
+      "nowMs": 1694662,
+      "requestId": "r20",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 19,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3238.59212500001,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3931,
+        "outputTokens": 88,
+        "cacheReadTokens": 0,
+        "costUsd": 0.021855,
+        "optionsOffered": 18,
+        "candidatesOffered": 18
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfyGBx4mCvsWQY3eK3o",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 20,
+      "nowMs": 1717048,
+      "requestId": "r21",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 20,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3717.5268339999893,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4649,
+        "outputTokens": 94,
+        "cacheReadTokens": 0,
+        "costUsd": 0.025595,
+        "optionsOffered": 23,
+        "candidatesOffered": 23
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfyVvwznfZKmanyH2HX",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 21,
+      "nowMs": 1886680,
+      "requestId": "r22",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 21,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 5529.965666999997,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3623,
+        "outputTokens": 195,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02299,
+        "optionsOffered": 15,
+        "candidatesOffered": 15
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfymzLFzNHovfNAoFvC",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 22,
+      "nowMs": 1944829,
+      "requestId": "r23",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 22,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2775.2661249999946,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3005,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.015425,
+        "optionsOffered": 11,
+        "candidatesOffered": 11
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfzBbAGY6EJvBapYDxL",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 23,
+      "nowMs": 2037594,
+      "requestId": "r24",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 23,
+        "candidateId": "v2:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4514.764083000002,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3278,
+        "outputTokens": 158,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02034,
+        "optionsOffered": 13,
+        "candidatesOffered": 13
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfzPSYN4NwVddPsJiAt",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:1:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 24,
+      "nowMs": 2108860,
+      "requestId": "r25",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 24,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 5450.377666999993,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3274,
+        "outputTokens": 200,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02137,
+        "optionsOffered": 13,
+        "candidatesOffered": 13
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBfzin9Eny3SwRXQ3U8C",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 25,
+      "nowMs": 2136160,
+      "requestId": "r26",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 25,
+        "candidateId": "v4:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 6116.414540999991,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3996,
+        "outputTokens": 330,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02823,
+        "optionsOffered": 18,
+        "candidatesOffered": 18
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg17uC2965pEZg5mWpi",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:0:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 26,
+      "nowMs": 2202320,
+      "requestId": "r27",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 26,
+        "candidateId": "v2:2:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 5933.507459,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4924,
+        "outputTokens": 259,
+        "cacheReadTokens": 0,
+        "costUsd": 0.031095,
+        "optionsOffered": 25,
+        "candidatesOffered": 25
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg1aHCBtRzLFc9pYUvm",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:2:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 27,
+      "nowMs": 2238988,
+      "requestId": "r28",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 27,
+        "candidateId": "v2:0:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 8725.537208000009,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 5475,
+        "outputTokens": 500,
+        "cacheReadTokens": 0,
+        "costUsd": 0.039875,
+        "optionsOffered": 29,
+        "candidatesOffered": 29
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg21SGh8Ay431kP2udv",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:0:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 28,
+      "nowMs": 2260942,
+      "requestId": "r29",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 28,
+        "candidateId": "v4:2:4"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 8320.564207999982,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 6855,
+        "outputTokens": 487,
+        "cacheReadTokens": 0,
+        "costUsd": 0.04645,
+        "optionsOffered": 40,
+        "candidatesOffered": 40
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg2ejrjJZ86uwTV9Rxj",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:2:4\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 29,
+      "nowMs": 2405990,
+      "requestId": "r30",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 29,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 7410.119958999974,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4416,
+        "outputTokens": 370,
+        "cacheReadTokens": 0,
+        "costUsd": 0.03133,
+        "optionsOffered": 22,
+        "candidatesOffered": 22
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg3GURxodXLVcbN5voL",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 30,
+      "nowMs": 2435025,
+      "requestId": "r31",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 30,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 6969.977333999996,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4649,
+        "outputTokens": 388,
+        "cacheReadTokens": 0,
+        "costUsd": 0.032945,
+        "optionsOffered": 23,
+        "candidatesOffered": 23
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg3pBA4xa9CcgJZGxzQ",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 31,
+      "nowMs": 2556271,
+      "requestId": "r32",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 31,
+        "candidateId": "v2:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3029.293042000005,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3994,
+        "outputTokens": 53,
+        "cacheReadTokens": 0,
+        "costUsd": 0.021295,
+        "optionsOffered": 18,
+        "candidatesOffered": 18
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg4L2n7ww3b3XF6mzor",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:1:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 32,
+      "nowMs": 2607886,
+      "requestId": "r33",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 32,
+        "candidateId": "v4:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2934.02125000002,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4180,
+        "outputTokens": 52,
+        "cacheReadTokens": 0,
+        "costUsd": 0.0222,
+        "optionsOffered": 19,
+        "candidatesOffered": 19
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg4YvfhPcvBGhM9MLq1",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:1:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 33,
+      "nowMs": 2675206,
+      "requestId": "r34",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 33,
+        "candidateId": "v2:2:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 9112.260541999975,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4553,
+        "outputTokens": 552,
+        "cacheReadTokens": 0,
+        "costUsd": 0.036565,
+        "optionsOffered": 22,
+        "candidatesOffered": 22
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg4mLnokk4oikyiq5Nz",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v2:2:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 34,
+      "nowMs": 2703313,
+      "requestId": "r35",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 34,
+        "candidateId": "v3:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2500.637916000007,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4182,
+        "outputTokens": 52,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02221,
+        "optionsOffered": 19,
+        "candidatesOffered": 19
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg5STzi6Hhav1141dAv",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:1:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 35,
+      "nowMs": 2757885,
+      "requestId": "r36",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 35,
+        "candidateId": "v3:2:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4040.1994159999886,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4549,
+        "outputTokens": 126,
+        "cacheReadTokens": 0,
+        "costUsd": 0.025895,
+        "optionsOffered": 22,
+        "candidatesOffered": 22
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg5cyXPD9zsE8Spfnei",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:2:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 36,
+      "nowMs": 2873596,
+      "requestId": "r37",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 36,
+        "candidateId": "v4:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 5063.921375000005,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3723,
+        "outputTokens": 237,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02454,
+        "optionsOffered": 16,
+        "candidatesOffered": 16
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg5vR1aRBUgFqyYdC3p",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:1:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 37,
+      "nowMs": 3087342,
+      "requestId": "r38",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 37,
+        "candidateId": "v4:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4049.122166999994,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3005,
+        "outputTokens": 173,
+        "cacheReadTokens": 0,
+        "costUsd": 0.01935,
+        "optionsOffered": 11,
+        "candidatesOffered": 11
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg6JFRq9JapcPdjMmsh",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:0:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 38,
+      "nowMs": 3135769,
+      "requestId": "r39",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 38,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 5000.027124999993,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3488,
+        "outputTokens": 170,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02169,
+        "optionsOffered": 15,
+        "candidatesOffered": 15
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg6bXVHcf5jCS8fn1KG",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 39,
+      "nowMs": 3136794,
+      "requestId": "r40",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 39,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 8049.947374999989,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 4206,
+        "outputTokens": 411,
+        "cacheReadTokens": 0,
+        "costUsd": 0.031305,
+        "optionsOffered": 20,
+        "candidatesOffered": 20
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg6xeF1uWndKRQwo9kv",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 40,
+      "nowMs": 3415025,
+      "requestId": "r41",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 40,
+        "candidateId": "v4:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3516.8391249999986,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3488,
+        "outputTokens": 106,
+        "cacheReadTokens": 0,
+        "costUsd": 0.02009,
+        "optionsOffered": 15,
+        "candidatesOffered": 15
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg7Z99hoT8vd5zRmjF8",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v4:1:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 41,
+      "nowMs": 3594877,
+      "requestId": "r42",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 41,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2186.232958000008,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2213,
+        "outputTokens": 16,
+        "cacheReadTokens": 0,
+        "costUsd": 0.011465,
+        "optionsOffered": 6,
+        "candidatesOffered": 6
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "anthropic",
+            "modelId": "claude-opus-5",
+            "responseId": "msg_011CfBg7pDzmWHHH5d2AzhwN",
+            "stopReason": "end_turn",
+            "question": "Which candidate should the new passenger be assigned to?",
+            "text": "{\"choice\":\"v3:0:1\"}"
+          }
+        ]
+      }
+    }
+  ],
+  "finalStateDigest": "sha256:9e17961196baf59833e95bbbbe2349f8bd6f7eafa0d4c0648bdd8785f9b49c7b"
+}

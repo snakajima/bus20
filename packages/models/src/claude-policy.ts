@@ -11,7 +11,13 @@ import {
   DEFAULT_CHOICE_SETTINGS,
   decideByChoice,
 } from "./choice-procedure.js";
-import { CANDIDATE_ENCODING_TEXT, OBJECTIVE_TEXT, PROMPT_VERSION } from "./decision-brief.js";
+import { OBJECTIVE_TEXT } from "./decision-brief.js";
+import {
+  DEFAULT_PRESENTATION_ID,
+  type Presentation,
+  presentationById,
+  type PresentationId,
+} from "./presentation.js";
 import { usageRecord } from "./pricing.js";
 
 export const DEFAULT_CLAUDE_MODEL_ID = "claude-opus-5" as const;
@@ -25,8 +31,8 @@ const DEFAULT_TIMEOUT_MS = 120_000;
 const DEFAULT_MAX_RETRIES = 2;
 const MAX_OUTPUT_TOKENS = 4096;
 
-const SYSTEM_PROMPT =
-  `${OBJECTIVE_TEXT} ${CANDIDATE_ENCODING_TEXT} ` +
+const systemPrompt = (presentation: Presentation): string =>
+  `${OBJECTIVE_TEXT} ${presentation.encodingText} ` +
   "Each message carries the current state, one question, and the options to choose from. " +
   'Reply with JSON only: {"choice": <one of the offered option ids>}. ' +
   "Do not invent ids and do not choose more than one.";
@@ -38,6 +44,8 @@ export interface ClaudePolicyOptions {
   readonly timeoutMs?: number;
   readonly maxRetries?: number;
   readonly choice?: ChoiceSettings;
+  /** `consequences` (default, prompt v3) or `numeric` (prompt v2). */
+  readonly presentation?: PresentationId;
   /** Injected transport for tests; production uses the SDK default. */
   readonly fetch?: typeof fetch;
 }
@@ -48,6 +56,7 @@ interface Settings {
   readonly timeoutMs: number;
   readonly maxRetries: number;
   readonly choice: ChoiceSettings;
+  readonly presentation: Presentation;
 }
 
 const replySchema = z.object({ choice: z.string().min(1) });
@@ -63,13 +72,14 @@ const outputFormat = (ids: readonly string[]) => ({
 });
 
 const describe = (settings: Settings): PolicyDescriptor => ({
-  id: `claude:${settings.modelId}:${settings.effort}:${settings.choice.mode}`,
+  id: `claude:${settings.modelId}:${settings.effort}:${settings.presentation.id}:${settings.choice.mode}`,
   kind: "general-llm",
   provider: ANTHROPIC_PROVIDER,
   modelId: settings.modelId,
-  promptVersion: PROMPT_VERSION,
+  promptVersion: settings.presentation.promptVersion,
   settings: {
     effort: settings.effort,
+    presentation: settings.presentation.id,
     timeoutMs: settings.timeoutMs,
     maxRetries: settings.maxRetries,
     maxOutputTokens: MAX_OUTPUT_TOKENS,
@@ -142,12 +152,21 @@ const createClaudeChoiceClient = (client: Anthropic, settings: Settings): Choice
     const message = await client.messages.create({
       model: settings.modelId,
       max_tokens: MAX_OUTPUT_TOKENS,
-      system: SYSTEM_PROMPT,
+      system: systemPrompt(settings.presentation),
       messages: [{ role: "user", content: userMessage(request) }],
       output_config: { effort: settings.effort, format: outputFormat(ids) },
     });
     return toReply(settings, request, message);
   },
+});
+
+const settingsOf = (options: ClaudePolicyOptions): Settings => ({
+  modelId: options.modelId ?? DEFAULT_CLAUDE_MODEL_ID,
+  effort: options.effort ?? DEFAULT_EFFORT,
+  timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
+  maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
+  choice: options.choice ?? DEFAULT_CHOICE_SETTINGS,
+  presentation: presentationById(options.presentation ?? DEFAULT_PRESENTATION_ID),
 });
 
 /**
@@ -156,13 +175,7 @@ const createClaudeChoiceClient = (client: Anthropic, settings: Settings): Choice
  * reply fails the decision, and the failed run is kept as data.
  */
 export const createClaudePolicy = (options: ClaudePolicyOptions = {}): Policy => {
-  const settings: Settings = {
-    modelId: options.modelId ?? DEFAULT_CLAUDE_MODEL_ID,
-    effort: options.effort ?? DEFAULT_EFFORT,
-    timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
-    maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
-    choice: options.choice ?? DEFAULT_CHOICE_SETTINGS,
-  };
+  const settings = settingsOf(options);
   const client = new Anthropic({
     ...(options.apiKey === undefined ? {} : { apiKey: options.apiKey }),
     ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
@@ -172,6 +185,7 @@ export const createClaudePolicy = (options: ClaudePolicyOptions = {}): Policy =>
   const choiceClient = createClaudeChoiceClient(client, settings);
   return {
     descriptor: describe(settings),
-    decide: (observation) => decideByChoice(choiceClient, observation, settings.choice),
+    decide: (observation) =>
+      decideByChoice(choiceClient, observation, settings.choice, settings.presentation),
   };
 };

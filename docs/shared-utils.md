@@ -82,8 +82,8 @@ Packages export individual modules by subpath (for example
 | `choice-client` | `ChoiceClient`, `ChoiceRequest`, `ChoiceReply` | The one structured-choice call every adapter implements. |
 | `choice-procedure` | `decideByChoice`, `CHOICE_MODES`, `DEFAULT_CHOICE_SETTINGS`, `DEFAULT_CHUNK_SIZE` | Flat, hierarchical, auto, and tournament decision procedures over a choice client. |
 | `choice-client` | `askAll` | Batched choices when the client supports `askMany`, sequential otherwise. |
-| `presentation` | `SHARED_PRESENTATION`, `JEV_NATIVE_PRESENTATION`, `presentationById` | How observations become choice requests. |
-| `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Jev-specific presentation: consequences in code, words and whole minutes. |
+| `presentation` | `NUMERIC_PRESENTATION`, `CONSEQUENCES_PRESENTATION`, `presentationById` | How observations become choice requests, with prompt version and encoding text. |
+| `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Consequences presentation (shared prompt v3): arithmetic in code, words and whole minutes. |
 | `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |
 | `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID`, `EFFORT_LEVELS` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |

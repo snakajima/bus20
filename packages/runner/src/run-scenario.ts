@@ -139,6 +139,7 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
   const shared = {
     ...(options.modelId === undefined ? {} : { modelId: options.modelId }),
     ...(options.choice === undefined ? {} : { choice: options.choice }),
+    ...(options.presentation === undefined ? {} : { presentation: options.presentation }),
   };
   if (policyId === "claude") {
     const effort = options.effort === undefined ? {} : { effort: options.effort };
@@ -147,7 +148,6 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
   if (policyId === "jev") {
     return createJevPolicy({
       ...shared,
-      ...(options.presentation === undefined ? {} : { presentation: options.presentation }),
       ...(options.repeats === undefined ? {} : { repeats: options.repeats }),
     });
   }

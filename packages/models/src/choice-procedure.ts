@@ -14,7 +14,7 @@ import {
   type ChoiceRequest,
 } from "./choice-client.js";
 import { assertChoiceFits } from "./decision-brief.js";
-import { type Presentation, SHARED_PRESENTATION } from "./presentation.js";
+import { CONSEQUENCES_PRESENTATION, type Presentation } from "./presentation.js";
 
 export const CHOICE_MODES = ["flat", "hierarchical", "auto", "tournament"] as const;
 export type ChoiceMode = (typeof CHOICE_MODES)[number];
@@ -179,7 +179,7 @@ export const decideByChoice = (
   client: ChoiceClient,
   observation: Observation,
   settings: ChoiceSettings,
-  presentation: Presentation = SHARED_PRESENTATION,
+  presentation: Presentation = CONSEQUENCES_PRESENTATION,
 ): Promise<Decision> => {
   if (isFlat(settings, observation)) {
     return decideFlat(client, presentation, observation);

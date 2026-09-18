@@ -5,6 +5,7 @@ import { test } from "node:test";
 import { askAll, type ChoiceClient, type ChoiceRequest } from "../src/choice-client.js";
 import { decideByChoice } from "../src/choice-procedure.js";
 import { buildDecisionBrief, describeCandidate } from "../src/decision-brief.js";
+import { NUMERIC_PRESENTATION } from "../src/presentation.js";
 import { APPEND, IDLE, INSERT, MINUTE, observation, stop } from "./choice-fixture.js";
 import { loadFixture } from "./fakes.js";
 
@@ -102,10 +103,12 @@ test("flat mode asks once with every candidate", async () => {
 
 test("hierarchical mode asks for a vehicle, then an insertion, and sums usage", async () => {
   const twoStage = scripted([() => "v1", () => "v1:3:4"]);
-  const decision = await decideByChoice(twoStage, observation(), {
-    mode: "hierarchical",
-    flatLimit: 0,
-  });
+  const decision = await decideByChoice(
+    twoStage,
+    observation(),
+    { mode: "hierarchical", flatLimit: 0 },
+    NUMERIC_PRESENTATION,
+  );
   assert.equal(twoStage.requests.length, 2);
   const [first, second] = twoStage.requests;
   assert.ok(first !== undefined && second !== undefined);
