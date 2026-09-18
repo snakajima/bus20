@@ -56,6 +56,7 @@ type Metrics = Pick<
   | "inputTokens"
   | "outputTokens"
   | "costUsd"
+  | "programCpuMs"
 >;
 
 const metricsOf = (row: ComparisonRow): Metrics => ({
@@ -69,6 +70,7 @@ const metricsOf = (row: ComparisonRow): Metrics => ({
   inputTokens: row.inputTokens,
   outputTokens: row.outputTokens,
   costUsd: row.costUsd,
+  programCpuMs: row.programCpuMs,
 });
 
 const toSuiteRun = (
@@ -85,6 +87,7 @@ const toSuiteRun = (
     dir,
     ...metricsOf(row),
     failureReason: result.status === "failed" ? result.failure.reason : null,
+    failureDetail: result.status === "failed" ? result.failure.detail : null,
     replayMatches,
   };
 };

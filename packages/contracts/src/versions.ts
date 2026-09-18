@@ -11,3 +11,5 @@ export const RUN_LOG_SCHEMA_VERSION = "bus20-run-log/1" as const;
 export const RUN_RESULT_SCHEMA_VERSION = "bus20-run-result/1" as const;
 export const MANIFEST_SCHEMA_VERSION = "bus20-manifest/1" as const;
 export const SUITE_INDEX_SCHEMA_VERSION = "bus20-suite-index/1" as const;
+export const POLICY_PROGRAM_SCHEMA_VERSION = "bus20-policy-program/1" as const;
+export const CAMPAIGN_SCHEMA_VERSION = "bus20-campaign/1" as const;

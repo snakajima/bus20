@@ -26,6 +26,7 @@
     "@bus20/baselines": "0.1.0",
     "@bus20/models": "0.1.0",
     "@bus20/datasets": "0.1.0",
-    "@bus20/analysis": "0.1.0"
+    "@bus20/analysis": "0.1.0",
+    "@bus20/policy-runtime": "0.1.0"
   }
 }

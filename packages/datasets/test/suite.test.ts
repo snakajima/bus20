@@ -158,3 +158,22 @@ test("the committed synthetic-dev suite matches its config and manifest", async 
   const rebuilt = buildSuite(config, loaded.value.manifest.createdAt);
   assert.deepEqual(rebuilt.manifest, loaded.value.manifest);
 });
+
+test("the committed second-paper suite matches its config and uses a different seed", async () => {
+  const configPath = path.join(REPO_ROOT, "datasets/configs/synthetic-paper2-1.json");
+  const config = suiteConfigSchema.parse(JSON.parse(readFileSync(configPath, "utf8")));
+  const devConfig = suiteConfigSchema.parse(
+    JSON.parse(readFileSync(path.join(REPO_ROOT, "datasets/configs/synthetic-dev-1.json"), "utf8")),
+  );
+  assert.notEqual(config.seed, devConfig.seed);
+  const loaded = await loadSuite(path.join(REPO_ROOT, "datasets/synthetic-paper2-1/manifest.json"));
+  assert.ok(loaded.ok);
+  assert.deepEqual(
+    buildSuite(config, loaded.value.manifest.createdAt).manifest,
+    loaded.value.manifest,
+  );
+  const devLoaded = await loadSuite(path.join(REPO_ROOT, "datasets/synthetic-dev-1/manifest.json"));
+  assert.ok(devLoaded.ok);
+  const devDigests = new Set(devLoaded.value.manifest.scenarios.map((scenario) => scenario.digest));
+  assert.ok(loaded.value.manifest.scenarios.every((scenario) => !devDigests.has(scenario.digest)));
+});

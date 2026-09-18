@@ -11,7 +11,13 @@ const digestSchema = z.string().regex(/^sha256:[0-9a-f]{64}$/);
  * Which kind of decision-maker produced a run. The offline fixture policy is
  * a smoke-test baseline only and must never be presented as Swift or as AI.
  */
-export const POLICY_KINDS = ["swift-reference", "general-llm", "jev", "fixture"] as const;
+export const POLICY_KINDS = [
+  "swift-reference",
+  "general-llm",
+  "jev",
+  "fixture",
+  "generated-program",
+] as const;
 export const GENERAL_LLM_PROVIDERS = ["anthropic", "openai", "google"] as const;
 export const policyKindSchema = z.enum(POLICY_KINDS);
 

@@ -13,7 +13,7 @@
   "scripts": {
     "format": "prettier --write \"{packages,datasets,.github}/**/*.{ts,mts,mjs,json,yml,yaml}\" \"*.{json,mjs}\"",
     "format:check": "prettier --check \"{packages,datasets,.github}/**/*.{ts,mts,mjs,json,yml,yaml}\" \"*.{json,mjs}\"",
-    "build:packages": "yarn workspace @bus20/contracts run build && yarn workspace @bus20/graph run build && yarn workspace @bus20/scoring run build && yarn workspace @bus20/datasets run build && yarn workspace @bus20/simulator run build && yarn workspace @bus20/baselines run build && yarn workspace @bus20/models run build && yarn workspace @bus20/analysis run build && yarn workspace @bus20/runner run build",
+    "build:packages": "yarn workspace @bus20/contracts run build && yarn workspace @bus20/transport run build && yarn workspace @bus20/graph run build && yarn workspace @bus20/scoring run build && yarn workspace @bus20/datasets run build && yarn workspace @bus20/simulator run build && yarn workspace @bus20/baselines run build && yarn workspace @bus20/models run build && yarn workspace @bus20/analysis run build && yarn workspace @bus20/policy-runtime run build && yarn workspace @bus20/runner run build && yarn workspace @bus20/policy-build run build",
     "typecheck": "yarn workspaces run typecheck",
     "lint": "eslint packages",
     "build": "yarn build:packages",

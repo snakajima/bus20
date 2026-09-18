@@ -5,6 +5,9 @@
       "path": "packages/contracts"
     },
     {
+      "path": "packages/transport"
+    },
+    {
       "path": "packages/graph"
     },
     {
@@ -26,7 +29,13 @@
       "path": "packages/analysis"
     },
     {
+      "path": "packages/policy-runtime"
+    },
+    {
       "path": "packages/runner"
+    },
+    {
+      "path": "packages/policy-build"
     }
   ]
 }

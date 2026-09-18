@@ -1,0 +1,24 @@
+{
+  "name": "@bus20/policy-runtime",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Isolated execution of generated dispatch programs with resource limits",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@bus20/contracts": "0.1.0",
+    "@bus20/simulator": "0.1.0",
+    "@bus20/transport": "0.1.0",
+    "typescript": "^6.0.0",
+    "zod": "^4.0.0"
+  }
+}

@@ -15,6 +15,7 @@ export const suiteRunSchema = z.object({
   status: z.enum(["complete", "failed"]),
   pain: z.number().nonnegative().nullable(),
   failureReason: z.string().nullable(),
+  failureDetail: z.string().nullable(),
   completedCount: z.int().nonnegative(),
   requestCount: z.int().positive(),
   decisions: z.int().nonnegative(),
@@ -23,6 +24,8 @@ export const suiteRunSchema = z.object({
   inputTokens: z.int().nonnegative(),
   outputTokens: z.int().nonnegative(),
   costUsd: z.number().nonnegative().nullable(),
+  /** CPU spent inside a generated program across all decisions; 0 for other policies. */
+  programCpuMs: z.number().nonnegative(),
   replayMatches: z.boolean(),
 });
 

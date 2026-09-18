@@ -86,6 +86,24 @@ export default tseslint.config(
     },
   },
   {
+    // The program sandbox exists to execute generated code under node:vm with
+    // frozen globals, CPU timeouts, and a separate process. Flagging every
+    // runInContext call there reports the module's purpose, not a defect.
+    files: ["packages/policy-runtime/src/sandbox.ts"],
+    rules: {
+      "sonarjs/code-eval": "off",
+    },
+  },
+  {
+    // The program sandbox exists to execute generated code under node:vm with
+    // frozen globals, CPU timeouts, and a separate process. Flagging every
+    // runInContext call there reports the module's purpose, not a defect.
+    files: ["packages/policy-runtime/src/sandbox.ts"],
+    rules: {
+      "sonarjs/code-eval": "off",
+    },
+  },
+  {
     files: ["packages/**/test/**/*.ts"],
     rules: {
       "max-lines-per-function": [

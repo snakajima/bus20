@@ -17,6 +17,7 @@
   "dependencies": {
     "@bus20/contracts": "0.1.0",
     "@bus20/simulator": "0.1.0",
-    "zod": "^4.0.0"
+    "zod": "^4.0.0",
+    "@bus20/transport": "0.1.0"
   }
 }

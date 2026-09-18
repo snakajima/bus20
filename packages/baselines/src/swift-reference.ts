@@ -4,7 +4,7 @@ import { type Observation } from "@bus20/contracts/observation";
 import { formatIssues } from "@bus20/contracts/result";
 import { type Decision, type Policy } from "@bus20/simulator/policy";
 import { z } from "zod";
-import { JsonLinesClient } from "./json-lines-client.js";
+import { JsonLinesClient } from "@bus20/transport/json-lines-client";
 
 export const SWIFT_REFERENCE_POLICY_ID = "swift-insertion-reference" as const;
 export const SWIFT_REFERENCE_TOOL_VERSION = "bus20-swift-reference/1" as const;

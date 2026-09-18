@@ -21,6 +21,7 @@ export interface ComparisonRow {
   readonly inputTokens: number;
   readonly outputTokens: number;
   readonly costUsd: number | null;
+  readonly programCpuMs: number;
 }
 
 const percentile = (values: readonly number[], fraction: number): number => {
@@ -57,6 +58,7 @@ export const toRow = (log: RunLog, result: RunResult): ComparisonRow => {
     inputTokens: sumUsage(log, "inputTokens") ?? 0,
     outputTokens: sumUsage(log, "outputTokens") ?? 0,
     costUsd: sumUsage(log, "costUsd"),
+    programCpuMs: sumUsage(log, "programCpuMs") ?? 0,
   };
 };
 

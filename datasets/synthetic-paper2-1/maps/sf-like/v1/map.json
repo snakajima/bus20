@@ -1,0 +1,1806 @@
+{
+  "schemaVersion": "bus20-map/1",
+  "id": "sf-like-v1",
+  "nodes": [
+    {
+      "id": "n0-0",
+      "stopAllowed": true,
+      "lat": 37.77990488945284,
+      "lon": -122.42007358923244
+    },
+    {
+      "id": "n0-1",
+      "stopAllowed": true,
+      "lat": 37.77994536097111,
+      "lon": -122.4184135152136
+    },
+    {
+      "id": "n0-2",
+      "stopAllowed": true,
+      "lat": 37.78017880035775,
+      "lon": -122.41641680458942
+    },
+    {
+      "id": "n0-3",
+      "stopAllowed": true,
+      "lat": 37.78003943060103,
+      "lon": -122.41503063933663
+    },
+    {
+      "id": "n0-4",
+      "stopAllowed": true,
+      "lat": 37.78012252461591,
+      "lon": -122.41298494579034
+    },
+    {
+      "id": "n0-5",
+      "stopAllowed": true,
+      "lat": 37.779889970624545,
+      "lon": -122.41166876571504
+    },
+    {
+      "id": "n0-6",
+      "stopAllowed": true,
+      "lat": 37.780132053520454,
+      "lon": -122.40978497949953
+    },
+    {
+      "id": "n1-0",
+      "stopAllowed": true,
+      "lat": 37.781384583394185,
+      "lon": -122.41982281834296
+    },
+    {
+      "id": "n1-1",
+      "stopAllowed": true,
+      "lat": 37.78117288000627,
+      "lon": -122.41842520665212
+    },
+    {
+      "id": "n1-2",
+      "stopAllowed": true,
+      "lat": 37.78150420391444,
+      "lon": -122.41684505683378
+    },
+    {
+      "id": "n1-4",
+      "stopAllowed": true,
+      "lat": 37.78129495583619,
+      "lon": -122.41327991816675
+    },
+    {
+      "id": "n1-5",
+      "stopAllowed": true,
+      "lat": 37.781543288596595,
+      "lon": -122.41129730602155
+    },
+    {
+      "id": "n1-6",
+      "stopAllowed": true,
+      "lat": 37.781424208517656,
+      "lon": -122.40993970469337
+    },
+    {
+      "id": "n2-0",
+      "stopAllowed": true,
+      "lat": 37.78252557105777,
+      "lon": -122.41978462267046
+    },
+    {
+      "id": "n2-2",
+      "stopAllowed": true,
+      "lat": 37.782854841149586,
+      "lon": -122.41635065793312
+    },
+    {
+      "id": "n2-4",
+      "stopAllowed": true,
+      "lat": 37.78275654962292,
+      "lon": -122.4131912955073
+    },
+    {
+      "id": "n2-5",
+      "stopAllowed": true,
+      "lat": 37.78269901489317,
+      "lon": -122.41126966284412
+    },
+    {
+      "id": "n2-6",
+      "stopAllowed": true,
+      "lat": 37.782565416707854,
+      "lon": -122.40995941061156
+    },
+    {
+      "id": "n2-7",
+      "stopAllowed": true,
+      "lat": 37.78283961674034,
+      "lon": -122.40810288771088
+    },
+    {
+      "id": "n2-8",
+      "stopAllowed": true,
+      "lat": 37.78250702153437,
+      "lon": -122.40647329834684
+    },
+    {
+      "id": "n3-0",
+      "stopAllowed": true,
+      "lat": 37.78415706752968,
+      "lon": -122.41992925758889
+    },
+    {
+      "id": "n3-1",
+      "stopAllowed": true,
+      "lat": 37.78385613188768,
+      "lon": -122.41818592054972
+    },
+    {
+      "id": "n3-4",
+      "stopAllowed": true,
+      "lat": 37.78415328637679,
+      "lon": -122.41307613796359
+    },
+    {
+      "id": "n3-5",
+      "stopAllowed": true,
+      "lat": 37.7840288601774,
+      "lon": -122.41138473432909
+    },
+    {
+      "id": "n3-6",
+      "stopAllowed": true,
+      "lat": 37.784038414977495,
+      "lon": -122.40991105686507
+    },
+    {
+      "id": "n3-7",
+      "stopAllowed": true,
+      "lat": 37.78424031308029,
+      "lon": -122.40811116865343
+    },
+    {
+      "id": "n3-8",
+      "stopAllowed": true,
+      "lat": 37.78421148536662,
+      "lon": -122.40654123766747
+    },
+    {
+      "id": "n4-0",
+      "stopAllowed": true,
+      "lat": 37.785470441388085,
+      "lon": -122.4200391043125
+    },
+    {
+      "id": "n4-1",
+      "stopAllowed": true,
+      "lat": 37.785265943837125,
+      "lon": -122.418189037211
+    },
+    {
+      "id": "n4-2",
+      "stopAllowed": true,
+      "lat": 37.78527609784043,
+      "lon": -122.41676380383825
+    },
+    {
+      "id": "n4-3",
+      "stopAllowed": true,
+      "lat": 37.785432600717265,
+      "lon": -122.41478779403998
+    },
+    {
+      "id": "n4-4",
+      "stopAllowed": true,
+      "lat": 37.78542231965268,
+      "lon": -122.41317304520952
+    },
+    {
+      "id": "n4-5",
+      "stopAllowed": true,
+      "lat": 37.78524547542469,
+      "lon": -122.41152687820332
+    },
+    {
+      "id": "n4-6",
+      "stopAllowed": true,
+      "lat": 37.78543977745088,
+      "lon": -122.40997669475085
+    },
+    {
+      "id": "n4-7",
+      "stopAllowed": true,
+      "lat": 37.78533007664978,
+      "lon": -122.4079486260096
+    },
+    {
+      "id": "n5-0",
+      "stopAllowed": true,
+      "lat": 37.78693411944503,
+      "lon": -122.42013622126483
+    },
+    {
+      "id": "n5-1",
+      "stopAllowed": true,
+      "lat": 37.78686784038986,
+      "lon": -122.41840842361853
+    },
+    {
+      "id": "n5-2",
+      "stopAllowed": true,
+      "lat": 37.78678242004851,
+      "lon": -122.41650359789494
+    },
+    {
+      "id": "n5-3",
+      "stopAllowed": true,
+      "lat": 37.78660189334587,
+      "lon": -122.41511070122621
+    },
+    {
+      "id": "n5-4",
+      "stopAllowed": true,
+      "lat": 37.78661292064322,
+      "lon": -122.41299937871725
+    },
+    {
+      "id": "n5-5",
+      "stopAllowed": true,
+      "lat": 37.78679352660293,
+      "lon": -122.41143370751415
+    },
+    {
+      "id": "n5-6",
+      "stopAllowed": true,
+      "lat": 37.78686323542754,
+      "lon": -122.40982498064126
+    },
+    {
+      "id": "n5-7",
+      "stopAllowed": true,
+      "lat": 37.78657861338846,
+      "lon": -122.40832135521539
+    },
+    {
+      "id": "n6-0",
+      "stopAllowed": true,
+      "lat": 37.788084167159006,
+      "lon": -122.41987288882852
+    },
+    {
+      "id": "n6-1",
+      "stopAllowed": true,
+      "lat": 37.78817631802639,
+      "lon": -122.41850661360583
+    },
+    {
+      "id": "n6-2",
+      "stopAllowed": true,
+      "lat": 37.788168324907765,
+      "lon": -122.41643230167342
+    },
+    {
+      "id": "n6-3",
+      "stopAllowed": true,
+      "lat": 37.78793135387922,
+      "lon": -122.41481698383494
+    },
+    {
+      "id": "n6-4",
+      "stopAllowed": true,
+      "lat": 37.788110894192165,
+      "lon": -122.41305105613394
+    },
+    {
+      "id": "n6-5",
+      "stopAllowed": true,
+      "lat": 37.78792714758428,
+      "lon": -122.41123705321922
+    },
+    {
+      "id": "n6-6",
+      "stopAllowed": true,
+      "lat": 37.78814007237924,
+      "lon": -122.40963264562376
+    },
+    {
+      "id": "n6-7",
+      "stopAllowed": true,
+      "lat": 37.78823921865099,
+      "lon": -122.40800025041817
+    },
+    {
+      "id": "n6-8",
+      "stopAllowed": true,
+      "lat": 37.78789889606942,
+      "lon": -122.40652658859999
+    },
+    {
+      "id": "n7-0",
+      "stopAllowed": true,
+      "lat": 37.78943786512607,
+      "lon": -122.41982285552496
+    },
+    {
+      "id": "n7-1",
+      "stopAllowed": true,
+      "lat": 37.78952939012412,
+      "lon": -122.41815986569824
+    },
+    {
+      "id": "n7-2",
+      "stopAllowed": true,
+      "lat": 37.7894608254996,
+      "lon": -122.41663144897777
+    },
+    {
+      "id": "n7-3",
+      "stopAllowed": true,
+      "lat": 37.78931748101665,
+      "lon": -122.41476768926535
+    },
+    {
+      "id": "n7-4",
+      "stopAllowed": true,
+      "lat": 37.78947799972169,
+      "lon": -122.41320410758361
+    },
+    {
+      "id": "n7-5",
+      "stopAllowed": true,
+      "lat": 37.78946517681523,
+      "lon": -122.41130547311889
+    },
+    {
+      "id": "n7-6",
+      "stopAllowed": true,
+      "lat": 37.78938697613831,
+      "lon": -122.40996970467279
+    },
+    {
+      "id": "n7-7",
+      "stopAllowed": true,
+      "lat": 37.78950843638598,
+      "lon": -122.40805148194838
+    },
+    {
+      "id": "n7-8",
+      "stopAllowed": true,
+      "lat": 37.78940894987499,
+      "lon": -122.40633981062341
+    },
+    {
+      "id": "n8-0",
+      "stopAllowed": true,
+      "lat": 37.7907028247972,
+      "lon": -122.419828094091
+    },
+    {
+      "id": "n8-1",
+      "stopAllowed": true,
+      "lat": 37.790899476971504,
+      "lon": -122.41830762177702
+    },
+    {
+      "id": "n8-2",
+      "stopAllowed": true,
+      "lat": 37.79073851649181,
+      "lon": -122.41651997466023
+    },
+    {
+      "id": "n8-3",
+      "stopAllowed": true,
+      "lat": 37.79094532796429,
+      "lon": -122.41507174338052
+    },
+    {
+      "id": "n8-4",
+      "stopAllowed": true,
+      "lat": 37.79094052148184,
+      "lon": -122.41294146073908
+    },
+    {
+      "id": "n8-5",
+      "stopAllowed": true,
+      "lat": 37.79064030334557,
+      "lon": -122.41163006003917
+    },
+    {
+      "id": "n8-6",
+      "stopAllowed": true,
+      "lat": 37.79075174580782,
+      "lon": -122.40954943126276
+    },
+    {
+      "id": "n8-7",
+      "stopAllowed": true,
+      "lat": 37.790728093394364,
+      "lon": -122.4082027791507
+    },
+    {
+      "id": "n8-8",
+      "stopAllowed": true,
+      "lat": 37.790976319291815,
+      "lon": -122.40645382343519
+    }
+  ],
+  "edges": [
+    {
+      "id": "n0-0>n0-1",
+      "from": "n0-0",
+      "to": "n0-1",
+      "travelTimeMs": 18266,
+      "lengthMeters": 146
+    },
+    {
+      "id": "n0-1>n0-0",
+      "from": "n0-1",
+      "to": "n0-0",
+      "travelTimeMs": 18266,
+      "lengthMeters": 146
+    },
+    {
+      "id": "n0-0>n1-0",
+      "from": "n0-0",
+      "to": "n1-0",
+      "travelTimeMs": 16619,
+      "lengthMeters": 166
+    },
+    {
+      "id": "n1-0>n0-0",
+      "from": "n1-0",
+      "to": "n0-0",
+      "travelTimeMs": 16619,
+      "lengthMeters": 166
+    },
+    {
+      "id": "n0-1>n0-2",
+      "from": "n0-1",
+      "to": "n0-2",
+      "travelTimeMs": 17759,
+      "lengthMeters": 178
+    },
+    {
+      "id": "n0-1>n1-1",
+      "from": "n0-1",
+      "to": "n1-1",
+      "travelTimeMs": 15183,
+      "lengthMeters": 137
+    },
+    {
+      "id": "n1-1>n0-1",
+      "from": "n1-1",
+      "to": "n0-1",
+      "travelTimeMs": 15183,
+      "lengthMeters": 137
+    },
+    {
+      "id": "n0-2>n0-3",
+      "from": "n0-2",
+      "to": "n0-3",
+      "travelTimeMs": 15368,
+      "lengthMeters": 123
+    },
+    {
+      "id": "n0-3>n0-2",
+      "from": "n0-3",
+      "to": "n0-2",
+      "travelTimeMs": 15368,
+      "lengthMeters": 123
+    },
+    {
+      "id": "n0-2>n1-2",
+      "from": "n0-2",
+      "to": "n1-2",
+      "travelTimeMs": 19035,
+      "lengthMeters": 152
+    },
+    {
+      "id": "n1-2>n0-2",
+      "from": "n1-2",
+      "to": "n0-2",
+      "travelTimeMs": 19035,
+      "lengthMeters": 152
+    },
+    {
+      "id": "n0-3>n0-4",
+      "from": "n0-3",
+      "to": "n0-4",
+      "travelTimeMs": 18023,
+      "lengthMeters": 180
+    },
+    {
+      "id": "n0-4>n0-3",
+      "from": "n0-4",
+      "to": "n0-3",
+      "travelTimeMs": 18023,
+      "lengthMeters": 180
+    },
+    {
+      "id": "n0-5>n0-4",
+      "from": "n0-5",
+      "to": "n0-4",
+      "travelTimeMs": 16952,
+      "lengthMeters": 119
+    },
+    {
+      "id": "n0-4>n1-4",
+      "from": "n0-4",
+      "to": "n1-4",
+      "travelTimeMs": 13307,
+      "lengthMeters": 133
+    },
+    {
+      "id": "n1-4>n0-4",
+      "from": "n1-4",
+      "to": "n0-4",
+      "travelTimeMs": 13307,
+      "lengthMeters": 133
+    },
+    {
+      "id": "n0-5>n0-6",
+      "from": "n0-5",
+      "to": "n0-6",
+      "travelTimeMs": 16792,
+      "lengthMeters": 168
+    },
+    {
+      "id": "n0-6>n0-5",
+      "from": "n0-6",
+      "to": "n0-5",
+      "travelTimeMs": 16792,
+      "lengthMeters": 168
+    },
+    {
+      "id": "n0-5>n1-5",
+      "from": "n0-5",
+      "to": "n1-5",
+      "travelTimeMs": 20770,
+      "lengthMeters": 187
+    },
+    {
+      "id": "n1-5>n0-5",
+      "from": "n1-5",
+      "to": "n0-5",
+      "travelTimeMs": 20770,
+      "lengthMeters": 187
+    },
+    {
+      "id": "n1-6>n0-6",
+      "from": "n1-6",
+      "to": "n0-6",
+      "travelTimeMs": 20641,
+      "lengthMeters": 144
+    },
+    {
+      "id": "n1-0>n1-1",
+      "from": "n1-0",
+      "to": "n1-1",
+      "travelTimeMs": 13911,
+      "lengthMeters": 125
+    },
+    {
+      "id": "n1-1>n1-0",
+      "from": "n1-1",
+      "to": "n1-0",
+      "travelTimeMs": 13911,
+      "lengthMeters": 125
+    },
+    {
+      "id": "n1-0>n2-0",
+      "from": "n1-0",
+      "to": "n2-0",
+      "travelTimeMs": 18151,
+      "lengthMeters": 127
+    },
+    {
+      "id": "n1-1>n1-2",
+      "from": "n1-1",
+      "to": "n1-2",
+      "travelTimeMs": 17979,
+      "lengthMeters": 144
+    },
+    {
+      "id": "n1-2>n1-1",
+      "from": "n1-2",
+      "to": "n1-1",
+      "travelTimeMs": 17979,
+      "lengthMeters": 144
+    },
+    {
+      "id": "n1-2>n2-2",
+      "from": "n1-2",
+      "to": "n2-2",
+      "travelTimeMs": 15652,
+      "lengthMeters": 157
+    },
+    {
+      "id": "n2-2>n1-2",
+      "from": "n2-2",
+      "to": "n1-2",
+      "travelTimeMs": 15652,
+      "lengthMeters": 157
+    },
+    {
+      "id": "n1-4>n1-5",
+      "from": "n1-4",
+      "to": "n1-5",
+      "travelTimeMs": 17661,
+      "lengthMeters": 177
+    },
+    {
+      "id": "n2-4>n1-4",
+      "from": "n2-4",
+      "to": "n1-4",
+      "travelTimeMs": 23270,
+      "lengthMeters": 163
+    },
+    {
+      "id": "n1-5>n1-6",
+      "from": "n1-5",
+      "to": "n1-6",
+      "travelTimeMs": 12018,
+      "lengthMeters": 120
+    },
+    {
+      "id": "n1-6>n1-5",
+      "from": "n1-6",
+      "to": "n1-5",
+      "travelTimeMs": 12018,
+      "lengthMeters": 120
+    },
+    {
+      "id": "n1-5>n2-5",
+      "from": "n1-5",
+      "to": "n2-5",
+      "travelTimeMs": 16085,
+      "lengthMeters": 129
+    },
+    {
+      "id": "n2-5>n1-5",
+      "from": "n2-5",
+      "to": "n1-5",
+      "travelTimeMs": 16085,
+      "lengthMeters": 129
+    },
+    {
+      "id": "n1-6>n2-6",
+      "from": "n1-6",
+      "to": "n2-6",
+      "travelTimeMs": 18150,
+      "lengthMeters": 127
+    },
+    {
+      "id": "n2-6>n1-6",
+      "from": "n2-6",
+      "to": "n1-6",
+      "travelTimeMs": 18150,
+      "lengthMeters": 127
+    },
+    {
+      "id": "n2-0>n3-0",
+      "from": "n2-0",
+      "to": "n3-0",
+      "travelTimeMs": 26009,
+      "lengthMeters": 182
+    },
+    {
+      "id": "n2-4>n2-5",
+      "from": "n2-4",
+      "to": "n2-5",
+      "travelTimeMs": 24170,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n2-5>n2-4",
+      "from": "n2-5",
+      "to": "n2-4",
+      "travelTimeMs": 24170,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n3-4>n2-4",
+      "from": "n3-4",
+      "to": "n2-4",
+      "travelTimeMs": 22259,
+      "lengthMeters": 156
+    },
+    {
+      "id": "n2-5>n2-6",
+      "from": "n2-5",
+      "to": "n2-6",
+      "travelTimeMs": 12915,
+      "lengthMeters": 116
+    },
+    {
+      "id": "n2-6>n2-5",
+      "from": "n2-6",
+      "to": "n2-5",
+      "travelTimeMs": 12915,
+      "lengthMeters": 116
+    },
+    {
+      "id": "n2-5>n3-5",
+      "from": "n2-5",
+      "to": "n3-5",
+      "travelTimeMs": 16487,
+      "lengthMeters": 148
+    },
+    {
+      "id": "n2-7>n2-6",
+      "from": "n2-7",
+      "to": "n2-6",
+      "travelTimeMs": 20771,
+      "lengthMeters": 166
+    },
+    {
+      "id": "n2-6>n3-6",
+      "from": "n2-6",
+      "to": "n3-6",
+      "travelTimeMs": 23433,
+      "lengthMeters": 164
+    },
+    {
+      "id": "n3-6>n2-6",
+      "from": "n3-6",
+      "to": "n2-6",
+      "travelTimeMs": 23433,
+      "lengthMeters": 164
+    },
+    {
+      "id": "n2-7>n2-8",
+      "from": "n2-7",
+      "to": "n2-8",
+      "travelTimeMs": 16453,
+      "lengthMeters": 148
+    },
+    {
+      "id": "n2-8>n2-7",
+      "from": "n2-8",
+      "to": "n2-7",
+      "travelTimeMs": 16453,
+      "lengthMeters": 148
+    },
+    {
+      "id": "n3-7>n2-7",
+      "from": "n3-7",
+      "to": "n2-7",
+      "travelTimeMs": 22275,
+      "lengthMeters": 156
+    },
+    {
+      "id": "n2-8>n3-8",
+      "from": "n2-8",
+      "to": "n3-8",
+      "travelTimeMs": 23729,
+      "lengthMeters": 190
+    },
+    {
+      "id": "n3-8>n2-8",
+      "from": "n3-8",
+      "to": "n2-8",
+      "travelTimeMs": 23729,
+      "lengthMeters": 190
+    },
+    {
+      "id": "n3-1>n3-0",
+      "from": "n3-1",
+      "to": "n3-0",
+      "travelTimeMs": 17444,
+      "lengthMeters": 157
+    },
+    {
+      "id": "n3-0>n4-0",
+      "from": "n3-0",
+      "to": "n4-0",
+      "travelTimeMs": 18315,
+      "lengthMeters": 147
+    },
+    {
+      "id": "n4-0>n3-0",
+      "from": "n4-0",
+      "to": "n3-0",
+      "travelTimeMs": 18315,
+      "lengthMeters": 147
+    },
+    {
+      "id": "n3-1>n4-1",
+      "from": "n3-1",
+      "to": "n4-1",
+      "travelTimeMs": 15694,
+      "lengthMeters": 157
+    },
+    {
+      "id": "n4-1>n3-1",
+      "from": "n4-1",
+      "to": "n3-1",
+      "travelTimeMs": 15694,
+      "lengthMeters": 157
+    },
+    {
+      "id": "n3-4>n3-5",
+      "from": "n3-4",
+      "to": "n3-5",
+      "travelTimeMs": 16606,
+      "lengthMeters": 149
+    },
+    {
+      "id": "n3-5>n3-4",
+      "from": "n3-5",
+      "to": "n3-4",
+      "travelTimeMs": 16606,
+      "lengthMeters": 149
+    },
+    {
+      "id": "n3-4>n4-4",
+      "from": "n3-4",
+      "to": "n4-4",
+      "travelTimeMs": 20218,
+      "lengthMeters": 142
+    },
+    {
+      "id": "n4-4>n3-4",
+      "from": "n4-4",
+      "to": "n3-4",
+      "travelTimeMs": 20218,
+      "lengthMeters": 142
+    },
+    {
+      "id": "n3-5>n3-6",
+      "from": "n3-5",
+      "to": "n3-6",
+      "travelTimeMs": 12966,
+      "lengthMeters": 130
+    },
+    {
+      "id": "n3-6>n3-5",
+      "from": "n3-6",
+      "to": "n3-5",
+      "travelTimeMs": 12966,
+      "lengthMeters": 130
+    },
+    {
+      "id": "n3-5>n4-5",
+      "from": "n3-5",
+      "to": "n4-5",
+      "travelTimeMs": 13601,
+      "lengthMeters": 136
+    },
+    {
+      "id": "n4-5>n3-5",
+      "from": "n4-5",
+      "to": "n3-5",
+      "travelTimeMs": 13601,
+      "lengthMeters": 136
+    },
+    {
+      "id": "n3-6>n3-7",
+      "from": "n3-6",
+      "to": "n3-7",
+      "travelTimeMs": 22848,
+      "lengthMeters": 160
+    },
+    {
+      "id": "n3-7>n3-6",
+      "from": "n3-7",
+      "to": "n3-6",
+      "travelTimeMs": 22848,
+      "lengthMeters": 160
+    },
+    {
+      "id": "n3-6>n4-6",
+      "from": "n3-6",
+      "to": "n4-6",
+      "travelTimeMs": 22301,
+      "lengthMeters": 156
+    },
+    {
+      "id": "n4-6>n3-6",
+      "from": "n4-6",
+      "to": "n3-6",
+      "travelTimeMs": 22301,
+      "lengthMeters": 156
+    },
+    {
+      "id": "n3-7>n3-8",
+      "from": "n3-7",
+      "to": "n3-8",
+      "travelTimeMs": 15351,
+      "lengthMeters": 138
+    },
+    {
+      "id": "n3-8>n3-7",
+      "from": "n3-8",
+      "to": "n3-7",
+      "travelTimeMs": 15351,
+      "lengthMeters": 138
+    },
+    {
+      "id": "n4-7>n3-7",
+      "from": "n4-7",
+      "to": "n3-7",
+      "travelTimeMs": 13572,
+      "lengthMeters": 122
+    },
+    {
+      "id": "n4-0>n4-1",
+      "from": "n4-0",
+      "to": "n4-1",
+      "travelTimeMs": 18261,
+      "lengthMeters": 164
+    },
+    {
+      "id": "n4-1>n4-0",
+      "from": "n4-1",
+      "to": "n4-0",
+      "travelTimeMs": 18261,
+      "lengthMeters": 164
+    },
+    {
+      "id": "n4-0>n5-0",
+      "from": "n4-0",
+      "to": "n5-0",
+      "travelTimeMs": 18129,
+      "lengthMeters": 163
+    },
+    {
+      "id": "n5-0>n4-0",
+      "from": "n5-0",
+      "to": "n4-0",
+      "travelTimeMs": 18129,
+      "lengthMeters": 163
+    },
+    {
+      "id": "n4-1>n4-2",
+      "from": "n4-1",
+      "to": "n4-2",
+      "travelTimeMs": 13933,
+      "lengthMeters": 125
+    },
+    {
+      "id": "n4-2>n4-1",
+      "from": "n4-2",
+      "to": "n4-1",
+      "travelTimeMs": 13933,
+      "lengthMeters": 125
+    },
+    {
+      "id": "n5-1>n4-1",
+      "from": "n5-1",
+      "to": "n4-1",
+      "travelTimeMs": 25624,
+      "lengthMeters": 179
+    },
+    {
+      "id": "n4-2>n4-3",
+      "from": "n4-2",
+      "to": "n4-3",
+      "travelTimeMs": 24959,
+      "lengthMeters": 175
+    },
+    {
+      "id": "n4-3>n4-2",
+      "from": "n4-3",
+      "to": "n4-2",
+      "travelTimeMs": 24959,
+      "lengthMeters": 175
+    },
+    {
+      "id": "n4-2>n5-2",
+      "from": "n4-2",
+      "to": "n5-2",
+      "travelTimeMs": 21155,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n5-2>n4-2",
+      "from": "n5-2",
+      "to": "n4-2",
+      "travelTimeMs": 21155,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n4-3>n4-4",
+      "from": "n4-3",
+      "to": "n4-4",
+      "travelTimeMs": 20295,
+      "lengthMeters": 142
+    },
+    {
+      "id": "n4-4>n4-3",
+      "from": "n4-4",
+      "to": "n4-3",
+      "travelTimeMs": 20295,
+      "lengthMeters": 142
+    },
+    {
+      "id": "n4-3>n5-3",
+      "from": "n4-3",
+      "to": "n5-3",
+      "travelTimeMs": 16654,
+      "lengthMeters": 133
+    },
+    {
+      "id": "n5-3>n4-3",
+      "from": "n5-3",
+      "to": "n4-3",
+      "travelTimeMs": 16654,
+      "lengthMeters": 133
+    },
+    {
+      "id": "n4-4>n4-5",
+      "from": "n4-4",
+      "to": "n4-5",
+      "travelTimeMs": 20880,
+      "lengthMeters": 146
+    },
+    {
+      "id": "n4-5>n4-4",
+      "from": "n4-5",
+      "to": "n4-4",
+      "travelTimeMs": 20880,
+      "lengthMeters": 146
+    },
+    {
+      "id": "n4-4>n5-4",
+      "from": "n4-4",
+      "to": "n5-4",
+      "travelTimeMs": 13342,
+      "lengthMeters": 133
+    },
+    {
+      "id": "n5-4>n4-4",
+      "from": "n5-4",
+      "to": "n4-4",
+      "travelTimeMs": 13342,
+      "lengthMeters": 133
+    },
+    {
+      "id": "n4-6>n4-5",
+      "from": "n4-6",
+      "to": "n4-5",
+      "travelTimeMs": 15343,
+      "lengthMeters": 138
+    },
+    {
+      "id": "n5-5>n4-5",
+      "from": "n5-5",
+      "to": "n4-5",
+      "travelTimeMs": 21565,
+      "lengthMeters": 173
+    },
+    {
+      "id": "n4-6>n4-7",
+      "from": "n4-6",
+      "to": "n4-7",
+      "travelTimeMs": 19871,
+      "lengthMeters": 179
+    },
+    {
+      "id": "n4-7>n4-6",
+      "from": "n4-7",
+      "to": "n4-6",
+      "travelTimeMs": 19871,
+      "lengthMeters": 179
+    },
+    {
+      "id": "n5-6>n4-6",
+      "from": "n5-6",
+      "to": "n4-6",
+      "travelTimeMs": 15902,
+      "lengthMeters": 159
+    },
+    {
+      "id": "n4-7>n5-7",
+      "from": "n4-7",
+      "to": "n5-7",
+      "travelTimeMs": 20400,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n5-7>n4-7",
+      "from": "n5-7",
+      "to": "n4-7",
+      "travelTimeMs": 20400,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n5-0>n5-1",
+      "from": "n5-0",
+      "to": "n5-1",
+      "travelTimeMs": 19023,
+      "lengthMeters": 152
+    },
+    {
+      "id": "n5-1>n5-0",
+      "from": "n5-1",
+      "to": "n5-0",
+      "travelTimeMs": 19023,
+      "lengthMeters": 152
+    },
+    {
+      "id": "n6-0>n5-0",
+      "from": "n6-0",
+      "to": "n5-0",
+      "travelTimeMs": 14456,
+      "lengthMeters": 130
+    },
+    {
+      "id": "n5-1>n5-2",
+      "from": "n5-1",
+      "to": "n5-2",
+      "travelTimeMs": 20981,
+      "lengthMeters": 168
+    },
+    {
+      "id": "n5-2>n5-1",
+      "from": "n5-2",
+      "to": "n5-1",
+      "travelTimeMs": 20981,
+      "lengthMeters": 168
+    },
+    {
+      "id": "n5-1>n6-1",
+      "from": "n5-1",
+      "to": "n6-1",
+      "travelTimeMs": 20845,
+      "lengthMeters": 146
+    },
+    {
+      "id": "n6-1>n5-1",
+      "from": "n6-1",
+      "to": "n5-1",
+      "travelTimeMs": 20845,
+      "lengthMeters": 146
+    },
+    {
+      "id": "n5-2>n5-3",
+      "from": "n5-2",
+      "to": "n5-3",
+      "travelTimeMs": 17740,
+      "lengthMeters": 124
+    },
+    {
+      "id": "n5-3>n5-2",
+      "from": "n5-3",
+      "to": "n5-2",
+      "travelTimeMs": 17740,
+      "lengthMeters": 124
+    },
+    {
+      "id": "n5-2>n6-2",
+      "from": "n5-2",
+      "to": "n6-2",
+      "travelTimeMs": 19301,
+      "lengthMeters": 154
+    },
+    {
+      "id": "n6-2>n5-2",
+      "from": "n6-2",
+      "to": "n5-2",
+      "travelTimeMs": 19301,
+      "lengthMeters": 154
+    },
+    {
+      "id": "n5-3>n5-4",
+      "from": "n5-3",
+      "to": "n5-4",
+      "travelTimeMs": 23219,
+      "lengthMeters": 186
+    },
+    {
+      "id": "n5-4>n5-3",
+      "from": "n5-4",
+      "to": "n5-3",
+      "travelTimeMs": 23219,
+      "lengthMeters": 186
+    },
+    {
+      "id": "n5-3>n6-3",
+      "from": "n5-3",
+      "to": "n6-3",
+      "travelTimeMs": 16693,
+      "lengthMeters": 150
+    },
+    {
+      "id": "n5-4>n5-5",
+      "from": "n5-4",
+      "to": "n5-5",
+      "travelTimeMs": 17400,
+      "lengthMeters": 139
+    },
+    {
+      "id": "n5-5>n5-4",
+      "from": "n5-5",
+      "to": "n5-4",
+      "travelTimeMs": 17400,
+      "lengthMeters": 139
+    },
+    {
+      "id": "n6-4>n5-4",
+      "from": "n6-4",
+      "to": "n5-4",
+      "travelTimeMs": 16682,
+      "lengthMeters": 167
+    },
+    {
+      "id": "n5-5>n5-6",
+      "from": "n5-5",
+      "to": "n5-6",
+      "travelTimeMs": 17718,
+      "lengthMeters": 142
+    },
+    {
+      "id": "n5-6>n5-5",
+      "from": "n5-6",
+      "to": "n5-5",
+      "travelTimeMs": 17718,
+      "lengthMeters": 142
+    },
+    {
+      "id": "n5-5>n6-5",
+      "from": "n5-5",
+      "to": "n6-5",
+      "travelTimeMs": 18196,
+      "lengthMeters": 127
+    },
+    {
+      "id": "n6-5>n5-5",
+      "from": "n6-5",
+      "to": "n5-5",
+      "travelTimeMs": 18196,
+      "lengthMeters": 127
+    },
+    {
+      "id": "n5-6>n5-7",
+      "from": "n5-6",
+      "to": "n5-7",
+      "travelTimeMs": 17003,
+      "lengthMeters": 136
+    },
+    {
+      "id": "n5-7>n5-6",
+      "from": "n5-7",
+      "to": "n5-6",
+      "travelTimeMs": 17003,
+      "lengthMeters": 136
+    },
+    {
+      "id": "n5-6>n6-6",
+      "from": "n5-6",
+      "to": "n6-6",
+      "travelTimeMs": 17893,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n6-6>n5-6",
+      "from": "n6-6",
+      "to": "n5-6",
+      "travelTimeMs": 17893,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n5-7>n6-7",
+      "from": "n5-7",
+      "to": "n6-7",
+      "travelTimeMs": 26715,
+      "lengthMeters": 187
+    },
+    {
+      "id": "n6-7>n5-7",
+      "from": "n6-7",
+      "to": "n5-7",
+      "travelTimeMs": 26715,
+      "lengthMeters": 187
+    },
+    {
+      "id": "n6-0>n6-1",
+      "from": "n6-0",
+      "to": "n6-1",
+      "travelTimeMs": 12063,
+      "lengthMeters": 121
+    },
+    {
+      "id": "n6-1>n6-0",
+      "from": "n6-1",
+      "to": "n6-0",
+      "travelTimeMs": 12063,
+      "lengthMeters": 121
+    },
+    {
+      "id": "n6-0>n7-0",
+      "from": "n6-0",
+      "to": "n7-0",
+      "travelTimeMs": 21537,
+      "lengthMeters": 151
+    },
+    {
+      "id": "n6-1>n6-2",
+      "from": "n6-1",
+      "to": "n6-2",
+      "travelTimeMs": 26070,
+      "lengthMeters": 182
+    },
+    {
+      "id": "n6-2>n6-1",
+      "from": "n6-2",
+      "to": "n6-1",
+      "travelTimeMs": 26070,
+      "lengthMeters": 182
+    },
+    {
+      "id": "n6-1>n7-1",
+      "from": "n6-1",
+      "to": "n7-1",
+      "travelTimeMs": 17076,
+      "lengthMeters": 154
+    },
+    {
+      "id": "n7-1>n6-1",
+      "from": "n7-1",
+      "to": "n6-1",
+      "travelTimeMs": 17076,
+      "lengthMeters": 154
+    },
+    {
+      "id": "n6-2>n6-3",
+      "from": "n6-2",
+      "to": "n6-3",
+      "travelTimeMs": 14453,
+      "lengthMeters": 145
+    },
+    {
+      "id": "n6-3>n6-2",
+      "from": "n6-3",
+      "to": "n6-2",
+      "travelTimeMs": 14453,
+      "lengthMeters": 145
+    },
+    {
+      "id": "n6-2>n7-2",
+      "from": "n6-2",
+      "to": "n7-2",
+      "travelTimeMs": 18118,
+      "lengthMeters": 145
+    },
+    {
+      "id": "n7-2>n6-2",
+      "from": "n7-2",
+      "to": "n6-2",
+      "travelTimeMs": 18118,
+      "lengthMeters": 145
+    },
+    {
+      "id": "n6-3>n6-4",
+      "from": "n6-3",
+      "to": "n6-4",
+      "travelTimeMs": 19580,
+      "lengthMeters": 157
+    },
+    {
+      "id": "n6-4>n6-3",
+      "from": "n6-4",
+      "to": "n6-3",
+      "travelTimeMs": 19580,
+      "lengthMeters": 157
+    },
+    {
+      "id": "n6-3>n7-3",
+      "from": "n6-3",
+      "to": "n7-3",
+      "travelTimeMs": 15436,
+      "lengthMeters": 154
+    },
+    {
+      "id": "n7-3>n6-3",
+      "from": "n7-3",
+      "to": "n6-3",
+      "travelTimeMs": 15436,
+      "lengthMeters": 154
+    },
+    {
+      "id": "n6-4>n6-5",
+      "from": "n6-4",
+      "to": "n6-5",
+      "travelTimeMs": 16089,
+      "lengthMeters": 161
+    },
+    {
+      "id": "n6-4>n7-4",
+      "from": "n6-4",
+      "to": "n7-4",
+      "travelTimeMs": 19098,
+      "lengthMeters": 153
+    },
+    {
+      "id": "n7-4>n6-4",
+      "from": "n7-4",
+      "to": "n6-4",
+      "travelTimeMs": 19098,
+      "lengthMeters": 153
+    },
+    {
+      "id": "n6-5>n6-6",
+      "from": "n6-5",
+      "to": "n6-6",
+      "travelTimeMs": 17890,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n6-6>n6-5",
+      "from": "n6-6",
+      "to": "n6-5",
+      "travelTimeMs": 17890,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n6-5>n7-5",
+      "from": "n6-5",
+      "to": "n7-5",
+      "travelTimeMs": 21415,
+      "lengthMeters": 171
+    },
+    {
+      "id": "n7-5>n6-5",
+      "from": "n7-5",
+      "to": "n6-5",
+      "travelTimeMs": 21415,
+      "lengthMeters": 171
+    },
+    {
+      "id": "n6-6>n6-7",
+      "from": "n6-6",
+      "to": "n6-7",
+      "travelTimeMs": 20576,
+      "lengthMeters": 144
+    },
+    {
+      "id": "n6-7>n6-6",
+      "from": "n6-7",
+      "to": "n6-6",
+      "travelTimeMs": 20576,
+      "lengthMeters": 144
+    },
+    {
+      "id": "n7-6>n6-6",
+      "from": "n7-6",
+      "to": "n6-6",
+      "travelTimeMs": 14194,
+      "lengthMeters": 142
+    },
+    {
+      "id": "n6-7>n6-8",
+      "from": "n6-7",
+      "to": "n6-8",
+      "travelTimeMs": 19295,
+      "lengthMeters": 135
+    },
+    {
+      "id": "n6-7>n7-7",
+      "from": "n6-7",
+      "to": "n7-7",
+      "travelTimeMs": 15707,
+      "lengthMeters": 141
+    },
+    {
+      "id": "n6-8>n7-8",
+      "from": "n6-8",
+      "to": "n7-8",
+      "travelTimeMs": 18767,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n7-8>n6-8",
+      "from": "n7-8",
+      "to": "n6-8",
+      "travelTimeMs": 18767,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n7-0>n7-1",
+      "from": "n7-0",
+      "to": "n7-1",
+      "travelTimeMs": 20950,
+      "lengthMeters": 147
+    },
+    {
+      "id": "n7-1>n7-0",
+      "from": "n7-1",
+      "to": "n7-0",
+      "travelTimeMs": 20950,
+      "lengthMeters": 147
+    },
+    {
+      "id": "n8-0>n7-0",
+      "from": "n8-0",
+      "to": "n7-0",
+      "travelTimeMs": 14082,
+      "lengthMeters": 141
+    },
+    {
+      "id": "n7-1>n7-2",
+      "from": "n7-1",
+      "to": "n7-2",
+      "travelTimeMs": 19239,
+      "lengthMeters": 135
+    },
+    {
+      "id": "n7-2>n7-1",
+      "from": "n7-2",
+      "to": "n7-1",
+      "travelTimeMs": 19239,
+      "lengthMeters": 135
+    },
+    {
+      "id": "n7-1>n8-1",
+      "from": "n7-1",
+      "to": "n8-1",
+      "travelTimeMs": 19134,
+      "lengthMeters": 153
+    },
+    {
+      "id": "n8-1>n7-1",
+      "from": "n8-1",
+      "to": "n7-1",
+      "travelTimeMs": 19134,
+      "lengthMeters": 153
+    },
+    {
+      "id": "n7-2>n7-3",
+      "from": "n7-2",
+      "to": "n7-3",
+      "travelTimeMs": 23534,
+      "lengthMeters": 165
+    },
+    {
+      "id": "n7-3>n7-2",
+      "from": "n7-3",
+      "to": "n7-2",
+      "travelTimeMs": 23534,
+      "lengthMeters": 165
+    },
+    {
+      "id": "n7-2>n8-2",
+      "from": "n7-2",
+      "to": "n8-2",
+      "travelTimeMs": 20367,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n8-2>n7-2",
+      "from": "n8-2",
+      "to": "n7-2",
+      "travelTimeMs": 20367,
+      "lengthMeters": 143
+    },
+    {
+      "id": "n7-3>n7-4",
+      "from": "n7-3",
+      "to": "n7-4",
+      "travelTimeMs": 13871,
+      "lengthMeters": 139
+    },
+    {
+      "id": "n7-4>n7-3",
+      "from": "n7-4",
+      "to": "n7-3",
+      "travelTimeMs": 13871,
+      "lengthMeters": 139
+    },
+    {
+      "id": "n7-3>n8-3",
+      "from": "n7-3",
+      "to": "n8-3",
+      "travelTimeMs": 22897,
+      "lengthMeters": 183
+    },
+    {
+      "id": "n8-3>n7-3",
+      "from": "n8-3",
+      "to": "n7-3",
+      "travelTimeMs": 22897,
+      "lengthMeters": 183
+    },
+    {
+      "id": "n7-5>n7-4",
+      "from": "n7-5",
+      "to": "n7-4",
+      "travelTimeMs": 16703,
+      "lengthMeters": 167
+    },
+    {
+      "id": "n8-4>n7-4",
+      "from": "n8-4",
+      "to": "n7-4",
+      "travelTimeMs": 20555,
+      "lengthMeters": 164
+    },
+    {
+      "id": "n7-5>n7-6",
+      "from": "n7-5",
+      "to": "n7-6",
+      "travelTimeMs": 13093,
+      "lengthMeters": 118
+    },
+    {
+      "id": "n7-6>n7-5",
+      "from": "n7-6",
+      "to": "n7-5",
+      "travelTimeMs": 13093,
+      "lengthMeters": 118
+    },
+    {
+      "id": "n7-5>n8-5",
+      "from": "n7-5",
+      "to": "n8-5",
+      "travelTimeMs": 19128,
+      "lengthMeters": 134
+    },
+    {
+      "id": "n7-6>n7-7",
+      "from": "n7-6",
+      "to": "n7-7",
+      "travelTimeMs": 18810,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n7-7>n7-6",
+      "from": "n7-7",
+      "to": "n7-6",
+      "travelTimeMs": 18810,
+      "lengthMeters": 169
+    },
+    {
+      "id": "n7-6>n8-6",
+      "from": "n7-6",
+      "to": "n8-6",
+      "travelTimeMs": 17373,
+      "lengthMeters": 156
+    },
+    {
+      "id": "n8-6>n7-6",
+      "from": "n8-6",
+      "to": "n7-6",
+      "travelTimeMs": 17373,
+      "lengthMeters": 156
+    },
+    {
+      "id": "n7-7>n7-8",
+      "from": "n7-7",
+      "to": "n7-8",
+      "travelTimeMs": 21570,
+      "lengthMeters": 151
+    },
+    {
+      "id": "n7-8>n7-7",
+      "from": "n7-8",
+      "to": "n7-7",
+      "travelTimeMs": 21570,
+      "lengthMeters": 151
+    },
+    {
+      "id": "n7-7>n8-7",
+      "from": "n7-7",
+      "to": "n8-7",
+      "travelTimeMs": 13642,
+      "lengthMeters": 136
+    },
+    {
+      "id": "n8-7>n7-7",
+      "from": "n8-7",
+      "to": "n7-7",
+      "travelTimeMs": 13642,
+      "lengthMeters": 136
+    },
+    {
+      "id": "n7-8>n8-8",
+      "from": "n7-8",
+      "to": "n8-8",
+      "travelTimeMs": 17477,
+      "lengthMeters": 175
+    },
+    {
+      "id": "n8-8>n7-8",
+      "from": "n8-8",
+      "to": "n7-8",
+      "travelTimeMs": 17477,
+      "lengthMeters": 175
+    },
+    {
+      "id": "n8-1>n8-0",
+      "from": "n8-1",
+      "to": "n8-0",
+      "travelTimeMs": 19362,
+      "lengthMeters": 136
+    },
+    {
+      "id": "n8-1>n8-2",
+      "from": "n8-1",
+      "to": "n8-2",
+      "travelTimeMs": 15828,
+      "lengthMeters": 158
+    },
+    {
+      "id": "n8-2>n8-3",
+      "from": "n8-2",
+      "to": "n8-3",
+      "travelTimeMs": 18495,
+      "lengthMeters": 129
+    },
+    {
+      "id": "n8-3>n8-2",
+      "from": "n8-3",
+      "to": "n8-2",
+      "travelTimeMs": 18495,
+      "lengthMeters": 129
+    },
+    {
+      "id": "n8-3>n8-4",
+      "from": "n8-3",
+      "to": "n8-4",
+      "travelTimeMs": 18740,
+      "lengthMeters": 187
+    },
+    {
+      "id": "n8-4>n8-3",
+      "from": "n8-4",
+      "to": "n8-3",
+      "travelTimeMs": 18740,
+      "lengthMeters": 187
+    },
+    {
+      "id": "n8-5>n8-4",
+      "from": "n8-5",
+      "to": "n8-4",
+      "travelTimeMs": 12011,
+      "lengthMeters": 120
+    },
+    {
+      "id": "n8-5>n8-6",
+      "from": "n8-5",
+      "to": "n8-6",
+      "travelTimeMs": 18346,
+      "lengthMeters": 183
+    },
+    {
+      "id": "n8-6>n8-5",
+      "from": "n8-6",
+      "to": "n8-5",
+      "travelTimeMs": 18346,
+      "lengthMeters": 183
+    },
+    {
+      "id": "n8-6>n8-7",
+      "from": "n8-6",
+      "to": "n8-7",
+      "travelTimeMs": 11850,
+      "lengthMeters": 118
+    },
+    {
+      "id": "n8-7>n8-6",
+      "from": "n8-7",
+      "to": "n8-6",
+      "travelTimeMs": 11850,
+      "lengthMeters": 118
+    },
+    {
+      "id": "n8-7>n8-8",
+      "from": "n8-7",
+      "to": "n8-8",
+      "travelTimeMs": 19540,
+      "lengthMeters": 156
+    },
+    {
+      "id": "n8-8>n8-7",
+      "from": "n8-8",
+      "to": "n8-7",
+      "travelTimeMs": 19540,
+      "lengthMeters": 156
+    }
+  ],
+  "source": {
+    "provider": "synthetic",
+    "attribution": "Bus 2.0 synthetic city \"SF-like\" (generated, not derived from OpenStreetMap)",
+    "license": "CC-BY-NC-SA-4.0",
+    "notes": "grid 9x9, block 150 m, seed 3141213037, attempt 0"
+  }
+}
