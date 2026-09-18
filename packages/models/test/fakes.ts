@@ -155,6 +155,42 @@ export const openaiResponse = (text: string, overrides: Record<string, unknown> 
   ...overrides,
 });
 
+/** Shape of the generateContent request the Gemini adapter must send. */
+export const geminiRequestSchema = z.object({
+  contents: z
+    .array(z.object({ role: z.literal("user"), parts: z.array(z.object({ text: z.string() })) }))
+    .length(1),
+  systemInstruction: z.object({ parts: z.array(z.object({ text: z.string() })) }),
+  generationConfig: z.object({
+    maxOutputTokens: z.int(),
+    responseMimeType: z.literal("application/json"),
+    responseJsonSchema: z.object({
+      properties: z.object({ choice: z.object({ enum: z.array(z.string()) }) }),
+    }),
+    thinkingConfig: z.object({ thinkingLevel: z.string() }),
+  }),
+});
+
+export const geminiResponse = (text: string, overrides: Record<string, unknown> = {}): unknown => ({
+  responseId: "gen_test",
+  modelVersion: "gemini-3.8-flash",
+  candidates: [
+    {
+      content: { role: "model", parts: [{ text }] },
+      finishReason: "STOP",
+      index: 0,
+    },
+  ],
+  usageMetadata: {
+    promptTokenCount: 1200,
+    candidatesTokenCount: 20,
+    thoughtsTokenCount: 80,
+    cachedContentTokenCount: 200,
+    totalTokenCount: 1300,
+  },
+  ...overrides,
+});
+
 /** Candidate options carry pickupMinutes; vehicle options (stage one) carry earliestPickupMinutes. */
 const optionSchema = z.object({
   id: z.string(),

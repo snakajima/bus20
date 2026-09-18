@@ -9,6 +9,7 @@ import {
 } from "@bus20/contracts/scenario";
 import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
 import { createClaudePolicy } from "@bus20/models/claude-policy";
+import { createGeminiPolicy } from "@bus20/models/gemini-policy";
 import { createOpenAIPolicy } from "@bus20/models/openai-policy";
 import { type Effort } from "@bus20/models/effort";
 import { createJevPolicy } from "@bus20/models/jev-policy";
@@ -113,9 +114,9 @@ export const replayStoredLog = async (
 export interface PolicyOptions {
   /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
   readonly swiftCommand?: string;
-  /** Exact model ID for `claude`, `openai`, or `jev`; defaults are the pinned IDs. */
+  /** Exact model ID for `claude`, `openai`, `gemini`, or `jev`; defaults are the pinned IDs. */
   readonly modelId?: string;
-  /** Reasoning effort for `claude` and `openai`. */
+  /** Reasoning effort for `claude`, `openai`, and `gemini`. */
   readonly effort?: Effort;
   /** Flat, hierarchical, or auto choice for the model policies. */
   readonly choice?: ChoiceSettings;
@@ -133,7 +134,15 @@ export interface ManagedPolicy {
   readonly close: () => void;
 }
 
-export const POLICY_IDS = ["fixture", "swift", "claude", "openai", "jev", "program"] as const;
+export const POLICY_IDS = [
+  "fixture",
+  "swift",
+  "claude",
+  "openai",
+  "gemini",
+  "jev",
+  "program",
+] as const;
 
 const noop = (): undefined => undefined;
 
@@ -152,6 +161,9 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
   if (policyId === "openai") {
     return createOpenAIPolicy({ ...shared, ...effort });
   }
+  if (policyId === "gemini") {
+    return createGeminiPolicy({ ...shared, ...effort });
+  }
   if (policyId === "jev") {
     return createJevPolicy({
       ...shared,
@@ -161,7 +173,7 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
   return undefined;
 };
 
-/** API keys come from the environment (ANTHROPIC_API_KEY, OPENAI_API_KEY, TYPESAFE_API_KEY) and are never logged. */
+/** API keys come from the environment (ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, TYPESAFE_API_KEY) and are never logged. */
 export const createPolicyById = (
   policyId: string,
   options: PolicyOptions = {},

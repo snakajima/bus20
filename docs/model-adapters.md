@@ -63,6 +63,16 @@ the prompt version follows the presentation.
   constrains the reply to the offered ids. `reasoning.effort` takes the same
   `--effort` value; `store` is off. Refusals and incomplete responses fail
   the decision.
+- **Gemini** (`@google/genai`, `gemini-3.8-flash` by default, the newest
+  stable Gemini at pinning time; `gemini-3.1-pro-preview` selectable via
+  `--model`): the same instruction text as `systemInstruction`, the same
+  JSON message as the user content, and `responseJsonSchema` with
+  `application/json` output constrains the reply to the offered ids. The
+  shared `--effort` maps to `thinkingConfig.thinkingLevel` (low → LOW,
+  medium → MEDIUM, high and above → HIGH), recorded as `thinkingLevel`.
+  Thinking tokens are billed as output and are added to `outputTokens`, with
+  the count kept separately as `thoughtTokens`. A blocked prompt or any
+  finish reason other than STOP fails the decision.
 
 No adapter is given tools, memory across decisions, or extra features.
 More than 255 candidates (Jev's Choice limit) fails the decision instead of
@@ -71,7 +81,7 @@ pruning; the first common suite must fit this limit.
 ## What is recorded per decision
 
 `DecisionRecord.usage` (numbers): `inputTokens`, `outputTokens`,
-`cacheReadTokens` (Claude, OpenAI), `costUsd` at the pinned tariff, `confidence` and
+`cacheReadTokens` (Claude, OpenAI, Gemini), `thoughtTokens` (Gemini), `costUsd` at the pinned tariff, `confidence` and
 `chosenProbability` (Jev), and `candidatesOffered`. `DecisionRecord.trace`
 (JSON): provider, the model ID the API reported, the raw reply text or the
 full probability distribution, and the response ID. Wall-clock latency is
@@ -100,7 +110,8 @@ results must state the tariff date they used.
 
 ## Running
 
-API keys come from `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `TYPESAFE_API_KEY`. They are read
+API keys come from `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`, and
+`TYPESAFE_API_KEY`. They are read
 by the SDKs and never logged or written to run logs.
 
 ```sh
