@@ -70,13 +70,14 @@ export const fakeFetch = (respond: (request: CapturedRequest) => unknown): FakeF
 export const jevRequestSchema = z.object({
   model: z.string(),
   state: z.record(z.string(), z.unknown()),
-  questions: z.object({
-    answer: z.object({
+  questions: z.record(
+    z.string(),
+    z.object({
       type: z.literal("choice"),
       instructions: z.union([z.string(), z.record(z.string(), z.unknown())]),
       criteria: z.record(z.string(), z.unknown()),
     }),
-  }),
+  ),
 });
 
 /** Shape of the Messages API request the Claude adapter must send. */
@@ -146,7 +147,11 @@ export const earliestPickupFromRequest = (request: unknown): string => {
 /** Jev's systemOne body carries the state and options separately; reshape it for the stand-in. */
 export const earliestPickupFromJevBody = (body: unknown): string => {
   const parsed = jevRequestSchema.parse(body);
-  const options = Object.entries(parsed.questions.answer.criteria).map(([id, description]) => ({
+  const question = parsed.questions["q0"] ?? Object.values(parsed.questions)[0];
+  if (question === undefined) {
+    throw new Error("no question in jev request");
+  }
+  const options = Object.entries(question.criteria).map(([id, description]) => ({
     id,
     ...(typeof description === "object" && description !== null ? description : {}),
   }));

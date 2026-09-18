@@ -6,20 +6,29 @@ import {
 } from "@bus20/contracts/observation";
 import { type Decision } from "@bus20/simulator/policy";
 import { chooseCandidateAction } from "./choose-action.js";
-import { type ChoiceClient, type ChoiceOption, type ChoiceReply } from "./choice-client.js";
+import {
+  askAll,
+  type ChoiceClient,
+  type ChoiceOption,
+  type ChoiceReply,
+  type ChoiceRequest,
+} from "./choice-client.js";
 import { assertChoiceFits } from "./decision-brief.js";
 import { type Presentation, SHARED_PRESENTATION } from "./presentation.js";
 
-export const CHOICE_MODES = ["flat", "hierarchical", "auto"] as const;
+export const CHOICE_MODES = ["flat", "hierarchical", "auto", "tournament"] as const;
 export type ChoiceMode = (typeof CHOICE_MODES)[number];
 
 export interface ChoiceSettings {
   readonly mode: ChoiceMode;
-  /** In `auto` mode, flat when at most this many candidates are offered. */
+  /** In `auto` and `tournament` modes, flat when at most this many candidates are offered. */
   readonly flatLimit: number;
+  /** In `tournament` mode, candidates per chunk in the first round. */
+  readonly chunkSize?: number;
 }
 
 export const DEFAULT_CHOICE_SETTINGS: ChoiceSettings = { mode: "auto", flatLimit: 40 };
+export const DEFAULT_CHUNK_SIZE = 120;
 
 const candidateOptions = (
   presentation: Presentation,
@@ -113,9 +122,57 @@ const decideHierarchical = async (
   return toDecision(observation, first === undefined ? [second] : [first, second], second.choice);
 };
 
+/** Round one: one choice per chunk of candidates, all in one round trip; round two: the chunk winners. */
+const decideTournament = async (
+  client: ChoiceClient,
+  presentation: Presentation,
+  observation: Observation,
+  chunkSize: number,
+): Promise<Decision> => {
+  const state = presentation.state(observation);
+  const requests = chunkRequests(presentation, observation, state, chunkSize);
+  const firstRound = await askAll(client, requests);
+  const winners = winnersOf(observation, firstRound);
+  const final = await client.ask({
+    state: { ...state, round: "final" },
+    question: presentation.candidateQuestion,
+    options: candidateOptions(presentation, observation, winners),
+  });
+  return toDecision(observation, [...firstRound, final], final.choice);
+};
+
+const winnersOf = (observation: Observation, replies: readonly ChoiceReply[]): Candidate[] => {
+  const winners = replies.flatMap((reply) =>
+    observation.candidates.filter((candidate) => candidate.id === reply.choice),
+  );
+  assertChoiceFits(winners.length, "chunk winners");
+  return winners;
+};
+
+const chunkRequests = (
+  presentation: Presentation,
+  observation: Observation,
+  state: Record<string, JsonValue>,
+  chunkSize: number,
+): ChoiceRequest[] =>
+  chunk(observation.candidates, chunkSize).map((group) => ({
+    state,
+    question: presentation.candidateQuestion,
+    options: candidateOptions(presentation, observation, group),
+  }));
+
+const chunk = <T>(items: readonly T[], size: number): T[][] => {
+  const groups: T[][] = [];
+  for (let start = 0; start < items.length; start += size) {
+    groups.push(items.slice(start, start + size));
+  }
+  return groups;
+};
+
 const isFlat = (settings: ChoiceSettings, observation: Observation): boolean =>
   settings.mode === "flat" ||
-  (settings.mode === "auto" && observation.candidates.length <= settings.flatLimit);
+  ((settings.mode === "auto" || settings.mode === "tournament") &&
+    observation.candidates.length <= settings.flatLimit);
 
 /** Runs the configured procedure; every stage's usage and trace is kept. */
 export const decideByChoice = (
@@ -123,7 +180,13 @@ export const decideByChoice = (
   observation: Observation,
   settings: ChoiceSettings,
   presentation: Presentation = SHARED_PRESENTATION,
-): Promise<Decision> =>
-  isFlat(settings, observation)
-    ? decideFlat(client, presentation, observation)
-    : decideHierarchical(client, presentation, observation);
+): Promise<Decision> => {
+  if (isFlat(settings, observation)) {
+    return decideFlat(client, presentation, observation);
+  }
+  if (settings.mode === "tournament") {
+    const size = settings.chunkSize ?? DEFAULT_CHUNK_SIZE;
+    return decideTournament(client, presentation, observation, size);
+  }
+  return decideHierarchical(client, presentation, observation);
+};

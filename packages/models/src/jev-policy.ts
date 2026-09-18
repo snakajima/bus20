@@ -5,19 +5,23 @@ import {
   choice,
   type ChoiceCriteria,
   type ChoiceQuestion,
+  type ChoiceResponse,
   type Fetch,
   type SystemOneResult,
   TypeSafeClient,
 } from "@typesafe-ai/sdk";
 import { type ChoiceClient, type ChoiceReply, type ChoiceRequest } from "./choice-client.js";
-import {
-  type ChoiceSettings,
-  DEFAULT_CHOICE_SETTINGS,
-  decideByChoice,
-} from "./choice-procedure.js";
+import { type ChoiceSettings, decideByChoice } from "./choice-procedure.js";
 import { usageRecord } from "./pricing.js";
 import { type Presentation, presentationById, type PresentationId } from "./presentation.js";
 import { withSelfConsistency } from "./self-consistency.js";
+
+/** Jev defaults to flat up to its practical token ceiling, then a chunked tournament. */
+export const DEFAULT_JEV_CHOICE_SETTINGS: ChoiceSettings = {
+  mode: "tournament",
+  flatLimit: 180,
+  chunkSize: 120,
+};
 
 /** Pinned model ID as listed on 2026-09-18; never a moving alias such as jev-latest. */
 export const DEFAULT_JEV_MODEL_ID = "jev-1.13.0" as const;
@@ -59,6 +63,7 @@ const describe = (settings: Settings): PolicyDescriptor => ({
     maxRetries: settings.maxRetries,
     choiceMode: settings.choice.mode,
     flatLimit: settings.choice.flatLimit,
+    chunkSize: settings.choice.chunkSize ?? 0,
     presentation: settings.presentation.id,
     repeats: settings.repeats,
   },
@@ -72,54 +77,88 @@ const criteriaFor = (request: ChoiceRequest): ChoiceCriteria =>
  * the shared state, the options are the labels. Confidence and the
  * probability distribution are recorded but never treated as pain.
  */
-type JevResult = SystemOneResult<{ answer: ChoiceQuestion }>;
+type JevAnswer = ChoiceResponse;
+type JevResult = SystemOneResult<Record<string, ChoiceQuestion>>;
 
-const usageOf = (request: ChoiceRequest, result: JevResult): Readonly<Record<string, number>> => {
-  const answer = result.answers.answer;
-  const tokens = {
-    inputTokens: result.usage.input_tokens,
-    outputTokens: result.usage.output_tokens,
-  };
-  return usageRecord(result.model, tokens, {
-    confidence: answer.confidence,
-    chosenProbability: answer.probabilities[answer.choice] ?? 0,
-    optionsOffered: request.options.length,
-  });
-};
+interface Tokens {
+  readonly inputTokens: number;
+  readonly outputTokens: number;
+}
 
-const toReply = (request: ChoiceRequest, result: JevResult): ChoiceReply => {
-  const answer = result.answers.answer;
+const replyFrom = (
+  request: ChoiceRequest,
+  modelId: string,
+  answer: JevAnswer,
+  tokens: Tokens,
+): ChoiceReply => {
   const probabilities: Record<string, JsonValue> = { ...answer.probabilities };
   return {
     choice: answer.choice,
-    usage: usageOf(request, result),
-    trace: {
-      provider: JEV_PROVIDER,
-      modelId: result.model,
-      question: request.question,
-      probabilities,
+    usage: usageRecord(modelId, tokens, {
+      confidence: answer.confidence,
+      chosenProbability: answer.probabilities[answer.choice] ?? 0,
+      optionsOffered: request.options.length,
+    }),
+    trace: { provider: JEV_PROVIDER, modelId, question: request.question, probabilities },
+  };
+};
+
+const answerOf = (result: JevResult, key: string): JevAnswer => {
+  const answer = result.answers[key];
+  if (answer === undefined) {
+    throw new Error(`jev returned no answer for ${key}`);
+  }
+  return answer;
+};
+
+const tokensOf = (result: JevResult): Tokens => ({
+  inputTokens: result.usage.input_tokens,
+  outputTokens: result.usage.output_tokens,
+});
+
+const NO_TOKENS: Tokens = { inputTokens: 0, outputTokens: 0 };
+
+const questionsFor = (requests: readonly ChoiceRequest[]): Record<string, ChoiceQuestion> =>
+  Object.fromEntries(
+    requests.map((request, index) => [`q${index}`, choice(request.question, criteriaFor(request))]),
+  );
+
+/**
+ * One systemOne call per choice, or one call for several independent choices
+ * over the same state (Jev scores each question on its own; tokens are
+ * charged once, on the first reply).
+ */
+const createJevChoiceClient = (client: TypeSafeClient, modelId: string): ChoiceClient => {
+  const call = (state: ChoiceRequest["state"], requests: readonly ChoiceRequest[]) =>
+    client.systemOne({ model: modelId, state: { ...state }, questions: questionsFor(requests) });
+  return {
+    ask: async (request): Promise<ChoiceReply> =>
+      manyReply(request, await call(request.state, [request]), 0),
+    askMany: async (requests): Promise<ChoiceReply[]> => {
+      const [first] = requests;
+      if (first === undefined) {
+        return [];
+      }
+      const result = await call(first.state, requests);
+      return requests.map((request, index) => manyReply(request, result, index));
     },
   };
 };
 
-const createJevChoiceClient = (client: TypeSafeClient, modelId: string): ChoiceClient => ({
-  ask: async (request): Promise<ChoiceReply> =>
-    toReply(
-      request,
-      await client.systemOne({
-        model: modelId,
-        state: { ...request.state },
-        questions: { answer: choice(request.question, criteriaFor(request)) },
-      }),
-    ),
-});
+const manyReply = (request: ChoiceRequest, result: JevResult, index: number): ChoiceReply =>
+  replyFrom(
+    request,
+    result.model,
+    answerOf(result, `q${index}`),
+    index === 0 ? tokensOf(result) : NO_TOKENS,
+  );
 
 /** Jev (TypeSafe AI) in the common candidate-choice track, flat or hierarchical. */
 const settingsOf = (options: JevPolicyOptions): Settings => ({
   modelId: options.modelId ?? DEFAULT_JEV_MODEL_ID,
   timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
-  choice: options.choice ?? DEFAULT_CHOICE_SETTINGS,
+  choice: options.choice ?? DEFAULT_JEV_CHOICE_SETTINGS,
   presentation: presentationById(options.presentation ?? "jev-native"),
   repeats: Math.max(1, Math.floor(options.repeats ?? 1)),
 });

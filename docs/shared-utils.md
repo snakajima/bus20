@@ -80,7 +80,8 @@ Packages export individual modules by subpath (for example
 | `pricing` | `TARIFFS`, `estimateCostUsd`, `usageRecord` | Pinned list prices with retrieval dates; cost per decision. |
 | `choose-action` | `chooseCandidateAction` | The `chooseCandidate` action form emitted by model adapters. |
 | `choice-client` | `ChoiceClient`, `ChoiceRequest`, `ChoiceReply` | The one structured-choice call every adapter implements. |
-| `choice-procedure` | `decideByChoice`, `CHOICE_MODES`, `DEFAULT_CHOICE_SETTINGS` | Flat, hierarchical, and auto decision procedures over a choice client. |
+| `choice-procedure` | `decideByChoice`, `CHOICE_MODES`, `DEFAULT_CHOICE_SETTINGS`, `DEFAULT_CHUNK_SIZE` | Flat, hierarchical, auto, and tournament decision procedures over a choice client. |
+| `choice-client` | `askAll` | Batched choices when the client supports `askMany`, sequential otherwise. |
 | `presentation` | `SHARED_PRESENTATION`, `JEV_NATIVE_PRESENTATION`, `presentationById` | How observations become choice requests. |
 | `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Jev-specific presentation: consequences in code, words and whole minutes. |
 | `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |

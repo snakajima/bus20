@@ -1,0 +1,494 @@
+{
+  "analysisVersion": "bus20-analysis/1",
+  "benchmarkVersion": "synthetic-dev/1",
+  "manifestDigest": "sha256:58fdffbe7e405dfdde4b9d3dbb476806ecc213d0d8f96efc391046a6c282c994",
+  "referencePolicyId": "swift-insertion-reference",
+  "bootstrapSeed": 1,
+  "cells": [
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 4.037223467265211,
+      "painInterval": {
+        "lower": 3.3742242886607134,
+        "upper": 4.526263560525793
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.25066666666676457,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 6.560489997453704,
+      "painInterval": {
+        "lower": 3.5528328410416665,
+        "upper": 11.045618303898811
+      },
+      "meanCostUsd": 0.002686474,
+      "meanLatencyMedianMs": 128.54991666666714,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 36.96469829119696,
+      "painInterval": {
+        "lower": 5.393880568358586,
+        "upper": 97.02075123135351
+      },
+      "meanCostUsd": 0.012680261999999998,
+      "meanLatencyMedianMs": 136.68802799999926,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 9.976936388008417,
+      "painInterval": {
+        "lower": 5.100826014095959,
+        "upper": 18.388756239348485
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.551985999999791,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 33.79857371026633,
+      "painInterval": {
+        "lower": 8.836241037562424,
+        "upper": 71.12954700464418
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.8627496666667867,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 2,
+      "successRate": 0.6666666666666666,
+      "conditionalMeanPain": 156.38269386981733,
+      "painInterval": {
+        "lower": 16.898295647571782,
+        "upper": 295.8670920920629
+      },
+      "meanCostUsd": 0.034597311,
+      "meanLatencyMedianMs": 175.33193066666476,
+      "failureReasons": {
+        "policyError": 1
+      }
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 3.810387608449821,
+      "painInterval": {
+        "lower": 2.74438762984767,
+        "upper": 5.805440268611112
+      },
+      "meanCostUsd": 0.002478252,
+      "meanLatencyMedianMs": 136.99073633332833,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 2.1427429220400236,
+      "painInterval": {
+        "lower": 1.8052101280197135,
+        "upper": 2.5189388667921144
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.24805566667055245,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 7.291174829357729,
+      "painInterval": {
+        "lower": 3.234162168694885,
+        "upper": 14.084390624316574
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.405138666673641,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 15.386319636297765,
+      "painInterval": {
+        "lower": 4.596140600242505,
+        "upper": 35.67585066130511
+      },
+      "meanCostUsd": 0.011159960000000002,
+      "meanLatencyMedianMs": 143.96402766667111,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 1,
+      "successRate": 0.3333333333333333,
+      "conditionalMeanPain": 19.60248332673612,
+      "painInterval": null,
+      "meanCostUsd": 0.02496034800000001,
+      "meanLatencyMedianMs": 164.99524966666164,
+      "failureReasons": {
+        "policyError": 2
+      }
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 25.576364352472226,
+      "painInterval": {
+        "lower": 7.566517564522225,
+        "upper": 58.63001260810834
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.5022916666639503,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 5.706302884911817,
+      "painInterval": {
+        "lower": 3.222723202777777,
+        "upper": 7.632834373518519
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.4048749999977493,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 8.597917218990299,
+      "painInterval": {
+        "lower": 4.607052639907407,
+        "upper": 11.630083702751321
+      },
+      "meanCostUsd": 0.001901578,
+      "meanLatencyMedianMs": 123.08265266665451,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 62.16241239940256,
+      "painInterval": {
+        "lower": 12.659767881997352,
+        "upper": 123.39024352728173
+      },
+      "meanCostUsd": 0.009440018,
+      "meanLatencyMedianMs": 143.8963886666752,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 19.47548381473545,
+      "painInterval": {
+        "lower": 10.218614509742062,
+        "upper": 28.111586122023805
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.944319333328167,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 43.231684548293856,
+      "painInterval": {
+        "lower": 18.35121856854984,
+        "upper": 67.79967132775737
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.61415299999256,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 403.88894006615743,
+      "painInterval": {
+        "lower": 27.90576580525328,
+        "upper": 721.3392039051186
+      },
+      "meanCostUsd": 0.031482961999999996,
+      "meanLatencyMedianMs": 182.36393033333783,
+      "failureReasons": {}
+    }
+  ],
+  "paired": [
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -2.5232665301884922,
+      "differenceInterval": {
+        "lower": -6.519354743373017,
+        "upper": -0.17860855238095308
+      },
+      "meanImprovementPercent": -56.67670838722745,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -26.987761903188545,
+      "differenceInterval": {
+        "lower": -78.63199499200503,
+        "upper": -0.2930545542626275
+      },
+      "meanImprovementPercent": -154.99931272529753,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 1,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -141.2496068067399,
+      "differenceInterval": {
+        "lower": -274.43715900347047,
+        "upper": -8.062054610009358
+      },
+      "meanImprovementPercent": -685.9319375949343,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -1.667644686409797,
+      "differenceInterval": {
+        "lower": -3.2865014018189975,
+        "upper": -0.6403078585394262
+      },
+      "meanImprovementPercent": -73.50518461214794,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -8.095144806940036,
+      "differenceInterval": {
+        "lower": -21.591460036988536,
+        "upper": -1.3319959522839504
+      },
+      "meanImprovementPercent": -74.88518866433905,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 1,
+      "meanDifference": -12.035965762213896,
+      "differenceInterval": null,
+      "meanImprovementPercent": -159.0687612838957,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -2.891614334078483,
+      "differenceInterval": {
+        "lower": -3.9972493292328024,
+        "upper": -1.3843294371296304
+      },
+      "meanImprovementPercent": -49.30143747170083,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -42.68692858466711,
+      "differenceInterval": {
+        "lower": -95.27865740525793,
+        "upper": -2.4411533722552896
+      },
+      "meanImprovementPercent": -171.26592449349747,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -360.65725551786363,
+      "differenceInterval": {
+        "lower": -677.7950401565442,
+        "upper": -9.554547236703442
+      },
+      "meanImprovementPercent": -730.2251836899391,
+      "policyWins": 0
+    }
+  ],
+  "acrossCities": [
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 3.962089758072351
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 6.322931608297941
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 38.1711434422991
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 12.247865010700531
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "high",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 34.2022075370108
+    },
+    {
+      "policyId": "jev:jev-1.13.0:jev-native:flat:x1",
+      "load": "high",
+      "cities": 3,
+      "successRate": 0.6666666666666666,
+      "conditionalMeanPain": 193.29137242090363
+    }
+  ]
+}

@@ -1,0 +1,195 @@
+{
+  "schemaVersion": "bus20-scenario/1",
+  "id": "nyc-like-low-test-03",
+  "map": {
+    "id": "nyc-like-v1",
+    "digest": "sha256:7b7e6f7bc804d58b76523dc25122a21e6aae490e702aa10a2c7102579222b7de"
+  },
+  "startTimeMs": 0,
+  "demandEndTimeMs": 3600000,
+  "completionDeadlineMs": 9000000,
+  "vehicles": [
+    {
+      "id": "v1",
+      "nodeId": "n4-6",
+      "capacity": 4
+    },
+    {
+      "id": "v2",
+      "nodeId": "n2-0",
+      "capacity": 4
+    },
+    {
+      "id": "v3",
+      "nodeId": "n9-0",
+      "capacity": 4
+    },
+    {
+      "id": "v4",
+      "nodeId": "n7-6",
+      "capacity": 4
+    }
+  ],
+  "requests": [
+    {
+      "id": "r01",
+      "requestTimeMs": 495050,
+      "originNodeId": "n4-0",
+      "destinationNodeId": "n5-2",
+      "passengers": 1
+    },
+    {
+      "id": "r02",
+      "requestTimeMs": 749353,
+      "originNodeId": "n9-0",
+      "destinationNodeId": "n10-3",
+      "passengers": 1
+    },
+    {
+      "id": "r03",
+      "requestTimeMs": 808360,
+      "originNodeId": "n7-1",
+      "destinationNodeId": "n2-1",
+      "passengers": 1
+    },
+    {
+      "id": "r04",
+      "requestTimeMs": 1018227,
+      "originNodeId": "n6-0",
+      "destinationNodeId": "n7-5",
+      "passengers": 1
+    },
+    {
+      "id": "r05",
+      "requestTimeMs": 1496566,
+      "originNodeId": "n8-2",
+      "destinationNodeId": "n8-6",
+      "passengers": 1
+    },
+    {
+      "id": "r06",
+      "requestTimeMs": 1536262,
+      "originNodeId": "n6-0",
+      "destinationNodeId": "n4-5",
+      "passengers": 1
+    },
+    {
+      "id": "r07",
+      "requestTimeMs": 1615027,
+      "originNodeId": "n7-6",
+      "destinationNodeId": "n3-6",
+      "passengers": 1
+    },
+    {
+      "id": "r08",
+      "requestTimeMs": 1620271,
+      "originNodeId": "n3-2",
+      "destinationNodeId": "n0-4",
+      "passengers": 1
+    },
+    {
+      "id": "r09",
+      "requestTimeMs": 1622073,
+      "originNodeId": "n6-0",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r10",
+      "requestTimeMs": 1973883,
+      "originNodeId": "n5-0",
+      "destinationNodeId": "n8-4",
+      "passengers": 1
+    },
+    {
+      "id": "r11",
+      "requestTimeMs": 2081692,
+      "originNodeId": "n7-0",
+      "destinationNodeId": "n10-3",
+      "passengers": 1
+    },
+    {
+      "id": "r12",
+      "requestTimeMs": 2122783,
+      "originNodeId": "n6-0",
+      "destinationNodeId": "n8-1",
+      "passengers": 1
+    },
+    {
+      "id": "r13",
+      "requestTimeMs": 2668288,
+      "originNodeId": "n0-1",
+      "destinationNodeId": "n5-1",
+      "passengers": 1
+    },
+    {
+      "id": "r14",
+      "requestTimeMs": 2691844,
+      "originNodeId": "n5-4",
+      "destinationNodeId": "n11-2",
+      "passengers": 1
+    },
+    {
+      "id": "r15",
+      "requestTimeMs": 2814730,
+      "originNodeId": "n5-0",
+      "destinationNodeId": "n7-4",
+      "passengers": 1
+    },
+    {
+      "id": "r16",
+      "requestTimeMs": 3075229,
+      "originNodeId": "n1-3",
+      "destinationNodeId": "n5-2",
+      "passengers": 1
+    },
+    {
+      "id": "r17",
+      "requestTimeMs": 3149575,
+      "originNodeId": "n7-3",
+      "destinationNodeId": "n1-2",
+      "passengers": 1
+    },
+    {
+      "id": "r18",
+      "requestTimeMs": 3163820,
+      "originNodeId": "n7-1",
+      "destinationNodeId": "n8-4",
+      "passengers": 1
+    },
+    {
+      "id": "r19",
+      "requestTimeMs": 3438638,
+      "originNodeId": "n7-5",
+      "destinationNodeId": "n3-5",
+      "passengers": 1
+    },
+    {
+      "id": "r20",
+      "requestTimeMs": 3443074,
+      "originNodeId": "n10-0",
+      "destinationNodeId": "n1-2",
+      "passengers": 1
+    },
+    {
+      "id": "r21",
+      "requestTimeMs": 3582471,
+      "originNodeId": "n3-1",
+      "destinationNodeId": "n12-2",
+      "passengers": 1
+    }
+  ],
+  "provenance": {
+    "generator": "bus20-synthetic-demand",
+    "generatorVersion": "1",
+    "seed": "2679563327",
+    "city": "nyc-like",
+    "load": "low",
+    "pattern": "hotspot",
+    "split": "test",
+    "targetUtilization": "0.25",
+    "meanDirectMinutes": "2.831",
+    "hotspotShare": "0.4",
+    "hotspotBurst": "0.35-0.6"
+  }
+}

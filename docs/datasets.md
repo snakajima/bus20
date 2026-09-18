@@ -41,6 +41,18 @@ minute completion margin.
   Stored request sequences are the data; the seed is provenance, not a
   substitute.
 
+### `synthetic-dev/2`
+
+`datasets/synthetic-dev-2/` is generated from
+`datasets/configs/synthetic-dev-2.json`: the same cities, seeds, and splits
+as version 1, with the high-load utilisation target lowered from 0.80 to
+0.65 and the hotspot burst configured as 40% of requests over 35% to 60% of
+the demand window (version 1 hard-coded 50% over 40% to 55%). Low and
+medium uniform and commute scenarios have identical request sequences to
+version 1; only provenance differs. Version 1 rebuilds byte for byte because
+the generator's hotspot defaults are unchanged. Use `--loads` on
+`bus20-run suite` to run a subset of load levels.
+
 ### Real cities
 
 `tools/osm/extract_map.py` writes a `bus20-map/1` document from OpenStreetMap
