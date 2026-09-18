@@ -79,6 +79,8 @@ Packages export individual modules by subpath (for example
 | `decision-brief` | `buildDecisionBrief`, `describeCandidate`, `candidateIds`, `assertChoiceFits`, `PROMPT_VERSION`, `MAX_CHOICE_OPTIONS` | The provider-neutral decision state every model receives. |
 | `pricing` | `TARIFFS`, `estimateCostUsd`, `usageRecord` | Pinned list prices with retrieval dates; cost per decision. |
 | `choose-action` | `chooseCandidateAction` | The `chooseCandidate` action form emitted by model adapters. |
+| `choice-client` | `ChoiceClient`, `ChoiceRequest`, `ChoiceReply` | The one structured-choice call every adapter implements. |
+| `choice-procedure` | `decideByChoice`, `CHOICE_MODES`, `DEFAULT_CHOICE_SETTINGS` | Flat, hierarchical, and auto decision procedures over a choice client. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |
 | `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID`, `EFFORT_LEVELS` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |
 

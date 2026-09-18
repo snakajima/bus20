@@ -5,7 +5,7 @@ import { createClaudePolicy, DEFAULT_CLAUDE_MODEL_ID } from "../src/claude-polic
 import {
   claudeMessage,
   claudeRequestSchema,
-  earliestPickupFromBrief,
+  earliestPickupFromRequest,
   fakeFetch,
   loadFixture,
 } from "./fakes.js";
@@ -16,15 +16,15 @@ const chosenFor = (body: unknown): string => {
   if (message === undefined) {
     throw new Error("no user message");
   }
-  const choice = earliestPickupFromBrief(JSON.parse(message.content));
-  assert.ok(request.output_config.format.schema.properties.candidateId.enum.includes(choice));
+  const choice = earliestPickupFromRequest(JSON.parse(message.content));
+  assert.ok(request.output_config.format.schema.properties.choice.enum.includes(choice));
   return choice;
 };
 
 test("Claude adapter sends the brief with a constrained schema and records usage and trace", async () => {
   const { scenario, map } = loadFixture();
   const transport = fakeFetch((request) =>
-    claudeMessage(JSON.stringify({ candidateId: chosenFor(request.body) })),
+    claudeMessage(JSON.stringify({ choice: chosenFor(request.body) })),
   );
   const policy = createClaudePolicy({
     apiKey: "test-key",
@@ -47,10 +47,8 @@ test("Claude adapter sends the brief with a constrained schema and records usage
   const sent = claudeRequestSchema.parse(first.body);
   assert.equal(sent.model, DEFAULT_CLAUDE_MODEL_ID);
   assert.equal(sent.output_config.effort, "medium");
-  assert.deepEqual(sent.output_config.format.schema.properties.candidateId.enum, [
-    "v1:0:1",
-    "v2:0:1",
-  ]);
+  assert.deepEqual(sent.output_config.format.schema.properties.choice.enum, ["v1:0:1", "v2:0:1"]);
+  assert.match(sent.system, /shiftBetweenMinutes/);
   assert.match(sent.system, /waitMinutes \+ detourMinutes/);
   assert.ok(!("thinking" in sent), "adaptive thinking is the model default; nothing is overridden");
 
@@ -65,17 +63,22 @@ test("Claude adapter sends the brief with a constrained schema and records usage
   assert.equal(decision.usage["cacheReadTokens"], 200);
   // 1000 uncached * $5/M + 200 cached * $5/M + 20 output * $25/M
   assert.ok(Math.abs((decision.usage["costUsd"] ?? 0) - (1200 * 5 + 20 * 25) / 1_000_000) < 1e-12);
-  assert.equal(decision.trace["provider"], "anthropic");
-  assert.equal(decision.trace["stopReason"], "end_turn");
+  const stages = decision.trace["stages"];
+  assert.ok(Array.isArray(stages) && stages.length === 1);
+  const [stage] = stages;
+  assert.ok(typeof stage === "object" && stage !== null && !Array.isArray(stage));
+  assert.equal(stage["provider"], "anthropic");
+  assert.equal(stage["stopReason"], "end_turn");
+  assert.equal(log.policy.settings["choiceMode"], "auto");
 });
 
 test("refusals, truncation, malformed JSON, and unknown ids fail the decision", async () => {
   const { scenario, map } = loadFixture();
   const cases: readonly [string, unknown][] = [
     ["refusal", claudeMessage("", { stop_reason: "refusal" })],
-    ["max_tokens", claudeMessage('{"candidateId": "v1', { stop_reason: "max_tokens" })],
+    ["max_tokens", claudeMessage('{"choice": "v1', { stop_reason: "max_tokens" })],
     ["malformed", claudeMessage("not json")],
-    ["unknown", claudeMessage(JSON.stringify({ candidateId: "v9:9:9" }))],
+    ["unknown", claudeMessage(JSON.stringify({ choice: "v9:9:9" }))],
   ];
   for (const [label, reply] of cases) {
     const transport = fakeFetch(() => reply);

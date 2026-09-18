@@ -18,3 +18,7 @@ out/
 
 # Swift
 swift/.build/
+
+# Secrets (API keys); never committed
+.env
+.env.*

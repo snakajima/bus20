@@ -3,18 +3,18 @@ import assert from "node:assert/strict";
 import { z } from "zod";
 import { test } from "node:test";
 import { createJevPolicy, DEFAULT_JEV_MODEL_ID } from "../src/jev-policy.js";
-import { earliestPickupFromBrief, fakeFetch, jevRequestSchema, loadFixture } from "./fakes.js";
+import { earliestPickupFromJevBody, fakeFetch, jevRequestSchema, loadFixture } from "./fakes.js";
 
 const respondWithChoice = (body: unknown, override?: string): unknown => {
   const request = jevRequestSchema.parse(body);
-  const ids = Object.keys(request.questions.candidate.criteria);
-  const choice = override ?? earliestPickupFromBrief(request.state);
+  const ids = Object.keys(request.questions.answer.criteria);
+  const choice = override ?? earliestPickupFromJevBody(body);
   const probabilities = Object.fromEntries(
     ids.map((id) => [id, id === choice ? 0.7 : 0.3 / Math.max(1, ids.length - 1)]),
   );
   return {
     model: request.model,
-    answers: { candidate: { type: "choice", choice, confidence: 0.61, probabilities } },
+    answers: { answer: { type: "choice", choice, confidence: 0.61, probabilities } },
     usage: { input_tokens: 900, output_tokens: 4 },
   };
 };
@@ -28,7 +28,7 @@ test("Jev adapter sends the brief as state, offers candidate IDs as options, and
   assert.equal(log.decisions.length, 12);
   assert.equal(log.policy.kind, "jev");
   assert.equal(log.policy.modelId, DEFAULT_JEV_MODEL_ID);
-  assert.equal(log.policy.promptVersion, "bus20-prompt/1");
+  assert.equal(log.policy.promptVersion, "bus20-prompt/2");
 
   const first = transport.requests[0];
   assert.ok(first !== undefined);
@@ -37,7 +37,8 @@ test("Jev adapter sends the brief as state, offers candidate IDs as options, and
   const sent = jevRequestSchema.parse(first.body);
   assert.equal(sent.model, DEFAULT_JEV_MODEL_ID);
   assert.equal(sent.state["decisionRequestId"], "r01");
-  assert.deepEqual(Object.keys(sent.questions.candidate.criteria), ["v1:0:1", "v2:0:1"]);
+  assert.deepEqual(Object.keys(sent.questions.answer.criteria), ["v1:0:1", "v2:0:1"]);
+  assert.ok(!("candidates" in sent.state), "candidates are options, not repeated in the state");
 
   const decision = log.decisions[0];
   assert.ok(decision !== undefined);
@@ -51,9 +52,14 @@ test("Jev adapter sends the brief as state, offers candidate IDs as options, and
   assert.equal(decision.usage["confidence"], 0.61);
   assert.equal(decision.usage["chosenProbability"], 0.7);
   assert.equal(decision.usage["candidatesOffered"], 2);
+  assert.equal(decision.usage["stages"], 1);
   assert.ok((decision.usage["costUsd"] ?? 0) > 0);
-  assert.equal(decision.trace["provider"], "typesafe");
-  assert.deepEqual(Object.keys(decision.trace["probabilities"] ?? {}), ["v1:0:1", "v2:0:1"]);
+  const stages = decision.trace["stages"];
+  assert.ok(Array.isArray(stages) && stages.length === 1);
+  const [stage] = stages;
+  assert.ok(typeof stage === "object" && stage !== null && !Array.isArray(stage));
+  assert.equal(stage["provider"], "typesafe");
+  assert.deepEqual(Object.keys(stage["probabilities"] ?? {}), ["v1:0:1", "v2:0:1"]);
 });
 
 test("the brief never contains unreleased requests or cost fields", async () => {

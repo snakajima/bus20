@@ -3,13 +3,37 @@ import { test } from "node:test";
 import { assertChoiceFits, buildDecisionBrief, MAX_CHOICE_OPTIONS } from "../src/decision-brief.js";
 import { estimateCostUsd, TARIFFS, usageRecord } from "../src/pricing.js";
 
+const committed = {
+  requestId: "x",
+  kind: "dropoff" as const,
+  nodeId: "c",
+  plannedArrivalTimeMs: 60_000,
+};
+const pickup = {
+  requestId: "r1",
+  kind: "pickup" as const,
+  nodeId: "a",
+  plannedArrivalTimeMs: 60_000,
+};
+const dropoff = {
+  requestId: "r1",
+  kind: "dropoff" as const,
+  nodeId: "b",
+  plannedArrivalTimeMs: 150_000,
+};
+
+/** Insertions of r1 around one committed stop: index 0 = before it, index 1 = after it. */
 const candidate = (index: number) => ({
   id: `v1:${index}:${index + 1}`,
   vehicleId: "v1",
-  stops: [
-    { requestId: "r1", kind: "pickup" as const, nodeId: "a", plannedArrivalTimeMs: 60_000 },
-    { requestId: "r1", kind: "dropoff" as const, nodeId: "b", plannedArrivalTimeMs: 150_000 },
-  ],
+  stops:
+    index === 0
+      ? [pickup, dropoff, { ...committed, plannedArrivalTimeMs: 240_000 }]
+      : [
+          committed,
+          { ...pickup, plannedArrivalTimeMs: 120_000 },
+          { ...dropoff, plannedArrivalTimeMs: 210_000 },
+        ],
 });
 
 const observation = (count: number) => ({
@@ -23,8 +47,8 @@ const observation = (count: number) => ({
       id: "v1",
       capacity: 4,
       position: { kind: "atNode" as const, nodeId: "a" },
-      onboardRequestIds: [],
-      stops: [],
+      onboardRequestIds: ["x"],
+      stops: [committed],
     },
   ],
   requests: [
@@ -36,14 +60,23 @@ const observation = (count: number) => ({
       phase: "waiting" as const,
       directTravelTimeMs: 90_000,
     },
+    {
+      id: "x",
+      requestTimeMs: 0,
+      originNodeId: "b",
+      destinationNodeId: "c",
+      phase: "onboard" as const,
+      directTravelTimeMs: 60_000,
+    },
   ],
-  candidates: Array.from({ length: count }, (_, index) => candidate(index)),
+  // Only the count matters for limit tests; the two-candidate brief test needs distinct ids.
+  candidates: Array.from({ length: count }, (_, index) => candidate(index % 2 === 0 ? 0 : 1)),
 });
 
 test("brief converts times to minutes and keeps candidate order", () => {
   const brief = buildDecisionBrief(observation(2));
   assert.equal(brief["nowMinutes"], 0.5);
-  assert.equal(brief["promptVersion"], "bus20-prompt/1");
+  assert.equal(brief["promptVersion"], "bus20-prompt/2");
   const candidates = brief["candidates"];
   assert.ok(Array.isArray(candidates));
   assert.deepEqual(
@@ -57,13 +90,13 @@ test("brief converts times to minutes and keeps candidate order", () => {
 
 test("choice limits are enforced instead of pruning", () => {
   assert.doesNotThrow(() => {
-    assertChoiceFits(observation(MAX_CHOICE_OPTIONS));
+    assertChoiceFits(observation(MAX_CHOICE_OPTIONS).candidates.length, "candidates");
   });
   assert.throws(() => {
-    assertChoiceFits(observation(MAX_CHOICE_OPTIONS + 1));
+    assertChoiceFits(observation(MAX_CHOICE_OPTIONS + 1).candidates.length, "candidates");
   }, /exceed the 255-option limit/);
   assert.throws(() => {
-    assertChoiceFits(observation(0));
+    assertChoiceFits(0, "candidates");
   }, /no legal candidates/);
 });
 

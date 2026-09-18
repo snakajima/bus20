@@ -7,15 +7,37 @@ paper can name the exact "model + prompt + tools + budget" that was evaluated.
 
 ## What every model receives
 
-`buildDecisionBrief(observation)` produces one provider-neutral JSON object:
+`buildDecisionState(observation)` produces one provider-neutral JSON object:
 the objective text, the current virtual time, the deciding request, every
-released and unfinished request with its direct travel time, every vehicle
-with capacity, position, riders on board and committed stops with planned
-arrival times, and every legal candidate with its full stop list and planned
-arrival times. Times are minutes for readability. The brief is versioned as
-`PROMPT_VERSION` (`bus20-prompt/1`) and stored in the run log's policy
+released and unfinished request with its direct travel time, and every
+vehicle with capacity, position, riders on board and committed stops with
+planned arrival times, listed exactly once. Candidates are encoded compactly
+(`describeCandidate`): the vehicle, the pickup and drop-off insertion
+indices, the new passenger's planned pickup and drop-off times, and two
+shifts that say how much later the vehicle's existing stops become (between
+the two insertions, and after the drop-off). Under fixed travel times those
+two constants describe the whole consequence for existing passengers, so a
+candidate costs O(1) tokens instead of O(stops). Times are minutes. The
+brief is versioned as `PROMPT_VERSION` (`bus20-prompt/2`; version 1
+repeated full stop lists per candidate) and stored in the run log's policy
 descriptor. The brief never contains unreleased requests, pain values, cost
 ranks, or the Swift reference's choice.
+
+Every adapter implements one narrow contract, `ChoiceClient.ask`, which
+answers a structured choice (state, question, options). The decision
+procedure (`decideByChoice`) composes calls in one of three modes, recorded
+in the descriptor as `choiceMode` and `flatLimit`:
+
+- `flat`: one call offering every candidate.
+- `hierarchical`: one call choosing a vehicle among those with at least one
+  legal insertion (each described by its committed stops, the number of
+  legal insertions, and its earliest possible pickup), then one call
+  choosing the insertion within it. A single eligible vehicle skips the first
+  stage. Each stage's usage and trace is kept; `stages` records the count.
+- `auto` (default, `flatLimit` 40): flat when at most `flatLimit` candidates
+  are offered, hierarchical otherwise.
+
+Jev's 255-option limit applies per stage.
 
 - **Jev** (`@typesafe-ai/sdk`, `jev-1.13.0` pinned; never `jev-latest`):
   the brief is the `state`, and one `choice` question offers the candidate IDs
@@ -25,7 +47,8 @@ ranks, or the Swift reference's choice.
   the single user message, the objective is the system prompt, and structured
   output constrains the reply to `{"candidateId": <enum of offered ids>}`.
   Adaptive thinking is the model default and is not overridden; `effort` is a
-  recorded setting (`--effort`).
+  recorded setting (`--effort`, default `low` so pilots stay cheap;
+  experiments set it explicitly).
 
 Neither adapter is given tools, memory across decisions, or extra features.
 More than 255 candidates (Jev's Choice limit) fails the decision instead of
@@ -85,5 +108,5 @@ count, latency p50/p95, tokens, and cost. Failed runs stay visible with pain
 - OpenAI and Gemini adapters (same brief, same structured choice).
 - The tool-use track (`get_travel_times`, `list_insertions`, ...) and any
   host-side computation accounting for it.
-- Paid pilot runs. All adapter tests use injected transports; no live API call
-  has been made from this repository.
+- Paid experiments. Adapter tests use injected transports. The only live
+  calls so far are the smoke pilots recorded under `results/pilot/smoke/`.

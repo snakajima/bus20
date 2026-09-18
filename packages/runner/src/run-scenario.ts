@@ -10,6 +10,7 @@ import {
 import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
 import { createClaudePolicy, type Effort } from "@bus20/models/claude-policy";
 import { createJevPolicy } from "@bus20/models/jev-policy";
+import { type ChoiceSettings } from "@bus20/models/choice-procedure";
 import { type PolicyProgram, policyProgramSchema } from "@bus20/contracts/policy-artifact";
 import { createProgramPolicy } from "@bus20/policy-runtime/program-policy";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
@@ -113,6 +114,8 @@ export interface PolicyOptions {
   readonly modelId?: string;
   /** Reasoning effort for `claude`. */
   readonly effort?: Effort;
+  /** Flat, hierarchical, or auto choice for `claude` and `jev`. */
+  readonly choice?: ChoiceSettings;
   /** A frozen generated program for `program`, plus the seed its Math.random gets. */
   readonly program?: PolicyProgram;
   readonly programSeed?: number;
@@ -129,13 +132,16 @@ export const POLICY_IDS = ["fixture", "swift", "claude", "jev", "program"] as co
 const noop = (): undefined => undefined;
 
 const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | undefined => {
-  const modelId = options.modelId === undefined ? {} : { modelId: options.modelId };
+  const shared = {
+    ...(options.modelId === undefined ? {} : { modelId: options.modelId }),
+    ...(options.choice === undefined ? {} : { choice: options.choice }),
+  };
   if (policyId === "claude") {
     const effort = options.effort === undefined ? {} : { effort: options.effort };
-    return createClaudePolicy({ ...modelId, ...effort });
+    return createClaudePolicy({ ...shared, ...effort });
   }
   if (policyId === "jev") {
-    return createJevPolicy(modelId);
+    return createJevPolicy(shared);
   }
   return undefined;
 };
