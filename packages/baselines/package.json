@@ -1,12 +1,9 @@
 {
-  "name": "@bus20/runner",
+  "name": "@bus20/baselines",
   "version": "0.1.0",
   "private": true,
-  "description": "Offline CLI that runs, scores, and replays Bus 2.0 benchmark scenarios",
+  "description": "Adapters that connect reference dispatchers (the headless Swift CLI) to the Bus 2.0 policy contract",
   "type": "module",
-  "bin": {
-    "bus20-run": "./dist/src/cli.js"
-  },
   "exports": {
     "./*": {
       "types": "./dist/src/*.d.ts",
@@ -19,10 +16,7 @@
   },
   "dependencies": {
     "@bus20/contracts": "0.1.0",
-    "@bus20/graph": "0.1.0",
-    "@bus20/scoring": "0.1.0",
     "@bus20/simulator": "0.1.0",
-    "zod": "^4.0.0",
-    "@bus20/baselines": "0.1.0"
+    "zod": "^4.0.0"
   }
 }

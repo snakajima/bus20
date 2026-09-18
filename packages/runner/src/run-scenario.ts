@@ -7,6 +7,7 @@ import {
   scenarioDocumentSchema,
   checkScenarioSemantics,
 } from "@bus20/contracts/scenario";
+import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
 import { scoreRun } from "@bus20/scoring/score";
 import { createFixturePolicy } from "@bus20/simulator/fixture-policy";
@@ -101,7 +102,31 @@ export const replayStoredLog = async (
   return ok(await verifyReplay(inputs.scenario, inputs.map, log.value));
 };
 
-export const createPolicyById = (policyId: string): Policy | undefined =>
-  policyId === "fixture" ? createFixturePolicy() : undefined;
+export interface PolicyOptions {
+  /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
+  readonly swiftCommand?: string;
+}
+
+/** A policy plus its cleanup, so the CLI can release child processes. */
+export interface ManagedPolicy {
+  readonly policy: Policy;
+  readonly close: () => void;
+}
+
+export const POLICY_IDS = ["fixture", "swift"] as const;
+
+export const createPolicyById = (
+  policyId: string,
+  options: PolicyOptions = {},
+): ManagedPolicy | undefined => {
+  if (policyId === "fixture") {
+    return { policy: createFixturePolicy(), close: () => undefined };
+  }
+  if (policyId === "swift" && options.swiftCommand !== undefined) {
+    const policy = createSwiftReferencePolicy({ command: options.swiftCommand });
+    return { policy, close: policy.close };
+  }
+  return undefined;
+};
 
 export const describeIssues = (issues: readonly Issue[]): string => formatIssues(issues);

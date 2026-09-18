@@ -24,7 +24,9 @@ stop list. Existing assigned stops retain their relative order. Requests with th
 same release time are processed by ID, with all of them visible before the first
 decision. IDs use locale-independent lexical ordering for all tie-breaking.
 
-Candidates contain a vehicle ID and complete remaining stop list. The host checks
+Candidates contain a vehicle ID and complete remaining stop list. Each stop,
+in candidates and in a vehicle's current commitments, carries the planned
+arrival time computed by the host on the fixed graph. The host checks
 reachability, capacity throughout the route, pickup before drop-off, no duplicate
 service, and preservation of existing commitments before accepting a choice.
 Candidates do not carry a pain score or a cost-based ranking.

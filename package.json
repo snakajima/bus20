@@ -13,12 +13,14 @@
   "scripts": {
     "format": "prettier --write \"{packages,datasets,.github}/**/*.{ts,mts,mjs,json,yml,yaml}\" \"*.{json,mjs}\"",
     "format:check": "prettier --check \"{packages,datasets,.github}/**/*.{ts,mts,mjs,json,yml,yaml}\" \"*.{json,mjs}\"",
-    "build:packages": "yarn workspace @bus20/contracts run build && yarn workspace @bus20/graph run build && yarn workspace @bus20/scoring run build && yarn workspace @bus20/simulator run build && yarn workspace @bus20/runner run build",
+    "build:packages": "yarn workspace @bus20/contracts run build && yarn workspace @bus20/graph run build && yarn workspace @bus20/scoring run build && yarn workspace @bus20/simulator run build && yarn workspace @bus20/baselines run build && yarn workspace @bus20/runner run build",
     "typecheck": "yarn workspaces run typecheck",
     "lint": "eslint packages",
     "build": "yarn build:packages",
     "test": "node --test \"packages/*/dist/test/**/*.test.js\"",
-    "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo"
+    "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo",
+    "build:swift": "cd swift && swift build -c release",
+    "test:swift": "cd swift && swift test"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.0",

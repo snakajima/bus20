@@ -5,16 +5,32 @@ import {
   type ObservedVehicle,
 } from "@bus20/contracts/observation";
 import { OBSERVATION_SCHEMA_VERSION } from "@bus20/contracts/versions";
+import { isPlanDefect, timePlan } from "./plan.js";
 import { type Routing } from "./routing.js";
-import { type RequestState, type SimulationState, type VehicleState } from "./state.js";
+import {
+  nextFreePoint,
+  type RequestState,
+  type SimulationState,
+  type VehicleState,
+} from "./state.js";
 
-const observeVehicle = (vehicle: VehicleState): ObservedVehicle => ({
-  id: vehicle.id,
-  capacity: vehicle.capacity,
-  position: vehicle.position,
-  onboardRequestIds: [...vehicle.onboard],
-  stops: vehicle.stops.map((stop) => ({ ...stop })),
-});
+const observeVehicle = (
+  routing: Routing,
+  nowMs: number,
+  vehicle: VehicleState,
+): ObservedVehicle => {
+  const timed = timePlan(routing, vehicle, nextFreePoint(vehicle, nowMs), vehicle.stops);
+  if (isPlanDefect(timed)) {
+    throw new Error(`simulator invariant: committed stops of "${vehicle.id}" are ${timed.defect}`);
+  }
+  return {
+    id: vehicle.id,
+    capacity: vehicle.capacity,
+    position: vehicle.position,
+    onboardRequestIds: [...vehicle.onboard],
+    stops: timed.stops,
+  };
+};
 
 const observeRequest = (routing: Routing, entry: RequestState): ObservedRequest | undefined => {
   if (entry.phase === "unreleased" || entry.phase === "completed") {
@@ -58,7 +74,7 @@ export const buildObservation = (
   stateVersion: state.stateVersion,
   nowMs: state.nowMs,
   decisionRequestId,
-  vehicles: state.vehicles.map(observeVehicle),
+  vehicles: state.vehicles.map((vehicle) => observeVehicle(routing, state.nowMs, vehicle)),
   requests: observeRequests(routing, state),
   candidates: candidates.map(copyCandidate),
 });

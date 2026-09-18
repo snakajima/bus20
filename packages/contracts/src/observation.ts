@@ -17,13 +17,16 @@ export const vehiclePositionSchema = z.discriminatedUnion("kind", [
   }),
 ]);
 
+/** A planned stop with its host-computed arrival time along the route. */
+export const candidateStopSchema = stopSchema.extend({ plannedArrivalTimeMs: timestampSchema });
+
 export const observedVehicleSchema = z.object({
   id: idSchema,
   capacity: z.int().positive(),
   position: vehiclePositionSchema,
   onboardRequestIds: z.array(idSchema),
-  /** Remaining committed stops in service order. */
-  stops: z.array(stopSchema),
+  /** Remaining committed stops in service order, with planned arrival times. */
+  stops: z.array(candidateStopSchema),
 });
 
 export const REQUEST_PHASES = ["waiting", "assigned", "onboard", "completed"] as const;
@@ -39,9 +42,6 @@ export const observedRequestSchema = z.object({
   /** Shortest direct travel time on the fixed graph, ms. */
   directTravelTimeMs: z.int().nonnegative(),
 });
-
-/** A planned stop with its host-computed arrival time along the candidate route. */
-export const candidateStopSchema = stopSchema.extend({ plannedArrivalTimeMs: timestampSchema });
 
 /**
  * A legal insertion candidate. It carries the complete remaining stop list of
