@@ -35,3 +35,14 @@ Observations, all from a single scenario:
   large.
 
 Results across prompt versions must not be pooled.
+
+## Jev-native presentation (`jev-native/`)
+
+Prompt `bus20-jev-prompt/1`: consequences computed in code, whole minutes,
+one sentence per option, filtered state. See `docs/jev-native.md`.
+
+| Jev configuration | pain (min²) | latency p50 | tokens in | cost |
+| --- | --- | --- | --- | --- |
+| native, flat | 11.65 | 148 ms | 28,280 | $0.0013 |
+| native, hierarchical | 26.56 | 247 ms | 24,983 | $0.0011 |
+| native, flat, 3 repeats | 13.48 | 383 ms | 85,110 | $0.004 |

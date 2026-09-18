@@ -9,6 +9,7 @@ how well online decision-makers dispatch riders on a fixed road network.
 - [Shared utility catalog](docs/shared-utils.md)
 - [Swift reference notes](docs/swift-reference.md)
 - [Model adapters](docs/model-adapters.md)
+- [Using Jev effectively](docs/jev-native.md)
 - [Datasets, paired evaluation, and analysis](docs/datasets.md)
 - [Generated programs and self-improvement (second paper)](docs/policy-build.md)
 - [Second-paper experiments](docs/paper2-experiments.md)

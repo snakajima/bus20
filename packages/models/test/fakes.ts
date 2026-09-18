@@ -73,7 +73,7 @@ export const jevRequestSchema = z.object({
   questions: z.object({
     answer: z.object({
       type: z.literal("choice"),
-      instructions: z.string(),
+      instructions: z.union([z.string(), z.record(z.string(), z.unknown())]),
       criteria: z.record(z.string(), z.unknown()),
     }),
   }),
@@ -113,15 +113,21 @@ const optionSchema = z.object({
   id: z.string(),
   pickupMinutes: z.number().optional(),
   earliestPickupMinutes: z.number().nullable().optional(),
+  new_passenger_wait_minutes: z.number().optional(),
+  soonest_pickup_minutes: z.number().optional(),
 });
 
 const requestSchema = z.object({
-  state: z.object({ decisionRequestId: z.string() }),
+  state: z.record(z.string(), z.unknown()),
   options: z.array(optionSchema),
 });
 
 const pickupOf = (option: z.infer<typeof optionSchema>): number =>
-  option.pickupMinutes ?? option.earliestPickupMinutes ?? Number.POSITIVE_INFINITY;
+  option.pickupMinutes ??
+  option.new_passenger_wait_minutes ??
+  option.earliestPickupMinutes ??
+  option.soonest_pickup_minutes ??
+  Number.POSITIVE_INFINITY;
 
 /** A deterministic stand-in for a model: whichever option picks the new passenger up soonest. */
 export const earliestPickupFromRequest = (request: unknown): string => {

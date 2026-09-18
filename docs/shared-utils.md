@@ -81,6 +81,9 @@ Packages export individual modules by subpath (for example
 | `choose-action` | `chooseCandidateAction` | The `chooseCandidate` action form emitted by model adapters. |
 | `choice-client` | `ChoiceClient`, `ChoiceRequest`, `ChoiceReply` | The one structured-choice call every adapter implements. |
 | `choice-procedure` | `decideByChoice`, `CHOICE_MODES`, `DEFAULT_CHOICE_SETTINGS` | Flat, hierarchical, and auto decision procedures over a choice client. |
+| `presentation` | `SHARED_PRESENTATION`, `JEV_NATIVE_PRESENTATION`, `presentationById` | How observations become choice requests. |
+| `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Jev-specific presentation: consequences in code, words and whole minutes. |
+| `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |
 | `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID`, `EFFORT_LEVELS` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |
 
