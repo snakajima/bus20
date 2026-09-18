@@ -109,6 +109,52 @@ export const claudeMessage = (text: string, overrides: Record<string, unknown> =
   ...overrides,
 });
 
+/** Shape of the Responses API request the OpenAI adapter must send. */
+export const openaiRequestSchema = z.object({
+  model: z.string(),
+  instructions: z.string(),
+  input: z.string(),
+  max_output_tokens: z.int(),
+  store: z.literal(false),
+  reasoning: z.object({ effort: z.string() }),
+  text: z.object({
+    format: z.object({
+      type: z.literal("json_schema"),
+      strict: z.literal(true),
+      schema: z.object({
+        properties: z.object({ choice: z.object({ enum: z.array(z.string()) }) }),
+      }),
+    }),
+  }),
+});
+
+export const openaiResponse = (text: string, overrides: Record<string, unknown> = {}): unknown => ({
+  id: "resp_test",
+  object: "response",
+  created_at: 0,
+  model: "gpt-5.6-sol",
+  status: "completed",
+  error: null,
+  incomplete_details: null,
+  output: [
+    {
+      id: "msg_test",
+      type: "message",
+      role: "assistant",
+      status: "completed",
+      content: [{ type: "output_text", text, annotations: [] }],
+    },
+  ],
+  usage: {
+    input_tokens: 1200,
+    input_tokens_details: { cached_tokens: 200 },
+    output_tokens: 20,
+    output_tokens_details: { reasoning_tokens: 0 },
+    total_tokens: 1220,
+  },
+  ...overrides,
+});
+
 /** Candidate options carry pickupMinutes; vehicle options (stage one) carry earliestPickupMinutes. */
 const optionSchema = z.object({
   id: z.string(),
