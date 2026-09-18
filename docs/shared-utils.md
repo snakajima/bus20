@@ -89,6 +89,7 @@ Packages export individual modules by subpath (for example
 | `effort` | `EFFORT_LEVELS`, `Effort`, `DEFAULT_EFFORT` | Reasoning effort names shared by the general-LLM adapters. |
 | `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |
 | `openai-policy` | `createOpenAIPolicy`, `DEFAULT_OPENAI_MODEL_ID` | OpenAI via the Responses API with a strict JSON schema; same prompt and procedure as Claude. |
+| `gemini-policy` | `createGeminiPolicy`, `DEFAULT_GEMINI_MODEL_ID` | Gemini via `@google/genai` JSON output with a response schema; thinking level from the shared effort. |
 
 `@bus20/runner` also gains `compare` (`loadRunDirectory`, `toRow`, `comparisonMarkdown`) and `writeTextAtomic` in `files`.
 

@@ -43,6 +43,20 @@ export const TARIFFS: Readonly<Record<string, Tariff>> = {
     retrievedAt: "2026-09-18",
     source: "https://developers.openai.com/api/docs/pricing",
   },
+  "gemini-3.8-flash": {
+    // Paid tier through 2026-12-31; thinking tokens are billed as output.
+    inputUsdPerMillion: 0.75,
+    outputUsdPerMillion: 3.75,
+    retrievedAt: "2026-09-18",
+    source: "https://ai.google.dev/gemini-api/docs/pricing",
+  },
+  "gemini-3.1-pro-preview": {
+    // Prompts up to 200k tokens; thinking tokens are billed as output.
+    inputUsdPerMillion: 2,
+    outputUsdPerMillion: 12,
+    retrievedAt: "2026-09-18",
+    source: "https://ai.google.dev/gemini-api/docs/pricing",
+  },
   "jev-1.13.0": {
     // Listed as "$42 / $0.042 per Btok/Mtok"; one rate for input and output.
     inputUsdPerMillion: 0.042,

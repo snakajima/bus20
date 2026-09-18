@@ -74,8 +74,8 @@ scenario of a suite with resume, and `bus20-analyze` turns the suite index
 into success rates, conditional pain with bootstrap intervals, and paired
 differences against a reference. See [the dataset notes](docs/datasets.md).
 
-Online model policies (`--policy jev`, `--policy claude`, `--policy openai`)
-read their API keys from `TYPESAFE_API_KEY`, `ANTHROPIC_API_KEY`, and
-`OPENAI_API_KEY`, and `compare <run-dir>...`
+Online model policies (`--policy jev`, `--policy claude`, `--policy openai`,
+`--policy gemini`) read their API keys from `TYPESAFE_API_KEY`,
+`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GEMINI_API_KEY`, and `compare <run-dir>...`
 tabulates pain, success, latency, tokens, and cost across runs. See
 [the model adapter notes](docs/model-adapters.md).

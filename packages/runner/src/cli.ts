@@ -31,7 +31,7 @@ import {
 
 const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
-                [--policy fixture|swift|claude|openai|jev|program] [--swift-cli <path>]
+                [--policy fixture|swift|claude|openai|gemini|jev|program] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]
                 [--presentation consequences|numeric] [--repeats N]

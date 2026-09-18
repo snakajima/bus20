@@ -43,3 +43,12 @@ prompt (`bus20-prompt/3`), run once on 2026-09-18. Pain 19.56 against Swift
 16.23 and Claude opus-5 (low) 18.56 on the same prompt; $0.115 for 12
 decisions (23,343 tokens in, 1,091 out), p50 latency 2.6 s, p95 8.9 s.
 Single run; same variance caveat as above. See `smoke-01/comparison-openai.md`.
+
+## Gemini smoke pilot (added with the Gemini adapter)
+
+`smoke-01/gemini-consequences`: gemini-3.8-flash at effort low (thinking
+level LOW) under the same prompt, run once on 2026-09-18. Pain 15.90, the
+only single run on this fixture below Swift's 16.23; $0.039 for 12 decisions
+(26,439 tokens in, 5,203 out of which 5,054 are thinking tokens), p50 latency
+1.8 s, p95 6.7 s. Single run; same variance caveat as above.
+`smoke-01/comparison-llms.md` tabulates Swift and all three general LLMs.
