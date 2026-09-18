@@ -39,10 +39,12 @@ in the descriptor as `choiceMode` and `flatLimit`:
 
 Jev's 255-option limit applies per stage.
 
-Jev uses a Jev-specific presentation by default (`bus20-jev-prompt/1`, see
-[docs/jev-native.md](jev-native.md)), selectable with
-`--presentation shared|jev-native`, and optional self-consistency with
-`--repeats N`. Both are recorded in the descriptor.
+Both Claude and Jev default to the `consequences` presentation (shared
+prompt `bus20-prompt/3`, see [docs/jev-native.md](jev-native.md)); the older
+`numeric` form (`bus20-prompt/2`) stays selectable with
+`--presentation consequences|numeric`. Jev also accepts self-consistency with
+`--repeats N`. Presentation and repeats are recorded in the descriptor, and
+the prompt version follows the presentation.
 
 - **Jev** (`@typesafe-ai/sdk`, `jev-1.13.0` pinned; never `jev-latest`):
   the brief is the `state`, and one `choice` question offers the candidate IDs

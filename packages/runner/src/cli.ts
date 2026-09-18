@@ -34,7 +34,7 @@ const USAGE = `usage:
                 [--policy fixture|swift|claude|jev|program] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]
-                [--presentation shared|jev-native] [--repeats N]
+                [--presentation consequences|numeric] [--repeats N]
                 [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
   bus20-run compare <run-dir>... [--markdown <file>]

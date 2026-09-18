@@ -9,14 +9,15 @@ import { type ChoiceOption } from "./choice-client.js";
 import { insertionIndices } from "./decision-brief.js";
 
 /**
- * Jev-specific presentation, versioned separately from the shared brief.
- * It carries the same information as `bus20-prompt/2` but follows the
- * TypeSafe guidance for System One models: arithmetic done in code, whole
- * minutes instead of decimals, consequences instead of ingredients, the
- * same named fields on every option, and a state filtered to what the
- * question needs.
+ * Consequence presentation, shared prompt version 3. It carries the same
+ * information as `bus20-prompt/2` in the form the TypeSafe guidance
+ * recommends for System One models, which general LLMs also benefit from:
+ * arithmetic done in code, whole minutes instead of decimals, consequences
+ * instead of ingredients, the same named fields on every option, and a
+ * state filtered to what the question needs. It was first used for Jev as
+ * `bus20-jev-prompt/1`; the content is identical.
  */
-export const JEV_PROMPT_VERSION = "bus20-jev-prompt/1" as const;
+export const CONSEQUENCES_PROMPT_VERSION = "bus20-prompt/3" as const;
 
 export const JEV_CANDIDATE_INSTRUCTIONS = {
   task:
@@ -143,7 +144,7 @@ const fleetSummary = (observation: Observation): JsonValue[] =>
 export const jevDecisionState = (observation: Observation): Record<string, JsonValue> => {
   const request = requestOf(observation, observation.decisionRequestId);
   return {
-    promptVersion: JEV_PROMPT_VERSION,
+    promptVersion: CONSEQUENCES_PROMPT_VERSION,
     new_passenger: {
       id: request.id,
       waiting_minutes_so_far: wholeMinutes(observation.nowMs - request.requestTimeMs),

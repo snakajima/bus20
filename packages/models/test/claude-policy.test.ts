@@ -39,6 +39,8 @@ test("Claude adapter sends the brief with a constrained schema and records usage
   assert.equal(log.policy.provider, "anthropic");
   assert.equal(log.policy.modelId, DEFAULT_CLAUDE_MODEL_ID);
   assert.equal(log.policy.settings?.["effort"], "medium");
+  assert.equal(log.policy.settings["presentation"], "consequences");
+  assert.equal(log.policy.promptVersion, "bus20-prompt/3");
 
   const first = transport.requests[0];
   assert.ok(first !== undefined);
@@ -48,8 +50,9 @@ test("Claude adapter sends the brief with a constrained schema and records usage
   assert.equal(sent.model, DEFAULT_CLAUDE_MODEL_ID);
   assert.equal(sent.output_config.effort, "medium");
   assert.deepEqual(sent.output_config.format.schema.properties.choice.enum, ["v1:0:1", "v2:0:1"]);
-  assert.match(sent.system, /shiftBetweenMinutes/);
+  assert.match(sent.system, /squared delay minutes/);
   assert.match(sent.system, /waitMinutes \+ detourMinutes/);
+  assert.match(JSON.stringify(sent.messages), /new_passenger_wait_minutes/);
   assert.ok(!("thinking" in sent), "adaptive thinking is the model default; nothing is overridden");
 
   const decision = log.decisions[0];
@@ -85,7 +88,7 @@ test("refusals, truncation, malformed JSON, and unknown ids fail the decision", 
     const log = await runSimulation(
       scenario,
       map,
-      createClaudePolicy({ apiKey: "k", fetch: transport, maxRetries: 0 }),
+      createClaudePolicy({ apiKey: "k", fetch: transport, maxRetries: 0, presentation: "numeric" }),
     );
     assert.equal(log.termination.kind, "failed", label);
     assert.equal(log.termination.reason, "policyError", label);

@@ -14,10 +14,13 @@ vehicle's full stop list per candidate; version 2 handed Jev decimal times
 and two shift constants and asked it to compare them. On the smoke fixture
 Jev scored 50.8 and then 157.6 min² against the Swift reference's 16.2.
 
-## The Jev-native presentation (`bus20-jev-prompt/1`)
+## The consequences presentation (`bus20-prompt/3`)
 
-`@bus20/models/jev-native` renders the same information as the shared brief
-in the form the documentation recommends:
+`@bus20/models/jev-native` renders the same information as the numeric brief
+(`bus20-prompt/2`) in the form the documentation recommends. It was first
+used for Jev alone as `bus20-jev-prompt/1`; since the content proved just as
+suitable for general LLMs it is now shared prompt version 3, the default for
+both Claude and Jev, with identical content under the new name:
 
 - **Arithmetic in code.** For every candidate the host computes the new
   passenger's wait and detour and, for every existing passenger of that
@@ -88,11 +91,12 @@ Claude opus-5 at low effort with the shared brief 16.23.
 
 ## Fairness
 
-The native presentation carries the same information as the shared brief;
-it changes form, not content. It is a Jev-specific condition and must be
-reported as such, with its own prompt version. If the shared brief is ever
-changed to carry per-passenger consequences too, that becomes a new shared
-prompt version and both conditions are re-run.
+The consequences presentation carries the same information as the numeric
+brief; it changes form, not content. Both models see the same state, the same
+option fields, and the same instruction text (Claude receives it as a system
+prompt, Jev as the structured question). Results under `bus20-prompt/2` and
+`bus20-prompt/3` are never pooled; see
+`results/pilot/smoke/prompt-v3/` for Claude under both.
 
 ## Observed deviations
 

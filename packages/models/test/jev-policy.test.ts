@@ -28,7 +28,7 @@ test("Jev adapter sends the brief as state, offers candidate IDs as options, and
   assert.equal(log.decisions.length, 12);
   assert.equal(log.policy.kind, "jev");
   assert.equal(log.policy.modelId, DEFAULT_JEV_MODEL_ID);
-  assert.equal(log.policy.promptVersion, "bus20-jev-prompt/1");
+  assert.equal(log.policy.promptVersion, "bus20-prompt/3");
 
   const first = transport.requests[0];
   assert.ok(first !== undefined);
@@ -73,7 +73,7 @@ test("the shared brief never contains unreleased requests or cost fields", async
   await runSimulation(
     scenario,
     map,
-    createJevPolicy({ apiKey: "k", fetch: transport, maxRetries: 0, presentation: "shared" }),
+    createJevPolicy({ apiKey: "k", fetch: transport, maxRetries: 0, presentation: "numeric" }),
   );
   for (const request of transport.requests) {
     const sent = jevRequestSchema.parse(request.body);

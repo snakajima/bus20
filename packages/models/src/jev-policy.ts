@@ -13,7 +13,12 @@ import {
 import { type ChoiceClient, type ChoiceReply, type ChoiceRequest } from "./choice-client.js";
 import { type ChoiceSettings, decideByChoice } from "./choice-procedure.js";
 import { usageRecord } from "./pricing.js";
-import { type Presentation, presentationById, type PresentationId } from "./presentation.js";
+import {
+  DEFAULT_PRESENTATION_ID,
+  type Presentation,
+  presentationById,
+  type PresentationId,
+} from "./presentation.js";
 import { withSelfConsistency } from "./self-consistency.js";
 
 /** Jev defaults to flat up to its practical token ceiling, then a chunked tournament. */
@@ -35,7 +40,7 @@ export interface JevPolicyOptions {
   readonly timeoutMs?: number;
   readonly maxRetries?: number;
   readonly choice?: ChoiceSettings;
-  /** `jev-native` (default) follows the TypeSafe guidance; `shared` is the common brief. */
+  /** `consequences` (default, prompt v3) or `numeric` (prompt v2). */
   readonly presentation?: PresentationId;
   /** Self-consistency: ask each choice this many times with permuted option order and sum probabilities. */
   readonly repeats?: number;
@@ -159,7 +164,7 @@ const settingsOf = (options: JevPolicyOptions): Settings => ({
   timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
   choice: options.choice ?? DEFAULT_JEV_CHOICE_SETTINGS,
-  presentation: presentationById(options.presentation ?? "jev-native"),
+  presentation: presentationById(options.presentation ?? DEFAULT_PRESENTATION_ID),
   repeats: Math.max(1, Math.floor(options.repeats ?? 1)),
 });
 

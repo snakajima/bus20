@@ -9,7 +9,7 @@ import {
   jevVehicleOption,
 } from "../src/jev-native.js";
 import { createJevPolicy } from "../src/jev-policy.js";
-import { JEV_NATIVE_PRESENTATION } from "../src/presentation.js";
+import { CONSEQUENCES_PRESENTATION } from "../src/presentation.js";
 import { withSelfConsistency } from "../src/self-consistency.js";
 import { APPEND, IDLE, INSERT, observation } from "./choice-fixture.js";
 
@@ -115,22 +115,22 @@ test("self-consistency permutes option order, sums probabilities, and charges ev
 
 test("Jev policy defaults to the native presentation and records it", () => {
   const policy = createJevPolicy({ apiKey: "k", repeats: 2 });
-  assert.equal(policy.descriptor.promptVersion, JEV_NATIVE_PRESENTATION.promptVersion);
+  assert.equal(policy.descriptor.promptVersion, CONSEQUENCES_PRESENTATION.promptVersion);
   const { settings } = policy.descriptor;
   assert.ok(settings !== undefined);
-  assert.equal(settings["presentation"], "jev-native");
+  assert.equal(settings["presentation"], "consequences");
   assert.equal(settings["repeats"], 2);
   assert.equal(settings["choiceMode"], "tournament");
   assert.equal(settings["flatLimit"], 180);
   assert.equal(settings["chunkSize"], 120);
   assert.equal(
-    createJevPolicy({ apiKey: "k", presentation: "shared" }).descriptor.promptVersion,
+    createJevPolicy({ apiKey: "k", presentation: "numeric" }).descriptor.promptVersion,
     "bus20-prompt/2",
   );
 });
 
 test("native presentation drives the hierarchical procedure with a structured question", () => {
   const o: Observation = observation();
-  assert.equal(typeof JEV_NATIVE_PRESENTATION.candidateQuestion, "object");
-  assert.equal(JEV_NATIVE_PRESENTATION.state(o)["promptVersion"], "bus20-jev-prompt/1");
+  assert.equal(typeof CONSEQUENCES_PRESENTATION.candidateQuestion, "object");
+  assert.equal(CONSEQUENCES_PRESENTATION.state(o)["promptVersion"], "bus20-prompt/3");
 });
