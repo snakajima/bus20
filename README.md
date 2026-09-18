@@ -8,6 +8,7 @@ how well online decision-makers dispatch riders on a fixed road network.
 - [Benchmark protocol v1](docs/benchmark-protocol.md)
 - [Shared utility catalog](docs/shared-utils.md)
 - [Swift reference notes](docs/swift-reference.md)
+- [Model adapters](docs/model-adapters.md)
 - [Development disciplines](CLAUDE.md)
 
 ## Development
@@ -62,3 +63,8 @@ node packages/runner/dist/src/cli.js run --policy swift \
 
 See [the Swift reference notes](docs/swift-reference.md) for what was
 corrected and what changed relative to the original app.
+
+Online model policies (`--policy jev`, `--policy claude`) read their API keys
+from `TYPESAFE_API_KEY` and `ANTHROPIC_API_KEY`, and `compare <run-dir>...`
+tabulates pain, success, latency, tokens, and cost across runs. See
+[the model adapter notes](docs/model-adapters.md).

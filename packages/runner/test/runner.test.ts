@@ -10,7 +10,7 @@ import { test } from "node:test";
 import { z } from "zod";
 import { readJsonFile, writeJsonAtomic } from "../src/files.js";
 import { silentLogger } from "../src/logging.js";
-import { loadInputs, replayStoredLog, runAndScore } from "../src/run-scenario.js";
+import { createPolicyById, loadInputs, replayStoredLog, runAndScore } from "../src/run-scenario.js";
 
 // Tests run from dist/test, four levels below the repository root.
 const REPO_ROOT = path.resolve(import.meta.dirname, "../../../..");
@@ -145,4 +145,93 @@ test("CLI runs the Swift reference and records its policy kind", () => {
     },
   );
   assert.equal(missing.status, 2);
+});
+
+test("compare command tabulates run directories and writes markdown", async () => {
+  const inputs = await loadInputs(SCENARIO, MAP);
+  assert.ok(inputs.ok);
+  const outDir = tempDir();
+  await runAndScore({
+    inputs: inputs.value,
+    policy: createFixturePolicy(),
+    outDir,
+    logger: silentLogger,
+  });
+  const markdownPath = path.join(outDir, "table.md");
+  const compare = spawnSync(
+    process.execPath,
+    [CLI, "compare", outDir, "--markdown", markdownPath],
+    {
+      encoding: "utf8",
+    },
+  );
+  assert.equal(compare.status, 0, compare.stderr);
+  const rows: unknown = JSON.parse(compare.stdout);
+  const parsed = z
+    .object({
+      rows: z.array(
+        z.object({
+          policyId: z.string(),
+          status: z.literal("complete"),
+          pain: z.number(),
+          completedCount: z.literal(12),
+          costUsd: z.null(),
+        }),
+      ),
+    })
+    .safeParse(rows);
+  assert.ok(parsed.success);
+  const table = readFileSync(markdownPath, "utf8");
+  assert.match(table, /^\| policy \| kind \| model/);
+  assert.match(
+    table,
+    /fixture-append-earliest-pickup \| fixture \| n\/a \| smoke-01 \| complete \| 67\.73 \| 12\/12/,
+  );
+  const empty = spawnSync(process.execPath, [CLI, "compare"], { encoding: "utf8" });
+  assert.equal(empty.status, 2);
+});
+
+test("model policies are selectable and an invalid effort is a usage error", () => {
+  process.env["ANTHROPIC_API_KEY"] = "test";
+  process.env["TYPESAFE_API_KEY"] = "test";
+  const claude = createPolicyById("claude", { modelId: "claude-sonnet-5", effort: "low" });
+  assert.ok(claude !== undefined);
+  assert.equal(claude.policy.descriptor.kind, "general-llm");
+  assert.equal(claude.policy.descriptor.modelId, "claude-sonnet-5");
+  const jev = createPolicyById("jev");
+  assert.ok(jev !== undefined);
+  assert.equal(jev.policy.descriptor.kind, "jev");
+  assert.equal(jev.policy.descriptor.modelId, "jev-1.13.0");
+  delete process.env["TYPESAFE_API_KEY"];
+  assert.throws(() => createPolicyById("jev"), /TYPESAFE_API_KEY/);
+  assert.equal(createPolicyById("nope"), undefined);
+  const outDir = tempDir();
+  const bad = spawnSync(
+    process.execPath,
+    [
+      CLI,
+      "run",
+      "--policy",
+      "claude",
+      "--effort",
+      "silly",
+      "--scenario",
+      SCENARIO,
+      "--map",
+      MAP,
+      "--out",
+      outDir,
+    ],
+    { encoding: "utf8", env: { ...process.env, ANTHROPIC_API_KEY: "test" } },
+  );
+  assert.equal(bad.status, 2);
+  const env = { ...process.env };
+  delete env["TYPESAFE_API_KEY"];
+  const noKey = spawnSync(
+    process.execPath,
+    [CLI, "run", "--policy", "jev", "--scenario", SCENARIO, "--map", MAP, "--out", outDir],
+    { encoding: "utf8", env },
+  );
+  assert.equal(noKey.status, 2);
+  assert.match(noKey.stderr, /TYPESAFE_API_KEY/);
 });

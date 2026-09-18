@@ -8,6 +8,8 @@ import {
   checkScenarioSemantics,
 } from "@bus20/contracts/scenario";
 import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
+import { createClaudePolicy, type Effort } from "@bus20/models/claude-policy";
+import { createJevPolicy } from "@bus20/models/jev-policy";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
 import { scoreRun } from "@bus20/scoring/score";
 import { createFixturePolicy } from "@bus20/simulator/fixture-policy";
@@ -105,6 +107,10 @@ export const replayStoredLog = async (
 export interface PolicyOptions {
   /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
   readonly swiftCommand?: string;
+  /** Exact model ID for `claude` or `jev`; defaults are the pinned IDs. */
+  readonly modelId?: string;
+  /** Reasoning effort for `claude`. */
+  readonly effort?: Effort;
 }
 
 /** A policy plus its cleanup, so the CLI can release child processes. */
@@ -113,20 +119,36 @@ export interface ManagedPolicy {
   readonly close: () => void;
 }
 
-export const POLICY_IDS = ["fixture", "swift"] as const;
+export const POLICY_IDS = ["fixture", "swift", "claude", "jev"] as const;
 
+const noop = (): undefined => undefined;
+
+const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | undefined => {
+  const modelId = options.modelId === undefined ? {} : { modelId: options.modelId };
+  if (policyId === "claude") {
+    const effort = options.effort === undefined ? {} : { effort: options.effort };
+    return createClaudePolicy({ ...modelId, ...effort });
+  }
+  if (policyId === "jev") {
+    return createJevPolicy(modelId);
+  }
+  return undefined;
+};
+
+/** API keys come from the environment (ANTHROPIC_API_KEY, TYPESAFE_API_KEY) and are never logged. */
 export const createPolicyById = (
   policyId: string,
   options: PolicyOptions = {},
 ): ManagedPolicy | undefined => {
   if (policyId === "fixture") {
-    return { policy: createFixturePolicy(), close: () => undefined };
+    return { policy: createFixturePolicy(), close: noop };
   }
   if (policyId === "swift" && options.swiftCommand !== undefined) {
     const policy = createSwiftReferencePolicy({ command: options.swiftCommand });
     return { policy, close: policy.close };
   }
-  return undefined;
+  const policy = createModelPolicy(policyId, options);
+  return policy === undefined ? undefined : { policy, close: noop };
 };
 
 export const describeIssues = (issues: readonly Issue[]): string => formatIssues(issues);
