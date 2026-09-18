@@ -72,6 +72,8 @@ export const runLogSchema = z.object({
   termination: runTerminationSchema,
   journeys: z.array(journeySchema),
   decisions: z.array(decisionRecordSchema),
+  /** Digest of the final simulator state; replay must reproduce it exactly. */
+  finalStateDigest: digestSchema.optional(),
 });
 
 export type PolicyKind = z.infer<typeof policyKindSchema>;
