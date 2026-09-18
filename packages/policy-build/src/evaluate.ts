@@ -17,6 +17,8 @@ export interface EvaluateRequest {
   readonly outDir: string;
   readonly campaignSeed: number;
   readonly limits?: Partial<ProgramLimits>;
+  /** Cities excluded from this evaluation (held-out generalisation design). */
+  readonly excludeCities?: readonly string[];
   readonly logger: Logger;
 }
 
@@ -70,6 +72,7 @@ export const evaluateProgram = async (request: EvaluateRequest): Promise<Program
     repetitions: 1,
     outDir: request.outDir,
     logger: request.logger,
+    scenarioFilter: (scenario) => !(request.excludeCities ?? []).includes(scenario.city),
   });
   return {
     programId: request.program.id,

@@ -1,7 +1,11 @@
 import { z } from "zod";
 import { jsonValueSchema } from "./json-value.js";
 import { suiteRunSchema } from "./suite-index.js";
-import { CAMPAIGN_SCHEMA_VERSION, POLICY_PROGRAM_SCHEMA_VERSION } from "./versions.js";
+import {
+  CAMPAIGN_SCHEMA_VERSION,
+  EXPERIMENT_SCHEMA_VERSION,
+  POLICY_PROGRAM_SCHEMA_VERSION,
+} from "./versions.js";
 
 const idSchema = z.string().min(1);
 const digestSchema = z.string().regex(/^sha256:[0-9a-f]{64}$/);
@@ -85,6 +89,8 @@ export const spendTotalsSchema = z.object({
 export const iterationSchema = z.object({
   index: z.int().nonnegative(),
   programId: idSchema,
+  /** What this iteration's generation cost, so curves can be drawn against spend. */
+  generationCostUsd: z.number().nonnegative(),
   devSummary: evaluationSummarySchema,
   accepted: z.boolean(),
   reason: z.string(),
@@ -104,6 +110,8 @@ export const campaignSchema = z.object({
   devSplit: idSchema,
   validationSplit: idSchema,
   seed: z.int().nonnegative(),
+  /** Cities excluded from development and validation (held-out generalisation). */
+  excludeCities: z.array(idSchema),
   budget: budgetSchema,
   spent: spendTotalsSchema,
   iterations: z.array(iterationSchema),
@@ -122,3 +130,47 @@ export type SpendTotals = z.infer<typeof spendTotalsSchema>;
 export type CampaignIteration = z.infer<typeof iterationSchema>;
 export type Campaign = z.infer<typeof campaignSchema>;
 export type CampaignMode = (typeof CAMPAIGN_MODES)[number];
+
+export const experimentCampaignSchema = z.object({
+  mode: z.enum(CAMPAIGN_MODES),
+  seed: z.int().nonnegative(),
+  /** Campaign directory relative to the experiment index. */
+  dir: z.string().min(1),
+  campaignId: idSchema,
+  selectedProgramId: idSchema.nullable(),
+  /** Test evaluation file relative to the experiment index, when a program was selected. */
+  testEvaluationPath: z.string().min(1).nullable(),
+});
+
+export const experimentReferenceSchema = z.object({
+  policyId: idSchema,
+  /** Suite index of this reference policy on the test split, relative to the experiment index. */
+  suiteIndexPath: z.string().min(1),
+});
+
+/**
+ * Index of a second-paper experiment: campaigns per mode and seed, their
+ * test evaluations, and reference policies (A, C, fixture) on the same test
+ * split. Amortisation inputs are stated here so the report can show them.
+ */
+export const experimentIndexSchema = z.object({
+  schemaVersion: z.literal(EXPERIMENT_SCHEMA_VERSION),
+  id: idSchema,
+  benchmarkVersion: idSchema,
+  manifestDigest: digestSchema,
+  generator: z.object({ provider: idSchema, modelId: idSchema }),
+  testSplit: idSchema,
+  heldOutCities: z.array(idSchema),
+  budget: budgetSchema,
+  campaigns: z.array(experimentCampaignSchema),
+  references: z.array(experimentReferenceSchema),
+  amortization: z.object({
+    runsPerArtifact: z.array(z.int().positive()).min(1),
+    /** Preparation cost attributed to online policies (prompt development), USD, by policy id. */
+    onlinePreparationCostUsd: z.record(z.string(), z.number().nonnegative()),
+  }),
+});
+
+export type ExperimentCampaign = z.infer<typeof experimentCampaignSchema>;
+export type ExperimentReference = z.infer<typeof experimentReferenceSchema>;
+export type ExperimentIndex = z.infer<typeof experimentIndexSchema>;

@@ -29,6 +29,8 @@ export interface SuiteRequest {
   readonly maxDecisions?: number;
   /** Optional cap on scenarios, for smoke runs. */
   readonly limit?: number;
+  /** Optional scenario filter (for example, excluding a held-out city). */
+  readonly scenarioFilter?: (scenario: ManifestScenario) => boolean;
   readonly logger: Logger;
 }
 
@@ -159,8 +161,9 @@ const runOne = async (
 };
 
 const selectedScenarios = (request: SuiteRequest): ManifestScenario[] => {
-  const chosen = request.suite.manifest.scenarios.filter((scenario) =>
-    request.splits.includes(scenario.split),
+  const chosen = request.suite.manifest.scenarios.filter(
+    (scenario) =>
+      request.splits.includes(scenario.split) && (request.scenarioFilter?.(scenario) ?? true),
   );
   return request.limit === undefined ? chosen : chosen.slice(0, request.limit);
 };

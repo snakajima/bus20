@@ -1,0 +1,88 @@
+{
+  "schemaVersion": "bus20-experiment/1",
+  "id": "paper2-sample-1",
+  "benchmarkVersion": "synthetic-paper2/1",
+  "manifestDigest": "sha256:2e117b3b3211568aac8cdd98cd7e4a755154f538c01978a0be8d5dcea250ff52",
+  "generator": {
+    "provider": "sample",
+    "modelId": "sample-ladder/1"
+  },
+  "testSplit": "test",
+  "heldOutCities": [
+    "nyc-like"
+  ],
+  "budget": {
+    "maxGenerations": 3,
+    "maxCostUsd": null,
+    "maxEvaluations": 12
+  },
+  "campaigns": [
+    {
+      "mode": "B0",
+      "seed": 1,
+      "dir": "campaigns/B0-1",
+      "campaignId": "B0-1",
+      "selectedProgramId": "B0-1-v000",
+      "testEvaluationPath": "campaigns/B0-1/evaluations/B0-1-v000.test.json"
+    },
+    {
+      "mode": "B0",
+      "seed": 2,
+      "dir": "campaigns/B0-2",
+      "campaignId": "B0-2",
+      "selectedProgramId": "B0-2-v000",
+      "testEvaluationPath": "campaigns/B0-2/evaluations/B0-2-v000.test.json"
+    },
+    {
+      "mode": "B-restart",
+      "seed": 1,
+      "dir": "campaigns/B-restart-1",
+      "campaignId": "B-restart-1",
+      "selectedProgramId": "B-restart-1-v001",
+      "testEvaluationPath": "campaigns/B-restart-1/evaluations/B-restart-1-v001.test.json"
+    },
+    {
+      "mode": "B-restart",
+      "seed": 2,
+      "dir": "campaigns/B-restart-2",
+      "campaignId": "B-restart-2",
+      "selectedProgramId": "B-restart-2-v001",
+      "testEvaluationPath": "campaigns/B-restart-2/evaluations/B-restart-2-v001.test.json"
+    },
+    {
+      "mode": "B-self",
+      "seed": 1,
+      "dir": "campaigns/B-self-1",
+      "campaignId": "B-self-1",
+      "selectedProgramId": "B-self-1-v002",
+      "testEvaluationPath": "campaigns/B-self-1/evaluations/B-self-1-v002.test.json"
+    },
+    {
+      "mode": "B-self",
+      "seed": 2,
+      "dir": "campaigns/B-self-2",
+      "campaignId": "B-self-2",
+      "selectedProgramId": "B-self-2-v002",
+      "testEvaluationPath": "campaigns/B-self-2/evaluations/B-self-2-v002.test.json"
+    }
+  ],
+  "references": [
+    {
+      "policyId": "fixture",
+      "suiteIndexPath": "references/fixture/suite-index.json"
+    },
+    {
+      "policyId": "swift",
+      "suiteIndexPath": "references/swift/suite-index.json"
+    }
+  ],
+  "amortization": {
+    "runsPerArtifact": [
+      1,
+      10,
+      100,
+      1000
+    ],
+    "onlinePreparationCostUsd": {}
+  }
+}

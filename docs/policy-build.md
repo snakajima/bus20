@@ -78,7 +78,7 @@ and analysis.
 
 - No campaign has been run with a live model; all tests use scripted
   generators.
-- Campaign resume after interruption is not implemented (every artifact is
-  written incrementally, so a rerun can be reconstructed by hand).
+- Campaigns resume from their directory (same id, mode, seed, and manifest
+  digest); a directory holding a different campaign is refused.
 - Per-campaign wall-time and memory ceilings are recorded but not enforced
   beyond the per-decision CPU timeout and heap cap.

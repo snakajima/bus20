@@ -1,0 +1,12 @@
+{
+  "id": "paper2-sample-1",
+  "manifest": "../datasets/synthetic-paper2-1/manifest.json",
+  "generator": { "provider": "sample" },
+  "modes": ["B0", "B-restart", "B-self"],
+  "seeds": [1, 2],
+  "budget": { "maxGenerations": 3, "maxEvaluations": 12, "maxCostUsd": null },
+  "heldOutCities": ["nyc-like"],
+  "references": ["fixture", "swift"],
+  "runsPerArtifact": [1, 10, 100, 1000],
+  "onlinePreparationCostUsd": {}
+}

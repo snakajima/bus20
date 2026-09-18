@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "bus20-policy-program/1",
+  "id": "B-self-1-v001",
+  "campaignId": "B-self-1",
+  "version": 1,
+  "parentId": "B-self-1-v000",
+  "origin": "revision",
+  "language": "typescript",
+  "source": "// sample: append to the vehicle that picks the passenger up soonest\nfunction pickupTime(candidate: any, requestId: string): number {\n  const stop = candidate.stops.find((s: any) => s.requestId === requestId && s.kind === \"pickup\");\n  return stop ? stop.plannedArrivalTimeMs : Number.POSITIVE_INFINITY;\n}\nfunction isAppend(candidate: any): boolean {\n  const n = candidate.stops.length;\n  return candidate.id === candidate.vehicleId + \":\" + (n - 2) + \":\" + (n - 1);\n}\nfunction decide(o: any) {\n  const appends = o.candidates.filter(isAppend);\n  const pool = appends.length > 0 ? appends : o.candidates;\n  let best: any = undefined;\n  for (const c of pool) {\n    if (!best || pickupTime(c, o.decisionRequestId) < pickupTime(best, o.decisionRequestId)) {\n      best = c;\n    }\n  }\n  return { kind: \"chooseCandidate\", schemaVersion: \"bus20-action/1\", stateVersion: o.stateVersion, candidateId: best.id };\n}\n",
+  "sourceDigest": "sha256:40928541496748101cd5b16b5d188eff65d0826e17c1984f04468e62b6817fe6",
+  "generator": {
+    "provider": "sample",
+    "modelId": "sample-ladder/1",
+    "promptVersion": "bus20-program-prompt/1"
+  },
+  "spend": {
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "costUsd": 0,
+    "wallMs": 0
+  },
+  "trace": {
+    "rung": 1,
+    "kind": "revision",
+    "attempt": 1
+  },
+  "compiled": "\"use strict\";\n// sample: append to the vehicle that picks the passenger up soonest\nfunction pickupTime(candidate, requestId) {\n    const stop = candidate.stops.find((s) => s.requestId === requestId && s.kind === \"pickup\");\n    return stop ? stop.plannedArrivalTimeMs : Number.POSITIVE_INFINITY;\n}\nfunction isAppend(candidate) {\n    const n = candidate.stops.length;\n    return candidate.id === candidate.vehicleId + \":\" + (n - 2) + \":\" + (n - 1);\n}\nfunction decide(o) {\n    const appends = o.candidates.filter(isAppend);\n    const pool = appends.length > 0 ? appends : o.candidates;\n    let best = undefined;\n    for (const c of pool) {\n        if (!best || pickupTime(c, o.decisionRequestId) < pickupTime(best, o.decisionRequestId)) {\n            best = c;\n        }\n    }\n    return { kind: \"chooseCandidate\", schemaVersion: \"bus20-action/1\", stateVersion: o.stateVersion, candidateId: best.id };\n}\n",
+  "compileError": null
+}

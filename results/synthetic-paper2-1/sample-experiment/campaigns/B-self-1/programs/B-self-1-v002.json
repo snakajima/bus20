@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "bus20-policy-program/1",
+  "id": "B-self-1-v002",
+  "campaignId": "B-self-1",
+  "version": 2,
+  "parentId": "B-self-1-v001",
+  "origin": "revision",
+  "language": "typescript",
+  "source": "// sample: choose the candidate with the smallest increase in total squared delay\nfunction planCost(stops: any[], requests: Map<string, any>): number {\n  let total = 0;\n  for (const stop of stops) {\n    if (stop.kind !== \"dropoff\") continue;\n    const request = requests.get(stop.requestId);\n    if (!request) continue;\n    const delay = stop.plannedArrivalTimeMs - request.requestTimeMs - request.directTravelTimeMs;\n    total += delay * delay;\n  }\n  return total;\n}\nfunction decide(o: any) {\n  const requests = new Map<string, any>();\n  for (const r of o.requests) requests.set(r.id, r);\n  const basis = new Map<string, number>();\n  for (const v of o.vehicles) basis.set(v.id, planCost(v.stops, requests));\n  let best: any = undefined;\n  let bestCost = Number.POSITIVE_INFINITY;\n  for (const c of o.candidates) {\n    const cost = planCost(c.stops, requests) - (basis.get(c.vehicleId) ?? 0);\n    if (cost < bestCost) {\n      bestCost = cost;\n      best = c;\n    }\n  }\n  return { kind: \"chooseCandidate\", schemaVersion: \"bus20-action/1\", stateVersion: o.stateVersion, candidateId: best.id };\n}\n",
+  "sourceDigest": "sha256:c94b40d27bfafd19bb3dc653504f89c5628c111071997c8aa3c15ce1e2d9f847",
+  "generator": {
+    "provider": "sample",
+    "modelId": "sample-ladder/1",
+    "promptVersion": "bus20-program-prompt/1"
+  },
+  "spend": {
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "costUsd": 0,
+    "wallMs": 0
+  },
+  "trace": {
+    "rung": 2,
+    "kind": "revision",
+    "attempt": 2
+  },
+  "compiled": "\"use strict\";\n// sample: choose the candidate with the smallest increase in total squared delay\nfunction planCost(stops, requests) {\n    let total = 0;\n    for (const stop of stops) {\n        if (stop.kind !== \"dropoff\")\n            continue;\n        const request = requests.get(stop.requestId);\n        if (!request)\n            continue;\n        const delay = stop.plannedArrivalTimeMs - request.requestTimeMs - request.directTravelTimeMs;\n        total += delay * delay;\n    }\n    return total;\n}\nfunction decide(o) {\n    const requests = new Map();\n    for (const r of o.requests)\n        requests.set(r.id, r);\n    const basis = new Map();\n    for (const v of o.vehicles)\n        basis.set(v.id, planCost(v.stops, requests));\n    let best = undefined;\n    let bestCost = Number.POSITIVE_INFINITY;\n    for (const c of o.candidates) {\n        const cost = planCost(c.stops, requests) - (basis.get(c.vehicleId) ?? 0);\n        if (cost < bestCost) {\n            bestCost = cost;\n            best = c;\n        }\n    }\n    return { kind: \"chooseCandidate\", schemaVersion: \"bus20-action/1\", stateVersion: o.stateVersion, candidateId: best.id };\n}\n",
+  "compileError": null
+}
