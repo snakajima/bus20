@@ -18,6 +18,12 @@ const SCENARIO = path.join(REPO_ROOT, "datasets/fixtures/scenarios/smoke/smoke-0
 const MAP = path.join(REPO_ROOT, "datasets/fixtures/maps/grid3x3/v1/map.json");
 const CLI = path.join(REPO_ROOT, "packages/runner/dist/src/cli.js");
 
+const SWIFT_CLI =
+  process.env["BUS20_SWIFT_CLI"] ??
+  ["release", "debug"]
+    .map((config) => path.join(REPO_ROOT, "swift/.build", config, "bus20-baseline"))
+    .find((candidate) => existsSync(candidate));
+
 const tempDir = (): string => mkdtempSync(path.join(tmpdir(), "bus20-runner-"));
 
 test("writeJsonAtomic leaves no temporary file and readJsonFile validates", async () => {
@@ -102,4 +108,41 @@ test("CLI run and replay succeed on the fixture; bad usage exits 2", () => {
     readFileSync(path.join(outDir, "run-result.json"), "utf8").includes('"pain": null'),
     false,
   );
+});
+
+test("CLI runs the Swift reference and records its policy kind", () => {
+  if (SWIFT_CLI === undefined) {
+    throw new Error("Swift CLI not built: run `yarn build:swift` (or set BUS20_SWIFT_CLI)");
+  }
+  const outDir = tempDir();
+  const args = [
+    CLI,
+    "run",
+    "--policy",
+    "swift",
+    "--swift-cli",
+    SWIFT_CLI,
+    "--scenario",
+    SCENARIO,
+    "--map",
+    MAP,
+    "--out",
+    outDir,
+  ];
+  const run = spawnSync(process.execPath, args, { encoding: "utf8" });
+  assert.equal(run.status, 0, run.stderr);
+  const log: unknown = JSON.parse(readFileSync(path.join(outDir, "run-log.json"), "utf8"));
+  const parsed = runLogSchema.safeParse(log);
+  assert.ok(parsed.success);
+  assert.equal(parsed.data.policy.kind, "swift-reference");
+  assert.equal(parsed.data.policy.toolVersion, "bus20-swift-reference/1");
+  const missing = spawnSync(
+    process.execPath,
+    [CLI, "run", "--policy", "swift", "--scenario", SCENARIO, "--map", MAP, "--out", outDir],
+    {
+      encoding: "utf8",
+      env: { ...process.env, BUS20_SWIFT_CLI: "" },
+    },
+  );
+  assert.equal(missing.status, 2);
 });

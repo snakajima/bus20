@@ -6,9 +6,20 @@
   },
   "include": ["src/**/*.ts", "test/**/*.ts"],
   "references": [
-    { "path": "../contracts" },
-    { "path": "../graph" },
-    { "path": "../scoring" },
-    { "path": "../simulator" }
+    {
+      "path": "../baselines"
+    },
+    {
+      "path": "../contracts"
+    },
+    {
+      "path": "../graph"
+    },
+    {
+      "path": "../scoring"
+    },
+    {
+      "path": "../simulator"
+    }
   ]
 }

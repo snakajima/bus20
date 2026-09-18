@@ -15,3 +15,6 @@ packages/*/dist/
 packages/*/tsconfig.tsbuildinfo
 .eslintcache
 out/
+
+# Swift
+swift/.build/

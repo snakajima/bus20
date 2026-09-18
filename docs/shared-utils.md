@@ -64,3 +64,10 @@ Packages export individual modules by subpath (for example
 | `logging` | `createStderrLogger`, `silentLogger` | Structured JSON logging on stderr; stdout stays free for CLI output. |
 | `run-scenario` | `loadInputs`, `runAndScore`, `replayStoredLog`, `createPolicyById` | Load and validate inputs, run, score, verify replay, persist. |
 | `cli` | `main` | `bus20-run run` and `bus20-run replay` commands. |
+
+## `@bus20/baselines`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `json-lines-client` | `JsonLinesClient` | One long-lived child process; one request line in, one response line out, with timeouts and crash reporting. |
+| `swift-reference` | `createSwiftReferencePolicy`, `swiftResponseSchema` | Connects the headless Swift CLI to the policy contract; validates every response line. |

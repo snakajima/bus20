@@ -7,6 +7,7 @@ how well online decision-makers dispatch riders on a fixed road network.
 - [Research plan (Japanese)](docs/benchmark_plan_jp.md)
 - [Benchmark protocol v1](docs/benchmark-protocol.md)
 - [Shared utility catalog](docs/shared-utils.md)
+- [Swift reference notes](docs/swift-reference.md)
 - [Development disciplines](CLAUDE.md)
 
 ## Development
@@ -46,3 +47,18 @@ node packages/runner/dist/src/cli.js replay \
 
 The fixture policy is a smoke-test baseline only. It is neither the Swift
 reference nor an AI policy.
+
+To run the Swift insertion reference, build the CLI first (Swift 6 toolchain)
+and pass `--policy swift`:
+
+```sh
+yarn build:swift
+node packages/runner/dist/src/cli.js run --policy swift \
+  --swift-cli swift/.build/release/bus20-baseline \
+  --scenario datasets/fixtures/scenarios/smoke/smoke-01.json \
+  --map datasets/fixtures/maps/grid3x3/v1/map.json \
+  --out out/smoke-swift
+```
+
+See [the Swift reference notes](docs/swift-reference.md) for what was
+corrected and what changed relative to the original app.
