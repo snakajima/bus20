@@ -35,3 +35,11 @@ Observations:
 Directories: `<scenario>/swift`, `<scenario>/claude-numeric`,
 `<scenario>/claude-consequences`, each with `run-log.json` and
 `run-result.json`; `<scenario>/comparison.md` from `bus20-run compare`.
+
+## OpenAI smoke pilot (added with the OpenAI adapter)
+
+`smoke-01/openai-consequences`: gpt-5.6-sol at effort low under the same
+prompt (`bus20-prompt/3`), run once on 2026-09-18. Pain 19.56 against Swift
+16.23 and Claude opus-5 (low) 18.56 on the same prompt; $0.115 for 12
+decisions (23,343 tokens in, 1,091 out), p50 latency 2.6 s, p95 8.9 s.
+Single run; same variance caveat as above. See `smoke-01/comparison-openai.md`.

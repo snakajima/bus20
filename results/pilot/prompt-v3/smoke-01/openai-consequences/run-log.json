@@ -1,0 +1,584 @@
+{
+  "schemaVersion": "bus20-run-log/1",
+  "protocolVersion": "bus20-protocol/1",
+  "scenarioId": "smoke-01",
+  "scenarioDigest": "sha256:7f056ece895697ddf0381ddb90a694c05a2f2b4420d242496e85a81ae94c7af0",
+  "mapDigest": "sha256:cb528e62918e658873f9a77034a8ea6cfc8ffcf1677a4d0ee4560844c08470f1",
+  "policy": {
+    "id": "openai:gpt-5.6-sol:low:consequences:auto",
+    "kind": "general-llm",
+    "provider": "openai",
+    "modelId": "gpt-5.6-sol",
+    "promptVersion": "bus20-prompt/3",
+    "settings": {
+      "effort": "low",
+      "presentation": "consequences",
+      "timeoutMs": 120000,
+      "maxRetries": 2,
+      "maxOutputTokens": 4096,
+      "choiceMode": "auto",
+      "flatLimit": 40
+    }
+  },
+  "termination": {
+    "kind": "drained",
+    "finalTimeMs": 1140000
+  },
+  "journeys": [
+    {
+      "requestId": "r01",
+      "vehicleId": "v1",
+      "pickupTimeMs": 0,
+      "dropoffTimeMs": 120000
+    },
+    {
+      "requestId": "r02",
+      "vehicleId": "v2",
+      "pickupTimeMs": 0,
+      "dropoffTimeMs": 120000
+    },
+    {
+      "requestId": "r05",
+      "vehicleId": "v1",
+      "pickupTimeMs": 210000,
+      "dropoffTimeMs": 330000
+    },
+    {
+      "requestId": "r04",
+      "vehicleId": "v2",
+      "pickupTimeMs": 210000,
+      "dropoffTimeMs": 330000
+    },
+    {
+      "requestId": "r03",
+      "vehicleId": "v1",
+      "pickupTimeMs": 60000,
+      "dropoffTimeMs": 480000
+    },
+    {
+      "requestId": "r11",
+      "vehicleId": "v2",
+      "pickupTimeMs": 480000,
+      "dropoffTimeMs": 630000
+    },
+    {
+      "requestId": "r06",
+      "vehicleId": "v2",
+      "pickupTimeMs": 420000,
+      "dropoffTimeMs": 720000
+    },
+    {
+      "requestId": "r12",
+      "vehicleId": "v1",
+      "pickupTimeMs": 630000,
+      "dropoffTimeMs": 780000
+    },
+    {
+      "requestId": "r09",
+      "vehicleId": "v2",
+      "pickupTimeMs": 540000,
+      "dropoffTimeMs": 840000
+    },
+    {
+      "requestId": "r08",
+      "vehicleId": "v1",
+      "pickupTimeMs": 480000,
+      "dropoffTimeMs": 960000
+    },
+    {
+      "requestId": "r10",
+      "vehicleId": "v1",
+      "pickupTimeMs": 540000,
+      "dropoffTimeMs": 1020000
+    },
+    {
+      "requestId": "r07",
+      "vehicleId": "v1",
+      "pickupTimeMs": 420000,
+      "dropoffTimeMs": 1140000
+    }
+  ],
+  "decisions": [
+    {
+      "stateVersion": 0,
+      "nowMs": 0,
+      "requestId": "r01",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 0,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2692.361916,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 632,
+        "outputTokens": 18,
+        "cacheReadTokens": 0,
+        "costUsd": 0.002888,
+        "optionsOffered": 2,
+        "candidatesOffered": 2
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_0795e48ef07d5bca016aadc6852a0887d08a8093b982725d14",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 1,
+      "nowMs": 0,
+      "requestId": "r02",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 1,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2126.512166,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 1034,
+        "outputTokens": 18,
+        "cacheReadTokens": 0,
+        "costUsd": 0.004496,
+        "optionsOffered": 7,
+        "candidatesOffered": 7
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_0913b9a65a8af401016aadc68729f087d0bfb284f2eb4e1349",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 2,
+      "nowMs": 60000,
+      "requestId": "r03",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 2,
+        "candidateId": "v1:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 7351.214583,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 945,
+        "outputTokens": 172,
+        "cacheReadTokens": 0,
+        "costUsd": 0.00722,
+        "optionsOffered": 6,
+        "candidatesOffered": 6
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_0b3b5793954820fe016aadc689657487d0a8f54bf86eddaeef",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v1:0:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 3,
+      "nowMs": 120000,
+      "requestId": "r04",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 3,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 1021.3774589999994,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 795,
+        "outputTokens": 18,
+        "cacheReadTokens": 0,
+        "costUsd": 0.00354,
+        "optionsOffered": 4,
+        "candidatesOffered": 4
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_001e6ae82776d787016aadc6908e0887d092038e2cc17e2528",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v2:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 4,
+      "nowMs": 120000,
+      "requestId": "r05",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 4,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4309.426916,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 1181,
+        "outputTokens": 125,
+        "cacheReadTokens": 0,
+        "costUsd": 0.007224,
+        "optionsOffered": 9,
+        "candidatesOffered": 9
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_044b1079bdaebf0b016aadc69194f087d08c5f06f5975d2f7f",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 5,
+      "nowMs": 180000,
+      "requestId": "r06",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 5,
+        "candidateId": "v2:2:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2511.599291999999,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 1788,
+        "outputTokens": 79,
+        "cacheReadTokens": 0,
+        "costUsd": 0.008732,
+        "optionsOffered": 16,
+        "candidatesOffered": 16
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_06e56ddf961aac59016aadc695e60087d081b714223bf9d60b",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v2:2:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 6,
+      "nowMs": 240000,
+      "requestId": "r07",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 6,
+        "candidateId": "v1:1:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2576.063666000002,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 1780,
+        "outputTokens": 90,
+        "cacheReadTokens": 0,
+        "costUsd": 0.00892,
+        "optionsOffered": 16,
+        "candidatesOffered": 16
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_024a56102ce8cfe9016aadc69867d487d0afee056f40410168",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v1:1:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 7,
+      "nowMs": 300000,
+      "requestId": "r08",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 7,
+        "candidateId": "v1:2:4"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 3249.7988750000004,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2602,
+        "outputTokens": 111,
+        "cacheReadTokens": 0,
+        "costUsd": 0.012628,
+        "optionsOffered": 25,
+        "candidatesOffered": 25
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_0ffddf6bddd91702016aadc69af9f887d0af5cefa5b3d8f860",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v1:2:4\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 8,
+      "nowMs": 360000,
+      "requestId": "r09",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 8,
+        "candidateId": "v2:1:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 2246.2694999999985,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2840,
+        "outputTokens": 18,
+        "cacheReadTokens": 0,
+        "costUsd": 0.01172,
+        "optionsOffered": 27,
+        "candidatesOffered": 27
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_0cd25bea165cd22f016aadc69e449087d085b8dc50db793c27",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v2:1:3\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 9,
+      "nowMs": 420000,
+      "requestId": "r10",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 9,
+        "candidateId": "v1:3:5"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 8923.221250000002,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3646,
+        "outputTokens": 245,
+        "cacheReadTokens": 0,
+        "costUsd": 0.019484,
+        "optionsOffered": 36,
+        "candidatesOffered": 36
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_078bb3bb49fb45d5016aadc6a07b7c87d082fa8ec5dfeeb9a4",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v1:3:5\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 10,
+      "nowMs": 480000,
+      "requestId": "r11",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 10,
+        "candidateId": "v2:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 1738.656584000004,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 3902,
+        "outputTokens": 18,
+        "cacheReadTokens": 0,
+        "costUsd": 0.015968,
+        "optionsOffered": 38,
+        "candidatesOffered": 38
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_0610464549226eec016aadc6a971fc87d09b162ec931addd67",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v2:0:2\"}"
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 11,
+      "nowMs": 600000,
+      "requestId": "r12",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 11,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 4441.297875000004,
+      "usage": {
+        "stages": 1,
+        "inputTokens": 2198,
+        "outputTokens": 179,
+        "cacheReadTokens": 0,
+        "costUsd": 0.012372,
+        "optionsOffered": 20,
+        "candidatesOffered": 20
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "openai",
+            "modelId": "gpt-5.6-sol",
+            "responseId": "resp_0d076ce7c2e17ba3016aadc6ab237c87d0bc9662ab437e4e4d",
+            "status": "completed",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "text": "{\"choice\":\"v1:0:1\"}"
+          }
+        ]
+      }
+    }
+  ],
+  "finalStateDigest": "sha256:98014ff1d9e6fe56976433d26a394c04dffe3720425be63fc2cb37df4516fae7"
+}
