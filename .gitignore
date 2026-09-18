@@ -8,3 +8,9 @@ project.xcworkspace/
 xcuserdata/
 
 .DS_Store
+
+# Node
+node_modules/
+packages/*/dist/
+packages/*/tsconfig.tsbuildinfo
+.eslintcache

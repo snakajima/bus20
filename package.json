@@ -1,0 +1,40 @@
+{
+  "name": "bus20-benchmark",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "license": "CC-BY-NC-SA-4.0",
+  "engines": {
+    "node": ">=22.19"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "format": "prettier --write \"{packages,datasets,.github}/**/*.{ts,mts,mjs,json,yml,yaml}\" \"*.{json,mjs}\"",
+    "format:check": "prettier --check \"{packages,datasets,.github}/**/*.{ts,mts,mjs,json,yml,yaml}\" \"*.{json,mjs}\"",
+    "build:packages": "yarn workspace @bus20/contracts run build && yarn workspace @bus20/graph run build && yarn workspace @bus20/scoring run build",
+    "typecheck": "yarn workspaces run typecheck",
+    "lint": "eslint packages",
+    "build": "yarn build:packages",
+    "test": "node --test \"packages/*/dist/test/**/*.test.js\"",
+    "clean": "rm -rf packages/*/dist packages/*/tsconfig.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.0",
+    "@types/node": "^24.0.0",
+    "eslint": "^10.0.0",
+    "eslint-config-prettier": "^10.0.0",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.2.0",
+    "eslint-plugin-sonarjs": "^4.0.0",
+    "globals": "^16.0.0",
+    "prettier": "^3.5.0",
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.40.0"
+  },
+  "resolutions": {
+    "typescript": "^6.0.0"
+  }
+}

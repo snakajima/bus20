@@ -1,0 +1,21 @@
+{
+  "name": "@bus20/scoring",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Independent passenger-pain scorer for Bus 2.0 benchmark run logs",
+  "type": "module",
+  "exports": {
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@bus20/contracts": "0.1.0",
+    "@bus20/graph": "0.1.0"
+  }
+}

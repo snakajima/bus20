@@ -1,0 +1,236 @@
+{
+  "schemaVersion": "bus20-map/1",
+  "id": "grid3x3",
+  "nodes": [
+    {
+      "id": "n00",
+      "stopAllowed": true,
+      "lat": 37.78,
+      "lon": -122.41
+    },
+    {
+      "id": "n01",
+      "stopAllowed": true,
+      "lat": 37.78,
+      "lon": -122.40899999999999
+    },
+    {
+      "id": "n02",
+      "stopAllowed": true,
+      "lat": 37.78,
+      "lon": -122.408
+    },
+    {
+      "id": "n10",
+      "stopAllowed": true,
+      "lat": 37.781,
+      "lon": -122.41
+    },
+    {
+      "id": "n11",
+      "stopAllowed": false,
+      "lat": 37.781,
+      "lon": -122.40899999999999
+    },
+    {
+      "id": "n12",
+      "stopAllowed": true,
+      "lat": 37.781,
+      "lon": -122.408
+    },
+    {
+      "id": "n20",
+      "stopAllowed": true,
+      "lat": 37.782000000000004,
+      "lon": -122.41
+    },
+    {
+      "id": "n21",
+      "stopAllowed": true,
+      "lat": 37.782000000000004,
+      "lon": -122.40899999999999
+    },
+    {
+      "id": "n22",
+      "stopAllowed": true,
+      "lat": 37.782000000000004,
+      "lon": -122.408
+    }
+  ],
+  "edges": [
+    {
+      "id": "e-n00-n01",
+      "from": "n00",
+      "to": "n01",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n01-n00",
+      "from": "n01",
+      "to": "n00",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n00-n10",
+      "from": "n00",
+      "to": "n10",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n10-n00",
+      "from": "n10",
+      "to": "n00",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n01-n02",
+      "from": "n01",
+      "to": "n02",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n02-n01",
+      "from": "n02",
+      "to": "n01",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n01-n11",
+      "from": "n01",
+      "to": "n11",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n11-n01",
+      "from": "n11",
+      "to": "n01",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n02-n12",
+      "from": "n02",
+      "to": "n12",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n12-n02",
+      "from": "n12",
+      "to": "n02",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n10-n11",
+      "from": "n10",
+      "to": "n11",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n11-n10",
+      "from": "n11",
+      "to": "n10",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n10-n20",
+      "from": "n10",
+      "to": "n20",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n20-n10",
+      "from": "n20",
+      "to": "n10",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n11-n12",
+      "from": "n11",
+      "to": "n12",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n12-n11",
+      "from": "n12",
+      "to": "n11",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n11-n21",
+      "from": "n11",
+      "to": "n21",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n21-n11",
+      "from": "n21",
+      "to": "n11",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n12-n22",
+      "from": "n12",
+      "to": "n22",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n22-n12",
+      "from": "n22",
+      "to": "n12",
+      "travelTimeMs": 90000,
+      "lengthMeters": 720
+    },
+    {
+      "id": "e-n20-n21",
+      "from": "n20",
+      "to": "n21",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n21-n20",
+      "from": "n21",
+      "to": "n20",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n21-n22",
+      "from": "n21",
+      "to": "n22",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    },
+    {
+      "id": "e-n22-n21",
+      "from": "n22",
+      "to": "n21",
+      "travelTimeMs": 60000,
+      "lengthMeters": 480
+    }
+  ],
+  "source": {
+    "provider": "synthetic",
+    "attribution": "Bus 2.0 benchmark fixture (generated, not derived from OpenStreetMap)",
+    "license": "CC-BY-NC-SA-4.0",
+    "notes": "3x3 bidirectional grid. Horizontal edges take 60 s, vertical edges 90 s. The centre node is a junction where stops are not allowed."
+  }
+}

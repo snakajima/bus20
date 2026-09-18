@@ -1,0 +1,106 @@
+{
+  "schemaVersion": "bus20-scenario/1",
+  "id": "smoke-01",
+  "map": {
+    "id": "grid3x3",
+    "digest": "sha256:cb528e62918e658873f9a77034a8ea6cfc8ffcf1677a4d0ee4560844c08470f1"
+  },
+  "startTimeMs": 0,
+  "demandEndTimeMs": 600000,
+  "completionDeadlineMs": 3600000,
+  "vehicles": [
+    { "id": "v1", "nodeId": "n00", "capacity": 4 },
+    { "id": "v2", "nodeId": "n22", "capacity": 4 }
+  ],
+  "requests": [
+    {
+      "id": "r01",
+      "requestTimeMs": 0,
+      "originNodeId": "n00",
+      "destinationNodeId": "n02",
+      "passengers": 1
+    },
+    {
+      "id": "r02",
+      "requestTimeMs": 0,
+      "originNodeId": "n22",
+      "destinationNodeId": "n20",
+      "passengers": 1
+    },
+    {
+      "id": "r03",
+      "requestTimeMs": 60000,
+      "originNodeId": "n01",
+      "destinationNodeId": "n21",
+      "passengers": 1
+    },
+    {
+      "id": "r04",
+      "requestTimeMs": 120000,
+      "originNodeId": "n10",
+      "destinationNodeId": "n12",
+      "passengers": 1
+    },
+    {
+      "id": "r05",
+      "requestTimeMs": 120000,
+      "originNodeId": "n12",
+      "destinationNodeId": "n10",
+      "passengers": 1
+    },
+    {
+      "id": "r06",
+      "requestTimeMs": 180000,
+      "originNodeId": "n02",
+      "destinationNodeId": "n20",
+      "passengers": 1
+    },
+    {
+      "id": "r07",
+      "requestTimeMs": 240000,
+      "originNodeId": "n20",
+      "destinationNodeId": "n02",
+      "passengers": 1
+    },
+    {
+      "id": "r08",
+      "requestTimeMs": 300000,
+      "originNodeId": "n21",
+      "destinationNodeId": "n01",
+      "passengers": 1
+    },
+    {
+      "id": "r09",
+      "requestTimeMs": 360000,
+      "originNodeId": "n00",
+      "destinationNodeId": "n22",
+      "passengers": 1
+    },
+    {
+      "id": "r10",
+      "requestTimeMs": 420000,
+      "originNodeId": "n22",
+      "destinationNodeId": "n00",
+      "passengers": 1
+    },
+    {
+      "id": "r11",
+      "requestTimeMs": 480000,
+      "originNodeId": "n01",
+      "destinationNodeId": "n10",
+      "passengers": 1
+    },
+    {
+      "id": "r12",
+      "requestTimeMs": 600000,
+      "originNodeId": "n12",
+      "destinationNodeId": "n21",
+      "passengers": 1
+    }
+  ],
+  "provenance": {
+    "generator": "hand-authored",
+    "pattern": "mixed directions, low load",
+    "purpose": "smoke test fixture; not a benchmark test case"
+  }
+}
