@@ -83,3 +83,25 @@ Packages export individual modules by subpath (for example
 | `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID`, `EFFORT_LEVELS` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |
 
 `@bus20/runner` also gains `compare` (`loadRunDirectory`, `toRow`, `comparisonMarkdown`) and `writeTextAtomic` in `files`.
+
+## `@bus20/datasets`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `synthetic-map` | `generateSyntheticMap` | Seeded, strongly connected, city-like grid maps with one-way streets. |
+| `demand` | `generateScenario`, `meanDirectTravelMs` | Fixed request sequences: uniform, commute, hotspot; load as target utilisation. |
+| `suite-config` | `suiteConfigSchema` | Configuration of a versioned synthetic suite. |
+| `build-suite` | `buildSuite`, `mapPath`, `scenarioPath` | Pure config-to-suite build with manifest digests. |
+| `files` | `writeSuite`, `loadSuite`, `readManifest`, `writeJsonAtomic` | Suite persistence and full verification. |
+
+`@bus20/contracts` gains `random` (`createRng`, `seedFromLabel`), `manifest`, and `suite-index`.
+
+## `@bus20/analysis`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `statistics` | `mean`, `bootstrapMeanInterval` | Seeded percentile bootstrap over scenario-level values. |
+| `aggregate` | `summarizeCells`, `summarizePaired`, `summarizeAcrossCities` | Success rates, conditional pain, paired differences, equal-weight city means. |
+| `report` | `analyzeSuite`, `analysisMarkdown` | JSON and Markdown paper artifacts. |
+
+`@bus20/runner` gains `suite` (`runSuite`) for paired evaluation with resume.

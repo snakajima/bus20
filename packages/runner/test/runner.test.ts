@@ -1,5 +1,6 @@
 import { runLogSchema } from "@bus20/contracts/run-log";
 import { runResultSchema } from "@bus20/contracts/run-result";
+import { suiteIndexSchema } from "@bus20/contracts/suite-index";
 import { createFixturePolicy } from "@bus20/simulator/fixture-policy";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
@@ -17,6 +18,7 @@ const REPO_ROOT = path.resolve(import.meta.dirname, "../../../..");
 const SCENARIO = path.join(REPO_ROOT, "datasets/fixtures/scenarios/smoke/smoke-01.json");
 const MAP = path.join(REPO_ROOT, "datasets/fixtures/maps/grid3x3/v1/map.json");
 const CLI = path.join(REPO_ROOT, "packages/runner/dist/src/cli.js");
+const ANALYZE_CLI = path.join(REPO_ROOT, "packages/analysis/dist/src/cli.js");
 
 const SWIFT_CLI =
   process.env["BUS20_SWIFT_CLI"] ??
@@ -234,4 +236,47 @@ test("model policies are selectable and an invalid effort is a usage error", () 
   );
   assert.equal(noKey.status, 2);
   assert.match(noKey.stderr, /TYPESAFE_API_KEY/);
+});
+
+test("suite runs every policy on every selected scenario, resumes, and analyzes", () => {
+  const manifestPath = path.join(REPO_ROOT, "datasets/synthetic-dev-1/manifest.json");
+  const outDir = tempDir();
+  const args = [
+    CLI,
+    "suite",
+    "--manifest",
+    manifestPath,
+    "--policies",
+    "fixture",
+    "--splits",
+    "dev",
+    "--limit",
+    "2",
+    "--out",
+    outDir,
+  ];
+  const first = spawnSync(process.execPath, args, { encoding: "utf8" });
+  assert.equal(first.status, 0, first.stderr);
+  const indexPath = path.join(outDir, "suite-index.json");
+  const index = suiteIndexSchema.parse(JSON.parse(readFileSync(indexPath, "utf8")));
+  assert.equal(index.runs.length, 2);
+  assert.ok(index.runs.every((run) => run.policy.kind === "fixture" && run.replayMatches));
+  const second = spawnSync(process.execPath, args, { encoding: "utf8" });
+  assert.equal(second.status, 0, second.stderr);
+  assert.equal((second.stderr.match(/suite\.reuse/g) ?? []).length, 2);
+  const analyze = spawnSync(
+    process.execPath,
+    [
+      ANALYZE_CLI,
+      "--suite-index",
+      indexPath,
+      "--reference",
+      "fixture-append-earliest-pickup",
+      "--out",
+      path.join(outDir, "analysis"),
+    ],
+    { encoding: "utf8" },
+  );
+  assert.equal(analyze.status, 0, analyze.stderr);
+  assert.ok(existsSync(path.join(outDir, "analysis", "analysis.md")));
 });

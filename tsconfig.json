@@ -11,6 +11,9 @@
       "path": "packages/scoring"
     },
     {
+      "path": "packages/datasets"
+    },
+    {
       "path": "packages/simulator"
     },
     {
@@ -18,6 +21,9 @@
     },
     {
       "path": "packages/models"
+    },
+    {
+      "path": "packages/analysis"
     },
     {
       "path": "packages/runner"
