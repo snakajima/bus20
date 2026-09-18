@@ -8,7 +8,9 @@ import {
   checkScenarioSemantics,
 } from "@bus20/contracts/scenario";
 import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
-import { createClaudePolicy, type Effort } from "@bus20/models/claude-policy";
+import { createClaudePolicy } from "@bus20/models/claude-policy";
+import { createOpenAIPolicy } from "@bus20/models/openai-policy";
+import { type Effort } from "@bus20/models/effort";
 import { createJevPolicy } from "@bus20/models/jev-policy";
 import { type ChoiceSettings } from "@bus20/models/choice-procedure";
 import { type PresentationId } from "@bus20/models/presentation";
@@ -111,13 +113,13 @@ export const replayStoredLog = async (
 export interface PolicyOptions {
   /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
   readonly swiftCommand?: string;
-  /** Exact model ID for `claude` or `jev`; defaults are the pinned IDs. */
+  /** Exact model ID for `claude`, `openai`, or `jev`; defaults are the pinned IDs. */
   readonly modelId?: string;
-  /** Reasoning effort for `claude`. */
+  /** Reasoning effort for `claude` and `openai`. */
   readonly effort?: Effort;
-  /** Flat, hierarchical, or auto choice for `claude` and `jev`. */
+  /** Flat, hierarchical, or auto choice for the model policies. */
   readonly choice?: ChoiceSettings;
-  /** Jev only: presentation and self-consistency repeats. */
+  /** Presentation for the model policies; self-consistency repeats for `jev` only. */
   readonly presentation?: PresentationId;
   readonly repeats?: number;
   /** A frozen generated program for `program`, plus the seed its Math.random gets. */
@@ -131,19 +133,24 @@ export interface ManagedPolicy {
   readonly close: () => void;
 }
 
-export const POLICY_IDS = ["fixture", "swift", "claude", "jev", "program"] as const;
+export const POLICY_IDS = ["fixture", "swift", "claude", "openai", "jev", "program"] as const;
 
 const noop = (): undefined => undefined;
 
+const sharedModelOptions = (options: PolicyOptions) => ({
+  ...(options.modelId === undefined ? {} : { modelId: options.modelId }),
+  ...(options.choice === undefined ? {} : { choice: options.choice }),
+  ...(options.presentation === undefined ? {} : { presentation: options.presentation }),
+});
+
 const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | undefined => {
-  const shared = {
-    ...(options.modelId === undefined ? {} : { modelId: options.modelId }),
-    ...(options.choice === undefined ? {} : { choice: options.choice }),
-    ...(options.presentation === undefined ? {} : { presentation: options.presentation }),
-  };
+  const shared = sharedModelOptions(options);
+  const effort = options.effort === undefined ? {} : { effort: options.effort };
   if (policyId === "claude") {
-    const effort = options.effort === undefined ? {} : { effort: options.effort };
     return createClaudePolicy({ ...shared, ...effort });
+  }
+  if (policyId === "openai") {
+    return createOpenAIPolicy({ ...shared, ...effort });
   }
   if (policyId === "jev") {
     return createJevPolicy({
@@ -154,7 +161,7 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
   return undefined;
 };
 
-/** API keys come from the environment (ANTHROPIC_API_KEY, TYPESAFE_API_KEY) and are never logged. */
+/** API keys come from the environment (ANTHROPIC_API_KEY, OPENAI_API_KEY, TYPESAFE_API_KEY) and are never logged. */
 export const createPolicyById = (
   policyId: string,
   options: PolicyOptions = {},

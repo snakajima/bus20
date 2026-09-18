@@ -56,15 +56,22 @@ the prompt version follows the presentation.
   Adaptive thinking is the model default and is not overridden; `effort` is a
   recorded setting (`--effort`, default `low` so pilots stay cheap;
   experiments set it explicitly).
+- **OpenAI** (`openai` SDK, Responses API, `gpt-5.6-sol` by default; the
+  model priced next to `claude-opus-5`, with `gpt-6-astra` selectable via
+  `--model`): the same instruction text as Claude's system prompt goes in
+  `instructions`, the same JSON message in `input`, and a strict JSON schema
+  constrains the reply to the offered ids. `reasoning.effort` takes the same
+  `--effort` value; `store` is off. Refusals and incomplete responses fail
+  the decision.
 
-Neither adapter is given tools, memory across decisions, or extra features.
+No adapter is given tools, memory across decisions, or extra features.
 More than 255 candidates (Jev's Choice limit) fails the decision instead of
 pruning; the first common suite must fit this limit.
 
 ## What is recorded per decision
 
 `DecisionRecord.usage` (numbers): `inputTokens`, `outputTokens`,
-`cacheReadTokens` (Claude), `costUsd` at the pinned tariff, `confidence` and
+`cacheReadTokens` (Claude, OpenAI), `costUsd` at the pinned tariff, `confidence` and
 `chosenProbability` (Jev), and `candidatesOffered`. `DecisionRecord.trace`
 (JSON): provider, the model ID the API reported, the raw reply text or the
 full probability distribution, and the response ID. Wall-clock latency is
@@ -93,7 +100,7 @@ results must state the tariff date they used.
 
 ## Running
 
-API keys come from `ANTHROPIC_API_KEY` and `TYPESAFE_API_KEY`. They are read
+API keys come from `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `TYPESAFE_API_KEY`. They are read
 by the SDKs and never logged or written to run logs.
 
 ```sh

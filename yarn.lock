@@ -1618,6 +1618,11 @@ object.values@^1.2.1:
     define-properties "^1.2.1"
     es-object-atoms "^1.0.0"
 
+openai@^7.19.0:
+  version "7.19.0"
+  resolved "https://registry.yarnpkg.com/openai/-/openai-7.19.0.tgz#8c02695d0afbdf1d41d5bb78b31bddaad14d99ad"
+  integrity sha512-MX2s3u2L5racTO0CC/SWpCOasJQBCJrqLKXK+l82cAhdeF8mPMBEe/gxMm0ZFa2xpKpOFLRjxv5afYEZbBXmbQ==
+
 optionator@^0.9.3:
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/optionator/-/optionator-0.9.4.tgz#7ea1c1a5d91d764fb282139c88fe11e182a3a734"

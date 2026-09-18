@@ -19,6 +19,7 @@
     "@bus20/contracts": "0.1.0",
     "@bus20/simulator": "0.1.0",
     "@typesafe-ai/sdk": "^0.6.0",
+    "openai": "^7.19.0",
     "zod": "^4.0.0"
   }
 }

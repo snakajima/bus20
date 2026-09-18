@@ -196,11 +196,16 @@ test("compare command tabulates run directories and writes markdown", async () =
 
 test("model policies are selectable and an invalid effort is a usage error", () => {
   process.env["ANTHROPIC_API_KEY"] = "test";
+  process.env["OPENAI_API_KEY"] = "test";
   process.env["TYPESAFE_API_KEY"] = "test";
   const claude = createPolicyById("claude", { modelId: "claude-sonnet-5", effort: "low" });
   assert.ok(claude !== undefined);
   assert.equal(claude.policy.descriptor.kind, "general-llm");
   assert.equal(claude.policy.descriptor.modelId, "claude-sonnet-5");
+  const openai = createPolicyById("openai", { effort: "low" });
+  assert.ok(openai !== undefined);
+  assert.equal(openai.policy.descriptor.provider, "openai");
+  assert.equal(openai.policy.descriptor.modelId, "gpt-5.6-sol");
   const jev = createPolicyById("jev");
   assert.ok(jev !== undefined);
   assert.equal(jev.policy.descriptor.kind, "jev");

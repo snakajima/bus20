@@ -1,9 +1,10 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { type JsonValue } from "@bus20/contracts/json-value";
 import { parseJsonWithSchema } from "@bus20/contracts/json";
 import { formatIssues } from "@bus20/contracts/result";
 import { type PolicyDescriptor } from "@bus20/contracts/run-log";
 import { type Policy } from "@bus20/simulator/policy";
+import OpenAI from "openai";
+import { type Response as OpenAIResponse } from "openai/resources/responses/responses";
 import { z } from "zod";
 import { type ChoiceClient, type ChoiceReply, type ChoiceRequest } from "./choice-client.js";
 import {
@@ -21,19 +22,27 @@ import {
 } from "./presentation.js";
 import { usageRecord } from "./pricing.js";
 
-export const DEFAULT_CLAUDE_MODEL_ID = "claude-opus-5" as const;
-export const ANTHROPIC_PROVIDER = "anthropic" as const;
+/**
+ * Pinned model ID as listed on 2026-09-18. GPT-5.6 Sol is the OpenAI model
+ * priced next to claude-opus-5 ($4/$20 vs $5/$25 per MTok); gpt-6-astra is
+ * the flagship and selectable with --model.
+ */
+export const DEFAULT_OPENAI_MODEL_ID = "gpt-5.6-sol" as const;
+export const OPENAI_PROVIDER = "openai" as const;
 const DEFAULT_TIMEOUT_MS = 120_000;
 const DEFAULT_MAX_RETRIES = 2;
 const MAX_OUTPUT_TOKENS = 4096;
+const COMPLETED = "completed" as const;
+const SCHEMA_NAME = "candidate_choice" as const;
 
-const systemPrompt = (presentation: Presentation): string =>
+/** Same wording as the Claude adapter: the instruction text is part of the shared prompt. */
+const instructions = (presentation: Presentation): string =>
   `${OBJECTIVE_TEXT} ${presentation.encodingText} ` +
   "Each message carries the current state, one question, and the options to choose from. " +
   'Reply with JSON only: {"choice": <one of the offered option ids>}. ' +
   "Do not invent ids and do not choose more than one.";
 
-export interface ClaudePolicyOptions {
+export interface OpenAIPolicyOptions {
   readonly modelId?: string;
   readonly apiKey?: string;
   readonly effort?: Effort;
@@ -57,8 +66,10 @@ interface Settings {
 
 const replySchema = z.object({ choice: z.string().min(1) });
 
-const outputFormat = (ids: readonly string[]) => ({
+const textFormat = (ids: readonly string[]) => ({
   type: "json_schema" as const,
+  name: SCHEMA_NAME,
+  strict: true,
   schema: {
     type: "object",
     properties: { choice: { type: "string", enum: [...ids] } },
@@ -68,9 +79,9 @@ const outputFormat = (ids: readonly string[]) => ({
 });
 
 const describe = (settings: Settings): PolicyDescriptor => ({
-  id: `claude:${settings.modelId}:${settings.effort}:${settings.presentation.id}:${settings.choice.mode}`,
+  id: `openai:${settings.modelId}:${settings.effort}:${settings.presentation.id}:${settings.choice.mode}`,
   kind: "general-llm",
-  provider: ANTHROPIC_PROVIDER,
+  provider: OPENAI_PROVIDER,
   modelId: settings.modelId,
   promptVersion: settings.presentation.promptVersion,
   settings: {
@@ -84,36 +95,44 @@ const describe = (settings: Settings): PolicyDescriptor => ({
   },
 });
 
-const textOf = (message: Anthropic.Message): string =>
-  message.content
-    .filter((block): block is Anthropic.TextBlock => block.type === "text")
-    .map((block) => block.text)
-    .join("");
-
-const parseChoice = (message: Anthropic.Message, ids: readonly string[]): string => {
-  if (message.stop_reason !== "end_turn") {
-    throw new Error(`claude stopped with ${String(message.stop_reason)}`);
+const refusalOf = (response: OpenAIResponse): string | undefined => {
+  for (const item of response.output) {
+    if (item.type === "message") {
+      const refusal = item.content.find((part) => part.type === "refusal");
+      if (refusal !== undefined) {
+        return refusal.refusal;
+      }
+    }
   }
-  const parsed = parseJsonWithSchema(replySchema, textOf(message));
+  return undefined;
+};
+
+const parseChoice = (response: OpenAIResponse, ids: readonly string[]): string => {
+  if (response.status !== COMPLETED) {
+    const reason = response.incomplete_details?.reason ?? response.error?.message ?? "unknown";
+    throw new Error(`openai response ${String(response.status)}: ${reason}`);
+  }
+  const refusal = refusalOf(response);
+  if (refusal !== undefined) {
+    throw new Error(`openai refused: ${refusal}`);
+  }
+  const parsed = parseJsonWithSchema(replySchema, response.output_text);
   if (!parsed.ok) {
-    throw new Error(`claude reply is not a choice: ${formatIssues(parsed.issues)}`);
+    throw new Error(`openai reply is not a choice: ${formatIssues(parsed.issues)}`);
   }
   if (!ids.includes(parsed.value.choice)) {
-    throw new Error(`claude chose unknown option "${parsed.value.choice}"`);
+    throw new Error(`openai chose unknown option "${parsed.value.choice}"`);
   }
   return parsed.value.choice;
 };
 
-const traceOf = (
-  message: Anthropic.Message,
-  request: ChoiceRequest,
-): Record<string, JsonValue> => ({
-  provider: ANTHROPIC_PROVIDER,
-  modelId: message.model,
-  responseId: message.id,
-  stopReason: message.stop_reason ?? null,
+const traceOf = (response: OpenAIResponse, request: ChoiceRequest): Record<string, JsonValue> => ({
+  provider: OPENAI_PROVIDER,
+  modelId: response.model,
+  responseId: response.id,
+  status: response.status ?? null,
   question: request.question,
-  text: textOf(message),
+  text: response.output_text,
 });
 
 const userMessage = (request: ChoiceRequest): string =>
@@ -123,41 +142,43 @@ const userMessage = (request: ChoiceRequest): string =>
     options: request.options.map((option) => ({ id: option.id, ...option.description })),
   });
 
-/** Claude answers each structured choice with structured output constrained to the option ids. */
+/** OpenAI answers each structured choice with a strict JSON schema whose only value is an option id. */
 const toReply = (
   settings: Settings,
   request: ChoiceRequest,
-  message: Anthropic.Message,
+  response: OpenAIResponse,
 ): ChoiceReply => {
   const ids = request.options.map((option) => option.id);
   const usage = {
-    inputTokens: message.usage.input_tokens,
-    outputTokens: message.usage.output_tokens,
-    cacheReadTokens: message.usage.cache_read_input_tokens ?? 0,
+    inputTokens: response.usage?.input_tokens ?? 0,
+    outputTokens: response.usage?.output_tokens ?? 0,
+    cacheReadTokens: response.usage?.input_tokens_details.cached_tokens ?? 0,
   };
   return {
-    choice: parseChoice(message, ids),
+    choice: parseChoice(response, ids),
     usage: usageRecord(settings.modelId, usage, { optionsOffered: ids.length }),
-    trace: traceOf(message, request),
+    trace: traceOf(response, request),
   };
 };
 
-const createClaudeChoiceClient = (client: Anthropic, settings: Settings): ChoiceClient => ({
+const createOpenAIChoiceClient = (client: OpenAI, settings: Settings): ChoiceClient => ({
   ask: async (request): Promise<ChoiceReply> => {
     const ids = request.options.map((option) => option.id);
-    const message = await client.messages.create({
+    const response = await client.responses.create({
       model: settings.modelId,
-      max_tokens: MAX_OUTPUT_TOKENS,
-      system: systemPrompt(settings.presentation),
-      messages: [{ role: "user", content: userMessage(request) }],
-      output_config: { effort: settings.effort, format: outputFormat(ids) },
+      instructions: instructions(settings.presentation),
+      input: userMessage(request),
+      max_output_tokens: MAX_OUTPUT_TOKENS,
+      reasoning: { effort: settings.effort },
+      text: { format: textFormat(ids) },
+      store: false,
     });
-    return toReply(settings, request, message);
+    return toReply(settings, request, response);
   },
 });
 
-const settingsOf = (options: ClaudePolicyOptions): Settings => ({
-  modelId: options.modelId ?? DEFAULT_CLAUDE_MODEL_ID,
+const settingsOf = (options: OpenAIPolicyOptions): Settings => ({
+  modelId: options.modelId ?? DEFAULT_OPENAI_MODEL_ID,
   effort: options.effort ?? DEFAULT_EFFORT,
   timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
@@ -166,19 +187,20 @@ const settingsOf = (options: ClaudePolicyOptions): Settings => ({
 });
 
 /**
- * A general LLM (Claude) in the common candidate-choice track, flat or
- * hierarchical. No server-side fallback is enabled: a refusal or a malformed
- * reply fails the decision, and the failed run is kept as data.
+ * A general LLM (OpenAI) in the common candidate-choice track, with the same
+ * prompt, presentation, and choice procedure as the Claude adapter. A
+ * refusal, an incomplete response, or a malformed reply fails the decision,
+ * and the failed run is kept as data.
  */
-export const createClaudePolicy = (options: ClaudePolicyOptions = {}): Policy => {
+export const createOpenAIPolicy = (options: OpenAIPolicyOptions = {}): Policy => {
   const settings = settingsOf(options);
-  const client = new Anthropic({
+  const client = new OpenAI({
     ...(options.apiKey === undefined ? {} : { apiKey: options.apiKey }),
     ...(options.fetch === undefined ? {} : { fetch: options.fetch }),
     timeout: settings.timeoutMs,
     maxRetries: settings.maxRetries,
   });
-  const choiceClient = createClaudeChoiceClient(client, settings);
+  const choiceClient = createOpenAIChoiceClient(client, settings);
   return {
     descriptor: describe(settings),
     decide: (observation) =>

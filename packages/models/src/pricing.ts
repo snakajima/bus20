@@ -30,6 +30,19 @@ export const TARIFFS: Readonly<Record<string, Tariff>> = {
     retrievedAt: "2026-06-24",
     source: "Anthropic model list (claude-api skill cache)",
   },
+  "gpt-5.6-sol": {
+    inputUsdPerMillion: 4,
+    outputUsdPerMillion: 20,
+    cacheReadUsdPerMillion: 0.4,
+    retrievedAt: "2026-09-18",
+    source: "https://developers.openai.com/api/docs/models/gpt-5.6-sol",
+  },
+  "gpt-6-astra": {
+    inputUsdPerMillion: 10,
+    outputUsdPerMillion: 50,
+    retrievedAt: "2026-09-18",
+    source: "https://developers.openai.com/api/docs/pricing",
+  },
   "jev-1.13.0": {
     // Listed as "$42 / $0.042 per Btok/Mtok"; one rate for input and output.
     inputUsdPerMillion: 0.042,

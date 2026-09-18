@@ -86,7 +86,9 @@ Packages export individual modules by subpath (for example
 | `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Consequences presentation (shared prompt v3): arithmetic in code, words and whole minutes. |
 | `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |
-| `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID`, `EFFORT_LEVELS` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |
+| `effort` | `EFFORT_LEVELS`, `Effort`, `DEFAULT_EFFORT` | Reasoning effort names shared by the general-LLM adapters. |
+| `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |
+| `openai-policy` | `createOpenAIPolicy`, `DEFAULT_OPENAI_MODEL_ID` | OpenAI via the Responses API with a strict JSON schema; same prompt and procedure as Claude. |
 
 `@bus20/runner` also gains `compare` (`loadRunDirectory`, `toRow`, `comparisonMarkdown`) and `writeTextAtomic` in `files`.
 

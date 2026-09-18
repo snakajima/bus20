@@ -3,7 +3,7 @@ import { type Issue } from "@bus20/contracts/result";
 import { type ManifestScenario } from "@bus20/contracts/manifest";
 import { type PolicyProgram } from "@bus20/contracts/policy-artifact";
 import { type SuiteIndex } from "@bus20/contracts/suite-index";
-import { EFFORT_LEVELS, type Effort } from "@bus20/models/claude-policy";
+import { EFFORT_LEVELS, type Effort } from "@bus20/models/effort";
 import {
   CHOICE_MODES,
   type ChoiceSettings,
@@ -31,7 +31,7 @@ import {
 
 const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
-                [--policy fixture|swift|claude|jev|program] [--swift-cli <path>]
+                [--policy fixture|swift|claude|openai|jev|program] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]
                 [--presentation consequences|numeric] [--repeats N]
