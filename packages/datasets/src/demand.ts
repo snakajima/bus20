@@ -24,15 +24,24 @@ export interface DemandSpec {
   readonly deadlineMarginMinutes: number;
   /** Fraction of fleet-time the direct trips alone would occupy. */
   readonly targetUtilization: number;
+  /** Hotspot pattern parameters; defaults reproduce generator version 1 demand. */
+  readonly hotspot?: HotspotSpec;
 }
+
+export interface HotspotSpec {
+  /** Share of requests that originate in the hotspot cluster during the burst. */
+  readonly share: number;
+  /** Burst window as fractions of the demand period. */
+  readonly burstStart: number;
+  readonly burstEnd: number;
+}
+
+export const DEFAULT_HOTSPOT: HotspotSpec = { share: 0.5, burstStart: 0.4, burstEnd: 0.55 };
 
 const DIRECT_SAMPLE_PAIRS = 200;
 const COMMUTE_SHARE = 0.7;
-const HOTSPOT_SHARE = 0.5;
 const CENTER_FRACTION = 0.2;
 const HOTSPOT_FRACTION = 0.1;
-const BURST_START = 0.4;
-const BURST_END = 0.55;
 
 const stopNodes = (map: MapDocument): MapNode[] => map.nodes.filter((node) => node.stopAllowed);
 
@@ -119,17 +128,19 @@ const drawCommute = (rng: Rng, zones: Zones, demandEndMs: number): Draw => {
   return { origin, destination, timeMs: rng.int(Math.floor(demandEndMs / 2) + 1) };
 };
 
-const drawHotspot = (rng: Rng, zones: Zones, demandEndMs: number): Draw => {
-  if (rng.next() >= HOTSPOT_SHARE) {
+const drawHotspot = (rng: Rng, zones: Zones, demandEndMs: number, hotspot: HotspotSpec): Draw => {
+  if (rng.next() >= hotspot.share) {
     return drawUniform(rng, zones, demandEndMs);
   }
   const [origin, destination] = distinctPair(rng, zones.hotspot, zones.all);
-  const start = Math.floor(demandEndMs * BURST_START);
-  const end = Math.floor(demandEndMs * BURST_END);
+  const start = Math.floor(demandEndMs * hotspot.burstStart);
+  const end = Math.floor(demandEndMs * hotspot.burstEnd);
   return { origin, destination, timeMs: start + rng.int(end - start + 1) };
 };
 
-const DRAWS: Record<DemandPattern, (rng: Rng, zones: Zones, demandEndMs: number) => Draw> = {
+type Drawer = (rng: Rng, zones: Zones, demandEndMs: number, hotspot: HotspotSpec) => Draw;
+
+const DRAWS: Record<DemandPattern, Drawer> = {
   uniform: drawUniform,
   commute: drawCommute,
   hotspot: drawHotspot,
@@ -168,6 +179,13 @@ const provenanceOf = (spec: DemandSpec, meanDirectMs: number): Record<string, st
   split: spec.split,
   targetUtilization: String(spec.targetUtilization),
   meanDirectMinutes: (meanDirectMs / MS_PER_MINUTE).toFixed(3),
+  // Only configured hotspots are recorded, so version-1 documents rebuild byte for byte.
+  ...(spec.hotspot === undefined
+    ? {}
+    : {
+        hotspotShare: String(spec.hotspot.share),
+        hotspotBurst: `${spec.hotspot.burstStart}-${spec.hotspot.burstEnd}`,
+      }),
 });
 
 const drawVehicles = (rng: Rng, zones: Zones, spec: DemandSpec) =>
@@ -177,14 +195,24 @@ const drawVehicles = (rng: Rng, zones: Zones, spec: DemandSpec) =>
     capacity: spec.capacity,
   }));
 
+const drawRequests = (
+  rng: Rng,
+  zones: Zones,
+  demandEndMs: number,
+  spec: DemandSpec,
+  count: number,
+): Draw[] => {
+  const hotspot = spec.hotspot ?? DEFAULT_HOTSPOT;
+  return Array.from({ length: count }, () => DRAWS[spec.pattern](rng, zones, demandEndMs, hotspot));
+};
+
 export const generateScenario = (map: MapDocument, spec: DemandSpec): ScenarioDocument => {
   const rng = createRng(spec.seed);
   // Seeded by the map, not the scenario, so every scenario in a cell gets the same count.
   const meanDirectMs = meanDirectTravelMs(map, createRng(seedFromLabel(0, `direct:${map.id}`)));
   const zones = zonesOf(map, rng);
   const demandEndMs = spec.demandMinutes * MS_PER_MINUTE;
-  const count = requestCountFor(spec, meanDirectMs);
-  const draws = Array.from({ length: count }, () => DRAWS[spec.pattern](rng, zones, demandEndMs));
+  const draws = drawRequests(rng, zones, demandEndMs, spec, requestCountFor(spec, meanDirectMs));
   return {
     schemaVersion: SCENARIO_SCHEMA_VERSION,
     id: spec.scenarioId,

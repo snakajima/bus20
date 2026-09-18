@@ -40,11 +40,36 @@ The hierarchical procedure works with this presentation too: stage one
 describes each vehicle in words (idle or busy, riders on board, soonest
 pickup in minutes, number of legal insertions).
 
+## Large candidate sets: the tournament
+
+Jev accepts at most 255 options per question and about 64k input tokens
+per call, which the native presentation reaches near 220 candidates. Jev's
+default choice mode is therefore `tournament`: flat up to `flatLimit` (180)
+candidates; beyond that, the candidates are split into chunks of
+`chunkSize` (120), one Choice per chunk is asked in a single systemOne call
+(Jev scores questions independently within one call, so this costs about
+one flat call), and a final Choice picks among the chunk winners. Unlike
+the vehicle-first hierarchy, every candidate is judged as a real option
+with its full description; `stages` records the number of questions.
+
 ## Self-consistency
 
 `repeats: k` asks each choice k times with a seeded permutation of the
 option order and sums the returned probability distributions in code; the
 host-order argmax wins. Every call is charged and `repeats` is recorded.
+
+## Dev-split runs
+
+`results/synthetic-dev-1/dev-jev-native/`: on the original dev suite
+(high load at 0.8 utilisation, 50% hotspot burst), Swift beat Jev on all 24
+completed pairs and Jev failed three high-load runs on its limits. The gap
+tracked candidate-set size: near parity at 16 to 40 candidates, 4 to 17×
+worse at 135 to 230.
+
+`results/synthetic-dev-2/dev-high-jev/`: with high load at 0.65 and a 40%
+hotspot burst over 15 minutes, plus the tournament, all nine high-load
+runs complete, Jev is 1.4 to 3.1× Swift on uniform and commute demand
+(one win), and 2.5 to 4.5× on hotspot demand.
 
 ## Smoke pilot
 

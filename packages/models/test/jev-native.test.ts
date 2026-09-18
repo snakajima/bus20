@@ -120,6 +120,9 @@ test("Jev policy defaults to the native presentation and records it", () => {
   assert.ok(settings !== undefined);
   assert.equal(settings["presentation"], "jev-native");
   assert.equal(settings["repeats"], 2);
+  assert.equal(settings["choiceMode"], "tournament");
+  assert.equal(settings["flatLimit"], 180);
+  assert.equal(settings["chunkSize"], 120);
   assert.equal(
     createJevPolicy({ apiKey: "k", presentation: "shared" }).descriptor.promptVersion,
     "bus20-prompt/2",

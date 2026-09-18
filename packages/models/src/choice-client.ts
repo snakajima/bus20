@@ -27,4 +27,22 @@ export interface ChoiceReply {
  */
 export interface ChoiceClient {
   readonly ask: (request: ChoiceRequest) => Promise<ChoiceReply>;
+  /**
+   * Several independent choices over the same state in one round trip, when
+   * the provider supports it (Jev scores questions independently within one
+   * call). Absent, the procedure asks them one by one.
+   */
+  readonly askMany?: (requests: readonly ChoiceRequest[]) => Promise<ChoiceReply[]>;
 }
+
+/** Runs `askMany` when available, otherwise sequential `ask` calls. */
+export const askAll = (
+  client: ChoiceClient,
+  requests: readonly ChoiceRequest[],
+): Promise<ChoiceReply[]> =>
+  client.askMany === undefined
+    ? requests.reduce<Promise<ChoiceReply[]>>(
+        async (previous, request) => [...(await previous), await client.ask(request)],
+        Promise.resolve([]),
+      )
+    : client.askMany(requests);

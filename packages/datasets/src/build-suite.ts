@@ -107,6 +107,7 @@ const demandSpec = (config: SuiteConfig, cell: Cell, scenarioId: string): Demand
   demandMinutes: config.timing.demandMinutes,
   deadlineMarginMinutes: config.timing.deadlineMarginMinutes,
   targetUtilization: config.loads[cell.load]?.targetUtilization ?? 0,
+  ...(config.hotspot === undefined ? {} : { hotspot: config.hotspot }),
 });
 
 const buildScenario = (config: SuiteConfig, map: BuiltMap, cell: Cell): BuiltScenario => {

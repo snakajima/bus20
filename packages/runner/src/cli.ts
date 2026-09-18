@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { type Issue } from "@bus20/contracts/result";
+import { type ManifestScenario } from "@bus20/contracts/manifest";
 import { type PolicyProgram } from "@bus20/contracts/policy-artifact";
 import { type SuiteIndex } from "@bus20/contracts/suite-index";
 import { EFFORT_LEVELS, type Effort } from "@bus20/models/claude-policy";
@@ -32,13 +33,13 @@ const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
                 [--policy fixture|swift|claude|jev|program] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
-                [--choice flat|hierarchical|auto] [--flat-limit N]
+                [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]
                 [--presentation shared|jev-native] [--repeats N]
                 [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
   bus20-run compare <run-dir>... [--markdown <file>]
   bus20-run suite --manifest <file> --policies <id,id,...> --out <dir>
-                [--splits dev,validation,test] [--repetitions N] [--limit N]
+                [--splits dev,validation,test] [--loads low,medium,high] [--repetitions N] [--limit N]
                 [--swift-cli <path>] [--model <id>] [--effort <level>] [--max-decisions N]`;
 
 const EXIT_OK = 0;
@@ -61,12 +62,14 @@ interface ParsedArgs {
     readonly effort?: string;
     readonly choice?: string;
     readonly "flat-limit"?: string;
+    readonly "chunk-size"?: string;
     readonly presentation?: string;
     readonly repeats?: string;
     readonly markdown?: string;
     readonly manifest?: string;
     readonly policies?: string;
     readonly splits?: string;
+    readonly loads?: string;
     readonly repetitions?: string;
     readonly limit?: string;
     readonly "max-decisions"?: string;
@@ -86,12 +89,14 @@ const OPTIONS = {
   effort: { type: "string" },
   choice: { type: "string" },
   "flat-limit": { type: "string" },
+  "chunk-size": { type: "string" },
   presentation: { type: "string" },
   repeats: { type: "string" },
   markdown: { type: "string" },
   manifest: { type: "string" },
   policies: { type: "string" },
   splits: { type: "string", default: "dev" },
+  loads: { type: "string" },
   repetitions: { type: "string", default: "1" },
   limit: { type: "string" },
   "max-decisions": { type: "string" },
@@ -152,12 +157,14 @@ const parseChoice = (args: ParsedArgs): ChoiceSettings | undefined | null => {
     return null;
   }
   const flatLimit = parseMaxDecisions(args.values["flat-limit"]);
-  if (mode === undefined && flatLimit === undefined) {
+  const chunkSize = parseMaxDecisions(args.values["chunk-size"]);
+  if (mode === undefined && flatLimit === undefined && chunkSize === undefined) {
     return undefined;
   }
   return {
     mode: mode ?? DEFAULT_CHOICE_SETTINGS.mode,
     flatLimit: flatLimit ?? DEFAULT_CHOICE_SETTINGS.flatLimit,
+    ...(chunkSize === undefined ? {} : { chunkSize }),
   };
 };
 
@@ -220,11 +227,15 @@ const policyFactories = (
 const suiteOptions = (args: ParsedArgs) => {
   const limit = parseMaxDecisions(args.values.limit);
   const maxDecisions = parseMaxDecisions(args.values["max-decisions"]);
+  const loads = args.values.loads?.split(",");
   return {
     splits: (args.values.splits ?? "dev").split(","),
     repetitions: parseMaxDecisions(args.values.repetitions) ?? 1,
     ...(limit === undefined ? {} : { limit }),
     ...(maxDecisions === undefined ? {} : { maxDecisions }),
+    ...(loads === undefined
+      ? {}
+      : { scenarioFilter: (scenario: ManifestScenario) => loads.includes(scenario.load) }),
   };
 };
 

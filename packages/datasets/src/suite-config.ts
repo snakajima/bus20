@@ -23,6 +23,14 @@ export const suiteConfigSchema = z.object({
     .min(1),
   loads: z.partialRecord(loadLevelSchema, z.object({ targetUtilization: z.number().positive() })),
   patterns: z.array(demandPatternSchema).min(1),
+  /** Hotspot burst; omitted means the generator's version-1 defaults (50% share, 40% to 55% of the window). */
+  hotspot: z
+    .object({
+      share: z.number().min(0).max(1),
+      burstStart: z.number().min(0).max(1),
+      burstEnd: z.number().min(0).max(1),
+    })
+    .optional(),
   /** Scenarios per (city, load) cell in each split; patterns cycle within a cell. */
   splits: z.partialRecord(dataSplitSchema, z.int().nonnegative()),
   fleet: z.object({ vehicleCount: z.int().positive(), capacity: z.int().positive() }),

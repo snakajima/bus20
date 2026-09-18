@@ -2,7 +2,7 @@ import { type Candidate, type CandidateStop, type Observation } from "@bus20/con
 import { runSimulation } from "@bus20/simulator/run";
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { type ChoiceClient, type ChoiceRequest } from "../src/choice-client.js";
+import { askAll, type ChoiceClient, type ChoiceRequest } from "../src/choice-client.js";
 import { decideByChoice } from "../src/choice-procedure.js";
 import { buildDecisionBrief, describeCandidate } from "../src/decision-brief.js";
 import { APPEND, IDLE, INSERT, MINUTE, observation, stop } from "./choice-fixture.js";
@@ -155,5 +155,82 @@ test("hierarchical decisions drive a full run and unknown vehicle choices fail t
   await assert.rejects(
     decideByChoice(bogus, observation(), settings),
     /no legal insertions for vehicle "v9"/,
+  );
+});
+
+test("tournament mode chunks the candidates, batches the first round, and finals the winners", async () => {
+  const o = observation();
+  const { stops, candidates } = allInsertions(20);
+  const [first] = o.vehicles;
+  assert.ok(first !== undefined);
+  const big: Observation = { ...o, vehicles: [{ ...first, stops }], candidates };
+  const batches: ChoiceRequest[][] = [];
+  const singles: ChoiceRequest[] = [];
+  const client: ChoiceClient = {
+    ask: (request) => {
+      singles.push(request);
+      return Promise.resolve({
+        choice: request.options[1]?.id ?? "",
+        usage: { inputTokens: 5 },
+        trace: {},
+      });
+    },
+    askMany: (requests) => {
+      batches.push([...requests]);
+      return Promise.resolve(
+        requests.map((request, index) => ({
+          choice: request.options[0]?.id ?? "",
+          usage: { inputTokens: index === 0 ? 100 : 0 },
+          trace: { batch: index },
+        })),
+      );
+    },
+  };
+  const decision = await decideByChoice(client, big, {
+    mode: "tournament",
+    flatLimit: 50,
+    chunkSize: 100,
+  });
+  assert.equal(batches.length, 1);
+  assert.deepEqual(
+    batches[0]?.map((request) => request.options.length),
+    [100, 100, 31],
+  );
+  assert.equal(singles.length, 1);
+  assert.deepEqual(
+    singles[0]?.options.map((option) => option.id),
+    ["v1:0:1", "v1:5:11", "v1:13:19"],
+  );
+  assert.equal(singles[0].state["round"], "final");
+  assert.equal(chosen(decision), "v1:5:11");
+  assert.ok(decision.usage !== undefined);
+  assert.equal(decision.usage["stages"], 4);
+  assert.equal(decision.usage["inputTokens"], 105);
+  // Under the flat limit the tournament mode behaves as flat.
+  const small = await decideByChoice(client, o, {
+    mode: "tournament",
+    flatLimit: 50,
+    chunkSize: 100,
+  });
+  assert.equal(chosen(small), "v1:3:4");
+  assert.equal(batches.length, 1);
+});
+
+test("askAll falls back to sequential asks when a client cannot batch", async () => {
+  const seen: string[] = [];
+  const client: ChoiceClient = {
+    ask: (request) => {
+      seen.push(typeof request.question === "string" ? request.question : "?");
+      return Promise.resolve({ choice: request.options[0]?.id ?? "", usage: {}, trace: {} });
+    },
+  };
+  const replies = await askAll(client, [
+    { state: {}, question: "a", options: [{ id: "x", description: {} }] },
+    { state: {}, question: "b", options: [{ id: "y", description: {} }] },
+  ]);
+  assert.deepEqual(seen, ["a", "b"]);
+  assert.deepEqual(
+    replies.map((reply) => reply.choice),
+    ["x", "y"],
   );
 });
