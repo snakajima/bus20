@@ -1,0 +1,14 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": ["src/**/*.ts", "test/**/*.ts"],
+  "references": [
+    { "path": "../contracts" },
+    { "path": "../graph" },
+    { "path": "../scoring" },
+    { "path": "../simulator" }
+  ]
+}

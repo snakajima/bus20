@@ -38,3 +38,29 @@ Packages export individual modules by subpath (for example
 | `statistics` | `mean`, `maximum`, `percentileNearestRank` | Summary statistics for score reports. |
 | `direct-travel` | `directTravelTimes` | Shortest direct travel time per request, one Dijkstra per origin. |
 | `score` | `scoreRun` | Grades a run log against scenario and map without trusting the policy. |
+
+## `@bus20/simulator`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `state` | `createInitialState`, `findVehicle`, `nextFreePoint`, `allRequestsCompleted` | Mutable simulator state and its invariants. |
+| `routing` | `Routing` | Memoised shortest-path queries (travel time, first edge) on the fixed map. |
+| `plan` | `timePlan`, `isPlanDefect` | Walks a stop list checking capacity, reachability, and stop permission; attaches planned arrival times. |
+| `candidates` | `enumerateCandidates`, `candidateId` | Every legal insertion of a request into one vehicle's stops, in cost-independent order. |
+| `validation` | `validateAction` | Checks `chooseCandidate` and `insert` actions against state; rejections never mutate state. |
+| `observation` | `buildObservation` | The legal policy view: released, unfinished requests and host candidates only. |
+| `events` | `processArrivals`, `processDropoffs`, `releaseRequests`, `processPickupsAndDepartures`, `nextEventTimeMs` | The five same-timestamp phases of protocol v1. |
+| `run` | `runSimulation` | Runs a scenario under a policy and produces a run log with a final state digest. |
+| `replay` | `createReplayPolicy`, `verifyReplay` | Replays a log's decisions and checks journeys, termination, and digest agree. |
+| `snapshot` | `snapshotState`, `stateDigest` | Canonical state view for replay verification. |
+| `policy` | `Policy`, `Decision` | The common `decide(observation)` contract all policies implement. |
+| `fixture-policy` | `createFixturePolicy` | Smoke-test baseline (append to earliest pickup); never the Swift reference or AI. |
+
+## `@bus20/runner`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `files` | `readJsonFile`, `writeJsonAtomic` | Validated JSON reads and atomic writes via a sibling temporary file. |
+| `logging` | `createStderrLogger`, `silentLogger` | Structured JSON logging on stderr; stdout stays free for CLI output. |
+| `run-scenario` | `loadInputs`, `runAndScore`, `replayStoredLog`, `createPolicyById` | Load and validate inputs, run, score, verify replay, persist. |
+| `cli` | `main` | `bus20-run run` and `bus20-run replay` commands. |
