@@ -9,7 +9,8 @@ export interface ChoiceOption {
 /** One structured choice: shared state, a question, and the options in host order. */
 export interface ChoiceRequest {
   readonly state: Readonly<Record<string, JsonValue>>;
-  readonly question: string;
+  /** A sentence, or a structured instruction object for models trained on structure. */
+  readonly question: string | Readonly<Record<string, JsonValue>>;
   readonly options: readonly ChoiceOption[];
 }
 

@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "bus20-run-result/1",
+  "protocolVersion": "bus20-protocol/1",
+  "scenarioId": "smoke-01",
+  "policy": {
+    "id": "jev:jev-1.13.0:jev-native:flat:x1",
+    "kind": "jev",
+    "provider": "typesafe",
+    "modelId": "jev-1.13.0",
+    "promptVersion": "bus20-jev-prompt/1",
+    "settings": {
+      "timeoutMs": 60000,
+      "maxRetries": 2,
+      "choiceMode": "flat",
+      "flatLimit": 40,
+      "presentation": "jev-native",
+      "repeats": 1
+    }
+  },
+  "requestCount": 12,
+  "completedCount": 12,
+  "status": "complete",
+  "pain": 11.645833333333334,
+  "passengers": [
+    {
+      "requestId": "r01",
+      "waitMinutes": 0,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0
+    },
+    {
+      "requestId": "r02",
+      "waitMinutes": 0,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0
+    },
+    {
+      "requestId": "r03",
+      "waitMinutes": 0,
+      "detourMinutes": 4,
+      "painMinutesSquared": 16
+    },
+    {
+      "requestId": "r04",
+      "waitMinutes": 1.5,
+      "detourMinutes": 0,
+      "painMinutesSquared": 2.25
+    },
+    {
+      "requestId": "r05",
+      "waitMinutes": 1.5,
+      "detourMinutes": 0,
+      "painMinutesSquared": 2.25
+    },
+    {
+      "requestId": "r06",
+      "waitMinutes": 4,
+      "detourMinutes": 0,
+      "painMinutesSquared": 16
+    },
+    {
+      "requestId": "r07",
+      "waitMinutes": 3,
+      "detourMinutes": 0,
+      "painMinutesSquared": 9
+    },
+    {
+      "requestId": "r08",
+      "waitMinutes": 3,
+      "detourMinutes": 0,
+      "painMinutesSquared": 9
+    },
+    {
+      "requestId": "r09",
+      "waitMinutes": 3,
+      "detourMinutes": 0,
+      "painMinutesSquared": 9
+    },
+    {
+      "requestId": "r10",
+      "waitMinutes": 8,
+      "detourMinutes": 0,
+      "painMinutesSquared": 64
+    },
+    {
+      "requestId": "r11",
+      "waitMinutes": 0,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0
+    },
+    {
+      "requestId": "r12",
+      "waitMinutes": 3.5,
+      "detourMinutes": 0,
+      "painMinutesSquared": 12.25
+    }
+  ],
+  "summary": {
+    "meanWaitMinutes": 2.2916666666666665,
+    "meanDetourMinutes": 0.3333333333333333,
+    "delayP95Minutes": 8,
+    "delayP99Minutes": 8,
+    "maxDelayMinutes": 8
+  }
+}

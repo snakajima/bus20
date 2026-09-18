@@ -28,7 +28,7 @@ test("Jev adapter sends the brief as state, offers candidate IDs as options, and
   assert.equal(log.decisions.length, 12);
   assert.equal(log.policy.kind, "jev");
   assert.equal(log.policy.modelId, DEFAULT_JEV_MODEL_ID);
-  assert.equal(log.policy.promptVersion, "bus20-prompt/2");
+  assert.equal(log.policy.promptVersion, "bus20-jev-prompt/1");
 
   const first = transport.requests[0];
   assert.ok(first !== undefined);
@@ -36,7 +36,12 @@ test("Jev adapter sends the brief as state, offers candidate IDs as options, and
   assert.equal(first.headers["authorization"], "Bearer test-key");
   const sent = jevRequestSchema.parse(first.body);
   assert.equal(sent.model, DEFAULT_JEV_MODEL_ID);
-  assert.equal(sent.state["decisionRequestId"], "r01");
+  assert.deepEqual(sent.state["new_passenger"], {
+    id: "r01",
+    waiting_minutes_so_far: 0,
+    direct_ride_minutes: 2,
+  });
+  assert.equal(typeof sent.questions.answer.instructions, "object");
   assert.deepEqual(Object.keys(sent.questions.answer.criteria), ["v1:0:1", "v2:0:1"]);
   assert.ok(!("candidates" in sent.state), "candidates are options, not repeated in the state");
 
@@ -62,13 +67,13 @@ test("Jev adapter sends the brief as state, offers candidate IDs as options, and
   assert.deepEqual(Object.keys(stage["probabilities"] ?? {}), ["v1:0:1", "v2:0:1"]);
 });
 
-test("the brief never contains unreleased requests or cost fields", async () => {
+test("the shared brief never contains unreleased requests or cost fields", async () => {
   const { scenario, map } = loadFixture();
   const transport = fakeFetch((request) => respondWithChoice(request.body));
   await runSimulation(
     scenario,
     map,
-    createJevPolicy({ apiKey: "k", fetch: transport, maxRetries: 0 }),
+    createJevPolicy({ apiKey: "k", fetch: transport, maxRetries: 0, presentation: "shared" }),
   );
   for (const request of transport.requests) {
     const sent = jevRequestSchema.parse(request.body);

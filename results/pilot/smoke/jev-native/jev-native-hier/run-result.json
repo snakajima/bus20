@@ -1,0 +1,105 @@
+{
+  "schemaVersion": "bus20-run-result/1",
+  "protocolVersion": "bus20-protocol/1",
+  "scenarioId": "smoke-01",
+  "policy": {
+    "id": "jev:jev-1.13.0:jev-native:hierarchical:x1",
+    "kind": "jev",
+    "provider": "typesafe",
+    "modelId": "jev-1.13.0",
+    "promptVersion": "bus20-jev-prompt/1",
+    "settings": {
+      "timeoutMs": 60000,
+      "maxRetries": 2,
+      "choiceMode": "hierarchical",
+      "flatLimit": 40,
+      "presentation": "jev-native",
+      "repeats": 1
+    }
+  },
+  "requestCount": 12,
+  "completedCount": 12,
+  "status": "complete",
+  "pain": 26.5625,
+  "passengers": [
+    {
+      "requestId": "r01",
+      "waitMinutes": 0,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0
+    },
+    {
+      "requestId": "r02",
+      "waitMinutes": 0,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0
+    },
+    {
+      "requestId": "r03",
+      "waitMinutes": 0,
+      "detourMinutes": 6,
+      "painMinutesSquared": 36
+    },
+    {
+      "requestId": "r04",
+      "waitMinutes": 1.5,
+      "detourMinutes": 5,
+      "painMinutesSquared": 42.25
+    },
+    {
+      "requestId": "r05",
+      "waitMinutes": 1.5,
+      "detourMinutes": 0,
+      "painMinutesSquared": 2.25
+    },
+    {
+      "requestId": "r06",
+      "waitMinutes": 9,
+      "detourMinutes": 0,
+      "painMinutesSquared": 81
+    },
+    {
+      "requestId": "r07",
+      "waitMinutes": 3,
+      "detourMinutes": 0,
+      "painMinutesSquared": 9
+    },
+    {
+      "requestId": "r08",
+      "waitMinutes": 5,
+      "detourMinutes": 0,
+      "painMinutesSquared": 25
+    },
+    {
+      "requestId": "r09",
+      "waitMinutes": 8,
+      "detourMinutes": 0,
+      "painMinutesSquared": 64
+    },
+    {
+      "requestId": "r10",
+      "waitMinutes": 2,
+      "detourMinutes": 0,
+      "painMinutesSquared": 4
+    },
+    {
+      "requestId": "r11",
+      "waitMinutes": 5,
+      "detourMinutes": 0,
+      "painMinutesSquared": 25
+    },
+    {
+      "requestId": "r12",
+      "waitMinutes": 0.5,
+      "detourMinutes": 5,
+      "painMinutesSquared": 30.25
+    }
+  ],
+  "summary": {
+    "meanWaitMinutes": 2.9583333333333335,
+    "meanDetourMinutes": 1.3333333333333333,
+    "delayP95Minutes": 9,
+    "delayP99Minutes": 9,
+    "maxDelayMinutes": 9
+  }
+}

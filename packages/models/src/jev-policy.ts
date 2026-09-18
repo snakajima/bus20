@@ -15,8 +15,9 @@ import {
   DEFAULT_CHOICE_SETTINGS,
   decideByChoice,
 } from "./choice-procedure.js";
-import { PROMPT_VERSION } from "./decision-brief.js";
 import { usageRecord } from "./pricing.js";
+import { type Presentation, presentationById, type PresentationId } from "./presentation.js";
+import { withSelfConsistency } from "./self-consistency.js";
 
 /** Pinned model ID as listed on 2026-09-18; never a moving alias such as jev-latest. */
 export const DEFAULT_JEV_MODEL_ID = "jev-1.13.0" as const;
@@ -30,6 +31,10 @@ export interface JevPolicyOptions {
   readonly timeoutMs?: number;
   readonly maxRetries?: number;
   readonly choice?: ChoiceSettings;
+  /** `jev-native` (default) follows the TypeSafe guidance; `shared` is the common brief. */
+  readonly presentation?: PresentationId;
+  /** Self-consistency: ask each choice this many times with permuted option order and sum probabilities. */
+  readonly repeats?: number;
   /** Injected transport for tests; production uses the global fetch. */
   readonly fetch?: Fetch;
 }
@@ -39,19 +44,23 @@ interface Settings {
   readonly timeoutMs: number;
   readonly maxRetries: number;
   readonly choice: ChoiceSettings;
+  readonly presentation: Presentation;
+  readonly repeats: number;
 }
 
 const describe = (settings: Settings): PolicyDescriptor => ({
-  id: `jev:${settings.modelId}:${settings.choice.mode}`,
+  id: `jev:${settings.modelId}:${settings.presentation.id}:${settings.choice.mode}:x${settings.repeats}`,
   kind: "jev",
   provider: JEV_PROVIDER,
   modelId: settings.modelId,
-  promptVersion: PROMPT_VERSION,
+  promptVersion: settings.presentation.promptVersion,
   settings: {
     timeoutMs: settings.timeoutMs,
     maxRetries: settings.maxRetries,
     choiceMode: settings.choice.mode,
     flatLimit: settings.choice.flatLimit,
+    presentation: settings.presentation.id,
+    repeats: settings.repeats,
   },
 });
 
@@ -111,6 +120,8 @@ const settingsOf = (options: JevPolicyOptions): Settings => ({
   timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
   choice: options.choice ?? DEFAULT_CHOICE_SETTINGS,
+  presentation: presentationById(options.presentation ?? "jev-native"),
+  repeats: Math.max(1, Math.floor(options.repeats ?? 1)),
 });
 
 export const createJevPolicy = (options: JevPolicyOptions = {}): Policy => {
@@ -123,9 +134,12 @@ export const createJevPolicy = (options: JevPolicyOptions = {}): Policy => {
     retry: { maxRetries: settings.maxRetries },
     logLevel: "off",
   });
-  const choiceClient = createJevChoiceClient(client, settings.modelId);
+  const single = createJevChoiceClient(client, settings.modelId);
+  const choiceClient =
+    settings.repeats > 1 ? withSelfConsistency(single, settings.repeats) : single;
   return {
     descriptor: describe(settings),
-    decide: (observation) => decideByChoice(choiceClient, observation, settings.choice),
+    decide: (observation) =>
+      decideByChoice(choiceClient, observation, settings.choice, settings.presentation),
   };
 };

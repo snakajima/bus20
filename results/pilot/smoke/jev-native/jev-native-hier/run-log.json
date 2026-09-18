@@ -1,0 +1,832 @@
+{
+  "schemaVersion": "bus20-run-log/1",
+  "protocolVersion": "bus20-protocol/1",
+  "scenarioId": "smoke-01",
+  "scenarioDigest": "sha256:7f056ece895697ddf0381ddb90a694c05a2f2b4420d242496e85a81ae94c7af0",
+  "mapDigest": "sha256:cb528e62918e658873f9a77034a8ea6cfc8ffcf1677a4d0ee4560844c08470f1",
+  "policy": {
+    "id": "jev:jev-1.13.0:jev-native:hierarchical:x1",
+    "kind": "jev",
+    "provider": "typesafe",
+    "modelId": "jev-1.13.0",
+    "promptVersion": "bus20-jev-prompt/1",
+    "settings": {
+      "timeoutMs": 60000,
+      "maxRetries": 2,
+      "choiceMode": "hierarchical",
+      "flatLimit": 40,
+      "presentation": "jev-native",
+      "repeats": 1
+    }
+  },
+  "termination": {
+    "kind": "drained",
+    "finalTimeMs": 1140000
+  },
+  "journeys": [
+    {
+      "requestId": "r01",
+      "vehicleId": "v1",
+      "pickupTimeMs": 0,
+      "dropoffTimeMs": 120000
+    },
+    {
+      "requestId": "r02",
+      "vehicleId": "v2",
+      "pickupTimeMs": 0,
+      "dropoffTimeMs": 120000
+    },
+    {
+      "requestId": "r05",
+      "vehicleId": "v1",
+      "pickupTimeMs": 210000,
+      "dropoffTimeMs": 330000
+    },
+    {
+      "requestId": "r03",
+      "vehicleId": "v1",
+      "pickupTimeMs": 60000,
+      "dropoffTimeMs": 600000
+    },
+    {
+      "requestId": "r04",
+      "vehicleId": "v2",
+      "pickupTimeMs": 210000,
+      "dropoffTimeMs": 630000
+    },
+    {
+      "requestId": "r07",
+      "vehicleId": "v2",
+      "pickupTimeMs": 420000,
+      "dropoffTimeMs": 720000
+    },
+    {
+      "requestId": "r08",
+      "vehicleId": "v1",
+      "pickupTimeMs": 600000,
+      "dropoffTimeMs": 780000
+    },
+    {
+      "requestId": "r10",
+      "vehicleId": "v1",
+      "pickupTimeMs": 540000,
+      "dropoffTimeMs": 840000
+    },
+    {
+      "requestId": "r11",
+      "vehicleId": "v2",
+      "pickupTimeMs": 780000,
+      "dropoffTimeMs": 930000
+    },
+    {
+      "requestId": "r06",
+      "vehicleId": "v2",
+      "pickupTimeMs": 720000,
+      "dropoffTimeMs": 1020000
+    },
+    {
+      "requestId": "r12",
+      "vehicleId": "v2",
+      "pickupTimeMs": 630000,
+      "dropoffTimeMs": 1080000
+    },
+    {
+      "requestId": "r09",
+      "vehicleId": "v1",
+      "pickupTimeMs": 840000,
+      "dropoffTimeMs": 1140000
+    }
+  ],
+  "decisions": [
+    {
+      "stateVersion": 0,
+      "nowMs": 0,
+      "requestId": "r01",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 0,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 603.032583,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 1259,
+        "outputTokens": 68,
+        "costUsd": 0.000055734000000000005,
+        "confidence": 2,
+        "chosenProbability": 2,
+        "optionsOffered": 3,
+        "candidatesOffered": 2
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1": 1,
+              "v2": 0
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1:0:1": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 1,
+      "nowMs": 0,
+      "requestId": "r02",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 1,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 218.88316599999996,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 1264,
+        "outputTokens": 68,
+        "costUsd": 0.000055944000000000005,
+        "confidence": 2,
+        "chosenProbability": 2,
+        "optionsOffered": 3,
+        "candidatesOffered": 7
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1": 0,
+              "v2": 1
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2:0:1": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 2,
+      "nowMs": 60000,
+      "requestId": "r03",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 2,
+        "candidateId": "v1:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 320.39708299999995,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 1457,
+        "outputTokens": 92,
+        "costUsd": 0.00006505800000000001,
+        "confidence": 1.79,
+        "chosenProbability": 1.8599999999999999,
+        "optionsOffered": 5,
+        "candidatesOffered": 6
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2": 0.03,
+              "v1": 0.97
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1:1:2": 0.05,
+              "v1:0:2": 0.89,
+              "v1:0:1": 0.06
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 3,
+      "nowMs": 120000,
+      "requestId": "r04",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 3,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 247.4571249999999,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 1267,
+        "outputTokens": 68,
+        "costUsd": 0.00005607000000000001,
+        "confidence": 2,
+        "chosenProbability": 2,
+        "optionsOffered": 3,
+        "candidatesOffered": 4
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2": 1,
+              "v1": 0
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2:0:1": 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 4,
+      "nowMs": 120000,
+      "requestId": "r05",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 4,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 234.984917,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 1463,
+        "outputTokens": 92,
+        "costUsd": 0.00006531,
+        "confidence": 0.5900000000000001,
+        "chosenProbability": 1.1800000000000002,
+        "optionsOffered": 5,
+        "candidatesOffered": 9
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1": 0.66,
+              "v2": 0.34
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1:0:2": 0.47,
+              "v1:1:2": 0.01,
+              "v1:0:1": 0.52
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 5,
+      "nowMs": 180000,
+      "requestId": "r06",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 5,
+        "candidateId": "v2:2:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 226.5016659999999,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 1763,
+        "outputTokens": 128,
+        "costUsd": 0.000079422,
+        "confidence": 0.96,
+        "chosenProbability": 1.4300000000000002,
+        "optionsOffered": 8,
+        "candidatesOffered": 16
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2": 0.56,
+              "v1": 0.44
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2:1:3": 0.08,
+              "v2:0:2": 0.02,
+              "v2:0:3": 0.01,
+              "v2:0:1": 0.02,
+              "v2:2:3": 0.87,
+              "v2:1:2": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 6,
+      "nowMs": 240000,
+      "requestId": "r07",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 6,
+        "candidateId": "v2:0:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 235.68587500000012,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 2178,
+        "outputTokens": 176,
+        "costUsd": 0.000098868,
+        "confidence": 0.62,
+        "chosenProbability": 1.1400000000000001,
+        "optionsOffered": 12,
+        "candidatesOffered": 16
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2": 0.55,
+              "v1": 0.45
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2:0:3": 0.04,
+              "v2:2:3": 0,
+              "v2:0:4": 0,
+              "v2:1:3": 0.02,
+              "v2:1:4": 0,
+              "v2:0:2": 0.59,
+              "v2:2:4": 0.19,
+              "v2:3:4": 0.01,
+              "v2:0:1": 0.06,
+              "v2:1:2": 0.09
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 7,
+      "nowMs": 300000,
+      "requestId": "r08",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 7,
+        "candidateId": "v1:1:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 593.797583,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 1780,
+        "outputTokens": 128,
+        "costUsd": 0.000080136,
+        "confidence": 1.49,
+        "chosenProbability": 1.69,
+        "optionsOffered": 8,
+        "candidatesOffered": 27
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2": 0.18,
+              "v1": 0.82
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1:0:3": 0.01,
+              "v1:0:2": 0,
+              "v1:1:2": 0.01,
+              "v1:1:3": 0.87,
+              "v1:2:3": 0.1,
+              "v1:0:1": 0.01
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 8,
+      "nowMs": 360000,
+      "requestId": "r09",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 8,
+        "candidateId": "v1:3:4"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 258.33237499999996,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 2209,
+        "outputTokens": 176,
+        "costUsd": 0.00010017000000000001,
+        "confidence": 1.58,
+        "chosenProbability": 1.65,
+        "optionsOffered": 12,
+        "candidatesOffered": 31
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1": 0.98,
+              "v2": 0.02
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1:3:4": 0.67,
+              "v1:0:1": 0.14,
+              "v1:0:2": 0.04,
+              "v1:1:3": 0,
+              "v1:0:3": 0.04,
+              "v1:0:4": 0.02,
+              "v1:1:4": 0,
+              "v1:2:4": 0.09,
+              "v1:1:2": 0,
+              "v1:2:3": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 9,
+      "nowMs": 420000,
+      "requestId": "r10",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 9,
+        "candidateId": "v1:0:4"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 254.52541699999983,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 3441,
+        "outputTokens": 308,
+        "costUsd": 0.000157458,
+        "confidence": 1.1800000000000002,
+        "chosenProbability": 1.26,
+        "optionsOffered": 23,
+        "candidatesOffered": 42
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1": 0.95,
+              "v2": 0.05
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1:4:5": 0,
+              "v1:2:6": 0,
+              "v1:3:6": 0,
+              "v1:2:4": 0.16,
+              "v1:3:4": 0,
+              "v1:0:3": 0.05,
+              "v1:1:3": 0.01,
+              "v1:0:5": 0.07,
+              "v1:0:6": 0.01,
+              "v1:1:2": 0,
+              "v1:3:5": 0,
+              "v1:0:1": 0.03,
+              "v1:2:5": 0.08,
+              "v1:1:6": 0,
+              "v1:1:5": 0.01,
+              "v1:1:4": 0.01,
+              "v1:4:6": 0.19,
+              "v1:5:6": 0.04,
+              "v1:0:4": 0.31,
+              "v1:2:3": 0.02,
+              "v1:0:2": 0.01
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 10,
+      "nowMs": 480000,
+      "requestId": "r11",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 10,
+        "candidateId": "v2:3:4"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 199.54308300000002,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 2764,
+        "outputTokens": 236,
+        "costUsd": 0.000126,
+        "confidence": 1.25,
+        "chosenProbability": 1.46,
+        "optionsOffered": 17,
+        "candidatesOffered": 51
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2": 0.83,
+              "v1": 0.17
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2:0:1": 0.16,
+              "v2:2:4": 0.09,
+              "v2:2:5": 0,
+              "v2:1:5": 0,
+              "v2:2:3": 0.01,
+              "v2:3:4": 0.63,
+              "v2:0:4": 0.03,
+              "v2:0:5": 0,
+              "v2:0:2": 0,
+              "v2:3:5": 0.04,
+              "v2:0:3": 0,
+              "v2:1:2": 0,
+              "v2:1:4": 0.04,
+              "v2:4:5": 0,
+              "v2:1:3": 0
+            }
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 11,
+      "nowMs": 600000,
+      "requestId": "r12",
+      "action": {
+        "kind": "chooseCandidate",
+        "schemaVersion": "bus20-action/1",
+        "stateVersion": 11,
+        "candidateId": "v2:0:7"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 284.60533399999986,
+      "usage": {
+        "stages": 2,
+        "inputTokens": 4138,
+        "outputTokens": 392,
+        "costUsd": 0.00019026000000000004,
+        "confidence": 1.1600000000000001,
+        "chosenProbability": 1.23,
+        "optionsOffered": 30,
+        "candidatesOffered": 56
+      },
+      "trace": {
+        "stages": [
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the vehicle that should serve the new passenger. The next question will offer that vehicle's insertion positions. Prefer a vehicle that can pick the passenger up soon without delaying others much.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v1": 0.03,
+              "v2": 0.97
+            }
+          },
+          {
+            "provider": "typesafe",
+            "modelId": "jev-1.13.0",
+            "question": {
+              "task": "Pick the candidate that keeps the total of squared delay minutes across all passengers smallest. A passenger's delay is their wait plus their detour. Because each delay is squared, one large delay hurts much more than several small ones.",
+              "how_to_read_options": "Every option lists the vehicle, the new passenger's wait and detour in minutes, and which passengers already assigned to that vehicle get delayed and by how many minutes.",
+              "note": "Options are listed in a fixed order that says nothing about their quality."
+            },
+            "probabilities": {
+              "v2:0:5": 0.2,
+              "v2:0:1": 0.18,
+              "v2:1:4": 0.01,
+              "v2:0:7": 0.26,
+              "v2:4:6": 0,
+              "v2:2:5": 0,
+              "v2:4:5": 0,
+              "v2:0:3": 0.01,
+              "v2:4:7": 0.01,
+              "v2:5:6": 0.01,
+              "v2:2:7": 0,
+              "v2:6:7": 0.04,
+              "v2:3:4": 0.01,
+              "v2:1:7": 0.05,
+              "v2:3:5": 0,
+              "v2:0:4": 0.01,
+              "v2:2:4": 0,
+              "v2:0:2": 0.09,
+              "v2:2:3": 0,
+              "v2:1:2": 0.02,
+              "v2:1:6": 0.01,
+              "v2:2:6": 0,
+              "v2:1:3": 0,
+              "v2:5:7": 0,
+              "v2:3:7": 0.01,
+              "v2:1:5": 0.03,
+              "v2:0:6": 0.05,
+              "v2:3:6": 0
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "finalStateDigest": "sha256:bd7801ef84028e46e0892dd39bfea9bfb29353b43ab6618be58c61008437b327"
+}

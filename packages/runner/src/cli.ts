@@ -8,6 +8,7 @@ import {
   type ChoiceSettings,
   DEFAULT_CHOICE_SETTINGS,
 } from "@bus20/models/choice-procedure";
+import { PRESENTATIONS, type PresentationId } from "@bus20/models/presentation";
 import { comparisonMarkdown, loadRunDirectory } from "./compare.js";
 import { writeTextAtomic } from "./files.js";
 import { loadSuite } from "@bus20/datasets/files";
@@ -32,6 +33,7 @@ const USAGE = `usage:
                 [--policy fixture|swift|claude|jev|program] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto] [--flat-limit N]
+                [--presentation shared|jev-native] [--repeats N]
                 [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
   bus20-run compare <run-dir>... [--markdown <file>]
@@ -59,6 +61,8 @@ interface ParsedArgs {
     readonly effort?: string;
     readonly choice?: string;
     readonly "flat-limit"?: string;
+    readonly presentation?: string;
+    readonly repeats?: string;
     readonly markdown?: string;
     readonly manifest?: string;
     readonly policies?: string;
@@ -82,6 +86,8 @@ const OPTIONS = {
   effort: { type: "string" },
   choice: { type: "string" },
   "flat-limit": { type: "string" },
+  presentation: { type: "string" },
+  repeats: { type: "string" },
   markdown: { type: "string" },
   manifest: { type: "string" },
   policies: { type: "string" },
@@ -170,7 +176,17 @@ const selectPolicy = (args: ParsedArgs, program?: PolicyProgram): ManagedPolicy 
     ...(choice === undefined ? {} : { choice }),
     ...(program === undefined ? {} : { program }),
     ...(programSeed === undefined ? {} : { programSeed }),
+    ...jevOptions(args),
   });
+};
+
+const jevOptions = (args: ParsedArgs): { presentation?: PresentationId; repeats?: number } => {
+  const presentation = PRESENTATIONS.find((item) => item === args.values.presentation);
+  const repeats = parseMaxDecisions(args.values.repeats);
+  return {
+    ...(presentation === undefined ? {} : { presentation }),
+    ...(repeats === undefined ? {} : { repeats }),
+  };
 };
 
 /** Reads --program when given; a missing or non-compiling file is a usage error. */

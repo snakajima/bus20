@@ -11,6 +11,7 @@ import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
 import { createClaudePolicy, type Effort } from "@bus20/models/claude-policy";
 import { createJevPolicy } from "@bus20/models/jev-policy";
 import { type ChoiceSettings } from "@bus20/models/choice-procedure";
+import { type PresentationId } from "@bus20/models/presentation";
 import { type PolicyProgram, policyProgramSchema } from "@bus20/contracts/policy-artifact";
 import { createProgramPolicy } from "@bus20/policy-runtime/program-policy";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
@@ -116,6 +117,9 @@ export interface PolicyOptions {
   readonly effort?: Effort;
   /** Flat, hierarchical, or auto choice for `claude` and `jev`. */
   readonly choice?: ChoiceSettings;
+  /** Jev only: presentation and self-consistency repeats. */
+  readonly presentation?: PresentationId;
+  readonly repeats?: number;
   /** A frozen generated program for `program`, plus the seed its Math.random gets. */
   readonly program?: PolicyProgram;
   readonly programSeed?: number;
@@ -141,7 +145,11 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
     return createClaudePolicy({ ...shared, ...effort });
   }
   if (policyId === "jev") {
-    return createJevPolicy(shared);
+    return createJevPolicy({
+      ...shared,
+      ...(options.presentation === undefined ? {} : { presentation: options.presentation }),
+      ...(options.repeats === undefined ? {} : { repeats: options.repeats }),
+    });
   }
   return undefined;
 };
