@@ -91,7 +91,7 @@ const recordDecision = (
   reply: Extract<PolicyReply, { decision: Decision }>,
   outcome: DecisionRecord["outcome"],
 ): void => {
-  const { usage } = reply.decision;
+  const { usage, trace } = reply.decision;
   host.decisions.push({
     stateVersion: host.state.stateVersion,
     nowMs: host.state.nowMs,
@@ -100,6 +100,7 @@ const recordDecision = (
     outcome,
     wallLatencyMs: reply.wallLatencyMs,
     ...(usage === undefined ? {} : { usage }),
+    ...(trace === undefined ? {} : { trace }),
   });
 };
 

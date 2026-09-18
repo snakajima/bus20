@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { actionOutcomeSchema, actionSchema } from "./action.js";
+import { jsonValueSchema } from "./json-value.js";
 import { PROTOCOL_VERSION, RUN_LOG_SCHEMA_VERSION } from "./versions.js";
 
 const idSchema = z.string().min(1);
@@ -11,6 +12,7 @@ const digestSchema = z.string().regex(/^sha256:[0-9a-f]{64}$/);
  * a smoke-test baseline only and must never be presented as Swift or as AI.
  */
 export const POLICY_KINDS = ["swift-reference", "general-llm", "jev", "fixture"] as const;
+export const GENERAL_LLM_PROVIDERS = ["anthropic", "openai", "google"] as const;
 export const policyKindSchema = z.enum(POLICY_KINDS);
 
 export const policyDescriptorSchema = z.object({
@@ -18,8 +20,11 @@ export const policyDescriptorSchema = z.object({
   kind: policyKindSchema,
   /** Exact model identifier, never a moving alias. Omitted for non-model policies. */
   modelId: z.string().min(1).optional(),
+  provider: z.string().min(1).optional(),
   promptVersion: z.string().min(1).optional(),
   toolVersion: z.string().min(1).optional(),
+  /** Provider-side settings that change behaviour (effort, retries, timeouts). */
+  settings: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
 });
 
 /** Completed passenger journey. Times are virtual milliseconds. */
@@ -38,7 +43,10 @@ export const decisionRecordSchema = z.object({
   outcome: actionOutcomeSchema,
   /** Wall-clock latency of the policy call. Never added to virtual time. */
   wallLatencyMs: z.number().nonnegative(),
+  /** Numeric accounting: tokens, cost, confidence, host computation. */
   usage: z.record(z.string(), z.number()).optional(),
+  /** Provider request/response material kept so the run can be re-scored without the API. */
+  trace: z.record(z.string(), jsonValueSchema).optional(),
 });
 
 export const RUN_FAILURE_REASONS = [

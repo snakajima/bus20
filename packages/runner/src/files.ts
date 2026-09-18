@@ -21,9 +21,12 @@ export const readJsonFile = async <T>(filePath: string, schema: ZodType<T>): Pro
  * Writes JSON atomically: to a temporary file beside the destination, then a
  * rename, so readers never observe a partially written document.
  */
-export const writeJsonAtomic = async (filePath: string, value: unknown): Promise<void> => {
+export const writeTextAtomic = async (filePath: string, text: string): Promise<void> => {
   await mkdir(path.dirname(filePath), { recursive: true });
   const tempPath = `${filePath}.${process.pid}.${Date.now()}.tmp`;
-  await writeFile(tempPath, `${JSON.stringify(value, null, JSON_INDENT)}\n`, "utf8");
+  await writeFile(tempPath, text, "utf8");
   await rename(tempPath, filePath);
 };
+
+export const writeJsonAtomic = (filePath: string, value: unknown): Promise<void> =>
+  writeTextAtomic(filePath, `${JSON.stringify(value, null, JSON_INDENT)}\n`);

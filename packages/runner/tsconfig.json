@@ -13,6 +13,9 @@
       "path": "../contracts"
     },
     {
+      "path": "../models"
+    },
+    {
       "path": "../graph"
     },
     {

@@ -58,7 +58,10 @@ only the served subset of requests.
 
 A complete run serves every request exactly once. A failed run has `pain: null`
 and a reason (conceptually infinite pain), plus its completed/request counts.
-Invalid decisions fail without silently substituting a reference action. Initial
+Invalid decisions fail without silently substituting a reference action.
+Each decision record stores the policy's action, outcome, wall-clock latency,
+numeric usage (tokens, cost at a pinned tariff, confidence), and a provider
+trace, so runs can be re-scored and audited without calling any API. Initial
 protocol v1 has no automatic model retry; any later repair/retry policy must be
 explicitly versioned. An empty-demand scenario is rejected at ingestion.
 

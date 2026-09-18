@@ -17,6 +17,9 @@
       "path": "packages/baselines"
     },
     {
+      "path": "packages/models"
+    },
+    {
       "path": "packages/runner"
     }
   ]

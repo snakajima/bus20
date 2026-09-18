@@ -1,4 +1,5 @@
 import { type Action } from "@bus20/contracts/action";
+import { type JsonValue } from "@bus20/contracts/json-value";
 import { type Observation } from "@bus20/contracts/observation";
 import { type PolicyDescriptor } from "@bus20/contracts/run-log";
 
@@ -8,6 +9,8 @@ export type DecisionUsage = Readonly<Record<string, number>>;
 export interface Decision {
   readonly action: Action;
   readonly usage?: DecisionUsage;
+  /** Provider material (request digest, raw response) for reproducibility. */
+  readonly trace?: Readonly<Record<string, JsonValue>>;
 }
 
 /**

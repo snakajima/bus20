@@ -71,3 +71,15 @@ Packages export individual modules by subpath (for example
 | --- | --- | --- |
 | `json-lines-client` | `JsonLinesClient` | One long-lived child process; one request line in, one response line out, with timeouts and crash reporting. |
 | `swift-reference` | `createSwiftReferencePolicy`, `swiftResponseSchema` | Connects the headless Swift CLI to the policy contract; validates every response line. |
+
+## `@bus20/models`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `decision-brief` | `buildDecisionBrief`, `describeCandidate`, `candidateIds`, `assertChoiceFits`, `PROMPT_VERSION`, `MAX_CHOICE_OPTIONS` | The provider-neutral decision state every model receives. |
+| `pricing` | `TARIFFS`, `estimateCostUsd`, `usageRecord` | Pinned list prices with retrieval dates; cost per decision. |
+| `choose-action` | `chooseCandidateAction` | The `chooseCandidate` action form emitted by model adapters. |
+| `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |
+| `claude-policy` | `createClaudePolicy`, `DEFAULT_CLAUDE_MODEL_ID`, `EFFORT_LEVELS` | Claude via `@anthropic-ai/sdk` structured output; records tokens and stop reason. |
+
+`@bus20/runner` also gains `compare` (`loadRunDirectory`, `toRow`, `comparisonMarkdown`) and `writeTextAtomic` in `files`.
