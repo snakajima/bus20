@@ -71,7 +71,7 @@ export const jevRequestSchema = z.object({
   model: z.string(),
   state: z.record(z.string(), z.unknown()),
   questions: z.object({
-    candidate: z.object({
+    answer: z.object({
       type: z.literal("choice"),
       instructions: z.string(),
       criteria: z.record(z.string(), z.unknown()),
@@ -90,7 +90,7 @@ export const claudeRequestSchema = z.object({
     format: z.object({
       type: z.literal("json_schema"),
       schema: z.object({
-        properties: z.object({ candidateId: z.object({ enum: z.array(z.string()) }) }),
+        properties: z.object({ choice: z.object({ enum: z.array(z.string()) }) }),
       }),
     }),
   }),
@@ -108,30 +108,41 @@ export const claudeMessage = (text: string, overrides: Record<string, unknown> =
   ...overrides,
 });
 
-const briefCandidateSchema = z.object({
+/** Candidate options carry pickupMinutes; vehicle options (stage one) carry earliestPickupMinutes. */
+const optionSchema = z.object({
   id: z.string(),
-  stops: z.array(z.object({ requestId: z.string(), kind: z.string(), arrivalMinutes: z.number() })),
+  pickupMinutes: z.number().optional(),
+  earliestPickupMinutes: z.number().nullable().optional(),
 });
 
-const briefSchema = z.object({
-  decisionRequestId: z.string(),
-  candidates: z.array(briefCandidateSchema),
+const requestSchema = z.object({
+  state: z.object({ decisionRequestId: z.string() }),
+  options: z.array(optionSchema),
 });
 
-/** A deterministic stand-in for a model: the candidate that picks the new passenger up soonest. */
-export const earliestPickupFromBrief = (brief: unknown): string => {
-  const parsed = briefSchema.parse(brief);
-  const pickupMinutes = (candidate: z.infer<typeof briefCandidateSchema>): number =>
-    candidate.stops.find(
-      (stop) => stop.requestId === parsed.decisionRequestId && stop.kind === "pickup",
-    )?.arrivalMinutes ?? Number.POSITIVE_INFINITY;
-  const best = parsed.candidates.reduce<z.infer<typeof briefCandidateSchema> | undefined>(
-    (chosen, candidate) =>
-      chosen === undefined || pickupMinutes(candidate) < pickupMinutes(chosen) ? candidate : chosen,
+const pickupOf = (option: z.infer<typeof optionSchema>): number =>
+  option.pickupMinutes ?? option.earliestPickupMinutes ?? Number.POSITIVE_INFINITY;
+
+/** A deterministic stand-in for a model: whichever option picks the new passenger up soonest. */
+export const earliestPickupFromRequest = (request: unknown): string => {
+  const parsed = requestSchema.parse(request);
+  const best = parsed.options.reduce<z.infer<typeof optionSchema> | undefined>(
+    (chosen, option) =>
+      chosen === undefined || pickupOf(option) < pickupOf(chosen) ? option : chosen,
     undefined,
   );
   if (best === undefined) {
-    throw new Error("no candidates in brief");
+    throw new Error("no options in request");
   }
   return best.id;
+};
+
+/** Jev's systemOne body carries the state and options separately; reshape it for the stand-in. */
+export const earliestPickupFromJevBody = (body: unknown): string => {
+  const parsed = jevRequestSchema.parse(body);
+  const options = Object.entries(parsed.questions.answer.criteria).map(([id, description]) => ({
+    id,
+    ...(typeof description === "object" && description !== null ? description : {}),
+  }));
+  return earliestPickupFromRequest({ state: parsed.state, options });
 };

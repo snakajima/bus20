@@ -1,19 +1,17 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { type JsonValue } from "@bus20/contracts/json-value";
 import { parseJsonWithSchema } from "@bus20/contracts/json";
-import { type Observation } from "@bus20/contracts/observation";
 import { formatIssues } from "@bus20/contracts/result";
 import { type PolicyDescriptor } from "@bus20/contracts/run-log";
-import { type Decision, type Policy } from "@bus20/simulator/policy";
+import { type Policy } from "@bus20/simulator/policy";
 import { z } from "zod";
-import { chooseCandidateAction } from "./choose-action.js";
+import { type ChoiceClient, type ChoiceReply, type ChoiceRequest } from "./choice-client.js";
 import {
-  assertChoiceFits,
-  buildDecisionBrief,
-  candidateIds,
-  OBJECTIVE_TEXT,
-  PROMPT_VERSION,
-} from "./decision-brief.js";
+  type ChoiceSettings,
+  DEFAULT_CHOICE_SETTINGS,
+  decideByChoice,
+} from "./choice-procedure.js";
+import { CANDIDATE_ENCODING_TEXT, OBJECTIVE_TEXT, PROMPT_VERSION } from "./decision-brief.js";
 import { usageRecord } from "./pricing.js";
 
 export const DEFAULT_CLAUDE_MODEL_ID = "claude-opus-5" as const;
@@ -21,12 +19,16 @@ export const ANTHROPIC_PROVIDER = "anthropic" as const;
 export const EFFORT_LEVELS = ["low", "medium", "high", "xhigh", "max"] as const;
 export type Effort = (typeof EFFORT_LEVELS)[number];
 
+/** Pilots default to low effort; experiments set effort explicitly and it is always recorded. */
+export const DEFAULT_EFFORT: Effort = "low";
 const DEFAULT_TIMEOUT_MS = 120_000;
 const DEFAULT_MAX_RETRIES = 2;
 const MAX_OUTPUT_TOKENS = 4096;
 
 const SYSTEM_PROMPT =
-  `${OBJECTIVE_TEXT} Reply with JSON only: {"candidateId": <one of the offered ids>}. ` +
+  `${OBJECTIVE_TEXT} ${CANDIDATE_ENCODING_TEXT} ` +
+  "Each message carries the current state, one question, and the options to choose from. " +
+  'Reply with JSON only: {"choice": <one of the offered option ids>}. ' +
   "Do not invent ids and do not choose more than one.";
 
 export interface ClaudePolicyOptions {
@@ -35,6 +37,7 @@ export interface ClaudePolicyOptions {
   readonly effort?: Effort;
   readonly timeoutMs?: number;
   readonly maxRetries?: number;
+  readonly choice?: ChoiceSettings;
   /** Injected transport for tests; production uses the SDK default. */
   readonly fetch?: typeof fetch;
 }
@@ -44,22 +47,23 @@ interface Settings {
   readonly effort: Effort;
   readonly timeoutMs: number;
   readonly maxRetries: number;
+  readonly choice: ChoiceSettings;
 }
 
-const replySchema = z.object({ candidateId: z.string().min(1) });
+const replySchema = z.object({ choice: z.string().min(1) });
 
 const outputFormat = (ids: readonly string[]) => ({
   type: "json_schema" as const,
   schema: {
     type: "object",
-    properties: { candidateId: { type: "string", enum: [...ids] } },
-    required: ["candidateId"],
+    properties: { choice: { type: "string", enum: [...ids] } },
+    required: ["choice"],
     additionalProperties: false,
   },
 });
 
 const describe = (settings: Settings): PolicyDescriptor => ({
-  id: `claude:${settings.modelId}:${settings.effort}`,
+  id: `claude:${settings.modelId}:${settings.effort}:${settings.choice.mode}`,
   kind: "general-llm",
   provider: ANTHROPIC_PROVIDER,
   modelId: settings.modelId,
@@ -69,6 +73,8 @@ const describe = (settings: Settings): PolicyDescriptor => ({
     timeoutMs: settings.timeoutMs,
     maxRetries: settings.maxRetries,
     maxOutputTokens: MAX_OUTPUT_TOKENS,
+    choiceMode: settings.choice.mode,
+    flatLimit: settings.choice.flatLimit,
   },
 });
 
@@ -84,69 +90,78 @@ const parseChoice = (message: Anthropic.Message, ids: readonly string[]): string
   }
   const parsed = parseJsonWithSchema(replySchema, textOf(message));
   if (!parsed.ok) {
-    throw new Error(`claude reply is not a candidate choice: ${formatIssues(parsed.issues)}`);
+    throw new Error(`claude reply is not a choice: ${formatIssues(parsed.issues)}`);
   }
-  if (!ids.includes(parsed.value.candidateId)) {
-    throw new Error(`claude chose unknown candidate "${parsed.value.candidateId}"`);
+  if (!ids.includes(parsed.value.choice)) {
+    throw new Error(`claude chose unknown option "${parsed.value.choice}"`);
   }
-  return parsed.value.candidateId;
+  return parsed.value.choice;
 };
 
-const traceOf = (message: Anthropic.Message): Record<string, JsonValue> => ({
+const traceOf = (
+  message: Anthropic.Message,
+  request: ChoiceRequest,
+): Record<string, JsonValue> => ({
   provider: ANTHROPIC_PROVIDER,
   modelId: message.model,
   responseId: message.id,
   stopReason: message.stop_reason ?? null,
+  question: request.question,
   text: textOf(message),
 });
 
-const toDecision = (
+const userMessage = (request: ChoiceRequest): string =>
+  JSON.stringify({
+    state: request.state,
+    question: request.question,
+    options: request.options.map((option) => ({ id: option.id, ...option.description })),
+  });
+
+/** Claude answers each structured choice with structured output constrained to the option ids. */
+const toReply = (
   settings: Settings,
-  ids: readonly string[],
-  observation: Observation,
+  request: ChoiceRequest,
   message: Anthropic.Message,
-): Decision => {
+): ChoiceReply => {
+  const ids = request.options.map((option) => option.id);
   const usage = {
     inputTokens: message.usage.input_tokens,
     outputTokens: message.usage.output_tokens,
     cacheReadTokens: message.usage.cache_read_input_tokens ?? 0,
   };
   return {
-    action: chooseCandidateAction(observation, parseChoice(message, ids)),
-    usage: usageRecord(settings.modelId, usage, { candidatesOffered: ids.length }),
-    trace: traceOf(message),
+    choice: parseChoice(message, ids),
+    usage: usageRecord(settings.modelId, usage, { optionsOffered: ids.length }),
+    trace: traceOf(message, request),
   };
 };
 
-const decideWith = async (
-  client: Anthropic,
-  settings: Settings,
-  observation: Observation,
-): Promise<Decision> => {
-  assertChoiceFits(observation);
-  const ids = candidateIds(observation);
-  const message = await client.messages.create({
-    model: settings.modelId,
-    max_tokens: MAX_OUTPUT_TOKENS,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: "user", content: JSON.stringify(buildDecisionBrief(observation)) }],
-    output_config: { effort: settings.effort, format: outputFormat(ids) },
-  });
-  return toDecision(settings, ids, observation, message);
-};
+const createClaudeChoiceClient = (client: Anthropic, settings: Settings): ChoiceClient => ({
+  ask: async (request): Promise<ChoiceReply> => {
+    const ids = request.options.map((option) => option.id);
+    const message = await client.messages.create({
+      model: settings.modelId,
+      max_tokens: MAX_OUTPUT_TOKENS,
+      system: SYSTEM_PROMPT,
+      messages: [{ role: "user", content: userMessage(request) }],
+      output_config: { effort: settings.effort, format: outputFormat(ids) },
+    });
+    return toReply(settings, request, message);
+  },
+});
 
 /**
- * A general LLM (Claude) in the common candidate-choice track. The model
- * receives the same brief as Jev and must return one offered candidate ID as
- * structured output. No server-side fallback is enabled: a refusal or a
- * malformed reply fails the decision, and the failed run is kept as data.
+ * A general LLM (Claude) in the common candidate-choice track, flat or
+ * hierarchical. No server-side fallback is enabled: a refusal or a malformed
+ * reply fails the decision, and the failed run is kept as data.
  */
 export const createClaudePolicy = (options: ClaudePolicyOptions = {}): Policy => {
   const settings: Settings = {
     modelId: options.modelId ?? DEFAULT_CLAUDE_MODEL_ID,
-    effort: options.effort ?? "high",
+    effort: options.effort ?? DEFAULT_EFFORT,
     timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
     maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
+    choice: options.choice ?? DEFAULT_CHOICE_SETTINGS,
   };
   const client = new Anthropic({
     ...(options.apiKey === undefined ? {} : { apiKey: options.apiKey }),
@@ -154,8 +169,9 @@ export const createClaudePolicy = (options: ClaudePolicyOptions = {}): Policy =>
     timeout: settings.timeoutMs,
     maxRetries: settings.maxRetries,
   });
+  const choiceClient = createClaudeChoiceClient(client, settings);
   return {
     descriptor: describe(settings),
-    decide: (observation) => decideWith(client, settings, observation),
+    decide: (observation) => decideByChoice(choiceClient, observation, settings.choice),
   };
 };

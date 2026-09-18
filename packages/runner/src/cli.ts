@@ -3,6 +3,11 @@ import { type Issue } from "@bus20/contracts/result";
 import { type PolicyProgram } from "@bus20/contracts/policy-artifact";
 import { type SuiteIndex } from "@bus20/contracts/suite-index";
 import { EFFORT_LEVELS, type Effort } from "@bus20/models/claude-policy";
+import {
+  CHOICE_MODES,
+  type ChoiceSettings,
+  DEFAULT_CHOICE_SETTINGS,
+} from "@bus20/models/choice-procedure";
 import { comparisonMarkdown, loadRunDirectory } from "./compare.js";
 import { writeTextAtomic } from "./files.js";
 import { loadSuite } from "@bus20/datasets/files";
@@ -26,6 +31,7 @@ const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
                 [--policy fixture|swift|claude|jev|program] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
+                [--choice flat|hierarchical|auto] [--flat-limit N]
                 [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
   bus20-run compare <run-dir>... [--markdown <file>]
@@ -51,6 +57,8 @@ interface ParsedArgs {
     readonly "program-seed"?: string;
     readonly model?: string;
     readonly effort?: string;
+    readonly choice?: string;
+    readonly "flat-limit"?: string;
     readonly markdown?: string;
     readonly manifest?: string;
     readonly policies?: string;
@@ -72,6 +80,8 @@ const OPTIONS = {
   "program-seed": { type: "string" },
   model: { type: "string" },
   effort: { type: "string" },
+  choice: { type: "string" },
+  "flat-limit": { type: "string" },
   markdown: { type: "string" },
   manifest: { type: "string" },
   policies: { type: "string" },
@@ -130,10 +140,26 @@ const reportRun = (summary: RunSummary): number => {
 const parseEffort = (raw: string | undefined): Effort | undefined =>
   EFFORT_LEVELS.find((level) => level === raw);
 
+const parseChoice = (args: ParsedArgs): ChoiceSettings | undefined | null => {
+  const mode = CHOICE_MODES.find((item) => item === args.values.choice);
+  if (args.values.choice !== undefined && mode === undefined) {
+    return null;
+  }
+  const flatLimit = parseMaxDecisions(args.values["flat-limit"]);
+  if (mode === undefined && flatLimit === undefined) {
+    return undefined;
+  }
+  return {
+    mode: mode ?? DEFAULT_CHOICE_SETTINGS.mode,
+    flatLimit: flatLimit ?? DEFAULT_CHOICE_SETTINGS.flatLimit,
+  };
+};
+
 const selectPolicy = (args: ParsedArgs, program?: PolicyProgram): ManagedPolicy | undefined => {
   const swiftCommand = args.values["swift-cli"] ?? nonEmpty(process.env["BUS20_SWIFT_CLI"]);
   const effort = parseEffort(args.values.effort);
-  if (args.values.effort !== undefined && effort === undefined) {
+  const choice = parseChoice(args);
+  if ((args.values.effort !== undefined && effort === undefined) || choice === null) {
     return undefined;
   }
   const programSeed = parseMaxDecisions(args.values["program-seed"]);
@@ -141,6 +167,7 @@ const selectPolicy = (args: ParsedArgs, program?: PolicyProgram): ManagedPolicy 
     ...(swiftCommand === undefined ? {} : { swiftCommand }),
     ...(args.values.model === undefined ? {} : { modelId: args.values.model }),
     ...(effort === undefined ? {} : { effort }),
+    ...(choice === undefined ? {} : { choice }),
     ...(program === undefined ? {} : { program }),
     ...(programSeed === undefined ? {} : { programSeed }),
   });
