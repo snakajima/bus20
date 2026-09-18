@@ -10,6 +10,7 @@ how well online decision-makers dispatch riders on a fixed road network.
 - [Swift reference notes](docs/swift-reference.md)
 - [Model adapters](docs/model-adapters.md)
 - [Datasets, paired evaluation, and analysis](docs/datasets.md)
+- [Generated programs and self-improvement (second paper)](docs/policy-build.md)
 - [Development disciplines](CLAUDE.md)
 
 ## Development

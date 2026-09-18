@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { type Issue } from "@bus20/contracts/result";
+import { type PolicyProgram } from "@bus20/contracts/policy-artifact";
 import { type SuiteIndex } from "@bus20/contracts/suite-index";
 import { EFFORT_LEVELS, type Effort } from "@bus20/models/claude-policy";
 import { comparisonMarkdown, loadRunDirectory } from "./compare.js";
@@ -14,6 +15,7 @@ import {
   describeIssues,
   type Inputs,
   loadInputs,
+  loadProgram,
   type ManagedPolicy,
   replayStoredLog,
   runAndScore,
@@ -22,8 +24,9 @@ import {
 
 const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
-                [--policy fixture|swift|claude|jev] [--swift-cli <path>]
+                [--policy fixture|swift|claude|jev|program] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
+                [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
   bus20-run compare <run-dir>... [--markdown <file>]
   bus20-run suite --manifest <file> --policies <id,id,...> --out <dir>
@@ -44,6 +47,8 @@ interface ParsedArgs {
     readonly log?: string;
     readonly policy?: string;
     readonly "swift-cli"?: string;
+    readonly program?: string;
+    readonly "program-seed"?: string;
     readonly model?: string;
     readonly effort?: string;
     readonly markdown?: string;
@@ -63,6 +68,8 @@ const OPTIONS = {
   log: { type: "string" },
   policy: { type: "string", default: "fixture" },
   "swift-cli": { type: "string" },
+  program: { type: "string" },
+  "program-seed": { type: "string" },
   model: { type: "string" },
   effort: { type: "string" },
   markdown: { type: "string" },
@@ -123,23 +130,42 @@ const reportRun = (summary: RunSummary): number => {
 const parseEffort = (raw: string | undefined): Effort | undefined =>
   EFFORT_LEVELS.find((level) => level === raw);
 
-const selectPolicy = (args: ParsedArgs): ManagedPolicy | undefined => {
+const selectPolicy = (args: ParsedArgs, program?: PolicyProgram): ManagedPolicy | undefined => {
   const swiftCommand = args.values["swift-cli"] ?? nonEmpty(process.env["BUS20_SWIFT_CLI"]);
   const effort = parseEffort(args.values.effort);
   if (args.values.effort !== undefined && effort === undefined) {
     return undefined;
   }
+  const programSeed = parseMaxDecisions(args.values["program-seed"]);
   return createPolicyById(args.values.policy ?? "fixture", {
     ...(swiftCommand === undefined ? {} : { swiftCommand }),
     ...(args.values.model === undefined ? {} : { modelId: args.values.model }),
     ...(effort === undefined ? {} : { effort }),
+    ...(program === undefined ? {} : { program }),
+    ...(programSeed === undefined ? {} : { programSeed }),
   });
 };
 
-const policyFactories = (args: ParsedArgs): (() => ManagedPolicy)[] | undefined => {
+/** Reads --program when given; a missing or non-compiling file is a usage error. */
+const loadProgramOption = async (args: ParsedArgs): Promise<PolicyProgram | undefined | null> => {
+  if (args.values.program === undefined) {
+    return undefined;
+  }
+  const program = await loadProgram(args.values.program);
+  if (!program.ok) {
+    process.stderr.write(`${describeIssues(program.issues)}\n`);
+    return null;
+  }
+  return program.value;
+};
+
+const policyFactories = (
+  args: ParsedArgs,
+  program: PolicyProgram | undefined,
+): (() => ManagedPolicy)[] | undefined => {
   const ids = (args.values.policies ?? "").split(",").filter((id) => id !== "");
   const factories = ids.map((id) => () => {
-    const managed = selectPolicy({ ...args, values: { ...args.values, policy: id } });
+    const managed = selectPolicy({ ...args, values: { ...args.values, policy: id } }, program);
     if (managed === undefined) {
       throw new Error(`unknown or unavailable policy "${id}"`);
     }
@@ -161,7 +187,8 @@ const suiteOptions = (args: ParsedArgs) => {
 
 const suiteCommand = async (args: ParsedArgs): Promise<number> => {
   const { manifest, out } = args.values;
-  const factories = policyFactories(args);
+  const program = await loadProgramOption(args);
+  const factories = program === null ? undefined : policyFactories(args, program);
   if (manifest === undefined || out === undefined || factories === undefined) {
     return usageError();
   }
@@ -169,15 +196,13 @@ const suiteCommand = async (args: ParsedArgs): Promise<number> => {
   if (!suite.ok) {
     return issuesError(suite.issues);
   }
-  const logger = createStderrLogger();
-  const index = await runSuite({
+  const base = {
     suite: suite.value,
     policies: factories,
     outDir: out,
-    logger,
-    ...suiteOptions(args),
-  });
-  return reportSuite(out, index);
+    logger: createStderrLogger(),
+  };
+  return reportSuite(out, await runSuite({ ...base, ...suiteOptions(args) }));
 };
 
 const reportSuite = (out: string, index: SuiteIndex): number => {
@@ -225,9 +250,12 @@ const runWithPolicy = async (
 };
 
 /** Policy construction fails fast on missing credentials; the message never includes a key. */
-const selectPolicySafely = (args: ParsedArgs): ManagedPolicy | undefined => {
+const selectPolicySafely = (
+  args: ParsedArgs,
+  program?: PolicyProgram,
+): ManagedPolicy | undefined => {
   try {
-    return selectPolicy(args);
+    return selectPolicy(args, program);
   } catch (error: unknown) {
     process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
     return undefined;
@@ -236,7 +264,8 @@ const selectPolicySafely = (args: ParsedArgs): ManagedPolicy | undefined => {
 
 const runCommand = async (args: ParsedArgs): Promise<number> => {
   const { scenario, map, out } = args.values;
-  const managed = selectPolicySafely(args);
+  const program = await loadProgramOption(args);
+  const managed = program === null ? undefined : selectPolicySafely(args, program);
   if (scenario === undefined || map === undefined || out === undefined || managed === undefined) {
     return usageError();
   }

@@ -105,3 +105,33 @@ Packages export individual modules by subpath (for example
 | `report` | `analyzeSuite`, `analysisMarkdown` | JSON and Markdown paper artifacts. |
 
 `@bus20/runner` gains `suite` (`runSuite`) for paired evaluation with resume.
+
+## `@bus20/transport`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `json-lines-client` | `JsonLinesClient` | One child process, ordered request/response lines, timeouts, crash reporting (moved from baselines). |
+
+## `@bus20/policy-runtime`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `compile` | `compileProgram`, `DECIDE_FUNCTION` | Static gate (no modules, no host access) and TypeScript stripping. |
+| `sandbox` | `ProgramSandbox` | `node:vm` context with frozen globals, seeded random, constant clock, CPU timeouts. |
+| `host-protocol` | `hostRequestSchema`, `hostResponseSchema` | JSON Lines contract between parent and program host. |
+| `program-host` | (executable) | Child process hosting one program. |
+| `program-policy` | `createProgramPolicy`, `DEFAULT_PROGRAM_LIMITS` | Policy adapter over the host process. |
+
+## `@bus20/policy-build`
+
+| Module | Exports | Purpose |
+| --- | --- | --- |
+| `program-spec` | `PROGRAM_SPEC`, `PROGRAM_PROMPT_VERSION` | The only task description generators receive. |
+| `generator` | `ProgramGenerator`, `createClaudeGenerator`, `extractProgram`, `generationTask` | Program generation interface and Claude implementation. |
+| `feedback` | `buildFeedback` | Aggregate development feedback for revisions. |
+| `evaluate` | `evaluateProgram`, `summarizeRuns` | Runs a program on one split through the suite runner. |
+| `selection` | `isImprovement`, `compareForSelection` | Fixed acceptance and selection rules. |
+| `campaign` | `runCampaign` | B0, B-restart, and B-self loops with budgets and freezing. |
+| `artifacts` | `writeCampaign`, `readCampaign`, `writeProgram`, `readProgram`, `writeEvaluation`, `readEvaluation` | Campaign directory layout. |
+
+`@bus20/contracts` gains `policy-artifact` (programs, evaluations, campaigns); `@bus20/runner` gains `--policy program`.

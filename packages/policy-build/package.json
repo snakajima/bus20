@@ -1,0 +1,31 @@
+{
+  "name": "@bus20/policy-build",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Second-paper foundation: program generation, self-improvement campaigns, artifact and cost tracking",
+  "type": "module",
+  "bin": {
+    "bus20-improve": "./dist/src/cli.js"
+  },
+  "exports": {
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.127.0",
+    "@bus20/analysis": "0.1.0",
+    "@bus20/contracts": "0.1.0",
+    "@bus20/datasets": "0.1.0",
+    "@bus20/models": "0.1.0",
+    "@bus20/policy-runtime": "0.1.0",
+    "@bus20/runner": "0.1.0",
+    "@bus20/simulator": "0.1.0",
+    "zod": "^4.0.0"
+  }
+}

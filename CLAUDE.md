@@ -37,6 +37,9 @@ checkout or assume that its packages exist here.
 - Pin scenario, map, model, prompt, and protocol versions in experiment results.
 - Keep all failed runs and retry costs; never silently fall back to Swift.
 - Do not add model-generated policies or self-improvement to the first-paper scope.
+  They live in `packages/policy-runtime` and `packages/policy-build` (second
+  paper) and must not be imported by the simulator, scorer, or first-paper
+  adapters.
 
 ## Validation and PRs
 

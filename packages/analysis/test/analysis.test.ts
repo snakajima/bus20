@@ -32,6 +32,7 @@ const run = (
   status: pain === null ? "failed" : "complete",
   pain,
   failureReason: pain === null ? "deadlineExceeded" : null,
+  failureDetail: pain === null ? "unfinished" : null,
   completedCount: pain === null ? 5 : 10,
   requestCount: 10,
   decisions: 10,
@@ -40,6 +41,7 @@ const run = (
   inputTokens: 1000,
   outputTokens: 10,
   costUsd: policyId === "ref" ? null : 0.01,
+  programCpuMs: 0,
   replayMatches: true,
 });
 

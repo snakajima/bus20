@@ -1,5 +1,5 @@
 import { type MapDocument, mapDocumentSchema, checkMapSemantics } from "@bus20/contracts/map";
-import { fail, formatIssues, type Issue, ok, type Result } from "@bus20/contracts/result";
+import { fail, formatIssues, type Issue, issue, ok, type Result } from "@bus20/contracts/result";
 import { type RunLog, runLogSchema } from "@bus20/contracts/run-log";
 import { type RunResult } from "@bus20/contracts/run-result";
 import {
@@ -10,6 +10,8 @@ import {
 import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
 import { createClaudePolicy, type Effort } from "@bus20/models/claude-policy";
 import { createJevPolicy } from "@bus20/models/jev-policy";
+import { type PolicyProgram, policyProgramSchema } from "@bus20/contracts/policy-artifact";
+import { createProgramPolicy } from "@bus20/policy-runtime/program-policy";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
 import { scoreRun } from "@bus20/scoring/score";
 import { createFixturePolicy } from "@bus20/simulator/fixture-policy";
@@ -111,6 +113,9 @@ export interface PolicyOptions {
   readonly modelId?: string;
   /** Reasoning effort for `claude`. */
   readonly effort?: Effort;
+  /** A frozen generated program for `program`, plus the seed its Math.random gets. */
+  readonly program?: PolicyProgram;
+  readonly programSeed?: number;
 }
 
 /** A policy plus its cleanup, so the CLI can release child processes. */
@@ -119,7 +124,7 @@ export interface ManagedPolicy {
   readonly close: () => void;
 }
 
-export const POLICY_IDS = ["fixture", "swift", "claude", "jev"] as const;
+export const POLICY_IDS = ["fixture", "swift", "claude", "jev", "program"] as const;
 
 const noop = (): undefined => undefined;
 
@@ -143,12 +148,35 @@ export const createPolicyById = (
   if (policyId === "fixture") {
     return { policy: createFixturePolicy(), close: noop };
   }
-  if (policyId === "swift" && options.swiftCommand !== undefined) {
-    const policy = createSwiftReferencePolicy({ command: options.swiftCommand });
-    return { policy, close: policy.close };
+  const external = createExternalPolicy(policyId, options);
+  if (external !== undefined) {
+    return { policy: external, close: external.close };
   }
   const policy = createModelPolicy(policyId, options);
   return policy === undefined ? undefined : { policy, close: noop };
 };
 
+/** Policies backed by a child process: the Swift reference and generated programs. */
+const createExternalPolicy = (
+  policyId: string,
+  options: PolicyOptions,
+): (Policy & { readonly close: () => void }) | undefined => {
+  if (policyId === "swift" && options.swiftCommand !== undefined) {
+    return createSwiftReferencePolicy({ command: options.swiftCommand });
+  }
+  if (policyId === "program" && options.program !== undefined) {
+    return createProgramPolicy({ program: options.program, seed: options.programSeed ?? 0 });
+  }
+  return undefined;
+};
+
 export const describeIssues = (issues: readonly Issue[]): string => formatIssues(issues);
+
+/** Loads a frozen program artifact; programs that failed to compile are refused. */
+export const loadProgram = async (programPath: string): Promise<Result<PolicyProgram>> => {
+  const program = await readJsonFile(programPath, policyProgramSchema);
+  if (program.ok && program.value.compileError !== null) {
+    return fail([issue(programPath, `program did not compile: ${program.value.compileError}`)]);
+  }
+  return program;
+};

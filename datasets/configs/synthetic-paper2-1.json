@@ -1,0 +1,67 @@
+{
+  "benchmarkVersion": "synthetic-paper2/1",
+  "seed": 20260919,
+  "cities": [
+    {
+      "id": "sf-like",
+      "name": "SF-like",
+      "width": 9,
+      "height": 9,
+      "blockMeters": 150,
+      "removeFraction": 0.12,
+      "oneWayFraction": 0.35,
+      "speedsMps": [7, 8, 9, 10],
+      "originLat": 37.78,
+      "originLon": -122.42
+    },
+    {
+      "id": "tokyo-like",
+      "name": "Tokyo-like",
+      "width": 11,
+      "height": 8,
+      "blockMeters": 110,
+      "removeFraction": 0.2,
+      "oneWayFraction": 0.5,
+      "speedsMps": [5, 6, 7, 8],
+      "originLat": 35.68,
+      "originLon": 139.76
+    },
+    {
+      "id": "nyc-like",
+      "name": "NYC-like",
+      "width": 7,
+      "height": 13,
+      "blockMeters": 200,
+      "removeFraction": 0.05,
+      "oneWayFraction": 0.6,
+      "speedsMps": [8, 9, 10, 11],
+      "originLat": 40.75,
+      "originLon": -73.99
+    }
+  ],
+  "loads": {
+    "low": {
+      "targetUtilization": 0.25
+    },
+    "medium": {
+      "targetUtilization": 0.5
+    },
+    "high": {
+      "targetUtilization": 0.8
+    }
+  },
+  "patterns": ["uniform", "commute", "hotspot"],
+  "splits": {
+    "dev": 1,
+    "validation": 1,
+    "test": 2
+  },
+  "fleet": {
+    "vehicleCount": 4,
+    "capacity": 4
+  },
+  "timing": {
+    "demandMinutes": 60,
+    "deadlineMarginMinutes": 90
+  }
+}

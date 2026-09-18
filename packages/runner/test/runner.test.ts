@@ -1,6 +1,7 @@
 import { runLogSchema } from "@bus20/contracts/run-log";
 import { runResultSchema } from "@bus20/contracts/run-result";
 import { suiteIndexSchema } from "@bus20/contracts/suite-index";
+import { compileProgram } from "@bus20/policy-runtime/compile";
 import { createFixturePolicy } from "@bus20/simulator/fixture-policy";
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
@@ -279,4 +280,63 @@ test("suite runs every policy on every selected scenario, resumes, and analyzes"
   );
   assert.equal(analyze.status, 0, analyze.stderr);
   assert.ok(existsSync(path.join(outDir, "analysis", "analysis.md")));
+});
+
+test("a frozen program artifact runs through --policy program and matches the fixture policy", async () => {
+  const source = readFileSync(
+    path.join(REPO_ROOT, "packages/policy-runtime/test/fixtures/append-earliest.ts.txt"),
+    "utf8",
+  );
+  const compiled = compileProgram(source, "typescript");
+  assert.ok(compiled.ok);
+  const outDir = tempDir();
+  const programPath = path.join(outDir, "program.json");
+  await writeJsonAtomic(programPath, {
+    schemaVersion: "bus20-policy-program/1",
+    id: "sample",
+    campaignId: "manual",
+    version: 0,
+    parentId: null,
+    origin: "initial",
+    language: "typescript",
+    source,
+    compiled: compiled.value,
+    compileError: null,
+    sourceDigest: `sha256:${"a".repeat(64)}`,
+    generator: { provider: "manual", modelId: "none", promptVersion: "none" },
+    spend: { inputTokens: 0, outputTokens: 0, costUsd: null, wallMs: 0 },
+  });
+  const run = spawnSync(
+    process.execPath,
+    [
+      CLI,
+      "run",
+      "--policy",
+      "program",
+      "--program",
+      programPath,
+      "--scenario",
+      SCENARIO,
+      "--map",
+      MAP,
+      "--out",
+      path.join(outDir, "run"),
+    ],
+    { encoding: "utf8" },
+  );
+  assert.equal(run.status, 0, run.stderr);
+  const log = runLogSchema.parse(
+    JSON.parse(readFileSync(path.join(outDir, "run", "run-log.json"), "utf8")),
+  );
+  assert.equal(log.policy.kind, "generated-program");
+  const fixture = spawnSync(
+    process.execPath,
+    [CLI, "run", "--scenario", SCENARIO, "--map", MAP, "--out", path.join(outDir, "fixture")],
+    { encoding: "utf8" },
+  );
+  assert.equal(fixture.status, 0);
+  const reference = runLogSchema.parse(
+    JSON.parse(readFileSync(path.join(outDir, "fixture", "run-log.json"), "utf8")),
+  );
+  assert.deepEqual(log.journeys, reference.journeys);
 });
