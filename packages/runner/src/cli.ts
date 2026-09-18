@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 import { type Issue } from "@bus20/contracts/result";
+import { type SuiteIndex } from "@bus20/contracts/suite-index";
 import { EFFORT_LEVELS, type Effort } from "@bus20/models/claude-policy";
 import { comparisonMarkdown, loadRunDirectory } from "./compare.js";
 import { writeTextAtomic } from "./files.js";
+import { loadSuite } from "@bus20/datasets/files";
+import path from "node:path";
 import { parseArgs } from "node:util";
+import { runSuite, SUITE_INDEX_FILE } from "./suite.js";
 import { createStderrLogger } from "./logging.js";
 import {
   createPolicyById,
@@ -21,7 +25,10 @@ const USAGE = `usage:
                 [--policy fixture|swift|claude|jev] [--swift-cli <path>]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
   bus20-run replay --scenario <file> --map <file> --log <file>
-  bus20-run compare <run-dir>... [--markdown <file>]`;
+  bus20-run compare <run-dir>... [--markdown <file>]
+  bus20-run suite --manifest <file> --policies <id,id,...> --out <dir>
+                [--splits dev,validation,test] [--repetitions N] [--limit N]
+                [--swift-cli <path>] [--model <id>] [--effort <level>] [--max-decisions N]`;
 
 const EXIT_OK = 0;
 const EXIT_USAGE = 2;
@@ -40,26 +47,38 @@ interface ParsedArgs {
     readonly model?: string;
     readonly effort?: string;
     readonly markdown?: string;
+    readonly manifest?: string;
+    readonly policies?: string;
+    readonly splits?: string;
+    readonly repetitions?: string;
+    readonly limit?: string;
     readonly "max-decisions"?: string;
   };
 }
+
+const OPTIONS = {
+  scenario: { type: "string" },
+  map: { type: "string" },
+  out: { type: "string" },
+  log: { type: "string" },
+  policy: { type: "string", default: "fixture" },
+  "swift-cli": { type: "string" },
+  model: { type: "string" },
+  effort: { type: "string" },
+  markdown: { type: "string" },
+  manifest: { type: "string" },
+  policies: { type: "string" },
+  splits: { type: "string", default: "dev" },
+  repetitions: { type: "string", default: "1" },
+  limit: { type: "string" },
+  "max-decisions": { type: "string" },
+} as const;
 
 const parse = (argv: readonly string[]): ParsedArgs => {
   const { values, positionals } = parseArgs({
     args: [...argv],
     allowPositionals: true,
-    options: {
-      scenario: { type: "string" },
-      map: { type: "string" },
-      out: { type: "string" },
-      log: { type: "string" },
-      policy: { type: "string", default: "fixture" },
-      "swift-cli": { type: "string" },
-      model: { type: "string" },
-      effort: { type: "string" },
-      markdown: { type: "string" },
-      "max-decisions": { type: "string" },
-    },
+    options: OPTIONS,
   });
   return { command: positionals[0], positionals: positionals.slice(1), values };
 };
@@ -115,6 +134,56 @@ const selectPolicy = (args: ParsedArgs): ManagedPolicy | undefined => {
     ...(args.values.model === undefined ? {} : { modelId: args.values.model }),
     ...(effort === undefined ? {} : { effort }),
   });
+};
+
+const policyFactories = (args: ParsedArgs): (() => ManagedPolicy)[] | undefined => {
+  const ids = (args.values.policies ?? "").split(",").filter((id) => id !== "");
+  const factories = ids.map((id) => () => {
+    const managed = selectPolicy({ ...args, values: { ...args.values, policy: id } });
+    if (managed === undefined) {
+      throw new Error(`unknown or unavailable policy "${id}"`);
+    }
+    return managed;
+  });
+  return factories.length === 0 ? undefined : factories;
+};
+
+const suiteOptions = (args: ParsedArgs) => {
+  const limit = parseMaxDecisions(args.values.limit);
+  const maxDecisions = parseMaxDecisions(args.values["max-decisions"]);
+  return {
+    splits: (args.values.splits ?? "dev").split(","),
+    repetitions: parseMaxDecisions(args.values.repetitions) ?? 1,
+    ...(limit === undefined ? {} : { limit }),
+    ...(maxDecisions === undefined ? {} : { maxDecisions }),
+  };
+};
+
+const suiteCommand = async (args: ParsedArgs): Promise<number> => {
+  const { manifest, out } = args.values;
+  const factories = policyFactories(args);
+  if (manifest === undefined || out === undefined || factories === undefined) {
+    return usageError();
+  }
+  const suite = await loadSuite(manifest);
+  if (!suite.ok) {
+    return issuesError(suite.issues);
+  }
+  const logger = createStderrLogger();
+  const index = await runSuite({
+    suite: suite.value,
+    policies: factories,
+    outDir: out,
+    logger,
+    ...suiteOptions(args),
+  });
+  return reportSuite(out, index);
+};
+
+const reportSuite = (out: string, index: SuiteIndex): number => {
+  const failed = index.runs.filter((run) => run.status === "failed").length;
+  emit({ indexPath: path.join(out, SUITE_INDEX_FILE), runs: index.runs.length, failed });
+  return EXIT_OK;
 };
 
 const compareCommand = async (args: ParsedArgs): Promise<number> => {
@@ -202,6 +271,9 @@ export const main = async (argv: readonly string[]): Promise<number> => {
   }
   if (args.command === "compare") {
     return compareCommand(args);
+  }
+  if (args.command === "suite") {
+    return suiteCommand(args);
   }
   return usageError();
 };

@@ -7,16 +7,22 @@
   "include": ["src/**/*.ts", "test/**/*.ts"],
   "references": [
     {
+      "path": "../analysis"
+    },
+    {
       "path": "../baselines"
     },
     {
       "path": "../contracts"
     },
     {
-      "path": "../models"
+      "path": "../datasets"
     },
     {
       "path": "../graph"
+    },
+    {
+      "path": "../models"
     },
     {
       "path": "../scoring"

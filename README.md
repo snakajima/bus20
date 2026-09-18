@@ -9,6 +9,7 @@ how well online decision-makers dispatch riders on a fixed road network.
 - [Shared utility catalog](docs/shared-utils.md)
 - [Swift reference notes](docs/swift-reference.md)
 - [Model adapters](docs/model-adapters.md)
+- [Datasets, paired evaluation, and analysis](docs/datasets.md)
 - [Development disciplines](CLAUDE.md)
 
 ## Development
@@ -63,6 +64,12 @@ node packages/runner/dist/src/cli.js run --policy swift \
 
 See [the Swift reference notes](docs/swift-reference.md) for what was
 corrected and what changed relative to the original app.
+
+A versioned synthetic development suite lives in `datasets/synthetic-dev-1/`
+(`bus20-data generate|verify`). `bus20-run suite` runs every policy on every
+scenario of a suite with resume, and `bus20-analyze` turns the suite index
+into success rates, conditional pain with bootstrap intervals, and paired
+differences against a reference. See [the dataset notes](docs/datasets.md).
 
 Online model policies (`--policy jev`, `--policy claude`) read their API keys
 from `TYPESAFE_API_KEY` and `ANTHROPIC_API_KEY`, and `compare <run-dir>...`

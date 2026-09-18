@@ -1,0 +1,24 @@
+{
+  "name": "@bus20/analysis",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Paired evaluation statistics and paper artifacts for Bus 2.0 benchmark suites",
+  "type": "module",
+  "bin": {
+    "bus20-analyze": "./dist/src/cli.js"
+  },
+  "exports": {
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@bus20/contracts": "0.1.0",
+    "zod": "^4.0.0"
+  }
+}

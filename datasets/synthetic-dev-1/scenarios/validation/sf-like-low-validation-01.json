@@ -1,0 +1,242 @@
+{
+  "schemaVersion": "bus20-scenario/1",
+  "id": "sf-like-low-validation-01",
+  "map": {
+    "id": "sf-like-v1",
+    "digest": "sha256:19fc4f4df8524d0815ce14b4f54bedc14bfa1638a98f3bb8c0df98269e6363d3"
+  },
+  "startTimeMs": 0,
+  "demandEndTimeMs": 3600000,
+  "completionDeadlineMs": 9000000,
+  "vehicles": [
+    {
+      "id": "v1",
+      "nodeId": "n6-3",
+      "capacity": 4
+    },
+    {
+      "id": "v2",
+      "nodeId": "n0-8",
+      "capacity": 4
+    },
+    {
+      "id": "v3",
+      "nodeId": "n3-4",
+      "capacity": 4
+    },
+    {
+      "id": "v4",
+      "nodeId": "n7-5",
+      "capacity": 4
+    }
+  ],
+  "requests": [
+    {
+      "id": "r01",
+      "requestTimeMs": 161967,
+      "originNodeId": "n4-5",
+      "destinationNodeId": "n7-7",
+      "passengers": 1
+    },
+    {
+      "id": "r02",
+      "requestTimeMs": 262405,
+      "originNodeId": "n0-7",
+      "destinationNodeId": "n7-2",
+      "passengers": 1
+    },
+    {
+      "id": "r03",
+      "requestTimeMs": 309578,
+      "originNodeId": "n3-7",
+      "destinationNodeId": "n2-3",
+      "passengers": 1
+    },
+    {
+      "id": "r04",
+      "requestTimeMs": 322490,
+      "originNodeId": "n7-7",
+      "destinationNodeId": "n0-4",
+      "passengers": 1
+    },
+    {
+      "id": "r05",
+      "requestTimeMs": 518862,
+      "originNodeId": "n1-5",
+      "destinationNodeId": "n5-1",
+      "passengers": 1
+    },
+    {
+      "id": "r06",
+      "requestTimeMs": 710165,
+      "originNodeId": "n4-5",
+      "destinationNodeId": "n2-6",
+      "passengers": 1
+    },
+    {
+      "id": "r07",
+      "requestTimeMs": 906770,
+      "originNodeId": "n5-2",
+      "destinationNodeId": "n3-1",
+      "passengers": 1
+    },
+    {
+      "id": "r08",
+      "requestTimeMs": 1099096,
+      "originNodeId": "n3-0",
+      "destinationNodeId": "n2-2",
+      "passengers": 1
+    },
+    {
+      "id": "r09",
+      "requestTimeMs": 1164147,
+      "originNodeId": "n0-5",
+      "destinationNodeId": "n2-5",
+      "passengers": 1
+    },
+    {
+      "id": "r10",
+      "requestTimeMs": 1586281,
+      "originNodeId": "n5-8",
+      "destinationNodeId": "n2-8",
+      "passengers": 1
+    },
+    {
+      "id": "r11",
+      "requestTimeMs": 1692733,
+      "originNodeId": "n0-2",
+      "destinationNodeId": "n8-1",
+      "passengers": 1
+    },
+    {
+      "id": "r12",
+      "requestTimeMs": 1694622,
+      "originNodeId": "n0-1",
+      "destinationNodeId": "n5-1",
+      "passengers": 1
+    },
+    {
+      "id": "r13",
+      "requestTimeMs": 1878164,
+      "originNodeId": "n2-8",
+      "destinationNodeId": "n5-3",
+      "passengers": 1
+    },
+    {
+      "id": "r14",
+      "requestTimeMs": 1966391,
+      "originNodeId": "n5-0",
+      "destinationNodeId": "n6-8",
+      "passengers": 1
+    },
+    {
+      "id": "r15",
+      "requestTimeMs": 2049977,
+      "originNodeId": "n5-1",
+      "destinationNodeId": "n1-0",
+      "passengers": 1
+    },
+    {
+      "id": "r16",
+      "requestTimeMs": 2079667,
+      "originNodeId": "n2-7",
+      "destinationNodeId": "n0-2",
+      "passengers": 1
+    },
+    {
+      "id": "r17",
+      "requestTimeMs": 2475285,
+      "originNodeId": "n2-2",
+      "destinationNodeId": "n4-3",
+      "passengers": 1
+    },
+    {
+      "id": "r18",
+      "requestTimeMs": 2517867,
+      "originNodeId": "n8-4",
+      "destinationNodeId": "n7-5",
+      "passengers": 1
+    },
+    {
+      "id": "r19",
+      "requestTimeMs": 2545707,
+      "originNodeId": "n1-5",
+      "destinationNodeId": "n0-6",
+      "passengers": 1
+    },
+    {
+      "id": "r20",
+      "requestTimeMs": 2571884,
+      "originNodeId": "n1-5",
+      "destinationNodeId": "n8-5",
+      "passengers": 1
+    },
+    {
+      "id": "r21",
+      "requestTimeMs": 2858923,
+      "originNodeId": "n2-7",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r22",
+      "requestTimeMs": 2868018,
+      "originNodeId": "n5-2",
+      "destinationNodeId": "n0-6",
+      "passengers": 1
+    },
+    {
+      "id": "r23",
+      "requestTimeMs": 2994643,
+      "originNodeId": "n2-8",
+      "destinationNodeId": "n1-8",
+      "passengers": 1
+    },
+    {
+      "id": "r24",
+      "requestTimeMs": 3153983,
+      "originNodeId": "n3-0",
+      "destinationNodeId": "n5-1",
+      "passengers": 1
+    },
+    {
+      "id": "r25",
+      "requestTimeMs": 3203664,
+      "originNodeId": "n1-0",
+      "destinationNodeId": "n5-2",
+      "passengers": 1
+    },
+    {
+      "id": "r26",
+      "requestTimeMs": 3335359,
+      "originNodeId": "n4-3",
+      "destinationNodeId": "n3-7",
+      "passengers": 1
+    },
+    {
+      "id": "r27",
+      "requestTimeMs": 3352682,
+      "originNodeId": "n7-4",
+      "destinationNodeId": "n7-2",
+      "passengers": 1
+    },
+    {
+      "id": "r28",
+      "requestTimeMs": 3506179,
+      "originNodeId": "n6-8",
+      "destinationNodeId": "n2-1",
+      "passengers": 1
+    }
+  ],
+  "provenance": {
+    "generator": "bus20-synthetic-demand",
+    "generatorVersion": "1",
+    "seed": "1338892959",
+    "city": "sf-like",
+    "load": "low",
+    "pattern": "uniform",
+    "split": "validation",
+    "targetUtilization": "0.25",
+    "meanDirectMinutes": "2.163"
+  }
+}

@@ -1,0 +1,496 @@
+{
+  "analysisVersion": "bus20-analysis/1",
+  "benchmarkVersion": "synthetic-dev/1",
+  "manifestDigest": "sha256:58fdffbe7e405dfdde4b9d3dbb476806ecc213d0d8f96efc391046a6c282c994",
+  "referencePolicyId": "swift-insertion-reference",
+  "bootstrapSeed": 1,
+  "cells": [
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 12.613400015049605,
+      "painInterval": {
+        "lower": 3.3965933604662695,
+        "upper": 26.926176386597223
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0017363333333169824,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 4.037223467265211,
+      "painInterval": {
+        "lower": 3.3742242886607134,
+        "upper": 4.526263560525793
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.2770696666666576,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 9.976936388008417,
+      "painInterval": {
+        "lower": 5.100826014095959,
+        "upper": 18.388756239348485
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.5416803333333368,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 120.99379668416499,
+      "painInterval": {
+        "lower": 10.008183230984852,
+        "upper": 264.1573462625455
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.004166666666700773,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 683.6296260220464,
+      "painInterval": {
+        "lower": 181.44851256870473,
+        "upper": 1210.4330171611268
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.01637500000000121,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 33.79857371026633,
+      "painInterval": {
+        "lower": 8.836241037562424,
+        "upper": 71.12954700464418
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.894097000000026,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 2.1427429220400236,
+      "painInterval": {
+        "lower": 1.8052101280197135,
+        "upper": 2.5189388667921144
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.22641666666671276,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 3.840788152697133,
+      "painInterval": {
+        "lower": 2.372545728216846,
+        "upper": 6.731363672231184
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0011803333333470316,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 92.5830485960479,
+      "painInterval": {
+        "lower": 4.863602481657849,
+        "upper": 242.0753854430467
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.004083333333331514,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 7.291174829357729,
+      "painInterval": {
+        "lower": 3.234162168694885,
+        "upper": 14.084390624316574
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.36319433333339174,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 25.576364352472226,
+      "painInterval": {
+        "lower": 7.566517564522225,
+        "upper": 58.63001260810834
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.4580413333333127,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 542.7105887411778,
+      "painInterval": {
+        "lower": 327.0436540966639,
+        "upper": 849.3280425679309
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.02056966666683972,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 30.893785178659613,
+      "painInterval": {
+        "lower": 4.952550117063491,
+        "upper": 79.67940796699736
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.001430666666844142,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 5.706302884911817,
+      "painInterval": {
+        "lower": 3.222723202777777,
+        "upper": 7.632834373518519
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.3238613333332978,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 19.47548381473545,
+      "painInterval": {
+        "lower": 10.218614509742062,
+        "upper": 28.111586122023805
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.7624166666666193,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 210.84362831899466,
+      "painInterval": {
+        "lower": 20.32756846915344,
+        "upper": 344.0300020335978
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.003958666666676436,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 911.9295866958213,
+      "painInterval": {
+        "lower": 537.0754558265442,
+        "upper": 1221.3733422701107
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.012194000000060138,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 3,
+      "completeRuns": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 43.231684548293856,
+      "painInterval": {
+        "lower": 18.35121856854984,
+        "upper": 67.79967132775737
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.6529163333331478,
+      "failureReasons": {}
+    }
+  ],
+  "paired": [
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -8.576176547784392,
+      "differenceInterval": {
+        "lower": -22.714993833988093,
+        "upper": -0.02236907180555603
+      },
+      "meanImprovementPercent": -202.04821789565736,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -111.0168602961566,
+      "differenceInterval": {
+        "lower": -245.76859002319702,
+        "upper": -4.907357216888893
+      },
+      "meanImprovementPercent": -903.8627511375535,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -649.8310523117801,
+      "differenceInterval": {
+        "lower": -1139.3034701564827,
+        "upper": -172.61227153114228
+      },
+      "meanImprovementPercent": -2176.786874841804,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -1.698045230657109,
+      "differenceInterval": {
+        "lower": -4.212424805439069,
+        "upper": -0.2684659569086021
+      },
+      "meanImprovementPercent": -71.32009041825542,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -85.29187376669019,
+      "differenceInterval": {
+        "lower": -227.99099481873017,
+        "upper": -1.6294403129629638
+      },
+      "meanImprovementPercent": -748.5129397836448,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -517.1342243887057,
+      "differenceInterval": {
+        "lower": -790.6980299598225,
+        "upper": -319.4771365321417
+      },
+      "meanImprovementPercent": -3253.348826402051,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -25.187482293747795,
+      "differenceInterval": {
+        "lower": -72.04657359347884,
+        "upper": -1.729826914285714
+      },
+      "meanImprovementPercent": -342.03167999909016,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -191.36814450425922,
+      "differenceInterval": {
+        "lower": -315.91841591157396,
+        "upper": -10.108953959411378
+      },
+      "meanImprovementPercent": -819.0576070598346,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 3,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 3,
+      "meanDifference": -868.6979021475275,
+      "differenceInterval": {
+        "lower": -1153.5736709423534,
+        "upper": -518.7242372579943
+      },
+      "meanImprovementPercent": -2224.190506010992,
+      "policyWins": 0
+    }
+  ],
+  "acrossCities": [
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 15.78265778213545
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 3.962089758072351
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 12.247865010700531
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 141.47349119973583
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "load": "high",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 712.7566004863485
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "high",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 34.2022075370108
+    }
+  ]
+}

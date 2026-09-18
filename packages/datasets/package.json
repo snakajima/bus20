@@ -1,0 +1,25 @@
+{
+  "name": "@bus20/datasets",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Seeded synthetic maps, fixed demand generation, and versioned manifests for the Bus 2.0 benchmark",
+  "type": "module",
+  "bin": {
+    "bus20-data": "./dist/src/cli.js"
+  },
+  "exports": {
+    "./*": {
+      "types": "./dist/src/*.d.ts",
+      "default": "./dist/src/*.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@bus20/contracts": "0.1.0",
+    "@bus20/graph": "0.1.0",
+    "zod": "^4.0.0"
+  }
+}

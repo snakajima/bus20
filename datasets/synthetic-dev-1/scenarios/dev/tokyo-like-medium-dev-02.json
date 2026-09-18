@@ -1,0 +1,487 @@
+{
+  "schemaVersion": "bus20-scenario/1",
+  "id": "tokyo-like-medium-dev-02",
+  "map": {
+    "id": "tokyo-like-v1",
+    "digest": "sha256:d07428ab13235004befeea1d7cdfada24a56a0ce553ed2755473c7ef6fe8c6e7"
+  },
+  "startTimeMs": 0,
+  "demandEndTimeMs": 3600000,
+  "completionDeadlineMs": 9000000,
+  "vehicles": [
+    {
+      "id": "v1",
+      "nodeId": "n3-5",
+      "capacity": 4
+    },
+    {
+      "id": "v2",
+      "nodeId": "n6-8",
+      "capacity": 4
+    },
+    {
+      "id": "v3",
+      "nodeId": "n5-2",
+      "capacity": 4
+    },
+    {
+      "id": "v4",
+      "nodeId": "n7-3",
+      "capacity": 4
+    }
+  ],
+  "requests": [
+    {
+      "id": "r01",
+      "requestTimeMs": 996,
+      "originNodeId": "n7-6",
+      "destinationNodeId": "n5-3",
+      "passengers": 1
+    },
+    {
+      "id": "r02",
+      "requestTimeMs": 8767,
+      "originNodeId": "n6-2",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r03",
+      "requestTimeMs": 21284,
+      "originNodeId": "n3-0",
+      "destinationNodeId": "n5-4",
+      "passengers": 1
+    },
+    {
+      "id": "r04",
+      "requestTimeMs": 140697,
+      "originNodeId": "n6-5",
+      "destinationNodeId": "n4-3",
+      "passengers": 1
+    },
+    {
+      "id": "r05",
+      "requestTimeMs": 191464,
+      "originNodeId": "n7-3",
+      "destinationNodeId": "n2-4",
+      "passengers": 1
+    },
+    {
+      "id": "r06",
+      "requestTimeMs": 192903,
+      "originNodeId": "n6-0",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r07",
+      "requestTimeMs": 238754,
+      "originNodeId": "n6-4",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r08",
+      "requestTimeMs": 258249,
+      "originNodeId": "n5-8",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r09",
+      "requestTimeMs": 306111,
+      "originNodeId": "n3-3",
+      "destinationNodeId": "n7-3",
+      "passengers": 1
+    },
+    {
+      "id": "r10",
+      "requestTimeMs": 345587,
+      "originNodeId": "n6-1",
+      "destinationNodeId": "n4-3",
+      "passengers": 1
+    },
+    {
+      "id": "r11",
+      "requestTimeMs": 361417,
+      "originNodeId": "n7-6",
+      "destinationNodeId": "n4-4",
+      "passengers": 1
+    },
+    {
+      "id": "r12",
+      "requestTimeMs": 366707,
+      "originNodeId": "n2-5",
+      "destinationNodeId": "n7-9",
+      "passengers": 1
+    },
+    {
+      "id": "r13",
+      "requestTimeMs": 373445,
+      "originNodeId": "n7-3",
+      "destinationNodeId": "n5-4",
+      "passengers": 1
+    },
+    {
+      "id": "r14",
+      "requestTimeMs": 446866,
+      "originNodeId": "n3-0",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r15",
+      "requestTimeMs": 467872,
+      "originNodeId": "n6-5",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r16",
+      "requestTimeMs": 473232,
+      "originNodeId": "n5-2",
+      "destinationNodeId": "n5-4",
+      "passengers": 1
+    },
+    {
+      "id": "r17",
+      "requestTimeMs": 482669,
+      "originNodeId": "n7-9",
+      "destinationNodeId": "n2-3",
+      "passengers": 1
+    },
+    {
+      "id": "r18",
+      "requestTimeMs": 493629,
+      "originNodeId": "n2-4",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r19",
+      "requestTimeMs": 496987,
+      "originNodeId": "n6-2",
+      "destinationNodeId": "n5-4",
+      "passengers": 1
+    },
+    {
+      "id": "r20",
+      "requestTimeMs": 517280,
+      "originNodeId": "n6-1",
+      "destinationNodeId": "n4-4",
+      "passengers": 1
+    },
+    {
+      "id": "r21",
+      "requestTimeMs": 576552,
+      "originNodeId": "n3-6",
+      "destinationNodeId": "n3-5",
+      "passengers": 1
+    },
+    {
+      "id": "r22",
+      "requestTimeMs": 603353,
+      "originNodeId": "n1-1",
+      "destinationNodeId": "n2-3",
+      "passengers": 1
+    },
+    {
+      "id": "r23",
+      "requestTimeMs": 664655,
+      "originNodeId": "n2-5",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r24",
+      "requestTimeMs": 681377,
+      "originNodeId": "n6-7",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r25",
+      "requestTimeMs": 685196,
+      "originNodeId": "n6-7",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r26",
+      "requestTimeMs": 748597,
+      "originNodeId": "n4-0",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r27",
+      "requestTimeMs": 812285,
+      "originNodeId": "n5-7",
+      "destinationNodeId": "n4-3",
+      "passengers": 1
+    },
+    {
+      "id": "r28",
+      "requestTimeMs": 825775,
+      "originNodeId": "n7-8",
+      "destinationNodeId": "n3-5",
+      "passengers": 1
+    },
+    {
+      "id": "r29",
+      "requestTimeMs": 955989,
+      "originNodeId": "n7-8",
+      "destinationNodeId": "n2-4",
+      "passengers": 1
+    },
+    {
+      "id": "r30",
+      "requestTimeMs": 960628,
+      "originNodeId": "n7-8",
+      "destinationNodeId": "n4-3",
+      "passengers": 1
+    },
+    {
+      "id": "r31",
+      "requestTimeMs": 964187,
+      "originNodeId": "n0-5",
+      "destinationNodeId": "n4-1",
+      "passengers": 1
+    },
+    {
+      "id": "r32",
+      "requestTimeMs": 1065621,
+      "originNodeId": "n7-0",
+      "destinationNodeId": "n3-5",
+      "passengers": 1
+    },
+    {
+      "id": "r33",
+      "requestTimeMs": 1095068,
+      "originNodeId": "n5-6",
+      "destinationNodeId": "n4-5",
+      "passengers": 1
+    },
+    {
+      "id": "r34",
+      "requestTimeMs": 1144136,
+      "originNodeId": "n5-7",
+      "destinationNodeId": "n5-4",
+      "passengers": 1
+    },
+    {
+      "id": "r35",
+      "requestTimeMs": 1282570,
+      "originNodeId": "n0-3",
+      "destinationNodeId": "n3-5",
+      "passengers": 1
+    },
+    {
+      "id": "r36",
+      "requestTimeMs": 1329028,
+      "originNodeId": "n6-9",
+      "destinationNodeId": "n4-3",
+      "passengers": 1
+    },
+    {
+      "id": "r37",
+      "requestTimeMs": 1365729,
+      "originNodeId": "n6-1",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r38",
+      "requestTimeMs": 1425716,
+      "originNodeId": "n6-1",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r39",
+      "requestTimeMs": 1463849,
+      "originNodeId": "n7-0",
+      "destinationNodeId": "n4-7",
+      "passengers": 1
+    },
+    {
+      "id": "r40",
+      "requestTimeMs": 1464600,
+      "originNodeId": "n5-3",
+      "destinationNodeId": "n6-2",
+      "passengers": 1
+    },
+    {
+      "id": "r41",
+      "requestTimeMs": 1524070,
+      "originNodeId": "n4-7",
+      "destinationNodeId": "n2-4",
+      "passengers": 1
+    },
+    {
+      "id": "r42",
+      "requestTimeMs": 1661920,
+      "originNodeId": "n5-1",
+      "destinationNodeId": "n5-3",
+      "passengers": 1
+    },
+    {
+      "id": "r43",
+      "requestTimeMs": 1671823,
+      "originNodeId": "n3-6",
+      "destinationNodeId": "n3-4",
+      "passengers": 1
+    },
+    {
+      "id": "r44",
+      "requestTimeMs": 1675260,
+      "originNodeId": "n4-1",
+      "destinationNodeId": "n2-4",
+      "passengers": 1
+    },
+    {
+      "id": "r45",
+      "requestTimeMs": 1701840,
+      "originNodeId": "n7-7",
+      "destinationNodeId": "n2-4",
+      "passengers": 1
+    },
+    {
+      "id": "r46",
+      "requestTimeMs": 1746081,
+      "originNodeId": "n7-9",
+      "destinationNodeId": "n4-3",
+      "passengers": 1
+    },
+    {
+      "id": "r47",
+      "requestTimeMs": 1771210,
+      "originNodeId": "n1-4",
+      "destinationNodeId": "n3-5",
+      "passengers": 1
+    },
+    {
+      "id": "r48",
+      "requestTimeMs": 1785257,
+      "originNodeId": "n0-2",
+      "destinationNodeId": "n3-3",
+      "passengers": 1
+    },
+    {
+      "id": "r49",
+      "requestTimeMs": 2034686,
+      "originNodeId": "n2-1",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r50",
+      "requestTimeMs": 2237300,
+      "originNodeId": "n5-4",
+      "destinationNodeId": "n6-1",
+      "passengers": 1
+    },
+    {
+      "id": "r51",
+      "requestTimeMs": 2458471,
+      "originNodeId": "n3-6",
+      "destinationNodeId": "n6-7",
+      "passengers": 1
+    },
+    {
+      "id": "r52",
+      "requestTimeMs": 2930702,
+      "originNodeId": "n3-6",
+      "destinationNodeId": "n4-2",
+      "passengers": 1
+    },
+    {
+      "id": "r53",
+      "requestTimeMs": 2943564,
+      "originNodeId": "n7-4",
+      "destinationNodeId": "n1-0",
+      "passengers": 1
+    },
+    {
+      "id": "r54",
+      "requestTimeMs": 2957300,
+      "originNodeId": "n6-5",
+      "destinationNodeId": "n7-7",
+      "passengers": 1
+    },
+    {
+      "id": "r55",
+      "requestTimeMs": 2984626,
+      "originNodeId": "n4-3",
+      "destinationNodeId": "n2-0",
+      "passengers": 1
+    },
+    {
+      "id": "r56",
+      "requestTimeMs": 3047394,
+      "originNodeId": "n2-3",
+      "destinationNodeId": "n6-7",
+      "passengers": 1
+    },
+    {
+      "id": "r57",
+      "requestTimeMs": 3094415,
+      "originNodeId": "n5-7",
+      "destinationNodeId": "n4-7",
+      "passengers": 1
+    },
+    {
+      "id": "r58",
+      "requestTimeMs": 3113333,
+      "originNodeId": "n6-0",
+      "destinationNodeId": "n5-5",
+      "passengers": 1
+    },
+    {
+      "id": "r59",
+      "requestTimeMs": 3199857,
+      "originNodeId": "n1-2",
+      "destinationNodeId": "n1-3",
+      "passengers": 1
+    },
+    {
+      "id": "r60",
+      "requestTimeMs": 3272939,
+      "originNodeId": "n6-7",
+      "destinationNodeId": "n0-3",
+      "passengers": 1
+    },
+    {
+      "id": "r61",
+      "requestTimeMs": 3276551,
+      "originNodeId": "n1-4",
+      "destinationNodeId": "n1-5",
+      "passengers": 1
+    },
+    {
+      "id": "r62",
+      "requestTimeMs": 3372448,
+      "originNodeId": "n1-0",
+      "destinationNodeId": "n5-4",
+      "passengers": 1
+    },
+    {
+      "id": "r63",
+      "requestTimeMs": 3476074,
+      "originNodeId": "n7-4",
+      "destinationNodeId": "n0-4",
+      "passengers": 1
+    }
+  ],
+  "provenance": {
+    "generator": "bus20-synthetic-demand",
+    "generatorVersion": "1",
+    "seed": "2932548564",
+    "city": "tokyo-like",
+    "load": "medium",
+    "pattern": "commute",
+    "split": "dev",
+    "targetUtilization": "0.5",
+    "meanDirectMinutes": "1.914"
+  }
+}
