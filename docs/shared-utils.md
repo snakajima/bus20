@@ -135,3 +135,16 @@ Packages export individual modules by subpath (for example
 | `artifacts` | `writeCampaign`, `readCampaign`, `writeProgram`, `readProgram`, `writeEvaluation`, `readEvaluation` | Campaign directory layout. |
 
 `@bus20/contracts` gains `policy-artifact` (programs, evaluations, campaigns); `@bus20/runner` gains `--policy program`.
+
+## Second-paper experiments
+
+| Package / module | Exports | Purpose |
+| --- | --- | --- |
+| `@bus20/analysis/campaigns` | `analyzeExperiment` | Curves, mode summaries, test comparison, generalisation, amortisation (pure). |
+| `@bus20/analysis/campaign-report` | `paper2Markdown` | Markdown artifact for the second paper. |
+| `@bus20/policy-build/experiment` | `runExperiment`, `reportExperiment` | Orchestrates campaigns, test evaluations, references, and the report. |
+| `@bus20/policy-build/experiment-config` | `experimentConfigSchema` | Experiment configuration file. |
+| `@bus20/policy-build/sample-generator` | `createSampleGenerator` | Offline stand-in generator over hand-written sample programs. |
+| `@bus20/policy-build/sample-programs` | `SAMPLE_LADDER` | The sample programs (labelled `provider: "sample"`). |
+
+`@bus20/contracts/policy-artifact` gains the experiment index; campaigns gain `excludeCities` and per-iteration `generationCostUsd`; `bus20-run suite` accepts a scenario filter.

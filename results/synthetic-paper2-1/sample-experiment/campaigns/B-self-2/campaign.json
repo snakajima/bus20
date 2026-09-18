@@ -1,0 +1,78 @@
+{
+  "schemaVersion": "bus20-campaign/1",
+  "id": "B-self-2",
+  "mode": "B-self",
+  "benchmarkVersion": "synthetic-paper2/1",
+  "manifestDigest": "sha256:2e117b3b3211568aac8cdd98cd7e4a755154f538c01978a0be8d5dcea250ff52",
+  "devSplit": "dev",
+  "validationSplit": "validation",
+  "seed": 2,
+  "excludeCities": [
+    "nyc-like"
+  ],
+  "budget": {
+    "maxGenerations": 3,
+    "maxCostUsd": null,
+    "maxEvaluations": 12
+  },
+  "spent": {
+    "generations": 3,
+    "evaluations": 6,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "costUsd": 0,
+    "programCpuMs": 175.84
+  },
+  "iterations": [
+    {
+      "index": 0,
+      "programId": "B-self-2-v000",
+      "generationCostUsd": 0,
+      "devSummary": {
+        "runs": 6,
+        "completeRuns": 1,
+        "successRate": 0.16666666666666666,
+        "conditionalMeanPain": 4986.150392195297,
+        "programCpuMs": 31.226000000000006,
+        "failureReasons": {
+          "deadlineExceeded": 5
+        }
+      },
+      "accepted": true,
+      "reason": "accepted"
+    },
+    {
+      "index": 1,
+      "programId": "B-self-2-v001",
+      "generationCostUsd": 0,
+      "devSummary": {
+        "runs": 6,
+        "completeRuns": 6,
+        "successRate": 1,
+        "conditionalMeanPain": 53.93787599009753,
+        "programCpuMs": 23.832,
+        "failureReasons": {}
+      },
+      "accepted": true,
+      "reason": "accepted"
+    },
+    {
+      "index": 2,
+      "programId": "B-self-2-v002",
+      "generationCostUsd": 0,
+      "devSummary": {
+        "runs": 6,
+        "completeRuns": 6,
+        "successRate": 1,
+        "conditionalMeanPain": 5.260652550240764,
+        "programCpuMs": 27.586999999999993,
+        "failureReasons": {}
+      },
+      "accepted": true,
+      "reason": "accepted"
+    }
+  ],
+  "selectedProgramId": "B-self-2-v002",
+  "frozen": true,
+  "stopReason": "attempt limit reached"
+}

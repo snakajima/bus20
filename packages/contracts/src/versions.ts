@@ -13,3 +13,4 @@ export const MANIFEST_SCHEMA_VERSION = "bus20-manifest/1" as const;
 export const SUITE_INDEX_SCHEMA_VERSION = "bus20-suite-index/1" as const;
 export const POLICY_PROGRAM_SCHEMA_VERSION = "bus20-policy-program/1" as const;
 export const CAMPAIGN_SCHEMA_VERSION = "bus20-campaign/1" as const;
+export const EXPERIMENT_SCHEMA_VERSION = "bus20-experiment/1" as const;

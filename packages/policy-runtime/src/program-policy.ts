@@ -105,6 +105,9 @@ export const createProgramPolicy = (options: ProgramPolicyOptions): ProgramPolic
   const limits = { ...DEFAULT_PROGRAM_LIMITS, ...options.limits };
   const client = spawnHost(limits);
   const loaded = send(client, loadRequest(options, limits));
+  // A policy may be closed before the host answers the load (for example when
+  // a finished run is reused); decide() still awaits and reports the failure.
+  loaded.catch(() => undefined);
   return {
     descriptor: describe(options.program, options.seed, limits),
     decide: (observation) => decideVia(client, loaded, observation),

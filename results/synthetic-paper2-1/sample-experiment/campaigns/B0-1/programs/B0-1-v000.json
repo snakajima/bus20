@@ -1,0 +1,29 @@
+{
+  "schemaVersion": "bus20-policy-program/1",
+  "id": "B0-1-v000",
+  "campaignId": "B0-1",
+  "version": 0,
+  "parentId": null,
+  "origin": "initial",
+  "language": "typescript",
+  "source": "// sample: always the first offered candidate\nfunction decide(o: any) {\n  return { kind: \"chooseCandidate\", schemaVersion: \"bus20-action/1\", stateVersion: o.stateVersion, candidateId: o.candidates[0].id };\n}\n",
+  "sourceDigest": "sha256:1d2bb89b132e402f7067b431127fef7e13ef6bdd324d627633760ff68f20698d",
+  "generator": {
+    "provider": "sample",
+    "modelId": "sample-ladder/1",
+    "promptVersion": "bus20-program-prompt/1"
+  },
+  "spend": {
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "costUsd": 0,
+    "wallMs": 0
+  },
+  "trace": {
+    "rung": 0,
+    "kind": "initial",
+    "attempt": 0
+  },
+  "compiled": "\"use strict\";\n// sample: always the first offered candidate\nfunction decide(o) {\n    return { kind: \"chooseCandidate\", schemaVersion: \"bus20-action/1\", stateVersion: o.stateVersion, candidateId: o.candidates[0].id };\n}\n",
+  "compileError": null
+}

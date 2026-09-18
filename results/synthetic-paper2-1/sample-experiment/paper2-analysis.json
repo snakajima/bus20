@@ -1,0 +1,2626 @@
+{
+  "experimentId": "paper2-sample-1",
+  "benchmarkVersion": "synthetic-paper2/1",
+  "generator": {
+    "provider": "sample",
+    "modelId": "sample-ladder/1"
+  },
+  "curves": [
+    {
+      "campaignId": "B0-1",
+      "mode": "B0",
+      "seed": 1,
+      "points": [
+        {
+          "iteration": 0,
+          "accepted": true,
+          "generations": 1,
+          "evaluations": 1,
+          "costUsd": 0,
+          "iterationDevPain": 4986.150392195297,
+          "incumbentDevPain": 4986.150392195297,
+          "incumbentSuccessRate": 0.16666666666666666
+        }
+      ]
+    },
+    {
+      "campaignId": "B0-2",
+      "mode": "B0",
+      "seed": 2,
+      "points": [
+        {
+          "iteration": 0,
+          "accepted": true,
+          "generations": 1,
+          "evaluations": 1,
+          "costUsd": 0,
+          "iterationDevPain": 4986.150392195297,
+          "incumbentDevPain": 4986.150392195297,
+          "incumbentSuccessRate": 0.16666666666666666
+        }
+      ]
+    },
+    {
+      "campaignId": "B-restart-1",
+      "mode": "B-restart",
+      "seed": 1,
+      "points": [
+        {
+          "iteration": 0,
+          "accepted": true,
+          "generations": 1,
+          "evaluations": 1,
+          "costUsd": 0,
+          "iterationDevPain": 4986.150392195297,
+          "incumbentDevPain": 4986.150392195297,
+          "incumbentSuccessRate": 0.16666666666666666
+        },
+        {
+          "iteration": 1,
+          "accepted": true,
+          "generations": 2,
+          "evaluations": 2,
+          "costUsd": 0,
+          "iterationDevPain": 5.260652550240764,
+          "incumbentDevPain": 5.260652550240764,
+          "incumbentSuccessRate": 1
+        },
+        {
+          "iteration": 2,
+          "accepted": true,
+          "generations": 3,
+          "evaluations": 3,
+          "costUsd": 0,
+          "iterationDevPain": 53.93787599009753,
+          "incumbentDevPain": 53.93787599009753,
+          "incumbentSuccessRate": 1
+        }
+      ]
+    },
+    {
+      "campaignId": "B-restart-2",
+      "mode": "B-restart",
+      "seed": 2,
+      "points": [
+        {
+          "iteration": 0,
+          "accepted": true,
+          "generations": 1,
+          "evaluations": 1,
+          "costUsd": 0,
+          "iterationDevPain": 4986.150392195297,
+          "incumbentDevPain": 4986.150392195297,
+          "incumbentSuccessRate": 0.16666666666666666
+        },
+        {
+          "iteration": 1,
+          "accepted": true,
+          "generations": 2,
+          "evaluations": 2,
+          "costUsd": 0,
+          "iterationDevPain": 5.260652550240764,
+          "incumbentDevPain": 5.260652550240764,
+          "incumbentSuccessRate": 1
+        },
+        {
+          "iteration": 2,
+          "accepted": true,
+          "generations": 3,
+          "evaluations": 3,
+          "costUsd": 0,
+          "iterationDevPain": 5.260652550240764,
+          "incumbentDevPain": 5.260652550240764,
+          "incumbentSuccessRate": 1
+        }
+      ]
+    },
+    {
+      "campaignId": "B-self-1",
+      "mode": "B-self",
+      "seed": 1,
+      "points": [
+        {
+          "iteration": 0,
+          "accepted": true,
+          "generations": 1,
+          "evaluations": 1,
+          "costUsd": 0,
+          "iterationDevPain": 4986.150392195297,
+          "incumbentDevPain": 4986.150392195297,
+          "incumbentSuccessRate": 0.16666666666666666
+        },
+        {
+          "iteration": 1,
+          "accepted": true,
+          "generations": 2,
+          "evaluations": 2,
+          "costUsd": 0,
+          "iterationDevPain": 53.93787599009753,
+          "incumbentDevPain": 53.93787599009753,
+          "incumbentSuccessRate": 1
+        },
+        {
+          "iteration": 2,
+          "accepted": true,
+          "generations": 3,
+          "evaluations": 3,
+          "costUsd": 0,
+          "iterationDevPain": 5.260652550240764,
+          "incumbentDevPain": 5.260652550240764,
+          "incumbentSuccessRate": 1
+        }
+      ]
+    },
+    {
+      "campaignId": "B-self-2",
+      "mode": "B-self",
+      "seed": 2,
+      "points": [
+        {
+          "iteration": 0,
+          "accepted": true,
+          "generations": 1,
+          "evaluations": 1,
+          "costUsd": 0,
+          "iterationDevPain": 4986.150392195297,
+          "incumbentDevPain": 4986.150392195297,
+          "incumbentSuccessRate": 0.16666666666666666
+        },
+        {
+          "iteration": 1,
+          "accepted": true,
+          "generations": 2,
+          "evaluations": 2,
+          "costUsd": 0,
+          "iterationDevPain": 53.93787599009753,
+          "incumbentDevPain": 53.93787599009753,
+          "incumbentSuccessRate": 1
+        },
+        {
+          "iteration": 2,
+          "accepted": true,
+          "generations": 3,
+          "evaluations": 3,
+          "costUsd": 0,
+          "iterationDevPain": 5.260652550240764,
+          "incumbentDevPain": 5.260652550240764,
+          "incumbentSuccessRate": 1
+        }
+      ]
+    }
+  ],
+  "modes": [
+    {
+      "mode": "B0",
+      "campaigns": 2,
+      "selected": 2,
+      "meanGenerations": 1,
+      "meanEvaluations": 2,
+      "meanCostUsd": 0,
+      "meanProgramCpuMs": 76.5335,
+      "meanIncumbentDevPain": 4986.150392195297,
+      "meanTestSuccessRate": 0.3333333333333333,
+      "meanTestConditionalPain": 4310.926941813136
+    },
+    {
+      "mode": "B-restart",
+      "campaigns": 2,
+      "selected": 2,
+      "meanGenerations": 3,
+      "meanEvaluations": 6,
+      "meanCostUsd": 0,
+      "meanProgramCpuMs": 180.13049999999998,
+      "meanIncumbentDevPain": 29.599264270169147,
+      "meanTestSuccessRate": 1,
+      "meanTestConditionalPain": 10.277283022498814
+    },
+    {
+      "mode": "B-self",
+      "campaigns": 2,
+      "selected": 2,
+      "meanGenerations": 3,
+      "meanEvaluations": 6,
+      "meanCostUsd": 0,
+      "meanProgramCpuMs": 175.235,
+      "meanIncumbentDevPain": 5.260652550240764,
+      "meanTestSuccessRate": 1,
+      "meanTestConditionalPain": 10.277283022498814
+    }
+  ],
+  "testCells": [
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 3.2011746778148145,
+      "painInterval": {
+        "lower": 2.3387934530462955,
+        "upper": 4.063555902583333
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0018749999871943146,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 37.61833096209747,
+      "painInterval": {
+        "lower": 14.65129221966102,
+        "upper": 60.58536970453391
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0029580000264104456,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 363.0705343213084,
+      "painInterval": {
+        "lower": 170.09991035254382,
+        "upper": 556.041158290073
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.013396000023931265,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 23.734554451890432,
+      "painInterval": {
+        "lower": 12.572597685015431,
+        "upper": 34.89651121876543
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0012920000008307397,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 92.05230330511961,
+      "painInterval": {
+        "lower": 33.29992136554013,
+        "upper": 150.80468524469907
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0026045000122394413,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 756.2180686047101,
+      "painInterval": {
+        "lower": 333.1247546311891,
+        "upper": 1179.3113825782311
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.008457999996608123,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 5.796960281190477,
+      "painInterval": {
+        "lower": 4.9790640387037035,
+        "upper": 6.61485652367725
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0009380000119563192,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 64.79230669811177,
+      "painInterval": {
+        "lower": 13.40407417269841,
+        "upper": 116.18053922352513
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.0027079999854322523,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 432.7738453511553,
+      "painInterval": {
+        "lower": 429.2393040072643,
+        "upper": 436.3083866950463
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.008562499977415428,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 2.4005711075138887,
+      "painInterval": {
+        "lower": 2.229764343981481,
+        "upper": 2.5713778710462964
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.1924789999902714,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 6.73644927962806,
+      "painInterval": {
+        "lower": 6.308264466563087,
+        "upper": 7.164634092693031
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.41141699999570847,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.400670267314325,
+      "painInterval": {
+        "lower": 11.903884088494147,
+        "upper": 14.897456446134502
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.9920204999798443,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.910356262854938,
+      "painInterval": {
+        "lower": 7.818916754243828,
+        "upper": 12.001795771466048
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.2457919999724254,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.274946997627316,
+      "painInterval": {
+        "lower": 7.58680033011574,
+        "upper": 10.96309366513889
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.33162499996251427,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 12.451852229444441,
+      "painInterval": {
+        "lower": 8.421877955428847,
+        "upper": 16.481826503460034
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.7251874999783468,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4.761438073584656,
+      "painInterval": {
+        "lower": 4.489983033095238,
+        "upper": 5.032893114074073
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.2069995000201743,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.365531405079368,
+      "painInterval": {
+        "lower": 7.134661005145502,
+        "upper": 19.596401805013233
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.43045850002090447,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 20.193731579442343,
+      "painInterval": {
+        "lower": 16.236607620202022,
+        "upper": 24.150855538682666
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.8954995000094641,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B0#1",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 3782.318923162532,
+      "painInterval": {
+        "lower": 3279.4440234671843,
+        "upper": 4285.193822857879
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 2.9121665000020585,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B0#1",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 35.090791500002524,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#1",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 84.9810624999991,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#1",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4906.402138733703,
+      "painInterval": {
+        "lower": 3578.25387263199,
+        "upper": 6234.550404835418
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.6886039999953937,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B0#1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 13.424187500000698,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#1",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 21.646978999997373,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#1",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4244.059763543174,
+      "painInterval": {
+        "lower": 3572.380458540291,
+        "upper": 4915.739068546058
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 2.6853749999936554,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B0#1",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 15.96672899999976,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#1",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 105.05875000001106,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#2",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 3782.318923162532,
+      "painInterval": {
+        "lower": 3279.4440234671843,
+        "upper": 4285.193822857879
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 2.677104499991401,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B0#2",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 35.13652099999308,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#2",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 85.12058350000007,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#2",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4906.402138733703,
+      "painInterval": {
+        "lower": 3578.25387263199,
+        "upper": 6234.550404835418
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 1.6370000000024447,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B0#2",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 13.349188000007416,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#2",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 21.07968749999418,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#2",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4244.059763543174,
+      "painInterval": {
+        "lower": 3572.380458540291,
+        "upper": 4915.739068546058
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 2.804374999992433,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B0#2",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 16.170396000001347,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B0#2",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 0,
+      "successRate": 0,
+      "conditionalMeanPain": null,
+      "painInterval": null,
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 106.39616699998442,
+      "failureReasons": {
+        "deadlineExceeded": 2
+      }
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 2.4005711075138887,
+      "painInterval": {
+        "lower": 2.229764343981481,
+        "upper": 2.5713778710462964
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.19310450000921264,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 6.73644927962806,
+      "painInterval": {
+        "lower": 6.308264466563087,
+        "upper": 7.164634092693031
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.23616699999547563,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.400670267314325,
+      "painInterval": {
+        "lower": 11.903884088494147,
+        "upper": 14.897456446134502
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.44506249998812564,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.910356262854938,
+      "painInterval": {
+        "lower": 7.818916754243828,
+        "upper": 12.001795771466048
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.22670850000577047,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.274946997627316,
+      "painInterval": {
+        "lower": 7.58680033011574,
+        "upper": 10.96309366513889
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.22435450000921264,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 12.451852229444441,
+      "painInterval": {
+        "lower": 8.421877955428847,
+        "upper": 16.481826503460034
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.33670849999180064,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4.761438073584656,
+      "painInterval": {
+        "lower": 4.489983033095238,
+        "upper": 5.032893114074073
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.20529149999492802,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.365531405079368,
+      "painInterval": {
+        "lower": 7.134661005145502,
+        "upper": 19.596401805013233
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.28620849997969344,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 20.193731579442343,
+      "painInterval": {
+        "lower": 16.236607620202022,
+        "upper": 24.150855538682666
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.40066650000517257,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 2.4005711075138887,
+      "painInterval": {
+        "lower": 2.229764343981481,
+        "upper": 2.5713778710462964
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.18954200000735,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 6.73644927962806,
+      "painInterval": {
+        "lower": 6.308264466563087,
+        "upper": 7.164634092693031
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.23622900003101677,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.400670267314325,
+      "painInterval": {
+        "lower": 11.903884088494147,
+        "upper": 14.897456446134502
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.4240210000134539,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.910356262854938,
+      "painInterval": {
+        "lower": 7.818916754243828,
+        "upper": 12.001795771466048
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.25564650000887923,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.274946997627316,
+      "painInterval": {
+        "lower": 7.58680033011574,
+        "upper": 10.96309366513889
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.23016599999391474,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 12.451852229444441,
+      "painInterval": {
+        "lower": 8.421877955428847,
+        "upper": 16.481826503460034
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.3346039999742061,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4.761438073584656,
+      "painInterval": {
+        "lower": 4.489983033095238,
+        "upper": 5.032893114074073
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.204895500006387,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.365531405079368,
+      "painInterval": {
+        "lower": 7.134661005145502,
+        "upper": 19.596401805013233
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.2714165000070352,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 20.193731579442343,
+      "painInterval": {
+        "lower": 16.236607620202022,
+        "upper": 24.150855538682666
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.37533300000359304,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 2.4005711075138887,
+      "painInterval": {
+        "lower": 2.229764343981481,
+        "upper": 2.5713778710462964
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.1896454999805428,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 6.73644927962806,
+      "painInterval": {
+        "lower": 6.308264466563087,
+        "upper": 7.164634092693031
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.2320624999993015,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.400670267314325,
+      "painInterval": {
+        "lower": 11.903884088494147,
+        "upper": 14.897456446134502
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.40891699999338016,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.910356262854938,
+      "painInterval": {
+        "lower": 7.818916754243828,
+        "upper": 12.001795771466048
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.23962500001653098,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.274946997627316,
+      "painInterval": {
+        "lower": 7.58680033011574,
+        "upper": 10.96309366513889
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.23908299999311566,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 12.451852229444441,
+      "painInterval": {
+        "lower": 8.421877955428847,
+        "upper": 16.481826503460034
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.32170850000693463,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4.761438073584656,
+      "painInterval": {
+        "lower": 4.489983033095238,
+        "upper": 5.032893114074073
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.1896670000278391,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.365531405079368,
+      "painInterval": {
+        "lower": 7.134661005145502,
+        "upper": 19.596401805013233
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.27006249999976717,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 20.193731579442343,
+      "painInterval": {
+        "lower": 16.236607620202022,
+        "upper": 24.150855538682666
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.37608350001391955,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 2.4005711075138887,
+      "painInterval": {
+        "lower": 2.229764343981481,
+        "upper": 2.5713778710462964
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.1972914999932982,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 6.73644927962806,
+      "painInterval": {
+        "lower": 6.308264466563087,
+        "upper": 7.164634092693031
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.24906250002095476,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.400670267314325,
+      "painInterval": {
+        "lower": 11.903884088494147,
+        "upper": 14.897456446134502
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.4331044999707956,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.910356262854938,
+      "painInterval": {
+        "lower": 7.818916754243828,
+        "upper": 12.001795771466048
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.22616700001526624,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 9.274946997627316,
+      "painInterval": {
+        "lower": 7.58680033011574,
+        "upper": 10.96309366513889
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.23443750001024455,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 12.451852229444441,
+      "painInterval": {
+        "lower": 8.421877955428847,
+        "upper": 16.481826503460034
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.3468544999777805,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 4.761438073584656,
+      "painInterval": {
+        "lower": 4.489983033095238,
+        "upper": 5.032893114074073
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.19972899998538196,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 13.365531405079368,
+      "painInterval": {
+        "lower": 7.134661005145502,
+        "upper": 19.596401805013233
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.27241650002542883,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 2,
+      "completeRuns": 2,
+      "successRate": 1,
+      "conditionalMeanPain": 20.193731579442343,
+      "painInterval": {
+        "lower": 16.236607620202022,
+        "upper": 24.150855538682666
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.38441700002294965,
+      "failureReasons": {}
+    }
+  ],
+  "testPaired": [
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -0.8006035703009258,
+      "differenceInterval": {
+        "lower": -1.492178031537037,
+        "upper": -0.10902910906481456
+      },
+      "meanImprovementPercent": -31.46000214078123,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -30.881881682469405,
+      "differenceInterval": {
+        "lower": -53.42073561184088,
+        "upper": -8.343027753097932
+      },
+      "meanImprovementPercent": -438.9362989336847,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -349.6698640539941,
+      "differenceInterval": {
+        "lower": -541.1437018439385,
+        "upper": -158.19602626404966
+      },
+      "meanImprovementPercent": -2480.7008140837697,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -13.824198189035492,
+      "differenceInterval": {
+        "lower": -27.077594464521603,
+        "upper": -0.5708019135493831
+      },
+      "meanImprovementPercent": -175.53237061013942,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -82.77735630749228,
+      "differenceInterval": {
+        "lower": -139.84159157956017,
+        "upper": -25.71312103542439
+      },
+      "meanImprovementPercent": -807.243026077473,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -743.7662163752657,
+      "differenceInterval": {
+        "lower": -1162.829556074771,
+        "upper": -324.70287667576025
+      },
+      "meanImprovementPercent": -5455.3457217867635,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -1.0355222076058208,
+      "differenceInterval": {
+        "lower": -1.5819634096031763,
+        "upper": -0.48908100560846535
+      },
+      "meanImprovementPercent": -21.16259980833203,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -51.42677529303241,
+      "differenceInterval": {
+        "lower": -96.5841374185119,
+        "upper": -6.269413167552908
+      },
+      "meanImprovementPercent": -290.3696535288689,
+      "policyWins": 0
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -412.58011377171294,
+      "differenceInterval": {
+        "lower": -420.07177907484424,
+        "upper": -405.08844846858165
+      },
+      "meanImprovementPercent": -2132.2573918476714,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -3779.9183520550177,
+      "differenceInterval": {
+        "lower": -4282.964058513898,
+        "upper": -3276.8726455961378
+      },
+      "meanImprovementPercent": -159758.9578384913,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -4896.491782470849,
+      "differenceInterval": {
+        "lower": -6226.731488081174,
+        "upper": -3566.252076860524
+      },
+      "meanImprovementPercent": -54675.537231991344,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -4239.29832546959,
+      "differenceInterval": {
+        "lower": -4910.706175431984,
+        "upper": -3567.890475507196
+      },
+      "meanImprovementPercent": -88517.78620725495,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#1",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -3779.9183520550177,
+      "differenceInterval": {
+        "lower": -4282.964058513898,
+        "upper": -3276.8726455961378
+      },
+      "meanImprovementPercent": -159758.9578384913,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -4896.491782470849,
+      "differenceInterval": {
+        "lower": -6226.731488081174,
+        "upper": -3566.252076860524
+      },
+      "meanImprovementPercent": -54675.537231991344,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": -4239.29832546959,
+      "differenceInterval": {
+        "lower": -4910.706175431984,
+        "upper": -3567.890475507196
+      },
+      "meanImprovementPercent": -88517.78620725495,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B0#2",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 2,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 0,
+      "meanDifference": null,
+      "differenceInterval": null,
+      "meanImprovementPercent": null,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#1",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-restart#2",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#1",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    },
+    {
+      "policyId": "B-self#2",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 2,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 2,
+      "meanDifference": 0,
+      "differenceInterval": {
+        "lower": 0,
+        "upper": 0
+      },
+      "meanImprovementPercent": 0,
+      "policyWins": 0
+    }
+  ],
+  "referencePolicyId": "swift-insertion-reference",
+  "generalization": [
+    {
+      "campaignId": "B0-1",
+      "mode": "B0",
+      "seed": 1,
+      "group": "seen",
+      "runs": 12,
+      "successRate": 0.3333333333333333,
+      "conditionalMeanPain": 4344.360530948117
+    },
+    {
+      "campaignId": "B0-1",
+      "mode": "B0",
+      "seed": 1,
+      "group": "held-out",
+      "runs": 6,
+      "successRate": 0.3333333333333333,
+      "conditionalMeanPain": 4244.059763543174
+    },
+    {
+      "campaignId": "B0-2",
+      "mode": "B0",
+      "seed": 2,
+      "group": "seen",
+      "runs": 12,
+      "successRate": 0.3333333333333333,
+      "conditionalMeanPain": 4344.360530948117
+    },
+    {
+      "campaignId": "B0-2",
+      "mode": "B0",
+      "seed": 2,
+      "group": "held-out",
+      "runs": 6,
+      "successRate": 0.3333333333333333,
+      "conditionalMeanPain": 4244.059763543174
+    },
+    {
+      "campaignId": "B-restart-1",
+      "mode": "B-restart",
+      "seed": 1,
+      "group": "seen",
+      "runs": 12,
+      "successRate": 1,
+      "conditionalMeanPain": 9.029141024063827
+    },
+    {
+      "campaignId": "B-restart-1",
+      "mode": "B-restart",
+      "seed": 1,
+      "group": "held-out",
+      "runs": 6,
+      "successRate": 1,
+      "conditionalMeanPain": 12.77356701936879
+    },
+    {
+      "campaignId": "B-restart-2",
+      "mode": "B-restart",
+      "seed": 2,
+      "group": "seen",
+      "runs": 12,
+      "successRate": 1,
+      "conditionalMeanPain": 9.029141024063827
+    },
+    {
+      "campaignId": "B-restart-2",
+      "mode": "B-restart",
+      "seed": 2,
+      "group": "held-out",
+      "runs": 6,
+      "successRate": 1,
+      "conditionalMeanPain": 12.77356701936879
+    },
+    {
+      "campaignId": "B-self-1",
+      "mode": "B-self",
+      "seed": 1,
+      "group": "seen",
+      "runs": 12,
+      "successRate": 1,
+      "conditionalMeanPain": 9.029141024063827
+    },
+    {
+      "campaignId": "B-self-1",
+      "mode": "B-self",
+      "seed": 1,
+      "group": "held-out",
+      "runs": 6,
+      "successRate": 1,
+      "conditionalMeanPain": 12.77356701936879
+    },
+    {
+      "campaignId": "B-self-2",
+      "mode": "B-self",
+      "seed": 2,
+      "group": "seen",
+      "runs": 12,
+      "successRate": 1,
+      "conditionalMeanPain": 9.029141024063827
+    },
+    {
+      "campaignId": "B-self-2",
+      "mode": "B-self",
+      "seed": 2,
+      "group": "held-out",
+      "runs": 6,
+      "successRate": 1,
+      "conditionalMeanPain": 12.77356701936879
+    }
+  ],
+  "amortization": [
+    {
+      "policyId": "B0#1",
+      "kind": "generated-program",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 6.081055555555557,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    },
+    {
+      "policyId": "B0#2",
+      "kind": "generated-program",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 6.042611111111111,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    },
+    {
+      "policyId": "B-restart#1",
+      "kind": "generated-program",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 4.4885,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    },
+    {
+      "policyId": "B-restart#2",
+      "kind": "generated-program",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 4.521388888888889,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    },
+    {
+      "policyId": "B-self#1",
+      "kind": "generated-program",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 4.445666666666666,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    },
+    {
+      "policyId": "B-self#2",
+      "kind": "generated-program",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 4.32672222222222,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    },
+    {
+      "policyId": "fixture-append-earliest-pickup",
+      "kind": "reference",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 0,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "kind": "reference",
+      "preparationCostUsd": 0,
+      "perRunCostUsd": 0,
+      "perRunProgramCpuMs": 0,
+      "costPerRunByK": {
+        "1": 0,
+        "10": 0,
+        "100": 0,
+        "1000": 0
+      }
+    }
+  ]
+}

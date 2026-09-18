@@ -13,7 +13,15 @@ import { type LoadedSuite } from "@bus20/datasets/files";
 import { compileProgram } from "@bus20/policy-runtime/compile";
 import { type ProgramLimits } from "@bus20/policy-runtime/program-policy";
 import { type Logger } from "@bus20/runner/logging";
-import { runsDir, writeCampaign, writeEvaluation, writeProgram } from "./artifacts.js";
+import {
+  readCampaign,
+  readEvaluation,
+  readProgram,
+  runsDir,
+  writeCampaign,
+  writeEvaluation,
+  writeProgram,
+} from "./artifacts.js";
 import { evaluateProgram } from "./evaluate.js";
 import { buildFeedback } from "./feedback.js";
 import { type GenerationInput, type GenerationOutput, type ProgramGenerator } from "./generator.js";
@@ -30,6 +38,8 @@ export interface CampaignRequest {
   readonly generator: ProgramGenerator;
   readonly outDir: string;
   readonly limits?: Partial<ProgramLimits>;
+  /** Cities held out of development and validation; the test split still includes them. */
+  readonly excludeCities?: readonly string[];
   readonly logger: Logger;
 }
 
@@ -59,6 +69,7 @@ const initialCampaign = (request: CampaignRequest): Campaign => ({
   devSplit: request.devSplit,
   validationSplit: request.validationSplit,
   seed: request.seed,
+  excludeCities: [...(request.excludeCities ?? [])],
   budget: request.budget,
   spent: ZERO_SPEND,
   iterations: [],
@@ -173,6 +184,7 @@ const evaluate = async (
     outDir: runsDir(state.request.outDir, program.id, split),
     campaignSeed: state.request.seed,
     ...(state.request.limits === undefined ? {} : { limits: state.request.limits }),
+    excludeCities: state.request.excludeCities ?? [],
     logger: state.request.logger,
   });
   await writeEvaluation(state.request.outDir, evaluation);
@@ -197,7 +209,15 @@ const record = async (
   reason: string,
 ): Promise<void> => {
   const index = state.campaign.iterations.length;
-  const iteration = { index, programId: program.id, devSummary, accepted, reason };
+  const generationCostUsd = program.spend.costUsd ?? 0;
+  const iteration = {
+    index,
+    programId: program.id,
+    generationCostUsd,
+    devSummary,
+    accepted,
+    reason,
+  };
   state.campaign = { ...state.campaign, iterations: [...state.campaign.iterations, iteration] };
   await writeCampaign(state.request.outDir, state.campaign);
 };
@@ -267,12 +287,26 @@ const nextInput = (
   };
 };
 
+/** On resume, the incumbent's stored development evaluation feeds the next revision. */
+const lastAcceptedEvaluation = async (state: State): Promise<ProgramEvaluation | undefined> => {
+  if (state.incumbent === undefined) {
+    return undefined;
+  }
+  const stored = await readEvaluation(
+    state.request.outDir,
+    state.incumbent.program.id,
+    state.request.devSplit,
+  );
+  return stored.ok ? stored.value : undefined;
+};
+
 const maxAttempts = (request: CampaignRequest): number =>
   request.mode === "B0" ? 1 : request.budget.maxGenerations;
 
 const loop = async (state: State): Promise<void> => {
-  let lastAccepted: ProgramEvaluation | undefined;
-  for (let attempt = 0; attempt < maxAttempts(state.request); attempt += 1) {
+  let lastAccepted: ProgramEvaluation | undefined = await lastAcceptedEvaluation(state);
+  const start = state.campaign.iterations.length;
+  for (let attempt = start; attempt < maxAttempts(state.request); attempt += 1) {
     const stop = budgetExhausted(state.campaign);
     if (stop !== undefined) {
       state.campaign = { ...state.campaign, stopReason: stop };
@@ -314,14 +348,72 @@ const select = async (state: State): Promise<void> => {
  * touched here.
  */
 export const runCampaign = async (request: CampaignRequest): Promise<Campaign> => {
-  const state: State = {
+  const state = (await resumeState(request)) ?? {
     request,
     campaign: initialCampaign(request),
     programs: [],
     incumbent: undefined,
   };
+  if (state.campaign.frozen) {
+    return state.campaign;
+  }
   await writeCampaign(request.outDir, state.campaign);
   await loop(state);
   await select(state);
   return state.campaign;
+};
+
+/**
+ * Resume: a campaign directory with the same id, mode, seed, and manifest
+ * digest is continued from its recorded iterations. Programs and the
+ * incumbent are rebuilt from the stored artifacts; nothing is regenerated.
+ */
+const resumeState = async (request: CampaignRequest): Promise<State | undefined> => {
+  const stored = await readCampaign(request.outDir);
+  if (!stored.ok) {
+    return undefined;
+  }
+  assertSameCampaign(request, stored.value);
+  const programs = await loadPrograms(request.outDir, stored.value);
+  request.logger.log("info", "campaign.resume", { iterations: stored.value.iterations.length });
+  return {
+    request,
+    campaign: stored.value,
+    programs,
+    incumbent: incumbentOf(stored.value, programs),
+  };
+};
+
+const assertSameCampaign = (request: CampaignRequest, stored: Campaign): void => {
+  const same =
+    stored.id === request.id &&
+    stored.mode === request.mode &&
+    stored.seed === request.seed &&
+    stored.manifestDigest === digestDocument(request.suite.manifest);
+  if (!same) {
+    throw new Error(`campaign directory ${request.outDir} holds a different campaign`);
+  }
+};
+
+const incumbentOf = (
+  campaign: Campaign,
+  programs: readonly PolicyProgram[],
+): State["incumbent"] => {
+  const lastAccepted = [...campaign.iterations].reverse().find((item) => item.accepted);
+  const program = programs.find((item) => item.id === lastAccepted?.programId);
+  return lastAccepted === undefined || program === undefined
+    ? undefined
+    : { program, summary: lastAccepted.devSummary };
+};
+
+const loadPrograms = async (dir: string, campaign: Campaign): Promise<PolicyProgram[]> => {
+  const programs: PolicyProgram[] = [];
+  for (const item of campaign.iterations) {
+    const program = await readProgram(dir, item.programId);
+    if (!program.ok) {
+      throw new Error(`campaign artifact for ${item.programId} is missing or invalid`);
+    }
+    programs.push(program.value);
+  }
+  return programs;
 };
