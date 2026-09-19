@@ -95,6 +95,7 @@ Packages export individual modules by subpath (for example
 | `forecast-presentation` | `createForecastPresentation`, `Forecaster`, `FORECAST_PROMPT_VERSION` | Prompt v5: v4 plus host-computed demand forecasts per option. |
 | `forecast` (runner) | `createKnownForecaster`, `DEFAULT_FORECAST_SETTINGS` | Forecasts from the scenario's demand distribution, seeded per decision. |
 | `random-shortlist` (baselines) | `createRandomShortlistPolicy` | Floor for shortlisted conditions: uniform choice among the rule's K cheapest, seeded per decision. |
+| `laya-policy` | `createLayaPolicy`, `compactOption`, `LAYA_MAX_OPTIONS` | Laya via `@receptron/laya` (local ONNX); one-sentence options, labels A-F, lazy session. |
 | `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Consequences presentation (shared prompt v3): arithmetic in code, words and whole minutes. |
 | `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |
