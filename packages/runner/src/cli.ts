@@ -36,7 +36,7 @@ const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
                 [--policy fixture|swift|rollout|claude|openai|gemini|jev|program]
                 [--swift-cli <path>]
-                [--rollout-demand empirical|known] [--rollout-shortlist K] [--rollout-samples N]
+                [--rollout-demand known|empirical] [--rollout-shortlist K] [--rollout-samples N]
                 [--rollout-horizon MIN] [--rollout-seed N]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]

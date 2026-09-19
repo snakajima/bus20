@@ -33,18 +33,19 @@ from the real simulator.
 
 ## Demand models
 
-- **`empirical` (default).** Only what this run has shown so far: arrivals
+- **`empirical`** (`--rollout-demand empirical`). Only what this run has shown so far: arrivals
   as a Poisson process at the rate observed over the last 20 minutes (or the
   whole run when that window holds fewer than five requests), trips
   bootstrapped from the same recent requests. No scenario metadata is used.
-- **`known`** (`--rollout-demand known`). The generator's distribution,
+- **`known` (default).** The generator's distribution,
   recovered from the scenario's provenance (pattern, seed, hotspot
   parameters; `demandDistributionOf` in `@bus20/datasets/demand`). Each
   sample is a fresh day drawn from that distribution and clipped to the
   horizon, so commute peaks and hotspot bursts fall at their usual times.
   This is what a dispatcher with historical data would have. The stored
   requests of the day being run are never read, and the per-cell request
-  count reveals nothing about one day.
+  count reveals nothing about one day. Scenarios without generator
+  provenance (the hand-written smoke fixture) need `empirical`.
 
 Both models, the map, and the demand window are the only information beyond
 the observation. Unreleased requests are never consulted; the policy is
@@ -74,8 +75,25 @@ Pain in min², Swift is the insertion rule; see `results/pilot/rollout/`.
 cheating. It shows the shortlist-and-rollout mechanism has headroom and
 that the remaining gap is the demand model, not the forward model.
 
-The rollout wins clearly at low and medium load and is neutral on the
-high-load hotspot scenario, where one different early decision changes the
-whole day and seed-to-seed spread is as large as the gap to Swift. More
-samples mainly reduce that spread; longer horizons did not help. Runtime is
-well under a minute for the hardest dev scenario.
+On single scenarios the rollout wins clearly at low and medium load and is
+neutral on the high-load hotspot scenario, where one different early
+decision changes the whole day and seed-to-seed spread is as large as the
+gap to Swift. More samples mainly reduce that spread; longer horizons did
+not help. Runtime is well under a minute for the hardest dev scenario.
+
+## Dev split (27 scenarios, three seeds)
+
+`results/synthetic-dev-2/dev-rollout/`, equal-weight pain over cities:
+
+| load | Swift | rollout, empirical | rollout, known |
+| --- | --- | --- | --- |
+| low | 3.78 | 3.82 | 3.28 |
+| medium | 9.40 | 9.05 | 8.35 |
+| high | 13.60 | 13.32 | 11.37 |
+
+The known-demand rollout beats Swift by 11 to 16% at every load and wins
+the majority of paired scenarios in every (city, load) cell; it is the
+stronger classical reference and the default. The empirical rollout, which
+sees nothing but the run itself, is on par with Swift: what it gains from
+looking ahead it loses to a demand estimate built from a few dozen
+requests.

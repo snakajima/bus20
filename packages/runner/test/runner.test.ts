@@ -197,13 +197,16 @@ test("compare command tabulates run directories and writes markdown", async () =
 test("the rollout reference binds to the scenario's map", async () => {
   const inputs = await loadInputs(SCENARIO, MAP);
   assert.ok(inputs.ok);
-  const rollout = createPolicyById("rollout", { inputs: inputs.value, rollout: { samples: 4 } });
+  const rollout = createPolicyById("rollout", {
+    inputs: inputs.value,
+    rollout: { demand: "empirical", samples: 4 },
+  });
   assert.ok(rollout !== undefined);
   assert.equal(rollout.policy.descriptor.kind, "rollout-reference");
   assert.equal(rollout.policy.descriptor.id, "rollout-reference:empirical:k8:s4:h10");
-  // The smoke fixture is hand-written, so it carries no generator distribution.
+  // The default is the known distribution; the hand-written smoke fixture has none.
   assert.throws(
-    () => createPolicyById("rollout", { inputs: inputs.value, rollout: { demand: "known" } }),
+    () => createPolicyById("rollout", { inputs: inputs.value }),
     /no generator provenance/,
   );
   assert.equal(createPolicyById("rollout"), undefined, "the rollout reference needs a map");

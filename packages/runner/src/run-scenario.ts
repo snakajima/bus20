@@ -22,7 +22,11 @@ import { type PresentationId } from "@bus20/models/presentation";
 import { type PolicyProgram, policyProgramSchema } from "@bus20/contracts/policy-artifact";
 import { createProgramPolicy } from "@bus20/policy-runtime/program-policy";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
-import { createKnownDemandModel, type RolloutDemandModel } from "./rollout-demand.js";
+import {
+  createKnownDemandModel,
+  DEFAULT_ROLLOUT_DEMAND,
+  type RolloutDemandModel,
+} from "./rollout-demand.js";
 import { scoreRun } from "@bus20/scoring/score";
 import { createFixturePolicy } from "@bus20/simulator/fixture-policy";
 import { type Policy } from "@bus20/simulator/policy";
@@ -192,11 +196,14 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
 
 /** The known-demand model needs generator provenance; a scenario without it is a usage error. */
 const createRolloutPolicy = (inputs: Inputs, settings: RolloutSettings): Policy => {
-  const { demand: demandName, ...knobs } = settings;
+  const { demand: demandName = DEFAULT_ROLLOUT_DEMAND, ...knobs } = settings;
   const { map, scenario } = inputs;
   const demand = demandName === "known" ? createKnownDemandModel(map, scenario) : undefined;
   if (demandName === "known" && demand === undefined) {
-    throw new Error(`scenario "${scenario.id}" carries no generator provenance for known demand`);
+    throw new Error(
+      `scenario "${scenario.id}" carries no generator provenance for known demand; ` +
+        "pass --rollout-demand empirical",
+    );
   }
   return createRolloutReferencePolicy({
     ...knobs,

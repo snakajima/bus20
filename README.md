@@ -71,7 +71,7 @@ corrected and what changed relative to the original app.
 
 A stronger classical baseline, the rollout reference, needs no external
 tool: `--policy rollout` shortlists insertions by the same rule and scores
-them by simulating sampled futures (`--rollout-demand empirical|known`,
+them by simulating sampled futures (`--rollout-demand known|empirical`,
 `--rollout-samples`, `--rollout-horizon`, `--rollout-shortlist`,
 `--rollout-seed`). See [the rollout notes](docs/rollout-reference.md).
 

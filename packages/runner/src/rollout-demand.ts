@@ -11,6 +11,8 @@ import { demandDistributionOf, sampleDemandDay } from "@bus20/datasets/demand";
 export const KNOWN_DEMAND_LABEL = "known" as const;
 export const ROLLOUT_DEMAND_MODELS = ["empirical", KNOWN_DEMAND_LABEL] as const;
 export type RolloutDemandModel = (typeof ROLLOUT_DEMAND_MODELS)[number];
+/** The informed model is the stronger baseline (results/synthetic-dev-2/dev-rollout), so it is the default. */
+export const DEFAULT_ROLLOUT_DEMAND: RolloutDemandModel = KNOWN_DEMAND_LABEL;
 
 /**
  * The informed variant: the rollout knows the generator's demand
