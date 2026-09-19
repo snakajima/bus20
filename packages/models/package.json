@@ -16,12 +16,13 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.127.0",
+    "@bus20/baselines": "0.1.0",
     "@bus20/contracts": "0.1.0",
     "@bus20/simulator": "0.1.0",
     "@google/genai": "^2.23.0",
+    "@receptron/laya": "^0.1.1",
     "@typesafe-ai/sdk": "^0.6.0",
     "openai": "^7.19.0",
-    "zod": "^4.0.0",
-    "@bus20/baselines": "0.1.0"
+    "zod": "^4.0.0"
   }
 }

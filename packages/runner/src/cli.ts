@@ -40,7 +40,8 @@ import {
 
 const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
-                [--policy fixture|swift|rollout|random|claude|openai|gemini|jev|program] [--seed N]
+                [--policy fixture|swift|rollout|random|claude|openai|gemini|jev|laya|program]
+                [--seed N] [--laya-model-dir <dir>]   (env LAYA_MODEL_DIR, LAYA_THREADS)
                 [--swift-cli <path>]
                 [--rollout-demand known|empirical] [--rollout-shortlist K] [--rollout-samples N]
                 [--rollout-horizon MIN] [--rollout-seed N]
@@ -89,6 +90,7 @@ interface ParsedArgs {
     readonly "rollout-seed"?: string;
     readonly "rollout-demand"?: string;
     readonly seed?: string;
+    readonly "laya-model-dir"?: string;
     readonly markdown?: string;
     readonly manifest?: string;
     readonly policies?: string;
@@ -123,6 +125,7 @@ const OPTIONS = {
   "rollout-seed": { type: "string" },
   "rollout-demand": { type: "string" },
   seed: { type: "string" },
+  "laya-model-dir": { type: "string" },
   markdown: { type: "string" },
   manifest: { type: "string" },
   policies: { type: "string" },
@@ -256,13 +259,30 @@ const seededOptions = (
   rollout: rolloutOptions(args, repetition),
 });
 
-const modelOptions = (
-  args: ParsedArgs,
-): Pick<PolicyOptions, "swiftCommand" | "modelId" | "programSeed" | "presentation" | "repeats"> => {
+const layaOptions = (args: ParsedArgs): Pick<PolicyOptions, "layaModelDir" | "layaThreads"> => {
+  const layaModelDir = args.values["laya-model-dir"] ?? nonEmpty(process.env["LAYA_MODEL_DIR"]);
+  const layaThreads = parseMaxDecisions(process.env["LAYA_THREADS"]);
+  return {
+    ...(layaModelDir === undefined ? {} : { layaModelDir }),
+    ...(layaThreads === undefined ? {} : { layaThreads }),
+  };
+};
+
+type ModelOptionKeys =
+  | "swiftCommand"
+  | "layaModelDir"
+  | "layaThreads"
+  | "modelId"
+  | "programSeed"
+  | "presentation"
+  | "repeats";
+
+const modelOptions = (args: ParsedArgs): Pick<PolicyOptions, ModelOptionKeys> => {
   const programSeed = parseMaxDecisions(args.values["program-seed"]);
   const swiftCommand = args.values["swift-cli"] ?? nonEmpty(process.env["BUS20_SWIFT_CLI"]);
   return {
     ...(swiftCommand === undefined ? {} : { swiftCommand }),
+    ...layaOptions(args),
     ...(args.values.model === undefined ? {} : { modelId: args.values.model }),
     ...(programSeed === undefined ? {} : { programSeed }),
     ...jevOptions(args),
