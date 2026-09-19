@@ -46,7 +46,7 @@ const USAGE = `usage:
                 [--rollout-horizon MIN] [--rollout-seed N]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]
-                [--presentation consequences|numeric] [--repeats N]
+                [--presentation consequences|cumulative|numeric] [--repeats N]
                 [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
   bus20-run compare <run-dir>... [--markdown <file>]

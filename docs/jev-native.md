@@ -89,6 +89,19 @@ One scenario, one repetition; direction, not evidence.
 For reference, the Swift insertion rule scores 16.23 on this scenario and
 Claude opus-5 at low effort with the shared brief 16.23.
 
+## Prompt version 4: cumulative delays
+
+Version 3 told the model that a candidate "delays r05 by 10 minutes" but
+not that r05 was already 8 minutes late. With a squared objective that is
+the deciding difference (18² − 8² = 260 against 10² = 100), and the
+insertion rule has always used it. Version 4 (`--presentation cumulative`,
+`bus20-prompt/4`, `cumulativeCandidateOption`) writes "delays r05 (already
+8 minutes late) by 10 minutes", adds the largest resulting delay as a
+field, and states the rule in the instructions. On the dev split it cut
+Jev's pain by 23% at low load and 17% at medium, shrank its bias toward the
+new passenger by two thirds, and left high load unchanged, where the loss
+comes from choice-set size (`results/synthetic-dev-2/dev-jev-v4`).
+
 ## Fairness
 
 The consequences presentation carries the same information as the numeric

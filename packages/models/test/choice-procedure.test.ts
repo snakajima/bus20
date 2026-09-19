@@ -35,6 +35,29 @@ test("compact candidates carry insertion indices, the new passenger's times, and
   assert.match(JSON.stringify(brief["candidateEncoding"]), /shiftBetweenMinutes/);
 });
 
+/** The synthetic passengers q0.. behind `allInsertions`, so consequences can be computed. */
+const syntheticRequests = (count: number): Observation["requests"] =>
+  Array.from({ length: count }, (_, i) => ({
+    id: `q${i}`,
+    requestTimeMs: 0,
+    originNodeId: "n00",
+    destinationNodeId: "n01",
+    phase: "assigned" as const,
+    directTravelTimeMs: 0,
+  }));
+
+const bigObservation = (
+  o: Observation,
+  first: Observation["vehicles"][number],
+  stops: CandidateStop[],
+  candidates: Candidate[],
+): Observation => ({
+  ...o,
+  vehicles: [{ ...first, stops }],
+  candidates,
+  requests: [...o.requests, ...syntheticRequests(stops.length)],
+});
+
 /** Every insertion of r3 into a vehicle with `count` committed stops, timed one minute apart. */
 const allInsertions = (count: number): { stops: CandidateStop[]; candidates: Candidate[] } => {
   const stops = Array.from({ length: count }, (_, i) =>
@@ -166,7 +189,7 @@ test("tournament mode chunks the candidates, batches the first round, and finals
   const { stops, candidates } = allInsertions(20);
   const [first] = o.vehicles;
   assert.ok(first !== undefined);
-  const big: Observation = { ...o, vehicles: [{ ...first, stops }], candidates };
+  const big = bigObservation(o, first, stops, candidates);
   const batches: ChoiceRequest[][] = [];
   const singles: ChoiceRequest[] = [];
   const client: ChoiceClient = {

@@ -15,6 +15,10 @@ import {
 } from "./decision-brief.js";
 import {
   CONSEQUENCES_PROMPT_VERSION,
+  CUMULATIVE_CANDIDATE_INSTRUCTIONS,
+  CUMULATIVE_PROMPT_VERSION,
+  cumulativeCandidateOption,
+  cumulativeDecisionState,
   JEV_CANDIDATE_INSTRUCTIONS,
   JEV_VEHICLE_INSTRUCTIONS,
   jevCandidateOption,
@@ -22,13 +26,17 @@ import {
   jevVehicleOption,
 } from "./jev-native.js";
 
+export const PRESENTATIONS = ["consequences", "cumulative", "numeric"] as const;
+export type PresentationId = (typeof PRESENTATIONS)[number];
+
 /**
  * How observations become choice requests. `consequences` (prompt version 3)
- * is the common brief every model receives; `numeric` (version 2) is the
+ * is the common brief every model receives; `cumulative` (version 4) adds
+ * how late each delayed passenger already is; `numeric` (version 2) is the
  * earlier form with planned times and shift constants, kept for comparison.
  */
 export interface Presentation {
-  readonly id: "consequences" | "numeric";
+  readonly id: PresentationId;
   readonly promptVersion: string;
   /** How options are encoded, in prose, for models that take a system prompt. */
   readonly encodingText: string;
@@ -88,11 +96,24 @@ export const CONSEQUENCES_PRESENTATION: Presentation = {
   vehicleOption: jevVehicleOption,
 };
 
-export const PRESENTATIONS = ["consequences", "numeric"] as const;
-export type PresentationId = (typeof PRESENTATIONS)[number];
+export const CUMULATIVE_PRESENTATION: Presentation = {
+  id: "cumulative",
+  promptVersion: CUMULATIVE_PROMPT_VERSION,
+  encodingText: `${CUMULATIVE_CANDIDATE_INSTRUCTIONS.how_to_read_options} ${CUMULATIVE_CANDIDATE_INSTRUCTIONS.task}`,
+  state: cumulativeDecisionState,
+  candidateQuestion: { ...CUMULATIVE_CANDIDATE_INSTRUCTIONS },
+  vehicleQuestion: { ...JEV_VEHICLE_INSTRUCTIONS },
+  candidateOption: cumulativeCandidateOption,
+  vehicleOption: jevVehicleOption,
+};
 
 /** The common condition every model receives unless a run overrides it. */
 export const DEFAULT_PRESENTATION_ID: PresentationId = "consequences";
 
-export const presentationById = (id: PresentationId): Presentation =>
-  id === "numeric" ? NUMERIC_PRESENTATION : CONSEQUENCES_PRESENTATION;
+const BY_ID: Readonly<Record<PresentationId, Presentation>> = {
+  numeric: NUMERIC_PRESENTATION,
+  consequences: CONSEQUENCES_PRESENTATION,
+  cumulative: CUMULATIVE_PRESENTATION,
+};
+
+export const presentationById = (id: PresentationId): Presentation => BY_ID[id];
