@@ -16,6 +16,7 @@ import {
 import { OBJECTIVE_TEXT } from "./decision-brief.js";
 import { DEFAULT_EFFORT, type Effort } from "./effort.js";
 import { type Presentation, type PresentationId, resolvePresentation } from "./presentation.js";
+import { labelMap, optionLabel, optionLabels } from "./option-labels.js";
 import { usageRecord } from "./pricing.js";
 
 export const DEFAULT_CLAUDE_MODEL_ID = "claude-opus-5" as const;
@@ -76,6 +77,7 @@ const describe = (settings: Settings): PolicyDescriptor => ({
     timeoutMs: settings.timeoutMs,
     maxRetries: settings.maxRetries,
     maxOutputTokens: MAX_OUTPUT_TOKENS,
+    optionLabels: "letters",
     ...describeChoice(settings.choice),
   },
 });
@@ -86,6 +88,7 @@ const textOf = (message: Anthropic.Message): string =>
     .map((block) => block.text)
     .join("");
 
+/** The reply names a label; it maps back to the candidate id, or fails the decision. */
 const parseChoice = (message: Anthropic.Message, ids: readonly string[]): string => {
   if (message.stop_reason !== "end_turn") {
     throw new Error(`claude stopped with ${String(message.stop_reason)}`);
@@ -94,10 +97,11 @@ const parseChoice = (message: Anthropic.Message, ids: readonly string[]): string
   if (!parsed.ok) {
     throw new Error(`claude reply is not a choice: ${formatIssues(parsed.issues)}`);
   }
-  if (!ids.includes(parsed.value.choice)) {
+  const id = labelMap(ids).get(parsed.value.choice);
+  if (id === undefined) {
     throw new Error(`claude chose unknown option "${parsed.value.choice}"`);
   }
-  return parsed.value.choice;
+  return id;
 };
 
 const traceOf = (
@@ -112,11 +116,15 @@ const traceOf = (
   text: textOf(message),
 });
 
+/** Options are labelled by position (A, B, ...); the labels are the ids the model replies with. */
 const userMessage = (request: ChoiceRequest): string =>
   JSON.stringify({
     state: request.state,
     question: request.question,
-    options: request.options.map((option) => ({ id: option.id, ...option.description })),
+    options: request.options.map((option, index) => ({
+      id: optionLabel(index),
+      ...option.description,
+    })),
   });
 
 /** Claude answers each structured choice with structured output constrained to the option ids. */
@@ -140,13 +148,15 @@ const toReply = (
 
 const createClaudeChoiceClient = (client: Anthropic, settings: Settings): ChoiceClient => ({
   ask: async (request): Promise<ChoiceReply> => {
-    const ids = request.options.map((option) => option.id);
     const message = await client.messages.create({
       model: settings.modelId,
       max_tokens: MAX_OUTPUT_TOKENS,
       system: systemPrompt(settings.presentation),
       messages: [{ role: "user", content: userMessage(request) }],
-      output_config: { effort: settings.effort, format: outputFormat(ids) },
+      output_config: {
+        effort: settings.effort,
+        format: outputFormat(optionLabels(request.options.length)),
+      },
     });
     return toReply(settings, request, message);
   },

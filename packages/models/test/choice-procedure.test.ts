@@ -10,6 +10,7 @@ import {
   shortlistObservation,
 } from "../src/choice-procedure.js";
 import { buildDecisionBrief, describeCandidate } from "../src/decision-brief.js";
+import { labelMap, optionLabel, optionLabels } from "../src/option-labels.js";
 import { NUMERIC_PRESENTATION } from "../src/presentation.js";
 import { incrementalCosts } from "@bus20/baselines/insertion-rule";
 import { APPEND, IDLE, INSERT, MINUTE, observation, stop } from "./choice-fixture.js";
@@ -304,4 +305,16 @@ test("a shortlist offers only the rule's cheapest insertions, in host order, wit
     flatLimit: 40,
     shortlist: 8,
   });
+});
+
+test("option labels are position based and round-trip through the label map", () => {
+  assert.deepEqual(optionLabels(3), ["A", "B", "C"]);
+  assert.equal(optionLabel(25), "Z");
+  assert.equal(optionLabel(26), "AA");
+  assert.equal(optionLabel(27), "AB");
+  assert.equal(optionLabel(52), "BA");
+  assert.equal(optionLabels(60).length, new Set(optionLabels(60)).size, "labels are distinct");
+  const map = labelMap(["v1:0:1", "v2:0:1"]);
+  assert.equal(map.get("B"), "v2:0:1");
+  assert.equal(map.get("C"), undefined);
 });
