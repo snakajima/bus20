@@ -39,6 +39,14 @@ in the descriptor as `choiceMode` and `flatLimit`:
 
 Jev's 255-option limit applies per stage.
 
+`--shortlist K` offers any model only the `K` insertions the insertion rule
+rates cheapest, in host order and without their costs (`shortlist` in the
+descriptor settings, `top<K>` in the id). It turns the task from searching
+the whole set into adding judgement on top of the rule; the rollout
+reference's choices lie within the rule's top 5 on 99.3% of dev decisions,
+so little is lost. With Jev and prompt v4 it cut pain from 37.1 to 17.4 at
+high load (`results/synthetic-dev-2/dev-jev-top8`).
+
 Every model defaults to the `consequences` presentation (shared prompt
 `bus20-prompt/3`, see [docs/jev-native.md](jev-native.md)). `cumulative`
 (`bus20-prompt/4`) adds how late each delayed passenger already is, which
