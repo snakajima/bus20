@@ -74,6 +74,8 @@ tool: `--policy rollout` shortlists insertions by the same rule and scores
 them by simulating sampled futures (`--rollout-demand known|empirical`,
 `--rollout-samples`, `--rollout-horizon`, `--rollout-shortlist`,
 `--rollout-seed`). See [the rollout notes](docs/rollout-reference.md).
+`--policy random [--shortlist K] [--seed N]` is the floor: uniform choice
+among the rule's K cheapest insertions, or among every legal insertion.
 
 A versioned synthetic development suite lives in `datasets/synthetic-dev-1/`
 (`bus20-data generate|verify`). `bus20-run suite` runs every policy on every

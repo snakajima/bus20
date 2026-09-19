@@ -13,6 +13,7 @@ import path from "node:path";
 import { test } from "node:test";
 import { DemandHistory } from "../src/demand-history.js";
 import { incrementalCosts, shortlistByCost } from "../src/insertion-rule.js";
+import { createRandomShortlistPolicy } from "../src/random-shortlist.js";
 import { createRolloutReferencePolicy } from "../src/rollout-reference.js";
 import {
   advanceWorld,
@@ -241,4 +242,32 @@ test("rollouts are deterministic per seed, record their accounting, and replay",
   );
   assert.equal(other.policy.id, first.policy.id, "the seed is a setting, not part of the id");
   assert.equal(other.policy.settings?.["seed"], 5);
+});
+
+test("the random reference draws from the rule's shortlist, deterministically per seed", async () => {
+  const { scenario, map } = loadFixture();
+  const policy = createRandomShortlistPolicy({ shortlist: 3, seed: 1 });
+  assert.equal(policy.descriptor.id, "random-reference:top3");
+  const first = await runSimulation(scenario, map, policy);
+  const second = await runSimulation(
+    scenario,
+    map,
+    createRandomShortlistPolicy({ shortlist: 3, seed: 1 }),
+  );
+  assert.equal(first.termination.kind, "drained");
+  assert.deepEqual(
+    first.decisions.map((d) => d.action),
+    second.decisions.map((d) => d.action),
+  );
+  assert.ok(first.decisions.every((d) => (d.usage?.["shortlisted"] ?? 9) <= 3));
+  const other = await runSimulation(
+    scenario,
+    map,
+    createRandomShortlistPolicy({ shortlist: 3, seed: 2 }),
+  );
+  assert.notDeepEqual(
+    first.decisions.map((d) => d.action),
+    other.decisions.map((d) => d.action),
+  );
+  assert.equal(createRandomShortlistPolicy().descriptor.id, "random-reference:all");
 });

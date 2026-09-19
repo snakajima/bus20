@@ -14,6 +14,7 @@ const digestSchema = z.string().regex(/^sha256:[0-9a-f]{64}$/);
 export const POLICY_KINDS = [
   "swift-reference",
   "rollout-reference",
+  "random-reference",
   "general-llm",
   "jev",
   "fixture",

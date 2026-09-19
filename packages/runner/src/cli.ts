@@ -40,7 +40,7 @@ import {
 
 const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
-                [--policy fixture|swift|rollout|claude|openai|gemini|jev|program]
+                [--policy fixture|swift|rollout|random|claude|openai|gemini|jev|program] [--seed N]
                 [--swift-cli <path>]
                 [--rollout-demand known|empirical] [--rollout-shortlist K] [--rollout-samples N]
                 [--rollout-horizon MIN] [--rollout-seed N]
@@ -88,6 +88,7 @@ interface ParsedArgs {
     readonly "rollout-horizon"?: string;
     readonly "rollout-seed"?: string;
     readonly "rollout-demand"?: string;
+    readonly seed?: string;
     readonly markdown?: string;
     readonly manifest?: string;
     readonly policies?: string;
@@ -121,6 +122,7 @@ const OPTIONS = {
   "rollout-horizon": { type: "string" },
   "rollout-seed": { type: "string" },
   "rollout-demand": { type: "string" },
+  seed: { type: "string" },
   markdown: { type: "string" },
   manifest: { type: "string" },
   policies: { type: "string" },
@@ -237,13 +239,22 @@ const selectPolicy = (
   }
   return createPolicyById(args.values.policy ?? "fixture", {
     inputs,
-    rollout: rolloutOptions(args, repetition),
+    ...seededOptions(args, repetition),
     ...(effort === undefined ? {} : { effort }),
     ...(choice === undefined ? {} : { choice }),
     ...(program === undefined ? {} : { program }),
     ...modelOptions(args),
   });
 };
+
+/** Seeds shift by the suite repetition so repetitions of seeded baselines differ. */
+const seededOptions = (
+  args: ParsedArgs,
+  repetition: number,
+): Pick<PolicyOptions, "seed" | "rollout"> => ({
+  seed: (parseCount(args.values.seed) ?? 0) + repetition,
+  rollout: rolloutOptions(args, repetition),
+});
 
 const modelOptions = (
   args: ParsedArgs,

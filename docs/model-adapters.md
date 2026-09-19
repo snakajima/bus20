@@ -45,7 +45,11 @@ descriptor settings, `top<K>` in the id). It turns the task from searching
 the whole set into adding judgement on top of the rule; the rollout
 reference's choices lie within the rule's top 5 on 99.3% of dev decisions,
 so little is lost. With Jev and prompt v4 it cut pain from 37.1 to 17.4 at
-high load (`results/synthetic-dev-2/dev-jev-top8`).
+high load (`results/synthetic-dev-2/dev-jev-top8`). The shortlist alone is
+worth nothing: `--policy random --shortlist 8`, uniform choice among the
+same eight, scores 54 / 74 / 79 against Swift's 3.8 / 9.4 / 13.6
+(`results/synthetic-dev-2/dev-random`), so what a shortlisted model
+scores above that floor is its own judgement.
 
 Every model defaults to the `consequences` presentation (shared prompt
 `bus20-prompt/3`, see [docs/jev-native.md](jev-native.md)). `cumulative`
