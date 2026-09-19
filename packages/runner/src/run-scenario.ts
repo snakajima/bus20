@@ -11,6 +11,7 @@ import {
   createRolloutReferencePolicy,
   type RolloutReferenceOptions,
 } from "@bus20/baselines/rollout-reference";
+import { createRandomShortlistPolicy } from "@bus20/baselines/random-shortlist";
 import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
 import { createClaudePolicy } from "@bus20/models/claude-policy";
 import { createGeminiPolicy } from "@bus20/models/gemini-policy";
@@ -133,6 +134,8 @@ export type RolloutSettings = Omit<
 export interface PolicyOptions {
   /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
   readonly swiftCommand?: string;
+  /** Seed for `random`, shifted by the suite repetition. */
+  readonly seed?: number;
   /** The scenario, required for `rollout` and the `forecast` presentation. */
   readonly inputs?: Inputs;
   readonly rollout?: RolloutSettings;
@@ -160,6 +163,7 @@ export const POLICY_IDS = [
   "fixture",
   "swift",
   "rollout",
+  "random",
   "claude",
   "openai",
   "gemini",
@@ -237,16 +241,33 @@ const createRolloutPolicy = (inputs: Inputs, settings: RolloutSettings): Policy 
   });
 };
 
+/** In-process baselines that need no credentials: fixture, random, and rollout. */
+const createLocalPolicy = (policyId: string, options: PolicyOptions): Policy | undefined => {
+  if (policyId === "fixture") {
+    return createFixturePolicy();
+  }
+  if (policyId === "random") {
+    const { seed } = options;
+    const shortlist = options.choice?.shortlist;
+    return createRandomShortlistPolicy({
+      ...(shortlist === undefined ? {} : { shortlist }),
+      ...(seed === undefined ? {} : { seed }),
+    });
+  }
+  if (policyId === "rollout" && options.inputs !== undefined) {
+    return createRolloutPolicy(options.inputs, options.rollout ?? {});
+  }
+  return undefined;
+};
+
 /** API keys come from the environment (ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, TYPESAFE_API_KEY) and are never logged. */
 export const createPolicyById = (
   policyId: string,
   options: PolicyOptions = {},
 ): ManagedPolicy | undefined => {
-  if (policyId === "fixture") {
-    return { policy: createFixturePolicy(), close: noop };
-  }
-  if (policyId === "rollout" && options.inputs !== undefined) {
-    return { policy: createRolloutPolicy(options.inputs, options.rollout ?? {}), close: noop };
+  const local = createLocalPolicy(policyId, options);
+  if (local !== undefined) {
+    return { policy: local, close: noop };
   }
   const external = createExternalPolicy(policyId, options);
   if (external !== undefined) {
