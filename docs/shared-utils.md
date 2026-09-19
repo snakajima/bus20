@@ -83,6 +83,12 @@ Packages export individual modules by subpath (for example
 | `choice-procedure` | `decideByChoice`, `CHOICE_MODES`, `DEFAULT_CHOICE_SETTINGS`, `DEFAULT_CHUNK_SIZE` | Flat, hierarchical, auto, and tournament decision procedures over a choice client. |
 | `choice-client` | `askAll` | Batched choices when the client supports `askMany`, sequential otherwise. |
 | `presentation` | `NUMERIC_PRESENTATION`, `CONSEQUENCES_PRESENTATION`, `presentationById` | How observations become choice requests, with prompt version and encoding text. |
+| `insertion-rule` (baselines) | `planCostMs2`, `incrementalCosts`, `shortlistByCost` | The Swift insertion rule in TypeScript, exact integer ms². |
+| `rollout-world` (baselines) | `worldFromObservation`, `advanceWorld`, `insertGreedily`, `totalCostMs2` | Light forward model for rollouts; never used for scoring. |
+| `demand-history` (baselines) | `DemandModel`, `DemandHistory`, `labelSamples` | Empirical demand from the run's own history; interface for other models. |
+| `rollout-reference` (baselines) | `createRolloutReferencePolicy`, `DEFAULT_ROLLOUT_SETTINGS` | Shortlist by the rule, score by sampled rollouts; see docs/rollout-reference.md. |
+| `demand` (datasets) | `demandDistributionOf`, `sampleDemandDay` | Recover a scenario's generative distribution from provenance and redraw days. |
+| `rollout-demand` (runner) | `createKnownDemandModel` | The `known` demand model for the rollout, built per scenario. |
 | `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Consequences presentation (shared prompt v3): arithmetic in code, words and whole minutes. |
 | `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |

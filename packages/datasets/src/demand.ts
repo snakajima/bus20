@@ -1,5 +1,10 @@
 import { digestDocument } from "@bus20/contracts/digest";
-import { type DemandPattern, type DataSplit, type LoadLevel } from "@bus20/contracts/manifest";
+import {
+  DEMAND_PATTERNS,
+  type DemandPattern,
+  type DataSplit,
+  type LoadLevel,
+} from "@bus20/contracts/manifest";
 import { type MapDocument, type MapNode } from "@bus20/contracts/map";
 import { type RideRequest, type ScenarioDocument } from "@bus20/contracts/scenario";
 import { MS_PER_MINUTE } from "@bus20/contracts/time";
@@ -224,4 +229,78 @@ export const generateScenario = (map: MapDocument, spec: DemandSpec): ScenarioDo
     requests: toRequests(draws),
     provenance: provenanceOf(spec, meanDirectMs),
   };
+};
+
+/**
+ * The generative distribution behind a stored scenario, recovered from its
+ * provenance. It identifies the pattern and the seeded zones, never the
+ * stored requests: fresh draws from it are other days with the same
+ * structure. Undefined when the scenario was not produced by this generator.
+ */
+export interface DemandDistribution {
+  readonly pattern: DemandPattern;
+  readonly seed: number;
+  readonly hotspot: HotspotSpec;
+  readonly demandEndTimeMs: number;
+  /** Draws per day; fixed per (map, load) cell, so it reveals nothing about one day's requests. */
+  readonly requestCount: number;
+}
+
+const patternOf = (value: string | undefined): DemandPattern | undefined =>
+  DEMAND_PATTERNS.find((pattern) => pattern === value);
+
+const hotspotOf = (provenance: Record<string, string>): HotspotSpec | undefined => {
+  const share = Number(provenance["hotspotShare"]);
+  const [start, end] = (provenance["hotspotBurst"] ?? "").split("-").map(Number);
+  if (provenance["hotspotShare"] === undefined) {
+    return DEFAULT_HOTSPOT;
+  }
+  return Number.isFinite(share) && start !== undefined && end !== undefined && start < end
+    ? { share, burstStart: start, burstEnd: end }
+    : undefined;
+};
+
+export const demandDistributionOf = (
+  scenario: ScenarioDocument,
+): DemandDistribution | undefined => {
+  const provenance = scenario.provenance ?? {};
+  const pattern = patternOf(provenance["pattern"]);
+  const seed = Number(provenance["seed"]);
+  const hotspot = hotspotOf(provenance);
+  const usable = provenance["generator"] === GENERATOR_NAME && Number.isInteger(seed);
+  if (!usable || pattern === undefined || hotspot === undefined) {
+    return undefined;
+  }
+  return {
+    pattern,
+    seed,
+    hotspot,
+    demandEndTimeMs: scenario.demandEndTimeMs,
+    requestCount: scenario.requests.length,
+  };
+};
+
+export interface DemandDraw {
+  readonly requestTimeMs: number;
+  readonly originNodeId: string;
+  readonly destinationNodeId: string;
+}
+
+/** One fresh day of demand from the distribution, in release order, drawn with `rng`. */
+export const sampleDemandDay = (
+  map: MapDocument,
+  distribution: DemandDistribution,
+  rng: Rng,
+): DemandDraw[] => {
+  const zones = zonesOf(map, createRng(distribution.seed));
+  const draw = DRAWS[distribution.pattern];
+  return Array.from({ length: distribution.requestCount }, () =>
+    draw(rng, zones, distribution.demandEndTimeMs, distribution.hotspot),
+  )
+    .sort((left, right) => left.timeMs - right.timeMs)
+    .map((item) => ({
+      requestTimeMs: item.timeMs,
+      originNodeId: item.origin.id,
+      destinationNodeId: item.destination.id,
+    }));
 };

@@ -8,6 +8,7 @@ how well online decision-makers dispatch riders on a fixed road network.
 - [Benchmark protocol v1](docs/benchmark-protocol.md)
 - [Shared utility catalog](docs/shared-utils.md)
 - [Swift reference notes](docs/swift-reference.md)
+- [Rollout reference](docs/rollout-reference.md)
 - [Model adapters](docs/model-adapters.md)
 - [Using Jev effectively](docs/jev-native.md)
 - [Datasets, paired evaluation, and analysis](docs/datasets.md)
@@ -67,6 +68,12 @@ node packages/runner/dist/src/cli.js run --policy swift \
 
 See [the Swift reference notes](docs/swift-reference.md) for what was
 corrected and what changed relative to the original app.
+
+A stronger classical baseline, the rollout reference, needs no external
+tool: `--policy rollout` shortlists insertions by the same rule and scores
+them by simulating sampled futures (`--rollout-demand known|empirical`,
+`--rollout-samples`, `--rollout-horizon`, `--rollout-shortlist`,
+`--rollout-seed`). See [the rollout notes](docs/rollout-reference.md).
 
 A versioned synthetic development suite lives in `datasets/synthetic-dev-1/`
 (`bus20-data generate|verify`). `bus20-run suite` runs every policy on every

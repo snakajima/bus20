@@ -19,10 +19,17 @@ import {
 
 export const SUITE_INDEX_FILE = "suite-index.json";
 
+/**
+ * Builds a fresh policy for one run. The inputs let map-aware baselines bind
+ * to the scenario; the repetition lets seeded baselines vary per repetition
+ * the way sampled model replies do.
+ */
+export type PolicyFactory = (inputs: Inputs, repetition: number) => ManagedPolicy;
+
 export interface SuiteRequest {
   readonly suite: LoadedSuite;
   /** Factories so each run gets a fresh policy (fresh memory, fresh process). */
-  readonly policies: readonly (() => ManagedPolicy)[];
+  readonly policies: readonly PolicyFactory[];
   readonly splits: readonly string[];
   readonly repetitions: number;
   readonly outDir: string;
@@ -146,11 +153,11 @@ const obtainOutcome = async (
 
 const runOne = async (
   request: SuiteRequest,
-  factory: () => ManagedPolicy,
+  factory: PolicyFactory,
   scenario: ManifestScenario,
   repetition: number,
 ): Promise<SuiteRun> => {
-  const managed = factory();
+  const managed = factory(inputsFor(request, scenario), repetition);
   const dir = relativeRunDir(managed.policy.descriptor.id, scenario.id, repetition);
   try {
     const outcome = await obtainOutcome(request, managed, scenario, dir);
@@ -170,10 +177,9 @@ const selectedScenarios = (request: SuiteRequest): ManifestScenario[] => {
 
 /** Policy order alternates per scenario so run order is not confounded with policy. */
 const orderedPolicies = (
-  policies: readonly (() => ManagedPolicy)[],
+  policies: readonly PolicyFactory[],
   scenarioIndex: number,
-): readonly (() => ManagedPolicy)[] =>
-  scenarioIndex % 2 === 0 ? policies : [...policies].reverse();
+): readonly PolicyFactory[] => (scenarioIndex % 2 === 0 ? policies : [...policies].reverse());
 
 /**
  * Paired evaluation: every policy on every selected scenario, repeated,
@@ -189,16 +195,12 @@ const indexOf = (request: SuiteRequest, runs: readonly SuiteRun[]): SuiteIndex =
 });
 
 /** Every (scenario, repetition, policy) triple in execution order. */
-const schedule = (request: SuiteRequest): [ManifestScenario, number, () => ManagedPolicy][] =>
+const schedule = (request: SuiteRequest): [ManifestScenario, number, PolicyFactory][] =>
   selectedScenarios(request).flatMap((scenario, scenarioIndex) =>
     Array.from({ length: request.repetitions }, (_, repetition) => repetition).flatMap(
       (repetition) =>
         orderedPolicies(request.policies, scenarioIndex).map(
-          (factory): [ManifestScenario, number, () => ManagedPolicy] => [
-            scenario,
-            repetition,
-            factory,
-          ],
+          (factory): [ManifestScenario, number, PolicyFactory] => [scenario, repetition, factory],
         ),
     ),
   );

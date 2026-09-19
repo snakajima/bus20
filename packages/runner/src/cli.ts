@@ -15,7 +15,8 @@ import { writeTextAtomic } from "./files.js";
 import { loadSuite } from "@bus20/datasets/files";
 import path from "node:path";
 import { parseArgs } from "node:util";
-import { runSuite, SUITE_INDEX_FILE } from "./suite.js";
+import { ROLLOUT_DEMAND_MODELS } from "./rollout-demand.js";
+import { type PolicyFactory, runSuite, SUITE_INDEX_FILE } from "./suite.js";
 import { createStderrLogger } from "./logging.js";
 import {
   createPolicyById,
@@ -24,6 +25,8 @@ import {
   loadInputs,
   loadProgram,
   type ManagedPolicy,
+  type PolicyOptions,
+  type RolloutSettings,
   replayStoredLog,
   runAndScore,
   type RunSummary,
@@ -31,7 +34,10 @@ import {
 
 const USAGE = `usage:
   bus20-run run --scenario <file> --map <file> --out <dir>
-                [--policy fixture|swift|claude|openai|gemini|jev|program] [--swift-cli <path>]
+                [--policy fixture|swift|rollout|claude|openai|gemini|jev|program]
+                [--swift-cli <path>]
+                [--rollout-demand known|empirical] [--rollout-shortlist K] [--rollout-samples N]
+                [--rollout-horizon MIN] [--rollout-seed N]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]
                 [--presentation consequences|numeric] [--repeats N]
@@ -65,6 +71,11 @@ interface ParsedArgs {
     readonly "chunk-size"?: string;
     readonly presentation?: string;
     readonly repeats?: string;
+    readonly "rollout-shortlist"?: string;
+    readonly "rollout-samples"?: string;
+    readonly "rollout-horizon"?: string;
+    readonly "rollout-seed"?: string;
+    readonly "rollout-demand"?: string;
     readonly markdown?: string;
     readonly manifest?: string;
     readonly policies?: string;
@@ -92,6 +103,11 @@ const OPTIONS = {
   "chunk-size": { type: "string" },
   presentation: { type: "string" },
   repeats: { type: "string" },
+  "rollout-shortlist": { type: "string" },
+  "rollout-samples": { type: "string" },
+  "rollout-horizon": { type: "string" },
+  "rollout-seed": { type: "string" },
+  "rollout-demand": { type: "string" },
   markdown: { type: "string" },
   manifest: { type: "string" },
   policies: { type: "string" },
@@ -168,23 +184,63 @@ const parseChoice = (args: ParsedArgs): ChoiceSettings | undefined | null => {
   };
 };
 
-const selectPolicy = (args: ParsedArgs, program?: PolicyProgram): ManagedPolicy | undefined => {
-  const swiftCommand = args.values["swift-cli"] ?? nonEmpty(process.env["BUS20_SWIFT_CLI"]);
+/** Non-negative integer flag (0 allowed), or undefined when absent or malformed. */
+const parseCount = (raw: string | undefined): number | undefined => {
+  if (raw === undefined) {
+    return undefined;
+  }
+  const value = Number.parseInt(raw, 10);
+  return Number.isInteger(value) && value >= 0 ? value : undefined;
+};
+
+/** The base seed shifts by the repetition, so suite repetitions sample different futures. */
+const rolloutOptions = (args: ParsedArgs, repetition: number): RolloutSettings => {
+  const shortlist = parseMaxDecisions(args.values["rollout-shortlist"]);
+  const samples = parseCount(args.values["rollout-samples"]);
+  const horizonMinutes = parseMaxDecisions(args.values["rollout-horizon"]);
+  const seed = (parseCount(args.values["rollout-seed"]) ?? 0) + repetition;
+  const demand = ROLLOUT_DEMAND_MODELS.find((item) => item === args.values["rollout-demand"]);
+  return {
+    ...(demand === undefined ? {} : { demand }),
+    ...(shortlist === undefined ? {} : { shortlist }),
+    ...(samples === undefined ? {} : { samples }),
+    ...(horizonMinutes === undefined ? {} : { horizonMinutes }),
+    seed,
+  };
+};
+
+const selectPolicy = (
+  args: ParsedArgs,
+  inputs: Inputs,
+  program?: PolicyProgram,
+  repetition = 0,
+): ManagedPolicy | undefined => {
   const effort = parseEffort(args.values.effort);
   const choice = parseChoice(args);
   if ((args.values.effort !== undefined && effort === undefined) || choice === null) {
     return undefined;
   }
-  const programSeed = parseMaxDecisions(args.values["program-seed"]);
   return createPolicyById(args.values.policy ?? "fixture", {
-    ...(swiftCommand === undefined ? {} : { swiftCommand }),
-    ...(args.values.model === undefined ? {} : { modelId: args.values.model }),
+    inputs,
+    rollout: rolloutOptions(args, repetition),
     ...(effort === undefined ? {} : { effort }),
     ...(choice === undefined ? {} : { choice }),
     ...(program === undefined ? {} : { program }),
+    ...modelOptions(args),
+  });
+};
+
+const modelOptions = (
+  args: ParsedArgs,
+): Pick<PolicyOptions, "swiftCommand" | "modelId" | "programSeed" | "presentation" | "repeats"> => {
+  const programSeed = parseMaxDecisions(args.values["program-seed"]);
+  const swiftCommand = args.values["swift-cli"] ?? nonEmpty(process.env["BUS20_SWIFT_CLI"]);
+  return {
+    ...(swiftCommand === undefined ? {} : { swiftCommand }),
+    ...(args.values.model === undefined ? {} : { modelId: args.values.model }),
     ...(programSeed === undefined ? {} : { programSeed }),
     ...jevOptions(args),
-  });
+  };
 };
 
 const jevOptions = (args: ParsedArgs): { presentation?: PresentationId; repeats?: number } => {
@@ -212,10 +268,15 @@ const loadProgramOption = async (args: ParsedArgs): Promise<PolicyProgram | unde
 const policyFactories = (
   args: ParsedArgs,
   program: PolicyProgram | undefined,
-): (() => ManagedPolicy)[] | undefined => {
+): PolicyFactory[] | undefined => {
   const ids = (args.values.policies ?? "").split(",").filter((id) => id !== "");
-  const factories = ids.map((id) => () => {
-    const managed = selectPolicy({ ...args, values: { ...args.values, policy: id } }, program);
+  const factories = ids.map((id) => (inputs: Inputs, repetition: number) => {
+    const managed = selectPolicy(
+      { ...args, values: { ...args.values, policy: id } },
+      inputs,
+      program,
+      repetition,
+    );
     if (managed === undefined) {
       throw new Error(`unknown or unavailable policy "${id}"`);
     }
@@ -306,10 +367,11 @@ const runWithPolicy = async (
 /** Policy construction fails fast on missing credentials; the message never includes a key. */
 const selectPolicySafely = (
   args: ParsedArgs,
+  inputs: Inputs,
   program?: PolicyProgram,
 ): ManagedPolicy | undefined => {
   try {
-    return selectPolicy(args, program);
+    return selectPolicy(args, inputs, program);
   } catch (error: unknown) {
     process.stderr.write(`${error instanceof Error ? error.message : String(error)}\n`);
     return undefined;
@@ -319,12 +381,15 @@ const selectPolicySafely = (
 const runCommand = async (args: ParsedArgs): Promise<number> => {
   const { scenario, map, out } = args.values;
   const program = await loadProgramOption(args);
-  const managed = program === null ? undefined : selectPolicySafely(args, program);
-  if (scenario === undefined || map === undefined || out === undefined || managed === undefined) {
+  if (scenario === undefined || map === undefined || out === undefined || program === null) {
     return usageError();
   }
   const inputs = await loadInputs(scenario, map);
-  return inputs.ok ? runWithPolicy(args, inputs.value, managed, out) : issuesError(inputs.issues);
+  if (!inputs.ok) {
+    return issuesError(inputs.issues);
+  }
+  const managed = selectPolicySafely(args, inputs.value, program);
+  return managed === undefined ? usageError() : runWithPolicy(args, inputs.value, managed, out);
 };
 
 const replayCommand = async (args: ParsedArgs): Promise<number> => {
