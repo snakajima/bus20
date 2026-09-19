@@ -42,6 +42,8 @@ const wholeMinutes = (ms: number): number => Math.round(ms / MS_PER_MINUTE);
 export interface DelayedPassenger {
   readonly requestId: string;
   readonly extraMinutes: number;
+  /** How late the passenger already is under the current plan (wait + detour so far), whole minutes. */
+  readonly delayBeforeMinutes: number;
 }
 
 export interface Consequences {
@@ -58,8 +60,18 @@ const requestOf = (observation: Observation, requestId: string) => {
   return request;
 };
 
+/** A passenger's delay against a direct trip if dropped off at `dropoffMs`. */
+const delayMinutes = (observation: Observation, requestId: string, dropoffMs: number): number => {
+  const request = requestOf(observation, requestId);
+  return Math.max(0, wholeMinutes(dropoffMs - request.requestTimeMs - request.directTravelTimeMs));
+};
+
 /** Existing passengers whose drop-off moves later under the candidate, computed in code. */
-const delayedPassengers = (vehicle: ObservedVehicle, candidate: Candidate): DelayedPassenger[] => {
+const delayedPassengers = (
+  observation: Observation,
+  vehicle: ObservedVehicle,
+  candidate: Candidate,
+): DelayedPassenger[] => {
   const original = new Map(
     vehicle.stops.flatMap((stop) =>
       stop.kind === "dropoff" ? [[stop.requestId, stop.plannedArrivalTimeMs] as const] : [],
@@ -67,12 +79,24 @@ const delayedPassengers = (vehicle: ObservedVehicle, candidate: Candidate): Dela
   );
   return candidate.stops.flatMap((stop) => {
     const before = original.get(stop.requestId);
-    if (stop.kind !== "dropoff" || before === undefined) {
-      return [];
-    }
-    const extraMinutes = wholeMinutes(stop.plannedArrivalTimeMs - before);
-    return extraMinutes > 0 ? [{ requestId: stop.requestId, extraMinutes }] : [];
+    return stop.kind === "dropoff" && before !== undefined
+      ? delayedPassenger(observation, stop.requestId, before, stop.plannedArrivalTimeMs)
+      : [];
   });
+};
+
+const delayedPassenger = (
+  observation: Observation,
+  requestId: string,
+  beforeMs: number,
+  afterMs: number,
+): DelayedPassenger[] => {
+  const extraMinutes = wholeMinutes(afterMs - beforeMs);
+  if (extraMinutes <= 0) {
+    return [];
+  }
+  const delayBeforeMinutes = delayMinutes(observation, requestId, beforeMs);
+  return [{ requestId, extraMinutes, delayBeforeMinutes }];
 };
 
 /** Exact consequences of a candidate for the new passenger and for existing ones. */
@@ -88,7 +112,7 @@ export const consequencesOf = (observation: Observation, candidate: Candidate): 
   return {
     waitMinutes: wholeMinutes(pickupMs - request.requestTimeMs),
     detourMinutes: wholeMinutes(dropoffMs - pickupMs - request.directTravelTimeMs),
-    othersDelayed: delayedPassengers(vehicle, candidate),
+    othersDelayed: delayedPassengers(observation, vehicle, candidate),
   };
 };
 
@@ -187,3 +211,74 @@ export const jevVehicleOption = (
     },
   };
 };
+
+/**
+ * Shared prompt version 4: version 3 plus, for every passenger a candidate
+ * delays, how late they already are. Version 3 showed only the added
+ * minutes, so a model could not tell a fresh passenger from one already
+ * far behind, although the squared objective makes that the deciding
+ * difference. The insertion rule has always had this information.
+ */
+export const CUMULATIVE_PROMPT_VERSION = "bus20-prompt/4" as const;
+
+export const CUMULATIVE_CANDIDATE_INSTRUCTIONS = {
+  task: JEV_CANDIDATE_INSTRUCTIONS.task,
+  how_to_read_options:
+    "Every option lists the vehicle, the new passenger's total wait and detour in minutes, and " +
+    "which passengers already assigned to that vehicle get delayed, by how many minutes, and how " +
+    "late each of them already is. Adding delay to a passenger who is already late costs far more " +
+    "than the same delay to a passenger who is on time, because delays are squared.",
+  note: JEV_CANDIDATE_INSTRUCTIONS.note,
+} as const;
+
+const lateInWords = (item: DelayedPassenger): string =>
+  item.delayBeforeMinutes === 0
+    ? item.requestId
+    : `${item.requestId} (already ${plural(item.delayBeforeMinutes, "minute")} late)`;
+
+const cumulativeDelayInWords = (item: DelayedPassenger): string =>
+  `${lateInWords(item)} by ${plural(item.extraMinutes, "minute")}`;
+
+const cumulativeDelaysInWords = (delayed: readonly DelayedPassenger[]): string =>
+  delayed.length === 0
+    ? "delays nobody else"
+    : `delays ${delayed.map(cumulativeDelayInWords).join(" and ")}`;
+
+/** Version-4 option: version 3's fields plus the largest delay anyone ends up with. */
+const largestOf = (
+  delayed: readonly DelayedPassenger[],
+  measure: (item: DelayedPassenger) => number,
+): number => Math.max(0, ...delayed.map(measure));
+
+const cumulativeFields = (delayed: readonly DelayedPassenger[]): Record<string, JsonValue> => ({
+  passengers_delayed: delayed.length,
+  largest_delay_added_to_others_minutes: largestOf(delayed, (i) => i.extraMinutes),
+  largest_resulting_delay_to_others_minutes: largestOf(
+    delayed,
+    (i) => i.delayBeforeMinutes + i.extraMinutes,
+  ),
+});
+
+export const cumulativeCandidateOption = (
+  observation: Observation,
+  candidate: Candidate,
+): ChoiceOption => {
+  const consequences = consequencesOf(observation, candidate);
+  const { othersDelayed } = consequences;
+  return {
+    id: candidate.id,
+    description: {
+      what: `Vehicle ${candidate.vehicleId}: ${rideInWords(consequences)}, ${cumulativeDelaysInWords(othersDelayed)}.`,
+      vehicle: candidate.vehicleId,
+      new_passenger_wait_minutes: consequences.waitMinutes,
+      new_passenger_detour_minutes: consequences.detourMinutes,
+      ...cumulativeFields(othersDelayed),
+    },
+  };
+};
+
+/** Version-4 state: version 3's plus the prompt version. */
+export const cumulativeDecisionState = (observation: Observation): Record<string, JsonValue> => ({
+  ...jevDecisionState(observation),
+  promptVersion: CUMULATIVE_PROMPT_VERSION,
+});

@@ -39,10 +39,12 @@ in the descriptor as `choiceMode` and `flatLimit`:
 
 Jev's 255-option limit applies per stage.
 
-Both Claude and Jev default to the `consequences` presentation (shared
-prompt `bus20-prompt/3`, see [docs/jev-native.md](jev-native.md)); the older
-`numeric` form (`bus20-prompt/2`) stays selectable with
-`--presentation consequences|numeric`. Jev also accepts self-consistency with
+Every model defaults to the `consequences` presentation (shared prompt
+`bus20-prompt/3`, see [docs/jev-native.md](jev-native.md)). `cumulative`
+(`bus20-prompt/4`) adds how late each delayed passenger already is, which
+the insertion rule always knew; the older `numeric` form (`bus20-prompt/2`)
+stays for comparison. Select with
+`--presentation consequences|cumulative|numeric`. Jev also accepts self-consistency with
 `--repeats N`. Presentation and repeats are recorded in the descriptor, and
 the prompt version follows the presentation.
 

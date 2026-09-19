@@ -4,12 +4,13 @@ import { test } from "node:test";
 import { type ChoiceClient, type ChoiceRequest } from "../src/choice-client.js";
 import {
   consequencesOf,
+  cumulativeCandidateOption,
   jevCandidateOption,
   jevDecisionState,
   jevVehicleOption,
 } from "../src/jev-native.js";
 import { createJevPolicy } from "../src/jev-policy.js";
-import { CONSEQUENCES_PRESENTATION } from "../src/presentation.js";
+import { CONSEQUENCES_PRESENTATION, CUMULATIVE_PRESENTATION } from "../src/presentation.js";
 import { withSelfConsistency } from "../src/self-consistency.js";
 import { APPEND, IDLE, INSERT, observation } from "./choice-fixture.js";
 
@@ -19,8 +20,8 @@ test("consequences are computed in code as whole minutes", () => {
     waitMinutes: 3,
     detourMinutes: 3,
     othersDelayed: [
-      { requestId: "r1", extraMinutes: 1 },
-      { requestId: "r2", extraMinutes: 3 },
+      { requestId: "r1", extraMinutes: 1, delayBeforeMinutes: 2 },
+      { requestId: "r2", extraMinutes: 3, delayBeforeMinutes: 2 },
     ],
   });
   assert.deepEqual(consequencesOf(o, APPEND), {
@@ -133,4 +134,31 @@ test("native presentation drives the hierarchical procedure with a structured qu
   const o: Observation = observation();
   assert.equal(typeof CONSEQUENCES_PRESENTATION.candidateQuestion, "object");
   assert.equal(CONSEQUENCES_PRESENTATION.state(o)["promptVersion"], "bus20-prompt/3");
+});
+
+test("prompt v4 says how late each delayed passenger already is; v3 text is unchanged", () => {
+  const o = observation();
+  const v4 = cumulativeCandidateOption(o, INSERT);
+  assert.equal(
+    v4.description["what"],
+    "Vehicle v1: picked up in 3 minutes, 3 minutes of detour, delays r1 (already 2 minutes late) by 1 minute and r2 (already 2 minutes late) by 3 minutes.",
+  );
+  assert.equal(v4.description["largest_delay_added_to_others_minutes"], 3);
+  assert.equal(v4.description["largest_resulting_delay_to_others_minutes"], 5);
+  assert.equal(
+    cumulativeCandidateOption(o, IDLE).description["what"],
+    "Vehicle v2: picked up in 2 minutes, direct ride, delays nobody else.",
+  );
+  assert.equal(CUMULATIVE_PRESENTATION.promptVersion, "bus20-prompt/4");
+  assert.equal(CUMULATIVE_PRESENTATION.state(o)["promptVersion"], "bus20-prompt/4");
+  assert.match(CUMULATIVE_PRESENTATION.encodingText, /already late/);
+  // Version 3 must stay byte-identical so its results remain comparable.
+  assert.equal(
+    jevCandidateOption(o, INSERT).description["what"],
+    "Vehicle v1: picked up in 3 minutes, 3 minutes of detour, delays r1 by 1 minute and r2 by 3 minutes.",
+  );
+  assert.equal(
+    createJevPolicy({ apiKey: "k", presentation: "cumulative" }).descriptor.promptVersion,
+    "bus20-prompt/4",
+  );
 });

@@ -1,0 +1,1132 @@
+{
+  "analysisVersion": "bus20-analysis/1",
+  "benchmarkVersion": "synthetic-dev/2",
+  "manifestDigest": "sha256:7b0d3cfbdc1e114815c83ae9075718f2c82be582d054000ae6c182ce91f723c8",
+  "referencePolicyId": "swift-insertion-reference",
+  "bootstrapSeed": 1,
+  "cells": [
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 3.6676839005092585,
+      "painInterval": {
+        "lower": 3.2836708098875658,
+        "upper": 4.081881484055334
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.31506488887940365,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 3.865413363369709,
+      "painInterval": {
+        "lower": 3.2811945549878745,
+        "upper": 4.5930247346527775
+      },
+      "meanCostUsd": 0.39472444444444443,
+      "meanLatencyMedianMs": 2128.8871156666705,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 2.1072180385205095,
+      "painInterval": {
+        "lower": 1.8995101959767022,
+        "upper": 2.296643211877738
+      },
+      "meanCostUsd": 0.3662477777777778,
+      "meanLatencyMedianMs": 2078.2242916666437,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 1.9334377039277182,
+      "painInterval": {
+        "lower": 1.8574874404818797,
+        "upper": 2.013991344038232
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.27456477778549826,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 5.752486272244269,
+      "painInterval": {
+        "lower": 4.403825101006762,
+        "upper": 6.930859174750149
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.337773000019499,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 5.345519791577015,
+      "painInterval": {
+        "lower": 4.709478793818342,
+        "upper": 5.926867157064963
+      },
+      "meanCostUsd": 0.2819072222222222,
+      "meanLatencyMedianMs": 2083.2272641110594,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 7.32933521843771,
+      "painInterval": {
+        "lower": 5.99259584848597,
+        "upper": 8.962110691008418
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.5581157777812078,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 9.660413073644781,
+      "painInterval": {
+        "lower": 6.915109573715487,
+        "upper": 12.727700678826599
+      },
+      "meanCostUsd": 1.3400583333333334,
+      "meanLatencyMedianMs": 2467.4655647777618,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 7.592256910308641,
+      "painInterval": {
+        "lower": 5.061475631385948,
+        "upper": 10.643146111348228
+      },
+      "meanCostUsd": 1.4457605555555557,
+      "meanLatencyMedianMs": 2278.5150926666747,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 4.940489539607584,
+      "painInterval": {
+        "lower": 3.9496945730398787,
+        "upper": 6.059790454357241
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.4142175556108769,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 15.918154886988539,
+      "painInterval": {
+        "lower": 12.920792949828778,
+        "upper": 18.620333327075247
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.7174815555206604,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 22.55366702634406,
+      "painInterval": {
+        "lower": 13.158991742885801,
+        "upper": 31.776249786347737
+      },
+      "meanCostUsd": 1.1211461111111112,
+      "meanLatencyMedianMs": 2553.205773111071,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 12.626965092132203,
+      "painInterval": {
+        "lower": 9.566611525593279,
+        "upper": 15.22756062887689
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.9546527777572023,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 14.29037325439772,
+      "painInterval": {
+        "lower": 10.007163654246828,
+        "upper": 19.844644826102964
+      },
+      "meanCostUsd": 2.323731111111111,
+      "meanLatencyMedianMs": 2667.0626434444857,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 12.571512713722752,
+      "painInterval": {
+        "lower": 9.487139875088396,
+        "upper": 16.118773036185797
+      },
+      "meanCostUsd": 2.7892777777777775,
+      "meanLatencyMedianMs": 2587.4558194444203,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 7.581643827520578,
+      "painInterval": {
+        "lower": 6.581916824036353,
+        "upper": 8.581370831004802
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.851439999933872,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 20.592605330776095,
+      "painInterval": {
+        "lower": 17.816055363052744,
+        "upper": 23.20958850679854
+      },
+      "meanCostUsd": null,
+      "meanLatencyMedianMs": 0.896875111023999,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 27.111245107956794,
+      "painInterval": {
+        "lower": 20.54017009942256,
+        "upper": 33.522872470098214
+      },
+      "meanCostUsd": 1.8292922222222225,
+      "meanLatencyMedianMs": 2818.323569555612,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 6.740702339867723,
+      "painInterval": {
+        "lower": 4.387972036389991,
+        "upper": 9.361530666984127
+      },
+      "meanCostUsd": 0.002387718666666667,
+      "meanLatencyMedianMs": 130.27885644444407,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 2.6430628596594983,
+      "painInterval": {
+        "lower": 2.245193520837316,
+        "upper": 2.9657792336389885
+      },
+      "meanCostUsd": 0.0022089759999999996,
+      "meanLatencyMedianMs": 127.28046300000116,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 7.640996991128749,
+      "painInterval": {
+        "lower": 6.033281018224574,
+        "upper": 8.962172848608173
+      },
+      "meanCostUsd": 0.001765404666666667,
+      "meanLatencyMedianMs": 121.27130555555374,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 16.172620087086422,
+      "painInterval": {
+        "lower": 8.989116386586979,
+        "upper": 25.661048025025256
+      },
+      "meanCostUsd": 0.008395296000000002,
+      "meanLatencyMedianMs": 136.79677311111007,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 20.35077832761121,
+      "painInterval": {
+        "lower": 5.291606646941015,
+        "upper": 38.380215089038316
+      },
+      "meanCostUsd": 0.01051928266666667,
+      "meanLatencyMedianMs": 134.60396322222692,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 26.185360881797468,
+      "painInterval": {
+        "lower": 18.396895671704144,
+        "upper": 33.45308121408877
+      },
+      "meanCostUsd": 0.007163389333333335,
+      "meanLatencyMedianMs": 140.63068044444987,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 34.91420775043466,
+      "painInterval": {
+        "lower": 18.875653909157663,
+        "upper": 52.19977144761829
+      },
+      "meanCostUsd": 0.017965019333333335,
+      "meanLatencyMedianMs": 147.28851399999823,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 27.14232994091106,
+      "painInterval": {
+        "lower": 14.335134204902074,
+        "upper": 40.919354891925764
+      },
+      "meanCostUsd": 0.022675174666666662,
+      "meanLatencyMedianMs": 149.88915733332882,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 47.147980139764876,
+      "painInterval": {
+        "lower": 33.32486498034793,
+        "upper": 63.412448272364195
+      },
+      "meanCostUsd": 0.012598856666666667,
+      "meanLatencyMedianMs": 139.21343966667257,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "sf-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 4.786211679496254,
+      "painInterval": {
+        "lower": 3.3702492077865958,
+        "upper": 6.349212284520503
+      },
+      "meanCostUsd": 0.0027373220000000004,
+      "meanLatencyMedianMs": 132.3595230000004,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "tokyo-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 2.780569675251891,
+      "painInterval": {
+        "lower": 2.588934762727001,
+        "upper": 2.968345526176821
+      },
+      "meanCostUsd": 0.0026025813333333332,
+      "meanLatencyMedianMs": 132.60356477777694,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "nyc-like",
+      "load": "low",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 5.600072880918578,
+      "painInterval": {
+        "lower": 4.716176430709877,
+        "upper": 6.613892256516754
+      },
+      "meanCostUsd": 0.00196938,
+      "meanLatencyMedianMs": 136.40174999999968,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "sf-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 16.40571820204377,
+      "painInterval": {
+        "lower": 9.964833622084175,
+        "upper": 23.285046540801346
+      },
+      "meanCostUsd": 0.012147930666666668,
+      "meanLatencyMedianMs": 146.05486588888763,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 10.52134412749069,
+      "painInterval": {
+        "lower": 5.541493086466294,
+        "upper": 16.991135632363317
+      },
+      "meanCostUsd": 0.012066282666666666,
+      "meanLatencyMedianMs": 144.09198133333282,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "nyc-like",
+      "load": "medium",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 24.829318092452233,
+      "painInterval": {
+        "lower": 15.284309720628308,
+        "upper": 33.93062472608171
+      },
+      "meanCostUsd": 0.009520392,
+      "meanLatencyMedianMs": 137.24035199999668,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "sf-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 23.526289962780353,
+      "painInterval": {
+        "lower": 15.75833698271219,
+        "upper": 30.958595824325275
+      },
+      "meanCostUsd": 0.022581804,
+      "meanLatencyMedianMs": 163.96326866666672,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "tokyo-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 22.797902853791726,
+      "painInterval": {
+        "lower": 16.167783495986512,
+        "upper": 29.856829800856573
+      },
+      "meanCostUsd": 0.030139554666666672,
+      "meanLatencyMedianMs": 159.9766066666699,
+      "failureReasons": {}
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "nyc-like",
+      "load": "high",
+      "runs": 9,
+      "completeRuns": 9,
+      "successRate": 1,
+      "conditionalMeanPain": 64.99651405746745,
+      "painInterval": {
+        "lower": 42.79541729013974,
+        "upper": 89.73513275528171
+      },
+      "meanCostUsd": 0.019240447333333337,
+      "meanLatencyMedianMs": 159.03343988887434,
+      "failureReasons": {}
+    }
+  ],
+  "paired": [
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -0.19772946286045043,
+      "differenceInterval": {
+        "lower": -0.5050972556966501,
+        "upper": 0.07601382373126059
+      },
+      "meanImprovementPercent": -3.9257558982567904,
+      "policyWins": 4
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -0.17378033459279163,
+      "differenceInterval": {
+        "lower": -0.34288453458880913,
+        "upper": 0.016620283558343378
+      },
+      "meanImprovementPercent": -8.995313170072404,
+      "policyWins": 3
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": 0.4069664806672548,
+      "differenceInterval": {
+        "lower": -0.33932523326278663,
+        "upper": 1.1532581945972966
+      },
+      "meanImprovementPercent": 0.28116467764288466,
+      "policyWins": 6
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -2.33107785520707,
+      "differenceInterval": {
+        "lower": -3.970046847091469,
+        "upper": -0.9094940426649829
+      },
+      "meanImprovementPercent": -26.889836296414778,
+      "policyWins": 1
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -2.651767370701057,
+      "differenceInterval": {
+        "lower": -4.712497372644521,
+        "upper": -0.8681063910111697
+      },
+      "meanImprovementPercent": -42.988949646900814,
+      "policyWins": 1
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -6.635512139355525,
+      "differenceInterval": {
+        "lower": -13.950991806169892,
+        "upper": 0.1483504685582003
+      },
+      "meanImprovementPercent": -28.324463815662554,
+      "policyWins": 4
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -1.6634081622655146,
+      "differenceInterval": {
+        "lower": -6.550755076195986,
+        "upper": 1.9615523218274182
+      },
+      "meanImprovementPercent": -16.702467977474416,
+      "policyWins": 3
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -4.989868886202177,
+      "differenceInterval": {
+        "lower": -7.813246212496186,
+        "upper": -2.7214253666537074
+      },
+      "meanImprovementPercent": -59.902228719203585,
+      "policyWins": 0
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -6.518639777180701,
+      "differenceInterval": {
+        "lower": -11.5402965399394,
+        "upper": -1.8936819547216652
+      },
+      "meanImprovementPercent": -28.453051292932578,
+      "policyWins": 3
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -3.0730184393584663,
+      "differenceInterval": {
+        "lower": -5.24946469000441,
+        "upper": -1.1680315913624355
+      },
+      "meanImprovementPercent": -73.43044536769773,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -0.7096251557317798,
+      "differenceInterval": {
+        "lower": -1.0203768609060129,
+        "upper": -0.34190867699721195
+      },
+      "meanImprovementPercent": -36.68856169602051,
+      "policyWins": 1
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -1.8885107188844807,
+      "differenceInterval": {
+        "lower": -2.5970479368033517,
+        "upper": -1.2751592988859508
+      },
+      "meanImprovementPercent": -35.054491207409576,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -8.843284868648707,
+      "differenceInterval": {
+        "lower": -17.37794475781425,
+        "upper": -2.9855669036111103
+      },
+      "meanImprovementPercent": -97.31733808150267,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -15.410288788003628,
+      "differenceInterval": {
+        "lower": -32.706842567344694,
+        "upper": -1.4704180220830878
+      },
+      "meanImprovementPercent": -228.33667160162142,
+      "policyWins": 1
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -10.267205994808936,
+      "differenceInterval": {
+        "lower": -14.995484643563337,
+        "upper": -5.426874824900061
+      },
+      "meanImprovementPercent": -55.41427345762672,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -22.287242658302464,
+      "differenceInterval": {
+        "lower": -38.44120383459104,
+        "upper": -7.670773184208248
+      },
+      "meanImprovementPercent": -163.22232002222145,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -19.560686113390485,
+      "differenceInterval": {
+        "lower": -32.62176064309974,
+        "upper": -7.500481260357414
+      },
+      "meanImprovementPercent": -227.18143115845825,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -26.555374808988784,
+      "differenceInterval": {
+        "lower": -42.5716115557486,
+        "upper": -13.383997697813694
+      },
+      "meanImprovementPercent": -128.58413385055005,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "sf-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -1.1185277789869934,
+      "differenceInterval": {
+        "lower": -2.2673308004651687,
+        "upper": -0.10001973161375712
+      },
+      "meanImprovementPercent": -24.307404783281378,
+      "policyWins": 2
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "tokyo-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -0.847131971324173,
+      "differenceInterval": {
+        "lower": -1.0472662862743916,
+        "upper": -0.675021693661887
+      },
+      "meanImprovementPercent": -44.14973253528731,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "nyc-like",
+      "load": "low",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": 0.1524133913256908,
+      "differenceInterval": {
+        "lower": -0.815553847004703,
+        "upper": 1.3780798682510291
+      },
+      "meanImprovementPercent": -4.556938823836488,
+      "policyWins": 3
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "sf-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -9.07638298360606,
+      "differenceInterval": {
+        "lower": -14.588526622302465,
+        "upper": -4.090814135744671
+      },
+      "meanImprovementPercent": -102.6878813327825,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "tokyo-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -5.580854587883106,
+      "differenceInterval": {
+        "lower": -11.274218611580444,
+        "upper": -1.4964863460214575
+      },
+      "meanImprovementPercent": -84.714160368362,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "nyc-like",
+      "load": "medium",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -8.911163205463698,
+      "differenceInterval": {
+        "lower": -15.594008505501908,
+        "upper": -2.263473080518814
+      },
+      "meanImprovementPercent": -42.59440681856573,
+      "policyWins": 3
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "sf-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -10.899324870648151,
+      "differenceInterval": {
+        "lower": -15.980490778718282,
+        "upper": -6.077664903047411
+      },
+      "meanImprovementPercent": -79.44571140898321,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "tokyo-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -15.216259026271144,
+      "differenceInterval": {
+        "lower": -21.46386856409007,
+        "upper": -9.496040417853221
+      },
+      "meanImprovementPercent": -186.5897017680009,
+      "policyWins": 0
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "city": "nyc-like",
+      "load": "high",
+      "referencePolicyId": "swift-insertion-reference",
+      "pairs": 9,
+      "onlyReferenceComplete": 0,
+      "onlyPolicyComplete": 0,
+      "bothComplete": 9,
+      "meanDifference": -44.403908726691355,
+      "differenceInterval": {
+        "lower": -68.46465626673289,
+        "upper": -24.015156437272736
+      },
+      "meanImprovementPercent": -202.61952883149004,
+      "policyWins": 0
+    }
+  ],
+  "acrossCities": [
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 3.7845359588937484
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 3.7727170644890777
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 9.395993215011279
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 13.268779003432494
+    },
+    {
+      "policyId": "swift-insertion-reference",
+      "load": "high",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 13.600404750142959
+    },
+    {
+      "policyId": "claude:claude-opus-5:low:consequences:flat",
+      "load": "high",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 17.991043692025755
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 5.674920730218656
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 20.902919765498368
+    },
+    {
+      "policyId": "jev:jev-1.13.0:consequences:tournament:x1",
+      "load": "high",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 36.40150594370353
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "load": "low",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 4.3889514118889075
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "load": "medium",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 17.252126807328896
+    },
+    {
+      "policyId": "jev:jev-1.13.0:cumulative:tournament:x1",
+      "load": "high",
+      "cities": 3,
+      "successRate": 1,
+      "conditionalMeanPain": 37.10690229134651
+    }
+  ]
+}
