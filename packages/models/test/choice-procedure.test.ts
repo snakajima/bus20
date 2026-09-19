@@ -3,9 +3,15 @@ import { runSimulation } from "@bus20/simulator/run";
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import { askAll, type ChoiceClient, type ChoiceRequest } from "../src/choice-client.js";
-import { decideByChoice } from "../src/choice-procedure.js";
+import {
+  choiceLabel,
+  decideByChoice,
+  describeChoice,
+  shortlistObservation,
+} from "../src/choice-procedure.js";
 import { buildDecisionBrief, describeCandidate } from "../src/decision-brief.js";
 import { NUMERIC_PRESENTATION } from "../src/presentation.js";
+import { incrementalCosts } from "@bus20/baselines/insertion-rule";
 import { APPEND, IDLE, INSERT, MINUTE, observation, stop } from "./choice-fixture.js";
 import { loadFixture } from "./fakes.js";
 
@@ -259,4 +265,43 @@ test("askAll falls back to sequential asks when a client cannot batch", async ()
     replies.map((reply) => reply.choice),
     ["x", "y"],
   );
+});
+
+test("a shortlist offers only the rule's cheapest insertions, in host order, without costs", async () => {
+  const o = observation();
+  const { stops, candidates } = allInsertions(20);
+  const [first] = o.vehicles;
+  assert.ok(first !== undefined);
+  const big = bigObservation(o, first, stops, candidates);
+  const shortlisted = shortlistObservation(big, 8);
+  assert.equal(shortlisted.candidates.length, 8);
+  const costs = new Map(
+    incrementalCosts(big).map((item) => [item.candidate.id, item.incrementalCostMs2]),
+  );
+  const eighth = [...costs.values()].sort((a, b) => a - b)[7] ?? 0;
+  assert.ok(shortlisted.candidates.every((c) => (costs.get(c.id) ?? Infinity) <= eighth));
+  const hostOrder = big.candidates.map((c) => c.id);
+  const kept = shortlisted.candidates.map((c) => c.id);
+  assert.deepEqual(
+    kept,
+    hostOrder.filter((id) => kept.includes(id)),
+    "host order is kept",
+  );
+  const client = scripted([(asked) => asked.options[2]?.id ?? ""]);
+  const decision = await decideByChoice(client, big, {
+    mode: "tournament",
+    flatLimit: 50,
+    shortlist: 8,
+  });
+  assert.equal(client.requests[0]?.options.length, 8);
+  assert.ok(!JSON.stringify(client.requests[0]).includes("incrementalCost"), "costs are not shown");
+  assert.equal(decision.usage?.["candidatesOffered"], 8);
+  assert.equal(chosen(decision), kept[2]);
+  assert.equal(choiceLabel({ mode: "tournament", flatLimit: 50, shortlist: 8 }), "tournament:top8");
+  assert.equal(choiceLabel({ mode: "flat", flatLimit: 0 }), "flat");
+  assert.deepEqual(describeChoice({ mode: "auto", flatLimit: 40, shortlist: 8 }), {
+    choiceMode: "auto",
+    flatLimit: 40,
+    shortlist: 8,
+  });
 });

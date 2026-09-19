@@ -11,7 +11,12 @@ import {
   TypeSafeClient,
 } from "@typesafe-ai/sdk";
 import { type ChoiceClient, type ChoiceReply, type ChoiceRequest } from "./choice-client.js";
-import { type ChoiceSettings, decideByChoice } from "./choice-procedure.js";
+import {
+  choiceLabel,
+  type ChoiceSettings,
+  decideByChoice,
+  describeChoice,
+} from "./choice-procedure.js";
 import { usageRecord } from "./pricing.js";
 import {
   DEFAULT_PRESENTATION_ID,
@@ -58,7 +63,7 @@ interface Settings {
 }
 
 const describe = (settings: Settings): PolicyDescriptor => ({
-  id: `jev:${settings.modelId}:${settings.presentation.id}:${settings.choice.mode}:x${settings.repeats}`,
+  id: `jev:${settings.modelId}:${settings.presentation.id}:${choiceLabel(settings.choice)}:x${settings.repeats}`,
   kind: "jev",
   provider: JEV_PROVIDER,
   modelId: settings.modelId,
@@ -66,9 +71,7 @@ const describe = (settings: Settings): PolicyDescriptor => ({
   settings: {
     timeoutMs: settings.timeoutMs,
     maxRetries: settings.maxRetries,
-    choiceMode: settings.choice.mode,
-    flatLimit: settings.choice.flatLimit,
-    chunkSize: settings.choice.chunkSize ?? 0,
+    ...describeChoice(settings.choice),
     presentation: settings.presentation.id,
     repeats: settings.repeats,
   },

@@ -21,6 +21,7 @@
     "@google/genai": "^2.23.0",
     "@typesafe-ai/sdk": "^0.6.0",
     "openai": "^7.19.0",
-    "zod": "^4.0.0"
+    "zod": "^4.0.0",
+    "@bus20/baselines": "0.1.0"
   }
 }
