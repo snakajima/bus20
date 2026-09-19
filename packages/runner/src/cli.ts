@@ -46,6 +46,7 @@ const USAGE = `usage:
                 [--rollout-horizon MIN] [--rollout-seed N]
                 [--model <id>] [--effort low|medium|high|xhigh|max] [--max-decisions N]
                 [--choice flat|hierarchical|auto|tournament] [--flat-limit N] [--chunk-size N]
+                [--shortlist K]
                 [--presentation consequences|cumulative|numeric] [--repeats N]
                 [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
@@ -79,6 +80,7 @@ interface ParsedArgs {
     readonly choice?: string;
     readonly "flat-limit"?: string;
     readonly "chunk-size"?: string;
+    readonly shortlist?: string;
     readonly presentation?: string;
     readonly repeats?: string;
     readonly "rollout-shortlist"?: string;
@@ -111,6 +113,7 @@ const OPTIONS = {
   choice: { type: "string" },
   "flat-limit": { type: "string" },
   "chunk-size": { type: "string" },
+  shortlist: { type: "string" },
   presentation: { type: "string" },
   repeats: { type: "string" },
   "rollout-shortlist": { type: "string" },
@@ -184,13 +187,15 @@ const parseChoice = (args: ParsedArgs): ChoiceSettings | undefined | null => {
   }
   const flatLimit = parseMaxDecisions(args.values["flat-limit"]);
   const chunkSize = parseMaxDecisions(args.values["chunk-size"]);
-  if (mode === undefined && flatLimit === undefined && chunkSize === undefined) {
+  const shortlist = parseMaxDecisions(args.values.shortlist);
+  if ([mode, flatLimit, chunkSize, shortlist].every((item) => item === undefined)) {
     return undefined;
   }
   return {
     mode: mode ?? DEFAULT_CHOICE_SETTINGS.mode,
     flatLimit: flatLimit ?? DEFAULT_CHOICE_SETTINGS.flatLimit,
     ...(chunkSize === undefined ? {} : { chunkSize }),
+    ...(shortlist === undefined ? {} : { shortlist }),
   };
 };
 

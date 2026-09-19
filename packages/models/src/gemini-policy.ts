@@ -13,8 +13,10 @@ import { z } from "zod";
 import { type ChoiceClient, type ChoiceReply, type ChoiceRequest } from "./choice-client.js";
 import {
   type ChoiceSettings,
+  choiceLabel,
   DEFAULT_CHOICE_SETTINGS,
   decideByChoice,
+  describeChoice,
 } from "./choice-procedure.js";
 import { OBJECTIVE_TEXT } from "./decision-brief.js";
 import { DEFAULT_EFFORT, type Effort } from "./effort.js";
@@ -86,7 +88,7 @@ const responseJsonSchema = (ids: readonly string[]) => ({
 });
 
 const describe = (settings: Settings): PolicyDescriptor => ({
-  id: `gemini:${settings.modelId}:${settings.effort}:${settings.presentation.id}:${settings.choice.mode}`,
+  id: `gemini:${settings.modelId}:${settings.effort}:${settings.presentation.id}:${choiceLabel(settings.choice)}`,
   kind: "general-llm",
   provider: GEMINI_PROVIDER,
   modelId: settings.modelId,
@@ -98,8 +100,7 @@ const describe = (settings: Settings): PolicyDescriptor => ({
     timeoutMs: settings.timeoutMs,
     maxRetries: settings.maxRetries,
     maxOutputTokens: MAX_OUTPUT_TOKENS,
-    choiceMode: settings.choice.mode,
-    flatLimit: settings.choice.flatLimit,
+    ...describeChoice(settings.choice),
   },
 });
 

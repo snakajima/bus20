@@ -13,6 +13,7 @@ import {
   type ChoiceReply,
   type ChoiceRequest,
 } from "./choice-client.js";
+import { shortlistByCost } from "@bus20/baselines/insertion-rule";
 import { assertChoiceFits } from "./decision-brief.js";
 import { CONSEQUENCES_PRESENTATION, type Presentation } from "./presentation.js";
 
@@ -25,7 +26,34 @@ export interface ChoiceSettings {
   readonly flatLimit: number;
   /** In `tournament` mode, candidates per chunk in the first round. */
   readonly chunkSize?: number;
+  /**
+   * Offer only the `shortlist` cheapest insertions by the insertion rule, in
+   * host order, never with their costs. The model then adds judgement on top
+   * of the rule instead of searching the whole set.
+   */
+  readonly shortlist?: number;
 }
+
+/** Descriptor settings shared by every model adapter. */
+export const describeChoice = (choice: ChoiceSettings): Record<string, number | string> => ({
+  choiceMode: choice.mode,
+  flatLimit: choice.flatLimit,
+  ...(choice.chunkSize === undefined ? {} : { chunkSize: choice.chunkSize }),
+  ...(choice.shortlist === undefined ? {} : { shortlist: choice.shortlist }),
+});
+
+/** The choice part of a descriptor id: the mode, plus `top<K>` when shortlisted. */
+export const choiceLabel = (choice: ChoiceSettings): string =>
+  choice.shortlist === undefined ? choice.mode : `${choice.mode}:top${choice.shortlist}`;
+
+/** The cheapest `count` insertions by the rule, kept in host order. */
+export const shortlistObservation = (observation: Observation, count: number): Observation => {
+  const keep = new Set(shortlistByCost(observation, count).map((item) => item.candidate.id));
+  return {
+    ...observation,
+    candidates: observation.candidates.filter((candidate) => keep.has(candidate.id)),
+  };
+};
 
 export const DEFAULT_CHOICE_SETTINGS: ChoiceSettings = { mode: "auto", flatLimit: 40 };
 export const DEFAULT_CHUNK_SIZE = 120;
@@ -177,10 +205,12 @@ const isFlat = (settings: ChoiceSettings, observation: Observation): boolean =>
 /** Runs the configured procedure; every stage's usage and trace is kept. */
 export const decideByChoice = (
   client: ChoiceClient,
-  observation: Observation,
+  legal: Observation,
   settings: ChoiceSettings,
   presentation: Presentation = CONSEQUENCES_PRESENTATION,
 ): Promise<Decision> => {
+  const observation =
+    settings.shortlist === undefined ? legal : shortlistObservation(legal, settings.shortlist);
   if (isFlat(settings, observation)) {
     return decideFlat(client, presentation, observation);
   }
