@@ -92,6 +92,8 @@ Packages export individual modules by subpath (for example
 | `decision-diagnosis` (analysis) | `summarizeDecisions`, `diagnosisMarkdown`, `candidateBucket` | Per-decision rank, myopic regret, error direction, and confidence quartiles. |
 | `diagnose` (runner) | `diagnoseRun`, `diagnoseSuiteDirectory` | Replay stored runs and score every choice against the insertion rule. |
 | `choice-procedure` (shortlist) | `shortlistObservation`, `choiceLabel`, `describeChoice` | Offer only the rule's cheapest insertions; shared descriptor fields. |
+| `forecast-presentation` | `createForecastPresentation`, `Forecaster`, `FORECAST_PROMPT_VERSION` | Prompt v5: v4 plus host-computed demand forecasts per option. |
+| `forecast` (runner) | `createKnownForecaster`, `DEFAULT_FORECAST_SETTINGS` | Forecasts from the scenario's demand distribution, seeded per decision. |
 | `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Consequences presentation (shared prompt v3): arithmetic in code, words and whole minutes. |
 | `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |
