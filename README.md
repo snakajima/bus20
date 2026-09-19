@@ -80,6 +80,10 @@ A versioned synthetic development suite lives in `datasets/synthetic-dev-1/`
 scenario of a suite with resume, and `bus20-analyze` turns the suite index
 into success rates, conditional pain with bootstrap intervals, and paired
 differences against a reference. See [the dataset notes](docs/datasets.md).
+`bus20-run diagnose --manifest <file> --out <dir> <suite-dir>...` replays
+every stored run and scores each decision against the insertion rule (rank,
+myopic regret, direction of error, and Jev's confidence quartiles); see
+`results/synthetic-dev-2/dev-online/diagnosis/` for the dev-split diagnosis.
 
 Online model policies (`--policy jev`, `--policy claude`, `--policy openai`,
 `--policy gemini`) read their API keys from `TYPESAFE_API_KEY`,
