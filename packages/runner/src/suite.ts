@@ -19,8 +19,12 @@ import {
 
 export const SUITE_INDEX_FILE = "suite-index.json";
 
-/** Builds a fresh policy for one run; the inputs let map-aware baselines bind to the scenario. */
-export type PolicyFactory = (inputs: Inputs) => ManagedPolicy;
+/**
+ * Builds a fresh policy for one run. The inputs let map-aware baselines bind
+ * to the scenario; the repetition lets seeded baselines vary per repetition
+ * the way sampled model replies do.
+ */
+export type PolicyFactory = (inputs: Inputs, repetition: number) => ManagedPolicy;
 
 export interface SuiteRequest {
   readonly suite: LoadedSuite;
@@ -153,7 +157,7 @@ const runOne = async (
   scenario: ManifestScenario,
   repetition: number,
 ): Promise<SuiteRun> => {
-  const managed = factory(inputsFor(request, scenario));
+  const managed = factory(inputsFor(request, scenario), repetition);
   const dir = relativeRunDir(managed.policy.descriptor.id, scenario.id, repetition);
   try {
     const outcome = await obtainOutcome(request, managed, scenario, dir);

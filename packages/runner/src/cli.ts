@@ -193,18 +193,19 @@ const parseCount = (raw: string | undefined): number | undefined => {
   return Number.isInteger(value) && value >= 0 ? value : undefined;
 };
 
-const rolloutOptions = (args: ParsedArgs): RolloutSettings => {
+/** The base seed shifts by the repetition, so suite repetitions sample different futures. */
+const rolloutOptions = (args: ParsedArgs, repetition: number): RolloutSettings => {
   const shortlist = parseMaxDecisions(args.values["rollout-shortlist"]);
   const samples = parseCount(args.values["rollout-samples"]);
   const horizonMinutes = parseMaxDecisions(args.values["rollout-horizon"]);
-  const seed = parseCount(args.values["rollout-seed"]);
+  const seed = (parseCount(args.values["rollout-seed"]) ?? 0) + repetition;
   const demand = ROLLOUT_DEMAND_MODELS.find((item) => item === args.values["rollout-demand"]);
   return {
     ...(demand === undefined ? {} : { demand }),
     ...(shortlist === undefined ? {} : { shortlist }),
     ...(samples === undefined ? {} : { samples }),
     ...(horizonMinutes === undefined ? {} : { horizonMinutes }),
-    ...(seed === undefined ? {} : { seed }),
+    seed,
   };
 };
 
@@ -212,6 +213,7 @@ const selectPolicy = (
   args: ParsedArgs,
   inputs: Inputs,
   program?: PolicyProgram,
+  repetition = 0,
 ): ManagedPolicy | undefined => {
   const effort = parseEffort(args.values.effort);
   const choice = parseChoice(args);
@@ -220,7 +222,7 @@ const selectPolicy = (
   }
   return createPolicyById(args.values.policy ?? "fixture", {
     inputs,
-    rollout: rolloutOptions(args),
+    rollout: rolloutOptions(args, repetition),
     ...(effort === undefined ? {} : { effort }),
     ...(choice === undefined ? {} : { choice }),
     ...(program === undefined ? {} : { program }),
@@ -268,11 +270,12 @@ const policyFactories = (
   program: PolicyProgram | undefined,
 ): PolicyFactory[] | undefined => {
   const ids = (args.values.policies ?? "").split(",").filter((id) => id !== "");
-  const factories = ids.map((id) => (inputs: Inputs) => {
+  const factories = ids.map((id) => (inputs: Inputs, repetition: number) => {
     const managed = selectPolicy(
       { ...args, values: { ...args.values, policy: id } },
       inputs,
       program,
+      repetition,
     );
     if (managed === undefined) {
       throw new Error(`unknown or unavailable policy "${id}"`);

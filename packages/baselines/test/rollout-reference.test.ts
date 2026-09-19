@@ -199,7 +199,7 @@ test("with zero samples the rollout reference is exactly the insertion rule", as
     ruleLog.decisions.map((decision) => decision.action),
   );
   assert.deepEqual(rolloutLog.journeys, ruleLog.journeys);
-  assert.equal(rolloutLog.policy.id, "rollout-reference:empirical:k8:s0:h10:seed0");
+  assert.equal(rolloutLog.policy.id, "rollout-reference:empirical:k8:s0:h10");
 });
 
 test("rollouts are deterministic per seed, record their accounting, and replay", async () => {
@@ -239,5 +239,6 @@ test("rollouts are deterministic per seed, record their accounting, and replay",
     map,
     createRolloutReferencePolicy({ map, demandEndTimeMs: scenario.demandEndTimeMs, seed: 5 }),
   );
-  assert.equal(other.policy.id, "rollout-reference:empirical:k8:s64:h10:seed5");
+  assert.equal(other.policy.id, first.policy.id, "the seed is a setting, not part of the id");
+  assert.equal(other.policy.settings?.["seed"], 5);
 });

@@ -67,7 +67,8 @@ export const DEFAULT_ROLLOUT_SETTINGS: Omit<Settings, "demand"> = {
 };
 
 const describe = (settings: Settings): PolicyDescriptor => ({
-  id: `rollout-reference:${settings.demand}:k${settings.shortlist}:s${settings.samples}:h${settings.horizonMinutes}:seed${settings.seed}`,
+  // The seed is a setting, not part of the id, so repetitions with different seeds group together.
+  id: `rollout-reference:${settings.demand}:k${settings.shortlist}:s${settings.samples}:h${settings.horizonMinutes}`,
   kind: ROLLOUT_REFERENCE_KIND,
   toolVersion: ROLLOUT_REFERENCE_TOOL_VERSION,
   settings: { ...settings },

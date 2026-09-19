@@ -200,7 +200,7 @@ test("the rollout reference binds to the scenario's map", async () => {
   const rollout = createPolicyById("rollout", { inputs: inputs.value, rollout: { samples: 4 } });
   assert.ok(rollout !== undefined);
   assert.equal(rollout.policy.descriptor.kind, "rollout-reference");
-  assert.equal(rollout.policy.descriptor.id, "rollout-reference:empirical:k8:s4:h10:seed0");
+  assert.equal(rollout.policy.descriptor.id, "rollout-reference:empirical:k8:s4:h10");
   // The smoke fixture is hand-written, so it carries no generator distribution.
   assert.throws(
     () => createPolicyById("rollout", { inputs: inputs.value, rollout: { demand: "known" } }),
