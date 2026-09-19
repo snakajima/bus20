@@ -93,6 +93,18 @@ the prompt version follows the presentation.
   the count kept separately as `thoughtTokens`. A blocked prompt or any
   finish reason other than STOP fails the decision.
 
+- **Laya** (`@receptron/laya`, the open-source Jev-compatible System-1 model
+  run locally through ONNX Runtime; `--policy laya`, bundle from
+  `--laya-model-dir` / `LAYA_MODEL_DIR` or the package's download cache):
+  the same Choice primitive as Jev, but its question head is capped at 192
+  tokens, so each option is rendered as one sentence built from the
+  presentation's fields ("picked up in 3 minutes, direct ride, delays 2
+  passengers by up to 4 minutes, one ending 9 minutes late") under labels
+  A, B, C..., and a choice holds at most six options (tournament above).
+  Probing showed a strong first-label bias with near-uniform confidence, so
+  it is run with permuted repeats (`--repeats 3`) and a small shortlist.
+  Recorded as provider `receptron`, `rendering: compact-string`. No cost.
+
 No adapter is given tools, memory across decisions, or extra features.
 More than 255 candidates (Jev's Choice limit) fails the decision instead of
 pruning; the first common suite must fit this limit.
@@ -130,7 +142,7 @@ results must state the tariff date they used.
 ## Running
 
 API keys come from `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `GEMINI_API_KEY`, and
-`TYPESAFE_API_KEY`. They are read
+`TYPESAFE_API_KEY`; Laya needs no key, only its ONNX bundle. They are read
 by the SDKs and never logged or written to run logs.
 
 ```sh

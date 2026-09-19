@@ -18,6 +18,7 @@ import { createGeminiPolicy } from "@bus20/models/gemini-policy";
 import { createOpenAIPolicy } from "@bus20/models/openai-policy";
 import { type Effort } from "@bus20/models/effort";
 import { createJevPolicy } from "@bus20/models/jev-policy";
+import { createLayaPolicy } from "@bus20/models/laya-policy";
 import { type ChoiceSettings } from "@bus20/models/choice-procedure";
 import { createForecastPresentation } from "@bus20/models/forecast-presentation";
 import { type Presentation, type PresentationId } from "@bus20/models/presentation";
@@ -134,6 +135,9 @@ export type RolloutSettings = Omit<
 export interface PolicyOptions {
   /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
   readonly swiftCommand?: string;
+  /** Local ONNX bundle for `laya`; default is the package's download cache. */
+  readonly layaModelDir?: string;
+  readonly layaThreads?: number;
   /** Seed for `random`, shifted by the suite repetition. */
   readonly seed?: number;
   /** The scenario, required for `rollout` and the `forecast` presentation. */
@@ -168,6 +172,7 @@ export const POLICY_IDS = [
   "openai",
   "gemini",
   "jev",
+  "laya",
   "program",
 ] as const;
 
@@ -260,7 +265,12 @@ const createLocalPolicy = (policyId: string, options: PolicyOptions): Policy | u
   return undefined;
 };
 
-/** API keys come from the environment (ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, TYPESAFE_API_KEY) and are never logged. */
+/**
+ * API keys come from the environment (ANTHROPIC_API_KEY, OPENAI_API_KEY,
+ * GEMINI_API_KEY, TYPESAFE_API_KEY) and are never logged. `laya` runs
+ * locally and needs `@receptron/laya` installed and its ONNX bundle
+ * (LAYA_MODEL_DIR or the package's cache).
+ */
 export const createPolicyById = (
   policyId: string,
   options: PolicyOptions = {},
@@ -277,6 +287,22 @@ export const createPolicyById = (
   return policy === undefined ? undefined : { policy, close: noop };
 };
 
+/** Laya holds an ONNX session, released when the run closes the policy. */
+const createManagedLaya = (options: PolicyOptions): Policy & { readonly close: () => void } => {
+  const laya = createLayaPolicy({
+    ...sharedModelOptions(options),
+    ...(options.repeats === undefined ? {} : { repeats: options.repeats }),
+    ...(options.layaModelDir === undefined ? {} : { modelDir: options.layaModelDir }),
+    ...(options.layaThreads === undefined ? {} : { threads: options.layaThreads }),
+  });
+  return {
+    ...laya,
+    close: () => {
+      laya.close().catch(() => undefined);
+    },
+  };
+};
+
 /** Policies backed by a child process: the Swift reference and generated programs. */
 const createExternalPolicy = (
   policyId: string,
@@ -284,6 +310,9 @@ const createExternalPolicy = (
 ): (Policy & { readonly close: () => void }) | undefined => {
   if (policyId === "swift" && options.swiftCommand !== undefined) {
     return createSwiftReferencePolicy({ command: options.swiftCommand });
+  }
+  if (policyId === "laya") {
+    return createManagedLaya(options);
   }
   if (policyId === "program" && options.program !== undefined) {
     return createProgramPolicy({ program: options.program, seed: options.programSeed ?? 0 });

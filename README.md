@@ -89,6 +89,8 @@ myopic regret, direction of error, and Jev's confidence quartiles); see
 
 Online model policies (`--policy jev`, `--policy claude`, `--policy openai`,
 `--policy gemini`) read their API keys from `TYPESAFE_API_KEY`,
-`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GEMINI_API_KEY`, and `compare <run-dir>...`
+`ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, and `GEMINI_API_KEY`; `--policy laya`
+runs the open-source Laya model locally (`LAYA_MODEL_DIR` or a first-use
+download of about 1.7 GB), and `compare <run-dir>...`
 tabulates pain, success, latency, tokens, and cost across runs. See
 [the model adapter notes](docs/model-adapters.md).
