@@ -1,0 +1,462 @@
+{
+  "schemaVersion": "bus20-run-result/1",
+  "protocolVersion": "bus20-protocol/1",
+  "scenarioId": "sf-like-high-dev-01",
+  "policy": {
+    "id": "rollout-reference:empirical:k8:s0:h10:seed0",
+    "kind": "rollout-reference",
+    "toolVersion": "bus20-rollout-reference/1",
+    "settings": {
+      "demand": "empirical",
+      "shortlist": 8,
+      "samples": 0,
+      "horizonMinutes": 10,
+      "seed": 0
+    }
+  },
+  "requestCount": 72,
+  "completedCount": 72,
+  "status": "complete",
+  "pain": 6.338150011338733,
+  "passengers": [
+    {
+      "requestId": "r01",
+      "waitMinutes": 0.8803333333333333,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.7749867777777777
+    },
+    {
+      "requestId": "r02",
+      "waitMinutes": 0.5822166666666667,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.3389762469444445
+    },
+    {
+      "requestId": "r03",
+      "waitMinutes": 0.50175,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.2517530625
+    },
+    {
+      "requestId": "r04",
+      "waitMinutes": 2.1300166666666667,
+      "detourMinutes": 0,
+      "painMinutesSquared": 4.536971000277778
+    },
+    {
+      "requestId": "r05",
+      "waitMinutes": 1.9009333333333334,
+      "detourMinutes": 0,
+      "painMinutesSquared": 3.613547537777778
+    },
+    {
+      "requestId": "r06",
+      "waitMinutes": 0.5382666666666667,
+      "detourMinutes": 0.6273666666666666,
+      "painMinutesSquared": 1.3587010677777778
+    },
+    {
+      "requestId": "r07",
+      "waitMinutes": 2.61115,
+      "detourMinutes": 0,
+      "painMinutesSquared": 6.818104322499999
+    },
+    {
+      "requestId": "r08",
+      "waitMinutes": 1.2797333333333334,
+      "detourMinutes": 0,
+      "painMinutesSquared": 1.6377174044444447
+    },
+    {
+      "requestId": "r09",
+      "waitMinutes": 0.5353333333333333,
+      "detourMinutes": 0.48843333333333333,
+      "painMinutesSquared": 1.048098187777778
+    },
+    {
+      "requestId": "r10",
+      "waitMinutes": 1.3979666666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 1.9543108011111108
+    },
+    {
+      "requestId": "r11",
+      "waitMinutes": 0.6222666666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.3872158044444444
+    },
+    {
+      "requestId": "r12",
+      "waitMinutes": 2.790766666666667,
+      "detourMinutes": 0,
+      "painMinutesSquared": 7.788378587777779
+    },
+    {
+      "requestId": "r13",
+      "waitMinutes": 2.8606166666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 8.18312771361111
+    },
+    {
+      "requestId": "r14",
+      "waitMinutes": 0.10053333333333334,
+      "detourMinutes": 0.050333333333333334,
+      "painMinutesSquared": 0.022760751111111113
+    },
+    {
+      "requestId": "r15",
+      "waitMinutes": 0.13391666666666666,
+      "detourMinutes": 2.028966666666667,
+      "painMinutesSquared": 4.67806431361111
+    },
+    {
+      "requestId": "r16",
+      "waitMinutes": 0.3066333333333333,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.0940240011111111
+    },
+    {
+      "requestId": "r17",
+      "waitMinutes": 0.7901333333333334,
+      "detourMinutes": 0.01325,
+      "painMinutesSquared": 0.6454247802777778
+    },
+    {
+      "requestId": "r18",
+      "waitMinutes": 1.0811666666666666,
+      "detourMinutes": 2.38565,
+      "painMinutesSquared": 12.018817800277779
+    },
+    {
+      "requestId": "r19",
+      "waitMinutes": 0.32911666666666667,
+      "detourMinutes": 4.0727,
+      "painMinutesSquared": 19.375989966944445
+    },
+    {
+      "requestId": "r20",
+      "waitMinutes": 2.0796333333333332,
+      "detourMinutes": 0,
+      "painMinutesSquared": 4.32487480111111
+    },
+    {
+      "requestId": "r21",
+      "waitMinutes": 0.23841666666666667,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.05684250694444445
+    },
+    {
+      "requestId": "r22",
+      "waitMinutes": 2.8456,
+      "detourMinutes": 0,
+      "painMinutesSquared": 8.097439360000001
+    },
+    {
+      "requestId": "r23",
+      "waitMinutes": 1.1681666666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 1.3646133611111109
+    },
+    {
+      "requestId": "r24",
+      "waitMinutes": 1.4558166666666668,
+      "detourMinutes": 0,
+      "painMinutesSquared": 2.1194021669444445
+    },
+    {
+      "requestId": "r25",
+      "waitMinutes": 2.1917666666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 4.803841121111111
+    },
+    {
+      "requestId": "r26",
+      "waitMinutes": 3.1765,
+      "detourMinutes": 0,
+      "painMinutesSquared": 10.09015225
+    },
+    {
+      "requestId": "r27",
+      "waitMinutes": 1.3497166666666667,
+      "detourMinutes": 0,
+      "painMinutesSquared": 1.8217350802777779
+    },
+    {
+      "requestId": "r28",
+      "waitMinutes": 0.004416666666666667,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.000019506944444444447
+    },
+    {
+      "requestId": "r29",
+      "waitMinutes": 2.0153166666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 4.061501266944444
+    },
+    {
+      "requestId": "r30",
+      "waitMinutes": 0.5975166666666667,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.3570261669444445
+    },
+    {
+      "requestId": "r31",
+      "waitMinutes": 1.78365,
+      "detourMinutes": 0,
+      "painMinutesSquared": 3.1814073224999997
+    },
+    {
+      "requestId": "r32",
+      "waitMinutes": 2.4510833333333335,
+      "detourMinutes": 0,
+      "painMinutesSquared": 6.0078095069444455
+    },
+    {
+      "requestId": "r33",
+      "waitMinutes": 1.1042166666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 1.2192944469444444
+    },
+    {
+      "requestId": "r34",
+      "waitMinutes": 1.0023833333333334,
+      "detourMinutes": 0.3757666666666667,
+      "painMinutesSquared": 1.8992974224999999
+    },
+    {
+      "requestId": "r35",
+      "waitMinutes": 0.99985,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.9997000225
+    },
+    {
+      "requestId": "r36",
+      "waitMinutes": 0.7200666666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.5184960044444444
+    },
+    {
+      "requestId": "r37",
+      "waitMinutes": 3.239316666666667,
+      "detourMinutes": 0.49223333333333336,
+      "painMinutesSquared": 13.9244654025
+    },
+    {
+      "requestId": "r38",
+      "waitMinutes": 1.0757166666666667,
+      "detourMinutes": 0.3737,
+      "painMinutesSquared": 2.1008086736111107
+    },
+    {
+      "requestId": "r39",
+      "waitMinutes": 2.2371666666666665,
+      "detourMinutes": 0,
+      "painMinutesSquared": 5.004914694444444
+    },
+    {
+      "requestId": "r40",
+      "waitMinutes": 2.518483333333333,
+      "detourMinutes": 0,
+      "painMinutesSquared": 6.342758300277777
+    },
+    {
+      "requestId": "r41",
+      "waitMinutes": 2.1406833333333335,
+      "detourMinutes": 0,
+      "painMinutesSquared": 4.582525133611112
+    },
+    {
+      "requestId": "r42",
+      "waitMinutes": 1.6223833333333333,
+      "detourMinutes": 0.6017333333333333,
+      "painMinutesSquared": 4.946694946944445
+    },
+    {
+      "requestId": "r43",
+      "waitMinutes": 1.9162666666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 3.6720779377777775
+    },
+    {
+      "requestId": "r44",
+      "waitMinutes": 3.4992666666666667,
+      "detourMinutes": 0.51875,
+      "painMinutesSquared": 16.144457933611115
+    },
+    {
+      "requestId": "r45",
+      "waitMinutes": 1.1258666666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 1.267575751111111
+    },
+    {
+      "requestId": "r46",
+      "waitMinutes": 2.01185,
+      "detourMinutes": 1.5052666666666668,
+      "painMinutesSquared": 12.370109646944442
+    },
+    {
+      "requestId": "r47",
+      "waitMinutes": 1.8616,
+      "detourMinutes": 0,
+      "painMinutesSquared": 3.4655545599999997
+    },
+    {
+      "requestId": "r48",
+      "waitMinutes": 0.8232,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.6776582400000001
+    },
+    {
+      "requestId": "r49",
+      "waitMinutes": 0.3028,
+      "detourMinutes": 0.05,
+      "painMinutesSquared": 0.12446784
+    },
+    {
+      "requestId": "r50",
+      "waitMinutes": 2.75465,
+      "detourMinutes": 0,
+      "painMinutesSquared": 7.588096622499999
+    },
+    {
+      "requestId": "r51",
+      "waitMinutes": 2.1040666666666668,
+      "detourMinutes": 0.14576666666666666,
+      "painMinutesSquared": 5.0617500277777765
+    },
+    {
+      "requestId": "r52",
+      "waitMinutes": 1.8038166666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 3.253754566944444
+    },
+    {
+      "requestId": "r53",
+      "waitMinutes": 1.0374,
+      "detourMinutes": 1.18235,
+      "painMinutesSquared": 4.927290062499999
+    },
+    {
+      "requestId": "r54",
+      "waitMinutes": 4.01635,
+      "detourMinutes": 0,
+      "painMinutesSquared": 16.1310673225
+    },
+    {
+      "requestId": "r55",
+      "waitMinutes": 0.9976833333333334,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.9953720336111112
+    },
+    {
+      "requestId": "r56",
+      "waitMinutes": 4.24305,
+      "detourMinutes": 0.01035,
+      "painMinutesSquared": 18.09141156
+    },
+    {
+      "requestId": "r57",
+      "waitMinutes": 0.97055,
+      "detourMinutes": 0,
+      "painMinutesSquared": 0.9419673025
+    },
+    {
+      "requestId": "r58",
+      "waitMinutes": 1.8239833333333333,
+      "detourMinutes": 0,
+      "painMinutesSquared": 3.3269152002777775
+    },
+    {
+      "requestId": "r59",
+      "waitMinutes": 6.8838,
+      "detourMinutes": 0,
+      "painMinutesSquared": 47.38670244
+    },
+    {
+      "requestId": "r60",
+      "waitMinutes": 1.7613833333333333,
+      "detourMinutes": 0,
+      "painMinutesSquared": 3.1024712469444444
+    },
+    {
+      "requestId": "r61",
+      "waitMinutes": 0.6516833333333333,
+      "detourMinutes": 0.6185166666666667,
+      "painMinutesSquared": 1.61340804
+    },
+    {
+      "requestId": "r62",
+      "waitMinutes": 1.9290833333333333,
+      "detourMinutes": 1.6244333333333334,
+      "painMinutesSquared": 12.62748070027778
+    },
+    {
+      "requestId": "r63",
+      "waitMinutes": 1.9277333333333333,
+      "detourMinutes": 0.44033333333333335,
+      "painMinutesSquared": 5.607739737777777
+    },
+    {
+      "requestId": "r64",
+      "waitMinutes": 1.8615,
+      "detourMinutes": 1.84035,
+      "painMinutesSquared": 13.703693422499999
+    },
+    {
+      "requestId": "r65",
+      "waitMinutes": 0.6467333333333334,
+      "detourMinutes": 0.8086666666666666,
+      "painMinutesSquared": 2.11818916
+    },
+    {
+      "requestId": "r66",
+      "waitMinutes": 2.3079,
+      "detourMinutes": 1.2108,
+      "painMinutesSquared": 12.381249689999999
+    },
+    {
+      "requestId": "r67",
+      "waitMinutes": 2.7135166666666666,
+      "detourMinutes": 0,
+      "painMinutesSquared": 7.363172700277778
+    },
+    {
+      "requestId": "r68",
+      "waitMinutes": 5.565033333333333,
+      "detourMinutes": 0,
+      "painMinutesSquared": 30.969596001111107
+    },
+    {
+      "requestId": "r69",
+      "waitMinutes": 5.1722,
+      "detourMinutes": 0,
+      "painMinutesSquared": 26.751652840000002
+    },
+    {
+      "requestId": "r70",
+      "waitMinutes": 3.2903333333333333,
+      "detourMinutes": 0,
+      "painMinutesSquared": 10.826293444444444
+    },
+    {
+      "requestId": "r71",
+      "waitMinutes": 2.3735833333333334,
+      "detourMinutes": 0.51875,
+      "painMinutesSquared": 8.365592111111111
+    },
+    {
+      "requestId": "r72",
+      "waitMinutes": 3.4838833333333334,
+      "detourMinutes": 0,
+      "painMinutesSquared": 12.137443080277778
+    }
+  ],
+  "summary": {
+    "meanWaitMinutes": 1.8229372685185186,
+    "meanDetourMinutes": 0.3053398148148149,
+    "delayP95Minutes": 4.401816666666667,
+    "delayP99Minutes": 6.8838,
+    "maxDelayMinutes": 6.8838
+  }
+}

@@ -2,6 +2,7 @@ import { digestDocument } from "@bus20/contracts/digest";
 import { validateManifest } from "@bus20/contracts/manifest";
 import { validateMapDocument } from "@bus20/contracts/map";
 import { validateScenarioDocument } from "@bus20/contracts/scenario";
+import { createRng } from "@bus20/contracts/random";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
 import { buildGraph } from "@bus20/graph/graph";
 import { reachableFrom } from "@bus20/graph/shortest-path";
@@ -11,6 +12,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { test } from "node:test";
 import { buildSuite } from "../src/build-suite.js";
+import { demandDistributionOf, sampleDemandDay } from "../src/demand.js";
 import { loadSuite, writeSuite } from "../src/files.js";
 import { type SuiteConfig, suiteConfigSchema } from "../src/suite-config.js";
 
@@ -176,4 +178,40 @@ test("the committed second-paper suite matches its config and uses a different s
   assert.ok(devLoaded.ok);
   const devDigests = new Set(devLoaded.value.manifest.scenarios.map((scenario) => scenario.digest));
   assert.ok(loaded.value.manifest.scenarios.every((scenario) => !devDigests.has(scenario.digest)));
+});
+
+test("a scenario's distribution is recoverable from provenance and redraws other days of the same shape", () => {
+  const suite = buildSuite(smallConfig(), "2026-01-01T00:00:00Z");
+  const hotspot = suite.scenarios.find(
+    (scenario) => scenario.entry.pattern === "hotspot" && scenario.entry.load === "high",
+  );
+  assert.ok(hotspot !== undefined);
+  const map = suite.maps.find((item) => item.entry.city === hotspot.entry.city)?.document;
+  assert.ok(map !== undefined);
+  const distribution = demandDistributionOf(hotspot.document);
+  assert.ok(distribution !== undefined);
+  assert.equal(distribution.pattern, "hotspot");
+  assert.equal(distribution.requestCount, hotspot.document.requests.length);
+  const day = sampleDemandDay(map, distribution, createRng(99));
+  assert.equal(day.length, distribution.requestCount);
+  assert.ok(
+    day.every(
+      (draw, index) => index === 0 || draw.requestTimeMs >= (day[index - 1]?.requestTimeMs ?? 0),
+    ),
+  );
+  const stored = new Set(
+    hotspot.document.requests.map(
+      (r) => `${r.requestTimeMs}:${r.originNodeId}:${r.destinationNodeId}`,
+    ),
+  );
+  const overlap = day.filter((d) =>
+    stored.has(`${d.requestTimeMs}:${d.originNodeId}:${d.destinationNodeId}`),
+  ).length;
+  assert.ok(overlap < day.length / 4, "a fresh day is not the stored day");
+  const end = hotspot.document.demandEndTimeMs;
+  const burst = day.filter(
+    (d) => d.requestTimeMs >= end * 0.4 && d.requestTimeMs <= end * 0.55,
+  ).length;
+  assert.ok(burst / day.length > 0.4, `redrawn hotspot burst share ${burst / day.length}`);
+  assert.equal(demandDistributionOf({ ...hotspot.document, provenance: {} }), undefined);
 });

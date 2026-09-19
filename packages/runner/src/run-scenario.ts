@@ -7,6 +7,10 @@ import {
   scenarioDocumentSchema,
   checkScenarioSemantics,
 } from "@bus20/contracts/scenario";
+import {
+  createRolloutReferencePolicy,
+  type RolloutReferenceOptions,
+} from "@bus20/baselines/rollout-reference";
 import { createSwiftReferencePolicy } from "@bus20/baselines/swift-reference";
 import { createClaudePolicy } from "@bus20/models/claude-policy";
 import { createGeminiPolicy } from "@bus20/models/gemini-policy";
@@ -18,6 +22,7 @@ import { type PresentationId } from "@bus20/models/presentation";
 import { type PolicyProgram, policyProgramSchema } from "@bus20/contracts/policy-artifact";
 import { createProgramPolicy } from "@bus20/policy-runtime/program-policy";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
+import { createKnownDemandModel, type RolloutDemandModel } from "./rollout-demand.js";
 import { scoreRun } from "@bus20/scoring/score";
 import { createFixturePolicy } from "@bus20/simulator/fixture-policy";
 import { type Policy } from "@bus20/simulator/policy";
@@ -111,9 +116,20 @@ export const replayStoredLog = async (
   return ok(await verifyReplay(inputs.scenario, inputs.map, log.value));
 };
 
+/** Rollout knobs without the per-scenario inputs, which the runner supplies. */
+export type RolloutSettings = Omit<
+  RolloutReferenceOptions,
+  "map" | "demandEndTimeMs" | "demand"
+> & {
+  readonly demand?: RolloutDemandModel;
+};
+
 export interface PolicyOptions {
   /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
   readonly swiftCommand?: string;
+  /** The scenario, required for `rollout` (map, demand window, and the known-demand model). */
+  readonly inputs?: Inputs;
+  readonly rollout?: RolloutSettings;
   /** Exact model ID for `claude`, `openai`, `gemini`, or `jev`; defaults are the pinned IDs. */
   readonly modelId?: string;
   /** Reasoning effort for `claude`, `openai`, and `gemini`. */
@@ -137,6 +153,7 @@ export interface ManagedPolicy {
 export const POLICY_IDS = [
   "fixture",
   "swift",
+  "rollout",
   "claude",
   "openai",
   "gemini",
@@ -173,6 +190,22 @@ const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | u
   return undefined;
 };
 
+/** The known-demand model needs generator provenance; a scenario without it is a usage error. */
+const createRolloutPolicy = (inputs: Inputs, settings: RolloutSettings): Policy => {
+  const { demand: demandName, ...knobs } = settings;
+  const { map, scenario } = inputs;
+  const demand = demandName === "known" ? createKnownDemandModel(map, scenario) : undefined;
+  if (demandName === "known" && demand === undefined) {
+    throw new Error(`scenario "${scenario.id}" carries no generator provenance for known demand`);
+  }
+  return createRolloutReferencePolicy({
+    ...knobs,
+    map,
+    demandEndTimeMs: scenario.demandEndTimeMs,
+    ...(demand === undefined ? {} : { demand }),
+  });
+};
+
 /** API keys come from the environment (ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY, TYPESAFE_API_KEY) and are never logged. */
 export const createPolicyById = (
   policyId: string,
@@ -180,6 +213,9 @@ export const createPolicyById = (
 ): ManagedPolicy | undefined => {
   if (policyId === "fixture") {
     return { policy: createFixturePolicy(), close: noop };
+  }
+  if (policyId === "rollout" && options.inputs !== undefined) {
+    return { policy: createRolloutPolicy(options.inputs, options.rollout ?? {}), close: noop };
   }
   const external = createExternalPolicy(policyId, options);
   if (external !== undefined) {

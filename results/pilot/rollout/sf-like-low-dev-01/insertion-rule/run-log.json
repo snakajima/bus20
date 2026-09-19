@@ -1,0 +1,1898 @@
+{
+  "schemaVersion": "bus20-run-log/1",
+  "protocolVersion": "bus20-protocol/1",
+  "scenarioId": "sf-like-low-dev-01",
+  "scenarioDigest": "sha256:25c4b79f7c3620e89b23b2b4222fe17b35b496817336afa0266fd7ce9c3f6104",
+  "mapDigest": "sha256:19fc4f4df8524d0815ce14b4f54bedc14bfa1638a98f3bb8c0df98269e6363d3",
+  "policy": {
+    "id": "rollout-reference:empirical:k8:s0:h10:seed0",
+    "kind": "rollout-reference",
+    "toolVersion": "bus20-rollout-reference/1",
+    "settings": {
+      "demand": "empirical",
+      "shortlist": 8,
+      "samples": 0,
+      "horizonMinutes": 10,
+      "seed": 0
+    }
+  },
+  "termination": {
+    "kind": "drained",
+    "finalTimeMs": 3869006
+  },
+  "journeys": [
+    {
+      "requestId": "r02",
+      "vehicleId": "v4",
+      "pickupTimeMs": 70905,
+      "dropoffTimeMs": 197611
+    },
+    {
+      "requestId": "r01",
+      "vehicleId": "v1",
+      "pickupTimeMs": 102567,
+      "dropoffTimeMs": 227446
+    },
+    {
+      "requestId": "r03",
+      "vehicleId": "v4",
+      "pickupTimeMs": 320913,
+      "dropoffTimeMs": 578392
+    },
+    {
+      "requestId": "r04",
+      "vehicleId": "v1",
+      "pickupTimeMs": 590346,
+      "dropoffTimeMs": 719481
+    },
+    {
+      "requestId": "r05",
+      "vehicleId": "v4",
+      "pickupTimeMs": 671809,
+      "dropoffTimeMs": 823339
+    },
+    {
+      "requestId": "r06",
+      "vehicleId": "v4",
+      "pickupTimeMs": 959282,
+      "dropoffTimeMs": 1080158
+    },
+    {
+      "requestId": "r07",
+      "vehicleId": "v2",
+      "pickupTimeMs": 1068679,
+      "dropoffTimeMs": 1220285
+    },
+    {
+      "requestId": "r08",
+      "vehicleId": "v1",
+      "pickupTimeMs": 1267260,
+      "dropoffTimeMs": 1282804
+    },
+    {
+      "requestId": "r09",
+      "vehicleId": "v4",
+      "pickupTimeMs": 1419868,
+      "dropoffTimeMs": 1493698
+    },
+    {
+      "requestId": "r10",
+      "vehicleId": "v4",
+      "pickupTimeMs": 1723298,
+      "dropoffTimeMs": 1889483
+    },
+    {
+      "requestId": "r12",
+      "vehicleId": "v1",
+      "pickupTimeMs": 1931204,
+      "dropoffTimeMs": 1974527
+    },
+    {
+      "requestId": "r13",
+      "vehicleId": "v3",
+      "pickupTimeMs": 1957801,
+      "dropoffTimeMs": 2004972
+    },
+    {
+      "requestId": "r11",
+      "vehicleId": "v2",
+      "pickupTimeMs": 1852778,
+      "dropoffTimeMs": 2137270
+    },
+    {
+      "requestId": "r14",
+      "vehicleId": "v3",
+      "pickupTimeMs": 2154204,
+      "dropoffTimeMs": 2313742
+    },
+    {
+      "requestId": "r15",
+      "vehicleId": "v1",
+      "pickupTimeMs": 2264263,
+      "dropoffTimeMs": 2355825
+    },
+    {
+      "requestId": "r16",
+      "vehicleId": "v4",
+      "pickupTimeMs": 2274855,
+      "dropoffTimeMs": 2363851
+    },
+    {
+      "requestId": "r17",
+      "vehicleId": "v2",
+      "pickupTimeMs": 2441532,
+      "dropoffTimeMs": 2536258
+    },
+    {
+      "requestId": "r19",
+      "vehicleId": "v1",
+      "pickupTimeMs": 2697876,
+      "dropoffTimeMs": 2766258
+    },
+    {
+      "requestId": "r20",
+      "vehicleId": "v4",
+      "pickupTimeMs": 2770282,
+      "dropoffTimeMs": 2838323
+    },
+    {
+      "requestId": "r18",
+      "vehicleId": "v3",
+      "pickupTimeMs": 2658699,
+      "dropoffTimeMs": 2838590
+    },
+    {
+      "requestId": "r22",
+      "vehicleId": "v3",
+      "pickupTimeMs": 3078040,
+      "dropoffTimeMs": 3131998
+    },
+    {
+      "requestId": "r21",
+      "vehicleId": "v1",
+      "pickupTimeMs": 3120845,
+      "dropoffTimeMs": 3241323
+    },
+    {
+      "requestId": "r24",
+      "vehicleId": "v2",
+      "pickupTimeMs": 3326247,
+      "dropoffTimeMs": 3379116
+    },
+    {
+      "requestId": "r23",
+      "vehicleId": "v4",
+      "pickupTimeMs": 3387158,
+      "dropoffTimeMs": 3511933
+    },
+    {
+      "requestId": "r25",
+      "vehicleId": "v1",
+      "pickupTimeMs": 3471595,
+      "dropoffTimeMs": 3693444
+    },
+    {
+      "requestId": "r26",
+      "vehicleId": "v1",
+      "pickupTimeMs": 3598491,
+      "dropoffTimeMs": 3731438
+    },
+    {
+      "requestId": "r27",
+      "vehicleId": "v4",
+      "pickupTimeMs": 3686529,
+      "dropoffTimeMs": 3768760
+    },
+    {
+      "requestId": "r28",
+      "vehicleId": "v2",
+      "pickupTimeMs": 3721402,
+      "dropoffTimeMs": 3869006
+    }
+  ],
+  "decisions": [
+    {
+      "stateVersion": 0,
+      "nowMs": 47790,
+      "requestId": "r01",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 0,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.29391700000002174,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 3000519729,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 3000519729,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 4741286449,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 49171288516,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 64337307904,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 1,
+      "nowMs": 57695,
+      "requestId": "r02",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 1,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.05629200000001333,
+      "usage": {
+        "candidatesEvaluated": 9,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 174504100,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 174504100,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 54135794241,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 60124336033,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 69998872329,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:3",
+            "incrementalCostMs2": 95403548540,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:3",
+            "incrementalCostMs2": 98019853636,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:2:3",
+            "incrementalCostMs2": 100740220816,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:2",
+            "incrementalCostMs2": 146337099683,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 2,
+      "nowMs": 256901,
+      "requestId": "r03",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 2,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.022500000000007958,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 4097536144,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 4097536144,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 4494897936,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 15782896900,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 22825468561,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 3,
+      "nowMs": 558832,
+      "requestId": "r04",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 3,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.021291000000019267,
+      "usage": {
+        "candidatesEvaluated": 6,
+        "shortlisted": 6,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 993132196,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 993132196,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 13581571600,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 22035027364,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 43322259600,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:2",
+            "incrementalCostMs2": 213198608308,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 393017711481,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 4,
+      "nowMs": 671809,
+      "requestId": "r05",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 4,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.019417000000004236,
+      "usage": {
+        "candidatesEvaluated": 6,
+        "shortlisted": 6,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 0,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 0,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 38988082116,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 52604174736,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 67990562500,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:2",
+            "incrementalCostMs2": 134896013374,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 238218967541,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 5,
+      "nowMs": 906562,
+      "requestId": "r06",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 5,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.01854099999999903,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 2779398400,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 2779398400,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 10174756900,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 13570852036,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 17628403984,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 6,
+      "nowMs": 939012,
+      "requestId": "r07",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 6,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.020375000000001364,
+      "usage": {
+        "candidatesEvaluated": 9,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 16813530889,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v2:0:1",
+        "shortlist": [
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 16813530889,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 21109474681,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 26104541761,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:2:3",
+            "incrementalCostMs2": 80124095844,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:3",
+            "incrementalCostMs2": 90803334280,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:3",
+            "incrementalCostMs2": 115231107624,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 127341166626,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 151496874946,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 7,
+      "nowMs": 1223488,
+      "requestId": "r08",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 7,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.015084000000001652,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 1915987984,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 1915987984,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 3474866704,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 6087432484,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 19231310329,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 8,
+      "nowMs": 1290628,
+      "requestId": "r09",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 8,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.01904100000001563,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 16702977600,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 16702977600,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 18414218601,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 22169125449,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 25870470649,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 9,
+      "nowMs": 1589210,
+      "requestId": "r10",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 9,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.02512500000000273,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 17979591744,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 17979591744,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 29686600804,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 34407282064,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 38983343364,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 10,
+      "nowMs": 1811155,
+      "requestId": "r11",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 10,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.015666000000010172,
+      "usage": {
+        "candidatesEvaluated": 6,
+        "shortlisted": 6,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 1732474129,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v2:0:1",
+        "shortlist": [
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 1732474129,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 4457832289,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 6940056249,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 13657895689,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:2",
+            "incrementalCostMs2": 30356479706,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 276508592116,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 11,
+      "nowMs": 1853479,
+      "requestId": "r12",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 11,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.013041000000015401,
+      "usage": {
+        "candidatesEvaluated": 8,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 6041175625,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 6041175625,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 11665728064,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 13230750625,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 18167561176,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 78745546442,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:2",
+            "incrementalCostMs2": 87525810770,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:1:2",
+            "incrementalCostMs2": 218860230625,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:2",
+            "incrementalCostMs2": 255899672232,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 12,
+      "nowMs": 1856539,
+      "requestId": "r13",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 12,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.0171670000000006,
+      "usage": {
+        "candidatesEvaluated": 13,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 10253992644,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v3:0:1",
+        "shortlist": [
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 10253992644,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 13907013184,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 17683714121,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:2:3",
+            "incrementalCostMs2": 35398164736,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 74029852575,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 103174439413,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 104792907447,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:2",
+            "incrementalCostMs2": 135378940477,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 13,
+      "nowMs": 1947302,
+      "requestId": "r14",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 13,
+        "candidateId": "v3:2:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.017749999999978172,
+      "usage": {
+        "candidatesEvaluated": 13,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 42808437604,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v3:2:3",
+        "shortlist": [
+          {
+            "id": "v3:2:3",
+            "incrementalCostMs2": 42808437604,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 47688514129,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 49774502404,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:1:2",
+            "incrementalCostMs2": 84286863684,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:2",
+            "incrementalCostMs2": 93117802288,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 123986763036,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:1:3",
+            "incrementalCostMs2": 164222550281,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 165839036269,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 14,
+      "nowMs": 2159861,
+      "requestId": "r15",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 14,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.023667000000017424,
+      "usage": {
+        "candidatesEvaluated": 6,
+        "shortlisted": 6,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 10899777604,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 10899777604,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 16262115529,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:2",
+            "incrementalCostMs2": 32379006045,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:1:2",
+            "incrementalCostMs2": 38580816400,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 52621607236,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 184676924046,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 15,
+      "nowMs": 2172938,
+      "requestId": "r16",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 15,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.016666999999984,
+      "usage": {
+        "candidatesEvaluated": 11,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 10387074889,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 10387074889,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 44636703076,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:1:2",
+            "incrementalCostMs2": 47344537744,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 51865416406,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:3",
+            "incrementalCostMs2": 82647058060,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:2",
+            "incrementalCostMs2": 127592541153,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:2",
+            "incrementalCostMs2": 135160992549,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 138212542257,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 16,
+      "nowMs": 2441532,
+      "requestId": "r17",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 16,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.007999999999981355,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 0,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v2:0:1",
+        "shortlist": [
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 0,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 13270579204,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 42402222724,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 75777977284,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 17,
+      "nowMs": 2574469,
+      "requestId": "r18",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 17,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.0072499999999990905,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 7094692900,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v3:0:1",
+        "shortlist": [
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 7094692900,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 13919516361,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 23589888100,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 45363036196,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 18,
+      "nowMs": 2657291,
+      "requestId": "r19",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 18,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.011832999999995764,
+      "usage": {
+        "candidatesEvaluated": 9,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 1647142225,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 1647142225,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 40266442225,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 67631723721,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 134329617670,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:1:2",
+            "incrementalCostMs2": 134329617670,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:2:3",
+            "incrementalCostMs2": 160945392400,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:1:3",
+            "incrementalCostMs2": 331809714448,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:2",
+            "incrementalCostMs2": 468599519680,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 19,
+      "nowMs": 2714109,
+      "requestId": "r20",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 19,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.011542000000019925,
+      "usage": {
+        "candidatesEvaluated": 8,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 3155405929,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 3155405929,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 13356193761,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:1:2",
+            "incrementalCostMs2": 28137043081,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:2",
+            "incrementalCostMs2": 31575641305,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 53268981861,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 54485830084,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 264013007620,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:2",
+            "incrementalCostMs2": 411092208195,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 20,
+      "nowMs": 2988822,
+      "requestId": "r21",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 20,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.007624999999990223,
+      "usage": {
+        "candidatesEvaluated": 4,
+        "shortlisted": 4,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 17430072529,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 17430072529,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 31212642241,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 61975106704,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 83595000384,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 21,
+      "nowMs": 3061806,
+      "requestId": "r22",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 21,
+        "candidateId": "v3:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.022625000000005002,
+      "usage": {
+        "candidatesEvaluated": 9,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 263542756,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v3:0:1",
+        "shortlist": [
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 263542756,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 6775100721,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 12148007524,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:2:3",
+            "incrementalCostMs2": 49525831936,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:3",
+            "incrementalCostMs2": 70699324116,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 81154599652,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 314122459300,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:2",
+            "incrementalCostMs2": 451026692872,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 22,
+      "nowMs": 3226385,
+      "requestId": "r23",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 22,
+        "candidateId": "v4:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.010250000000013415,
+      "usage": {
+        "candidatesEvaluated": 6,
+        "shortlisted": 6,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 25847957529,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:0:1",
+        "shortlist": [
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 25847957529,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 49393729009,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 59964745129,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 74654632900,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:2",
+            "incrementalCostMs2": 290975224791,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 305693105460,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 23,
+      "nowMs": 3302354,
+      "requestId": "r24",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 23,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.011541999999991504,
+      "usage": {
+        "candidatesEvaluated": 9,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 570875449,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v2:0:1",
+        "shortlist": [
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 570875449,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 6902951056,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 22269891361,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 42280974836,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:3",
+            "incrementalCostMs2": 114905352980,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:2:3",
+            "incrementalCostMs2": 118148937984,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 249550479503,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:2",
+            "incrementalCostMs2": 460342591136,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 24,
+      "nowMs": 3324530,
+      "requestId": "r25",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 24,
+        "candidateId": "v1:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.02312499999999318,
+      "usage": {
+        "candidatesEvaluated": 14,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 21628114225,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:0:1",
+        "shortlist": [
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 21628114225,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 34089344689,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:2:3",
+            "incrementalCostMs2": 56928051216,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:2:3",
+            "incrementalCostMs2": 81714224449,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:3",
+            "incrementalCostMs2": 170822969361,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 280352506185,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:3",
+            "incrementalCostMs2": 295155097911,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:2",
+            "incrementalCostMs2": 311943402315,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 25,
+      "nowMs": 3424004,
+      "requestId": "r26",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 25,
+        "candidateId": "v1:1:3"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.012124999999997499,
+      "usage": {
+        "candidatesEvaluated": 11,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 40145536953,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v1:1:3",
+        "shortlist": [
+          {
+            "id": "v1:1:3",
+            "incrementalCostMs2": 40145536953,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 42216277156,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 42472675921,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 43197049921,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:1",
+            "incrementalCostMs2": 99210600408,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:0:2",
+            "incrementalCostMs2": 99210600408,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:2:3",
+            "incrementalCostMs2": 103954656400,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:1:2",
+            "incrementalCostMs2": 174391719408,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 26,
+      "nowMs": 3454089,
+      "requestId": "r27",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 26,
+        "candidateId": "v4:1:2"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.02225000000001387,
+      "usage": {
+        "candidatesEvaluated": 20,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 54028353600,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v4:1:2",
+        "shortlist": [
+          {
+            "id": "v4:1:2",
+            "incrementalCostMs2": 54028353600,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 67679063104,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 68003600625,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:4:5",
+            "incrementalCostMs2": 210617662761,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 251659721767,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:2",
+            "incrementalCostMs2": 287919896623,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:2:5",
+            "incrementalCostMs2": 329257662590,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:3:4",
+            "incrementalCostMs2": 361831715284,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    },
+    {
+      "stateVersion": 27,
+      "nowMs": 3573991,
+      "requestId": "r28",
+      "action": {
+        "schemaVersion": "bus20-action/1",
+        "kind": "chooseCandidate",
+        "stateVersion": 27,
+        "candidateId": "v2:0:1"
+      },
+      "outcome": {
+        "status": "accepted"
+      },
+      "wallLatencyMs": 0.017499999999984084,
+      "usage": {
+        "candidatesEvaluated": 18,
+        "shortlisted": 8,
+        "samples": 0,
+        "meanSampledArrivals": 0,
+        "incrementalCostMs2": 21730002921,
+        "meanRolloutCostMs2": 0,
+        "changedFromMyopic": 0
+      },
+      "trace": {
+        "myopicChoice": "v2:0:1",
+        "shortlist": [
+          {
+            "id": "v2:0:1",
+            "incrementalCostMs2": 21730002921,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v3:0:1",
+            "incrementalCostMs2": 21914065156,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:3:4",
+            "incrementalCostMs2": 53071258384,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:2:3",
+            "incrementalCostMs2": 97194297600,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:2:4",
+            "incrementalCostMs2": 167162251664,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v1:2:3",
+            "incrementalCostMs2": 274019482879,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:0:1",
+            "incrementalCostMs2": 321517473625,
+            "meanRolloutCostMs2": 0
+          },
+          {
+            "id": "v4:1:3",
+            "incrementalCostMs2": 349184319650,
+            "meanRolloutCostMs2": 0
+          }
+        ]
+      }
+    }
+  ],
+  "finalStateDigest": "sha256:04e8708b90300ad0645f5034409818ed36d01f22894f5ac8ccc6659b28846c40"
+}

@@ -194,6 +194,21 @@ test("compare command tabulates run directories and writes markdown", async () =
   assert.equal(empty.status, 2);
 });
 
+test("the rollout reference binds to the scenario's map", async () => {
+  const inputs = await loadInputs(SCENARIO, MAP);
+  assert.ok(inputs.ok);
+  const rollout = createPolicyById("rollout", { inputs: inputs.value, rollout: { samples: 4 } });
+  assert.ok(rollout !== undefined);
+  assert.equal(rollout.policy.descriptor.kind, "rollout-reference");
+  assert.equal(rollout.policy.descriptor.id, "rollout-reference:empirical:k8:s4:h10:seed0");
+  // The smoke fixture is hand-written, so it carries no generator distribution.
+  assert.throws(
+    () => createPolicyById("rollout", { inputs: inputs.value, rollout: { demand: "known" } }),
+    /no generator provenance/,
+  );
+  assert.equal(createPolicyById("rollout"), undefined, "the rollout reference needs a map");
+});
+
 test("model policies are selectable and an invalid effort is a usage error", () => {
   process.env["ANTHROPIC_API_KEY"] = "test";
   process.env["OPENAI_API_KEY"] = "test";
