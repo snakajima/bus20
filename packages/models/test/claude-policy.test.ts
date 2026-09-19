@@ -49,7 +49,9 @@ test("Claude adapter sends the brief with a constrained schema and records usage
   const sent = claudeRequestSchema.parse(first.body);
   assert.equal(sent.model, DEFAULT_CLAUDE_MODEL_ID);
   assert.equal(sent.output_config.effort, "medium");
-  assert.deepEqual(sent.output_config.format.schema.properties.choice.enum, ["v1:0:1", "v2:0:1"]);
+  assert.deepEqual(sent.output_config.format.schema.properties.choice.enum, ["A", "B"]);
+  assert.match(sent.messages[0]?.content ?? "", /"id":"A"/);
+  assert.equal(log.policy.settings["optionLabels"], "letters");
   assert.match(sent.system, /squared delay minutes/);
   assert.match(sent.system, /waitMinutes \+ detourMinutes/);
   assert.match(JSON.stringify(sent.messages), /new_passenger_wait_minutes/);
