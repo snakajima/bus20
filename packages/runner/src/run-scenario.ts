@@ -18,7 +18,9 @@ import { createOpenAIPolicy } from "@bus20/models/openai-policy";
 import { type Effort } from "@bus20/models/effort";
 import { createJevPolicy } from "@bus20/models/jev-policy";
 import { type ChoiceSettings } from "@bus20/models/choice-procedure";
-import { type PresentationId } from "@bus20/models/presentation";
+import { createForecastPresentation } from "@bus20/models/forecast-presentation";
+import { type Presentation, type PresentationId } from "@bus20/models/presentation";
+import { createKnownForecaster } from "./forecast.js";
 import { type PolicyProgram, policyProgramSchema } from "@bus20/contracts/policy-artifact";
 import { createProgramPolicy } from "@bus20/policy-runtime/program-policy";
 import { checkScenarioOnMap } from "@bus20/graph/scenario-check";
@@ -131,7 +133,7 @@ export type RolloutSettings = Omit<
 export interface PolicyOptions {
   /** Path to the built Swift `bus20-baseline` executable, required for `swift`. */
   readonly swiftCommand?: string;
-  /** The scenario, required for `rollout` (map, demand window, and the known-demand model). */
+  /** The scenario, required for `rollout` and the `forecast` presentation. */
   readonly inputs?: Inputs;
   readonly rollout?: RolloutSettings;
   /** Exact model ID for `claude`, `openai`, `gemini`, or `jev`; defaults are the pinned IDs. */
@@ -167,10 +169,32 @@ export const POLICY_IDS = [
 
 const noop = (): undefined => undefined;
 
+/** The `forecast` presentation is built per scenario from its demand distribution. */
+const forecastPresentation = (inputs: Inputs | undefined): Presentation => {
+  const forecaster =
+    inputs === undefined ? undefined : createKnownForecaster(inputs.map, inputs.scenario);
+  if (forecaster === undefined) {
+    throw new Error("the forecast presentation needs a scenario with generator provenance");
+  }
+  return createForecastPresentation(forecaster);
+};
+
+const presentationOption = (
+  options: PolicyOptions,
+): { presentation?: PresentationId | Presentation } => {
+  if (options.presentation === undefined) {
+    return {};
+  }
+  if (options.presentation === "forecast") {
+    return { presentation: forecastPresentation(options.inputs) };
+  }
+  return { presentation: options.presentation };
+};
+
 const sharedModelOptions = (options: PolicyOptions) => ({
   ...(options.modelId === undefined ? {} : { modelId: options.modelId }),
   ...(options.choice === undefined ? {} : { choice: options.choice }),
-  ...(options.presentation === undefined ? {} : { presentation: options.presentation }),
+  ...presentationOption(options),
 });
 
 const createModelPolicy = (policyId: string, options: PolicyOptions): Policy | undefined => {

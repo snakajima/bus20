@@ -51,8 +51,13 @@ Every model defaults to the `consequences` presentation (shared prompt
 `bus20-prompt/3`, see [docs/jev-native.md](jev-native.md)). `cumulative`
 (`bus20-prompt/4`) adds how late each delayed passenger already is, which
 the insertion rule always knew; the older `numeric` form (`bus20-prompt/2`)
-stays for comparison. Select with
-`--presentation consequences|cumulative|numeric`. Jev also accepts self-consistency with
+stays for comparison. `forecast` (`bus20-prompt/5`) is version 4 plus a
+demand forecast computed by the host from the scenario's demand
+distribution (`createKnownForecaster` in the runner): expected requests in
+the next ten minutes in the state, and per option when the vehicle would be
+free and how many requests are expected near where it ends up. It needs a
+scenario with generator provenance. Select with
+`--presentation consequences|cumulative|forecast|numeric`. Jev also accepts self-consistency with
 `--repeats N`. Presentation and repeats are recorded in the descriptor, and
 the prompt version follows the presentation.
 

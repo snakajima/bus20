@@ -26,7 +26,8 @@ import {
   jevVehicleOption,
 } from "./jev-native.js";
 
-export const PRESENTATIONS = ["consequences", "cumulative", "numeric"] as const;
+/** `forecast` (version 5) needs a host-side forecaster and is built by the runner. */
+export const PRESENTATIONS = ["consequences", "cumulative", "forecast", "numeric"] as const;
 export type PresentationId = (typeof PRESENTATIONS)[number];
 
 /**
@@ -110,10 +111,25 @@ export const CUMULATIVE_PRESENTATION: Presentation = {
 /** The common condition every model receives unless a run overrides it. */
 export const DEFAULT_PRESENTATION_ID: PresentationId = "consequences";
 
-const BY_ID: Readonly<Record<PresentationId, Presentation>> = {
+const BY_ID: Readonly<Partial<Record<PresentationId, Presentation>>> = {
   numeric: NUMERIC_PRESENTATION,
   consequences: CONSEQUENCES_PRESENTATION,
   cumulative: CUMULATIVE_PRESENTATION,
 };
 
-export const presentationById = (id: PresentationId): Presentation => BY_ID[id];
+/** An adapter option: an id from the registry, a ready presentation, or the default. */
+export const resolvePresentation = (
+  presentation: PresentationId | Presentation | undefined,
+): Presentation =>
+  typeof presentation === "object"
+    ? presentation
+    : presentationById(presentation ?? DEFAULT_PRESENTATION_ID);
+
+/** Ids the registry can build on its own; `forecast` needs the runner. */
+export const presentationById = (id: PresentationId): Presentation => {
+  const presentation = BY_ID[id];
+  if (presentation === undefined) {
+    throw new Error(`presentation "${id}" needs a host-side forecaster; pass it as an object`);
+  }
+  return presentation;
+};

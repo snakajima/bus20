@@ -16,12 +16,7 @@ import {
 } from "./choice-procedure.js";
 import { OBJECTIVE_TEXT } from "./decision-brief.js";
 import { DEFAULT_EFFORT, type Effort } from "./effort.js";
-import {
-  DEFAULT_PRESENTATION_ID,
-  type Presentation,
-  presentationById,
-  type PresentationId,
-} from "./presentation.js";
+import { type Presentation, type PresentationId, resolvePresentation } from "./presentation.js";
 import { usageRecord } from "./pricing.js";
 
 /**
@@ -52,7 +47,7 @@ export interface OpenAIPolicyOptions {
   readonly maxRetries?: number;
   readonly choice?: ChoiceSettings;
   /** `consequences` (default, prompt v3) or `numeric` (prompt v2). */
-  readonly presentation?: PresentationId;
+  readonly presentation?: PresentationId | Presentation;
   /** Injected transport for tests; production uses the SDK default. */
   readonly fetch?: typeof fetch;
 }
@@ -184,7 +179,7 @@ const settingsOf = (options: OpenAIPolicyOptions): Settings => ({
   timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
   choice: options.choice ?? DEFAULT_CHOICE_SETTINGS,
-  presentation: presentationById(options.presentation ?? DEFAULT_PRESENTATION_ID),
+  presentation: resolvePresentation(options.presentation),
 });
 
 /**

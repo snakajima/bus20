@@ -18,12 +18,7 @@ import {
   describeChoice,
 } from "./choice-procedure.js";
 import { usageRecord } from "./pricing.js";
-import {
-  DEFAULT_PRESENTATION_ID,
-  type Presentation,
-  presentationById,
-  type PresentationId,
-} from "./presentation.js";
+import { type Presentation, type PresentationId, resolvePresentation } from "./presentation.js";
 import { withSelfConsistency } from "./self-consistency.js";
 
 /** Jev defaults to flat up to its practical token ceiling, then a chunked tournament. */
@@ -46,7 +41,7 @@ export interface JevPolicyOptions {
   readonly maxRetries?: number;
   readonly choice?: ChoiceSettings;
   /** `consequences` (default, prompt v3) or `numeric` (prompt v2). */
-  readonly presentation?: PresentationId;
+  readonly presentation?: PresentationId | Presentation;
   /** Self-consistency: ask each choice this many times with permuted option order and sum probabilities. */
   readonly repeats?: number;
   /** Injected transport for tests; production uses the global fetch. */
@@ -167,7 +162,7 @@ const settingsOf = (options: JevPolicyOptions): Settings => ({
   timeoutMs: options.timeoutMs ?? DEFAULT_TIMEOUT_MS,
   maxRetries: options.maxRetries ?? DEFAULT_MAX_RETRIES,
   choice: options.choice ?? DEFAULT_JEV_CHOICE_SETTINGS,
-  presentation: presentationById(options.presentation ?? DEFAULT_PRESENTATION_ID),
+  presentation: resolvePresentation(options.presentation),
   repeats: Math.max(1, Math.floor(options.repeats ?? 1)),
 });
 
