@@ -89,6 +89,8 @@ Packages export individual modules by subpath (for example
 | `rollout-reference` (baselines) | `createRolloutReferencePolicy`, `DEFAULT_ROLLOUT_SETTINGS` | Shortlist by the rule, score by sampled rollouts; see docs/rollout-reference.md. |
 | `demand` (datasets) | `demandDistributionOf`, `sampleDemandDay` | Recover a scenario's generative distribution from provenance and redraw days. |
 | `rollout-demand` (runner) | `createKnownDemandModel` | The `known` demand model for the rollout, built per scenario. |
+| `decision-diagnosis` (analysis) | `summarizeDecisions`, `diagnosisMarkdown`, `candidateBucket` | Per-decision rank, myopic regret, error direction, and confidence quartiles. |
+| `diagnose` (runner) | `diagnoseRun`, `diagnoseSuiteDirectory` | Replay stored runs and score every choice against the insertion rule. |
 | `jev-native` | `consequencesOf`, `jevCandidateOption`, `jevVehicleOption`, `jevDecisionState` | Consequences presentation (shared prompt v3): arithmetic in code, words and whole minutes. |
 | `self-consistency` | `withSelfConsistency` | Repeated choices with permuted option order, probabilities summed in code. |
 | `jev-policy` | `createJevPolicy`, `DEFAULT_JEV_MODEL_ID` | Jev via `@typesafe-ai/sdk` Choice; records confidence and probabilities. |

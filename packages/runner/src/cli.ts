@@ -11,7 +11,13 @@ import {
 } from "@bus20/models/choice-procedure";
 import { PRESENTATIONS, type PresentationId } from "@bus20/models/presentation";
 import { comparisonMarkdown, loadRunDirectory } from "./compare.js";
-import { writeTextAtomic } from "./files.js";
+import { writeJsonAtomic, writeTextAtomic } from "./files.js";
+import { diagnoseSuiteDirectory } from "./diagnose.js";
+import {
+  type DecisionDiagnostic,
+  diagnosisMarkdown,
+  summarizeDecisions,
+} from "@bus20/analysis/decision-diagnosis";
 import { loadSuite } from "@bus20/datasets/files";
 import path from "node:path";
 import { parseArgs } from "node:util";
@@ -44,11 +50,15 @@ const USAGE = `usage:
                 [--program <file> [--program-seed N]]
   bus20-run replay --scenario <file> --map <file> --log <file>
   bus20-run compare <run-dir>... [--markdown <file>]
+  bus20-run diagnose --manifest <file> --out <dir> <suite-dir>...
   bus20-run suite --manifest <file> --policies <id,id,...> --out <dir>
                 [--splits dev,validation,test] [--loads low,medium,high] [--repetitions N] [--limit N]
                 [--swift-cli <path>] [--model <id>] [--effort <level>] [--max-decisions N]`;
 
 const EXIT_OK = 0;
+const DIAGNOSIS_JSON = "diagnosis.json";
+const DIAGNOSIS_MARKDOWN = "diagnosis.md";
+const DECISIONS_JSON = "decisions.json";
 const EXIT_USAGE = 2;
 const EXIT_FAILED = 1;
 
@@ -326,6 +336,28 @@ const reportSuite = (out: string, index: SuiteIndex): number => {
   return EXIT_OK;
 };
 
+/** Replays every complete run in the given suite directories and scores each decision. */
+const diagnoseCommand = async (args: ParsedArgs): Promise<number> => {
+  const { manifest, out } = args.values;
+  if (manifest === undefined || out === undefined || args.positionals.length === 0) {
+    return usageError();
+  }
+  const suite = await loadSuite(manifest);
+  if (!suite.ok) {
+    return issuesError(suite.issues);
+  }
+  const records: DecisionDiagnostic[] = [];
+  for (const dir of args.positionals) {
+    records.push(...(await diagnoseSuiteDirectory(suite.value, dir)));
+  }
+  const diagnosis = summarizeDecisions(records);
+  await writeJsonAtomic(path.join(out, DIAGNOSIS_JSON), diagnosis);
+  await writeJsonAtomic(path.join(out, DECISIONS_JSON), records);
+  await writeTextAtomic(path.join(out, DIAGNOSIS_MARKDOWN), diagnosisMarkdown(diagnosis));
+  emit({ decisions: records.length, policies: diagnosis.overall.length, outDir: out });
+  return EXIT_OK;
+};
+
 const compareCommand = async (args: ParsedArgs): Promise<number> => {
   if (args.positionals.length === 0) {
     return usageError();
@@ -422,6 +454,9 @@ export const main = async (argv: readonly string[]): Promise<number> => {
   }
   if (args.command === "suite") {
     return suiteCommand(args);
+  }
+  if (args.command === "diagnose") {
+    return diagnoseCommand(args);
   }
   return usageError();
 };
