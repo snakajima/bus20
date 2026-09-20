@@ -1,0 +1,236 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage[numbers]{natbib}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\newcommand{\todo}[1]{\textcolor{red}{[TODO: #1]}}
+\newcommand{\minsq}{\mathrm{min}^2}
+
+\title{Can a Decision Model Dispatch? \\
+\large Comparing a System-1 choice model with general LLMs on online shared-shuttle dispatch}
+
+\author{
+Satoshi Nakajima \\ \todo{affiliation}
+\and
+\todo{co-authors}
+}
+\date{Draft of September 19, 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We ask what a small model specialised in choosing among options is worth, next to general large language models (LLMs), on a sequential decision problem with real consequences: dispatching a fleet of shared shuttles as ride requests arrive. We build a deterministic benchmark in which every policy sees the same observation, chooses one of the same legal insertions, and is scored by the same simulator on the mean squared delay of all passengers. A human-written greedy insertion rule serves as the reference and a demand-informed rollout as a stronger classical baseline. We evaluate Jev, a commercial System-1 decision model; Laya, its open-source counterpart; and Claude, GPT and Gemini at low reasoning effort, under a sequence of controlled host-side conditions. Three findings stand out. (1) How the host presents the decision dominates which model decides: replacing raw plan timings with host-computed consequences in words turned Jev from unusable into competitive, and the same change made every LLM better, faster and cheaper. (2) Under identical information and an identical eight-option shortlist, the three frontier LLMs are statistically indistinguishable, and Jev lands within 1--8\% of them at 1/25 to 1/175 of the cost and 1/15 of the latency. (3) No model beats the greedy rule on average and none reaches the rollout: models choose the rule's best insertion three quarters of the time and pay a small price when they deviate, whereas the rollout deviates as often and gains, because it simulates what a deviation buys. A replay-based diagnosis of 24{,}000 decisions locates the models' losses in large choice sets and in a shared bias toward the requesting passenger, both of which host-side design removes. \todo{numbers to be refreshed on the held-out test split before submission}
+\end{abstract}
+
+\section{Introduction}
+
+Online dispatch of a small shared-shuttle fleet is a sequential decision problem with three properties that make it a useful probe of machine judgement. Each decision is discrete and legal by construction (insert one new passenger's pickup and drop-off into one vehicle's plan); the consequences are computable and immediate (who waits, who is delayed); and yet the right choice depends on requests that have not arrived. A human dispatcher, or a human-written rule, does reasonably well by being greedy. Doing better requires anticipating demand.
+
+Large language models are increasingly proposed as general decision-makers for such operational loops, and specialised ``System-1'' decision models such as Jev~\cite{jev} have appeared that answer a typed question (choose one option, score on a rubric, judge true or false) with calibrated probabilities in a single forward pass, at a small fraction of an LLM's cost and latency. Whether a model of that kind can carry an operational decision, and what it gives up relative to a frontier LLM, has not been measured on a task where the answer has consequences beyond the next token.
+
+This paper contributes:
+\begin{itemize}
+\item \textbf{A benchmark} (Section~\ref{sec:benchmark}) with a deterministic event-driven simulator, integer-millisecond virtual time, a fixed observation contract that never exposes future requests, a single scalar objective with a passenger-level definition, complete run logs that replay, and a versioned synthetic suite spanning three city-like maps, three demand patterns and three load levels.
+\item \textbf{Two classical references} (Section~\ref{sec:baselines}): the corrected greedy insertion rule from a production Swift implementation, and a rollout policy that shortlists by the rule and scores each candidate by simulating sampled futures, with either the demand distribution or only the run's own history.
+\item \textbf{A controlled comparison} (Section~\ref{sec:results}) of Jev, Laya, Claude, GPT and Gemini under a ladder of host-side conditions, prompt content held identical across models at every rung: presentation form, cumulative delay information, choice-set size and a demand forecast.
+\item \textbf{A decision-level diagnosis} (Section~\ref{sec:diagnosis}) that replays every stored run and scores every choice against the rule, separating typical behaviour from tail failures, and showing that the models' losses concentrate in large choice sets and share one bias.
+\end{itemize}
+
+The headline result is not that one model wins. It is that the gap between a 0.13-second, sub-cent decision model and a frontier LLM is small once the host does its part, and that the gap between all of them and a classical lookahead is explained by planning, not by reading.
+
+\section{Related work}
+\todo{Ride-sharing assignment and insertion heuristics (e.g.\ \cite{alonso2017}); rollout and approximate dynamic programming for dispatch (\cite{bertsekas1997rollout,powell2011adp}); LLMs as agents in operational and planning tasks; evaluation of LLM decision-making under cost constraints; System-1 decision models. Keep short; cite only what we have read.}
+
+\section{The benchmark}
+\label{sec:benchmark}
+
+\subsection{Problem}
+A fleet of $V$ vehicles of capacity $C$ serves ride requests on a directed road graph with fixed edge travel times. Request $i$ appears at time $a_i$ with an origin and a destination; $\tau_i$ is its direct shortest-path time. A policy must assign it, immediately and irrevocably, to one vehicle by inserting its pickup and drop-off into that vehicle's remaining stop list without reordering committed stops. Passengers already assigned may be delayed but never reassigned. Every passenger must be served before a completion deadline; a run with an unserved passenger fails and scores $+\infty$.
+
+With pickup time $p_i$ and drop-off time $d_i$, wait is $W_i = p_i - a_i$, detour is $D_i = (d_i - p_i) - \tau_i$, and the objective is
+\[
+P = \frac{1}{N}\sum_i (W_i + D_i)^2
+\quad\text{in } \minsq,
+\]
+which under fixed travel times equals the mean over passengers of the squared delay against a direct trip, $(d_i - a_i - \tau_i)^2$. Squaring makes one long delay cost more than several short ones, which is what a rider-facing service wants.
+
+\subsection{Environment and protocol}
+The simulator is event-driven on integer-millisecond virtual time. Same-timestamp events are processed in a fixed order (edge arrivals, drop-offs, request releases, decisions, pickups and departures); vehicles follow shortest paths and may re-plan at the end of the edge they are on; idle vehicles wait in place. Model latency never enters virtual time and is measured separately. Every policy receives the same observation: the clock, the released and unfinished requests, every vehicle's position, riders and committed stops with planned arrival times, and the full set of legal insertions as candidates, each with the resulting stop list and timings. Candidates carry no cost or rank and are listed in an order that says nothing about quality. Unreleased requests are never visible to any policy.
+
+A decision returns one candidate id. The host validates it (capacity, reachability, order), commits it atomically, and records the action, the model's usage and a trace. Run logs replay to the same state digest; failed runs are kept as data with their cost. A refusal, a malformed reply or an id outside the offered set fails the decision and the run; no fallback to a rule is ever applied. Transport retries are fixed (two) and recorded.
+
+\subsection{Data}
+The suite used here (\texttt{synthetic-dev/2}) has three synthetic grid-based maps with removed blocks, one-way streets and heterogeneous speeds (55--81 nodes, 138--190 edges, every node a stop), three demand patterns (uniform; commute, with 70\% of trips toward the centre in the first half hour; hotspot, with 40\% of trips from one district during a 15-minute burst), and three load levels defined by the fleet utilisation the direct trips alone would cause (0.25, 0.50, 0.65), giving 27--81 requests per hour-long scenario for four vehicles of capacity four. Each (map, load) cell holds three scenarios per split, patterns cycling; nine dev, nine validation and nine test scenarios per load. Every scenario is a stored request sequence with its map digest and generator provenance (pattern, seed, hotspot parameters); the generator is seeded and versioned. \todo{Real road networks from OpenStreetMap are planned (see the research plan); the paper reports synthetic maps and says so as a limitation.}
+
+The number of legal insertions per decision grows with load: median 9 (max 43) at low load, 20 (103) at medium, 33 (141) at high on the dev split.
+
+\section{Policies}
+\label{sec:baselines}
+
+\subsection{Classical references}
+\paragraph{Insertion rule (Swift).} The production dispatcher's rule, extracted into a headless CLI and corrected (its evaluator double-counted the first ride segment): for every legal insertion, compute the total squared delay of every passenger on that vehicle's plan, subtract the plan's current total, and commit the insertion with the smallest increment; ties keep host order. It is exact-integer, myopic, and uses the accumulated delay of every passenger already assigned. An independent TypeScript statement of the rule agrees with the CLI decision by decision.
+
+\paragraph{Rollout reference.} A stronger classical policy in the rollout / sample-average family: shortlist the eight cheapest insertions by the rule; draw 64 futures of the next ten minutes (clipped to the demand window) from a demand model; for each shortlisted candidate and each future, commit the candidate in a light forward model, serve the sampled arrivals with the rule, and total the squared delay of everyone, known and sampled; commit the candidate with the lowest mean. Futures are shared across candidates (common random numbers) and seeded by the decision, so runs are deterministic per seed and replay. With zero samples the policy is exactly the rule (tested). Two demand models: \emph{known}, the generator's distribution recovered from the scenario's provenance (pattern, zones, burst window) and redrawn as fresh days, which is what a dispatcher with historical data would have; and \emph{empirical}, a Poisson rate and bootstrapped trips from the run's own history, which is the information the models have. The stored requests of the day being run are never read by either.
+
+\paragraph{Random floors.} Uniform choice among every legal insertion, and among the rule's $K$ cheapest, seeded per decision.
+
+\subsection{Model policies}
+Every model runs through one contract, \texttt{ChoiceClient.ask(state, question, options)}, and one decision procedure that turns an observation into one or more choices. Five models are evaluated as ``model + fixed prompt + presentation + choice procedure + budget'':
+\begin{itemize}
+\item \textbf{Jev} (TypeSafe AI, \texttt{jev-1.13.0}): the Choice primitive of its System-1 API; the state is the shared state, the options are the labels with structured descriptions; the answer's choice and probability distribution are recorded. At most 255 options per question and about 64k input tokens per request; above 180 candidates the procedure runs a tournament (chunks of 120 scored in one batched call, then a final).
+\item \textbf{Laya} (Convai Innovations; open-source, Jev-compatible; run locally through ONNX Runtime): same primitive, but a 192-token question head, so options are rendered as one sentence each under labels A--F and a choice holds at most six options.
+\item \textbf{Claude} (\texttt{claude-opus-5}), \textbf{GPT} (\texttt{gpt-5.6-sol}) and \textbf{Gemini} (\texttt{gemini-3.8-flash}), each at its lowest reasoning effort, with structured output constrained to the offered option labels, no tools, no memory across decisions, and no server-side fallback.
+\end{itemize}
+Costs are converted from reported tokens at pinned list prices with retrieval dates; Jev is billed per token at \$0.042 per million, Laya runs locally for free.
+
+\subsection{Presentations (prompt versions)}
+\label{sec:presentations}
+Prompt content is identical across models at every version; only the transport differs (system prompt and JSON message for the LLMs, structured question for Jev, sentence per option for Laya). Results across versions are never pooled.
+\begin{description}
+\item[v2, numeric.] Each candidate as insertion indices, the new passenger's planned pickup and drop-off minutes, and two shift constants for existing stops; the state lists every vehicle's stop list with planned arrivals.
+\item[v3, consequences.] Arithmetic moved into the host: each option states the new passenger's wait and detour in whole minutes and which existing passengers are delayed and by how many minutes, as a sentence and as the same named fields on every option; the state is filtered to the new passenger and a one-line fleet summary. This form was designed for Jev following its vendor's guidance (``not a calculator'', distracted by irrelevant state) and then adopted for every model.
+\item[v4, cumulative.] v3 plus, for every delayed passenger, how late they already are, and the statement that added delay to someone already late costs far more under a squared objective. The rule has always had this information; v3 withheld it.
+\item[v5, forecast.] v4 plus a host-computed demand forecast from the known distribution: expected requests in the next ten minutes, and per option when the vehicle would be free and how many requests are expected near where it ends up.
+\end{description}
+
+\subsection{Choice procedures}
+\emph{Flat}: one question over every legal insertion. \emph{Tournament}: for Jev above its limits. \emph{Shortlist} ($K$): the host offers only the rule's $K$ cheapest insertions, in host order and without their costs; the model adds judgement on top of the rule instead of searching the set. The rollout's choices lie within the rule's top 3 on 96.3\% and top 5 on 99.3\% of dev decisions, so a shortlist of eight loses almost nothing that lookahead could recover.
+
+\section{Results}
+\label{sec:results}
+All results below are on the development split of \texttt{synthetic-dev/2}: 27 scenarios (3 cities $\times$ 3 loads $\times$ 3 patterns), three repetitions, pain averaged with equal weight per city. \todo{Dev was used to choose prompt versions, rollout defaults and load levels; the final tables must be re-run on the validation or test split with the configuration frozen. Every number here is from committed results under \texttt{results/synthetic-dev-2/}.} All runs of every condition reported completed; no policy failed a run.
+
+\subsection{Presentation form}
+\label{sec:form}
+On the 12-request smoke fixture, Jev scored 50.8 with the original full-stop-list prompt (v1), 157.6 with the numeric form (v2), and 11.7 with the consequence form (v3), against the rule's 16.2. Claude at low effort on four pilot scenarios moved from v2 to v3 with pain lower on three of four, output tokens down by 82\% and cost down 23\% (\texttt{results/pilot/prompt-v3}). The consequence form became the shared prompt for every model.
+
+\subsection{Full choice set, prompt v3}
+\label{sec:full}
+Table~\ref{tab:full} gives every online policy choosing among every legal insertion.
+
+\begin{table}[t]
+\centering
+\caption{Dev split, full choice set, prompt v3, effort low. Pain in $\minsq$ (lower is better), equal weight per city; cost over the 81 runs; median decision latency.}
+\label{tab:full}
+\begin{tabular}{lrrrrr}
+\toprule
+policy & low & medium & high & cost & latency \\
+\midrule
+Swift insertion rule & 3.78 & 9.40 & 13.60 & \$0 & $<$1 ms \\
+Rollout, known demand & \textbf{3.28} & \textbf{8.35} & \textbf{11.37} & \$0 & 0.1 s \\
+Rollout, empirical demand & 3.82 & 9.05 & 13.32 & \$0 & 0.1 s \\
+Claude opus-5 & 3.77 & 13.27 & 17.99 & \$107 & 2.3 s \\
+Gemini 3.8 Flash & 4.30 & 13.62 & 19.07 & \$17 & 1.6 s \\
+GPT-5.6 Sol & 4.68 & 15.75 & 20.47 & \$42 & 2.8 s \\
+Jev 1.13.0 (tournament) & 5.67 & 20.90 & 36.40 & \$0.77 & 0.14 s \\
+Random, every insertion & 1299$^{a}$ & 2727$^{b}$ & fails & \$0 & -- \\
+\bottomrule
+\end{tabular}
+\\ \footnotesize $^{a}$96\% of runs complete; $^{b}$22\% complete; at high load no random run finishes the day.
+\end{table}
+
+The rollout with historical demand knowledge beats the rule by 11--16\% at every load and wins 66 of 81 paired scenarios; with only the run's own history it is on par with the rule. Claude ties the rule at low load (wins 13 of 27 pairs) and trails it by 30\% at medium and high; Gemini and GPT trail at every load; Jev trails by 50\% at low load and by a factor of 2.7 at high. Every model's gap widens with load.
+
+\subsection{Decision-level diagnosis}
+\label{sec:diagnosis}
+Run pain is chaotic: one early choice changes the whole day, and the same model varies by about 16\% between repetitions. We therefore replay every stored run, regenerate every observation, and score the chosen candidate against the rule: its rank by incremental cost (0 = the rule's cheapest), its \emph{myopic regret} (immediate squared delay given away against the rule's best, $\minsq$), and the direction of the error (chosen minus best in the new passenger's wait, the number of passengers delayed and the largest delay to others). Table~\ref{tab:diag} summarises 24{,}192 decisions.
+
+\begin{table}[t]
+\centering
+\caption{Decision diagnosis of Table~\ref{tab:full}'s runs. Normalised rank $= \mathrm{rank}/(n-1)$; 0.5 is uniform random choice. Biases are chosen minus the rule's best, averaged over all decisions (minutes or passengers).}
+\label{tab:diag}
+\begin{tabular}{lrrrrrrr}
+\toprule
+policy & best & top 3 & norm.\ rank & regret & p90 & wait bias & others delayed \\
+\midrule
+Rollout, known & 75.5\% & 96.3\% & 0.03 & 1.24 & 3.4 & +0.02 & +0.09 \\
+Claude & 69.0\% & 90.7\% & 0.03 & 3.60 & 8.6 & $-$0.33 & +0.24 \\
+Gemini & 70.0\% & 91.1\% & 0.03 & 3.41 & 7.0 & $-$0.25 & +0.19 \\
+GPT & 66.3\% & 88.1\% & 0.04 & 4.83 & 13.7 & $-$0.38 & +0.31 \\
+Jev & 62.0\% & 83.0\% & 0.06 & 13.41 & 24.1 & $-$0.38 & +0.36 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Three things follow. \emph{Nobody is guessing}: normalised rank is 0.03--0.06 against 0.5 for random choice; the models agree with the rule on most decisions and differ in the tail. \emph{The choice-set size drives the tail}: with ten or fewer candidates every model, Jev included, picks the rule's best about 77\% of the time with regret near 0.3; at 41--100 candidates the LLMs fall to 51--55\% and Jev to 47\%, and decisions with more than 40 candidates, a quarter of all decisions, carry 74--84\% of each model's regret. \emph{Everyone errs the same way}: when models leave the rule they shorten the requesting passenger's wait and delay the passengers already on the plan; the sign is the same for all four models, strongest in Jev and GPT, near zero for the rollout. The v3 prompt, it turned out, showed how much each delayed passenger would be delayed but not how late they already were, so a model could not weigh a delay to someone already far behind, which the squared objective makes decisive.
+
+Jev's reported confidence is a strong signal: in its most confident quartile it picks the rule's best 93.7\% of the time with regret 0.38, better than any LLM's average; in its least confident quartile 37.6\% with regret 33. Laya's confidence carries almost no information (54\% vs 44\% across quartiles).
+
+\subsection{Cumulative delays, shortlist and forecast}
+\label{sec:ladder}
+The diagnosis points at two host-side fixes, information and choice-set size, and one experiment, a forecast. Table~\ref{tab:ladder} shows Jev climbing the ladder; Table~\ref{tab:top8} shows every model at the top of it.
+
+\begin{table}[t]
+\centering
+\caption{Jev on the dev split under successive host-side conditions. ``top 8'' offers only the rule's eight cheapest insertions.}
+\label{tab:ladder}
+\begin{tabular}{lrrrrr}
+\toprule
+condition & low & medium & high & rule's best & regret \\
+\midrule
+v3, full set & 5.67 & 20.90 & 36.40 & 62.0\% & 13.4 \\
+v4, full set & 4.39 & 17.25 & 37.11 & 65.9\% & 10.4 \\
+v4, top 8 & 3.99 & 11.89 & 17.40 & 72.6\% & 1.66 \\
+v5, top 8 & 3.86 & 11.44 & 15.29 & 77.2\% & 1.18 \\
+\midrule
+Swift rule & 3.78 & 9.40 & 13.60 & 100\% & 0 \\
+Random, top 8 & 54.0 & 73.8 & 78.9 & 15.5\% & 49.8 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Adding the accumulated delay (v4) cut Jev's pain by 23\% at low and 17\% at medium load, shrank its bias toward the new passenger by two thirds, and left high load unchanged, where the loss sits in choice sets of 41 or more. The shortlist halved high-load pain and made Jev the best model at medium and high load among the full-set runs of Table~\ref{tab:full}. The forecast helped most where lookahead matters most ($-12\%$ at high load). Random choice from the same eight options scores 54--79, six to fourteen times worse than the rule, so the shortlist by itself is worth nothing; what a shortlisted model scores above that floor is its own judgement.
+
+\begin{table}[t]
+\centering
+\caption{Every model under the same conditions: prompt v4 and v5, the rule's top 8, effort low. Wins are paired scenarios (of 81) with lower pain than the rule.}
+\label{tab:top8}
+\begin{tabular}{lrrrrrrr}
+\toprule
+condition & low & medium & high & cost & latency & wins & rule's best \\
+\midrule
+Swift rule & 3.78 & 9.40 & 13.60 & \$0 & $<$1 ms & -- & 100\% \\
+Rollout, known & \textbf{3.28} & \textbf{8.35} & \textbf{11.37} & \$0 & 0.1 s & 66 & 75.5\% \\
+Claude, v4 & 3.92 & 10.32 & 14.88 & \$49 & 2.2 s & 30 & 78.1\% \\
+Claude, v5 & 3.84 & 10.70 & 15.34 & \$60 & 2.0 s & 28 & 81.5\% \\
+GPT, v4 & 3.79 & 11.56 & 15.39 & \$21 & 2.4 s & 22 & 77.5\% \\
+GPT, v5 & 3.81 & 9.96 & 15.17 & \$27 & 2.1 s & 27 & 83.8\% \\
+Gemini, v4 & 3.81 & 10.26 & 15.64 & \$9 & 1.6 s & 35 & 77.2\% \\
+Gemini, v5 & 3.63 & 10.13 & 15.59 & \$9 & 1.5 s & 25 & 84.5\% \\
+Jev, v4 & 3.99 & 11.89 & 17.40 & \$0.28 & 0.13 s & 16 & 72.6\% \\
+Jev, v5 & 3.86 & 11.44 & 15.29 & \$0.34 & 0.13 s & 18 & 77.2\% \\
+Laya, v4, top 3, 3 asks & 6.31 & 14.52 & 20.43 & \$0 & 2.9 s & 0 & 45.3\% \\
+Random, top 8 & 54.0 & 73.8 & 78.9 & \$0 & -- & 0 & 15.5\% \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Under identical information and choice sets, the three frontier LLMs are indistinguishable: within 0.2 of each other at low load and within 1.3 at medium and high, with decision statistics identical to the first decimal (77--78\% rule's best, regret 0.7 at v4), at a five-fold cost spread (Gemini \$9, Claude \$49). Jev at v5 is within 1--8\% of the LLMs at every load, at 1/25 to 1/175 of their cost and 1/15 of their latency; its remaining gap is in the tail (p90 regret 2.9 against 1.0--1.5), not in the typical decision. The forecast raises every model's agreement with the rule (best 77--78\% to 82--85\%, regret roughly halved) but moves pain little and not always down; the models read it as a reason to be careful, not to reposition a vehicle, and none turns the demand knowledge into the 11--16\% the rollout gets from real lookahead. No model beats the rule on average; the best conditions win 25--35 of 81 paired scenarios, the rollout 66.
+
+Laya, run locally, needs a shortlist of three and three permuted asks to beat random choice from the same three options by 30\%; a single ask is worse than random within the shortlist (near-uniform probabilities with a strong bias toward the first label). It is a free, local, Jev-compatible reference point, not a drop-in replacement for Jev on this task.
+
+\section{Discussion}
+\label{sec:discussion}
+\paragraph{Host design dominates model choice.} Across this study the largest movements came from what the host computed and how much it offered: consequences instead of timings (Jev 157.6 to 11.7 on the fixture), accumulated delay (Jev $-$17 to $-$23\%), a shortlist (Jev high load 37.1 to 17.4; Claude 18.0 to 14.9 at under half the cost). Under matched conditions three frontier LLMs are the same policy at a five-fold cost spread, and a sub-cent decision model is within a few percent of them. For a deployment, this argues for spending effort on the decision interface and buying the cheapest adequate decider.
+
+\paragraph{Reading is not planning.} Every model chooses the rule's best three quarters of the time and pays a small price when it deviates. The rollout deviates about as often and gains, because it simulates the future its deviation buys. Given the same demand forecast in words, the models become more conservative rather than more anticipatory. Anticipation on this task comes from search, not from a larger reader. \todo{Effort sweep (medium/high) on a subset to test whether more thinking buys planning; expected negative.}
+
+\paragraph{The specialised model.} Jev's value is not that it matches an LLM on every decision but that its confidence says when it does: its top quartile is better than any LLM's average and its bottom quartile is close to a coin flip among the top options. A cascade that lets Jev decide when confident and defers the rest is the natural next experiment. \todo{run it}
+
+\section{Limitations}
+Synthetic maps and demand; one fleet size; a single prompt per version and low effort only for the LLMs; three repetitions; development split (the paper's final numbers must come from the held-out splits with a frozen configuration); the known-demand rollout has information the models were not given, and is presented as an informed ceiling rather than a like-for-like competitor, with the empirical rollout as the fair classical comparison. Model versions and list prices are pinned with dates and will drift.
+
+\section{Conclusion}
+\todo{write after the held-out runs}
+
+\section*{Reproducibility}
+Simulator, adapters, datasets, run logs' indices, analyses and decision diagnoses are in the repository \todo{URL}; every result table maps to a committed results directory; every run replays from its log to the same state digest.
+
+\bibliographystyle{plainnat}
+\bibliography{references}
+\end{document}
