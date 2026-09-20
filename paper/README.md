@@ -6,4 +6,4 @@ taken from a committed results directory under `results/` and says which
 one; red TODO marks list what is still missing (held-out runs, related
 work, conclusion, affiliations).
 
-Build with any TeX Live: `cd paper && pdflatex main && bibtex main && pdflatex main && pdflatex main`.
+Build with `cd paper && tectonic main.tex` (or any TeX Live: pdflatex, bibtex, pdflatex twice).
